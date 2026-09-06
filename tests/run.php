@@ -22,6 +22,7 @@ define('ARC_ROOT', dirname(__DIR__));
 define('ARC_TESTING', true);
 
 require ARC_ROOT . '/app/autoload.php';
+require __DIR__ . '/helpers.php';
 
 /** Calistirici durumu. */
 final class TestRunner
