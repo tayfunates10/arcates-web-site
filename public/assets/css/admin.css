@@ -346,3 +346,75 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* --- Sekmeler ------------------------------------------------------------ */
+
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tabs__button {
+  border: 1px solid var(--line); background: var(--white); color: var(--ink-soft);
+  padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  font-family: var(--font-head); font-weight: 600; font-size: 13px;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.tabs__button:hover { background: var(--mist); }
+.tabs__button.is-current { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.tabs__badge {
+  font-size: 11px; font-weight: 500; padding: 1px 7px; border-radius: 999px;
+  background: rgba(255, 255, 255, .22);
+}
+.tabs__button:not(.is-current) .tabs__badge { background: var(--mist); color: var(--blue); }
+
+/* Sekme panelleri JavaScript yoksa hepsi acik kalir; icerik gizlenmez.
+   DOCS.md 1 (ilke 2), 7.1 */
+[data-tab-panel][hidden] { display: none !important; }
+
+/* --- Icerik skoru -------------------------------------------------------- */
+
+.issues { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 9px; }
+.issues__item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  background: var(--mist-2); border: 1px solid var(--line); font-size: 14px;
+}
+.issues__item--strong { background: rgba(255, 107, 87, .08); border-color: rgba(255, 107, 87, .32); }
+.issues__item .tag { flex: 0 0 auto; }
+
+/* --- Google sonuc onizlemesi --------------------------------------------- */
+
+.serp {
+  display: grid; gap: 3px; padding: 14px 16px; margin-top: 8px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--white);
+  max-width: 620px;
+}
+.serp__url { font-size: 13px; color: #0a7d34; overflow-wrap: anywhere; }
+.serp__title { font-size: 19px; color: #1a0dab; line-height: 1.3; }
+.serp__desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+.field__counter.is-over { color: var(--coral); font-weight: 600; }
+
+/* --- Ayrintilar ---------------------------------------------------------- */
+
+.details {
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 0 14px; margin-top: 14px; background: var(--mist-2);
+}
+.details > summary {
+  cursor: pointer; padding: 12px 0; font-weight: 600; font-size: 14px;
+  font-family: var(--font-head); list-style-position: inside;
+}
+.details[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.details > *:last-child { margin-bottom: 14px; }
+
+/* --- Menu duzenleyici ---------------------------------------------------- */
+
+.menu-rows { display: grid; gap: 10px; }
+.menu-row {
+  display: grid; gap: 12px; align-items: end;
+  grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) 110px 90px auto;
+  padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--mist-2);
+}
+.menu-row .field { margin-bottom: 0; }
+
+@media (max-width: 760px) {
+  .menu-row { grid-template-columns: 1fr; }
+}

@@ -19,6 +19,18 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
   islem gunlugu ekrani.
 - Faz 2: `admin.css` ve `admin.js`; panelde satir ici script yok.
 - Faz 2 testleri: S-09, S-10 ve panel davranis testleri.
+- Faz 3: `Model` tabani (ceviri deseni, cakismayan slug), `Page`, `MenuItem`,
+  `Language`, `Redirect` modelleri.
+- Faz 3: `Seo` sinifi — meta uretimi, hreflang seti, yapisal veri ve icerik
+  skoru (kelime esikleri, H1, meta, alt metin, ic link, ilce benzerligi).
+- Faz 3: Panel sayfa yoneticisi (tur filtresi, dil sekmeleri, tam SEO paneli,
+  icerik skoru, Google sonuc onizlemesi) ve menu duzenleyici.
+- Faz 3: On yuz duzeni, `head`/`header`/`footer` parcalari, `page`, `service`,
+  `location`, `sector` sablonlari, kirinti yolu, SSS ve cagri bandi.
+- Faz 3: Slug degisiminde otomatik 301; `NotFoundController` yonlendirme
+  cozumu ve 404 kaydi.
+- Faz 3: Bakim modu `App::handle` icinde devrede.
+- Faz 3 testleri: U-06, U-09…U-11, U-13, F-01…F-05, F-10.
 
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin

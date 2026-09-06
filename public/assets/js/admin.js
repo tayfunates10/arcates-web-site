@@ -45,15 +45,25 @@
       if (!rows.length) return;
 
       var clone = rows[rows.length - 1].cloneNode(true);
+      var nextIndex = rows.length;
+
       clone.querySelectorAll('input, select, textarea').forEach(function (input) {
         if (input.type === 'checkbox' || input.type === 'radio') {
           input.checked = false;
         } else {
           input.value = '';
         }
+
+        // Dizi adlarindaki ilk sayisal dizin yenilenir; aksi halde yeni satir
+        // son satirin degerlerinin ustune yazar.
+        var name = input.getAttribute('name');
+        if (name && /\[\d+\]/.test(name)) {
+          input.setAttribute('name', name.replace(/\[\d+\]/, '[' + nextIndex + ']'));
+        }
+
         // Etiket baglantisi korunsun diye benzersiz kimlik uretilir.
         if (input.id) {
-          var fresh = input.id.replace(/_\d+$/, '') + '_' + Date.now();
+          var fresh = input.id.replace(/_\d+$/, '') + '_' + nextIndex + '_' + Date.now();
           var label = clone.querySelector('label[for="' + input.id + '"]');
           input.id = fresh;
           if (label) label.setAttribute('for', fresh);

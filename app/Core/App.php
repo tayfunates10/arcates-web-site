@@ -113,6 +113,16 @@ final class App
             Lang::use($lang);
         }
 
+        // Bakim modu: ziyaretci bakim sayfasini gorur, oturum acmis yonetici
+        // siteyi normal gorur. Panel ve kurulum bu kontrolun disindadir.
+        // DOCS.md 9.11, test F-17
+        if (!$isAdmin && !str_starts_with($path, '/install')) {
+            $maintenance = \Arcates\Controllers\Front\Controller::maintenanceResponse();
+            if ($maintenance !== null) {
+                return $maintenance;
+            }
+        }
+
         $match = $this->router->match($request->method(), $routePath);
 
         if ($match === null) {

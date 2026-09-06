@@ -12,9 +12,6 @@
 
 declare(strict_types=1);
 
-use Arcates\Core\Response;
-use Arcates\Core\View;
-
 // ---------------------------------------------------------------------------
 // Kurulum  (DOCS.md 13)
 // ---------------------------------------------------------------------------
@@ -59,14 +56,35 @@ $router->post($panel . '/kullanicilar/{id:[0-9]+}/sil', 'Admin\UserController@de
 $router->get($panel . '/ayarlar', 'Admin\SettingController@index');
 $router->post($panel . '/ayarlar', 'Admin\SettingController@update');
 
+// Sayfalar
+$router->get($panel . '/sayfalar', 'Admin\PageController@index');
+$router->get($panel . '/sayfalar/yeni', 'Admin\PageController@create');
+$router->post($panel . '/sayfalar/yeni', 'Admin\PageController@store');
+$router->get($panel . '/sayfalar/{id:[0-9]+}', 'Admin\PageController@edit');
+$router->post($panel . '/sayfalar/{id:[0-9]+}', 'Admin\PageController@store');
+$router->post($panel . '/sayfalar/{id:[0-9]+}/durum', 'Admin\PageController@toggle');
+$router->post($panel . '/sayfalar/{id:[0-9]+}/sil', 'Admin\PageController@destroy');
+
+// Menuler
+$router->get($panel . '/menuler', 'Admin\MenuController@index');
+$router->post($panel . '/menuler', 'Admin\MenuController@save');
+
 // Islem gunlugu (yalnizca yonetici)
 $router->get($panel . '/islem-gunlugu', 'Admin\ActivityController@index');
 
 // ---------------------------------------------------------------------------
-// Son care: hicbir desen eslesmezse 404
-// Faz 3'te sayfa cozumleyicisi, faz 8'de yonlendirme kontrolu eklenecek.
+// On yuz sayfalari  (DOCS.md 4.1 - 4.4)
+//
+// Hizmet, ilce ve sektor sayfalari da tek duzey slug ile calisir; tur
+// veritabanindan gelir. Bu yuzden tek bir yakalayici desen kullanilir ve
+// panel yollari onunde tanimlanir.
 // ---------------------------------------------------------------------------
 
-$router->fallback(static function ($request, array $params): Response {
-    return Response::html(View::render('errors/404'), 404);
-});
+$router->get('/{slug:[^/]+}', 'Front\PageController@show');
+
+// ---------------------------------------------------------------------------
+// Son care: yonlendirme tablosuna bakilir, yoksa 404 kaydi tutulur.
+// DOCS.md 9.8 — testler F-11, F-12
+// ---------------------------------------------------------------------------
+
+$router->fallback('Front\NotFoundController@index');
