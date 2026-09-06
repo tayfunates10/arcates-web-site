@@ -1,0 +1,17 @@
+/config/config.php
+/public/uploads/*
+!/public/uploads/.htaccess
+/storage/logs/*
+/storage/cache/*
+/storage/backups/*
+!/storage/**/.gitkeep
+*.log
+*.sql
+*.sql.gz
+.DS_Store
+.idea/
+.vscode/
+
+# Sema dosyalari surum kontrolunde tutulur
+!/db/schema.sql
+!/db/migrations/*.sql
