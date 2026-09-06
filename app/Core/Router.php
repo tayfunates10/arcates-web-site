@@ -48,20 +48,25 @@ final class Router
             $pattern = rtrim($pattern, '/');
         }
 
-        // preg_quote suslu parantezleri de kacirir; yer tutucular taninabilsin
-        // diye once kacislari geri alinir, sonra yer tutucu cevrimi yapilir.
-        $quoted = str_replace(['\\{', '\\}'], ['{', '}'], preg_quote($pattern, '#'));
-
+        // Desen once yer tutuculardan bolunur: yalnizca DUZ metin parcalari
+        // preg_quote'dan gecer, yer tutucunun kendi alt deseni ham birakilir.
+        // (Butun deseni preg_quote'dan gecirmek `{id:[0-9]+}` gibi alt
+        // desenleri de kacirir ve rota hicbir zaman eslesmez.)
         $keys  = [];
-        $regex = preg_replace_callback(
-            '#\{([a-zA-Z_][a-zA-Z0-9_]*)(?::([^}]+))?\}#',
-            static function (array $m) use (&$keys): string {
-                $keys[] = $m[1];
-                $sub    = $m[2] ?? '[^/]+';
-                return '(' . $sub . ')';
-            },
-            $quoted
-        ) ?? $quoted;
+        $regex = '';
+        $offset = 0;
+
+        if (preg_match_all('#\{([a-zA-Z_][a-zA-Z0-9_]*)(?::([^}]+))?\}#', $pattern, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $start  = (int) $match[0][1];
+                $regex .= preg_quote(substr($pattern, $offset, $start - $offset), '#');
+                $keys[] = $match[1][0];
+                $regex .= '(' . (($match[2][0] ?? '') !== '' ? $match[2][0] : '[^/]+') . ')';
+                $offset = $start + strlen($match[0][0]);
+            }
+        }
+
+        $regex .= preg_quote(substr($pattern, $offset), '#');
 
         $this->routes[$method][] = [
             'pattern' => $pattern,

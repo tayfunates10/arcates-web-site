@@ -38,6 +38,27 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - Faz 4: Panel medya kitapligi — coklu yukleme, izgara gorunum, alt metni
   eksik uyari rozeti, varyant tablosu, kullanimdaki dosya icin silme onayi.
 - Faz 4 testleri: U-08, S-05, S-06, F-06, F-07.
+- Faz 5: `site.css` bolum 2-15 — ust menu, kahraman, sektor seridi, hizmet
+  kartlari, bolge haritasi, surec, referanslar, SSS, cagri bandi, alt bilgi,
+  animasyon katmani, duyarli davranis, azaltilmis hareket ve yazdirma.
+- Faz 5: `site.js` animasyon motoru — IntersectionObserver ile gorunurluk,
+  rAF ile sinirlandirilmis passive scroll, ilerleme cubugu, sabit ust menu,
+  sekil suruklenmesi, bolge haritasi cizimi, kesintisiz sektor seridi.
+- Faz 5: Anasayfa sablonu ve bolum parcalari (hero, strip, cards, coast,
+  steps, works), `HomeSection`, `District`, `Project`, `Faq` modelleri,
+  `HomeController`.
+- Faz 5: Favicon, apple-touch-icon ve varsayilan OG gorseli.
+- Faz 5: `tools/browser/animation-check.mjs` — A testlerinin tarayicidaki
+  karsiligi (istege bagli, CI'da zorunlu degil).
+- Faz 5 testleri: A-01…A-10, E-03, E-07, O-01, F-14, F-15, F-16.
+
+### Duzeltildi (faz 5)
+- `Router` ozel alt desenli yer tutucular: `preg_quote` alt deseni de
+  kacirdigi icin `{id:[0-9]+}` ve `{slug:[^/]+}` hicbir zaman eslesmiyordu;
+  ic sayfalar ve kimlik alan panel ekranlari acilmiyordu.
+- `.skip-link` `top` gecisi ve ust menu `padding` gecisi bolum 7.1 kural 1'i
+  ihlal ediyordu; ikisi de kaldirildi.
+- 360 px genisligde ust menu tasiyordu; panel duzeni yeniden kuruldu.
 
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin

@@ -36,12 +36,21 @@ $head = $head ?? [];
 <meta property="og:description" content="<?= Security::e($head['description'] ?? '') ?>">
 <meta property="og:url" content="<?= Security::e($head['canonical'] ?? url('/')) ?>">
 <meta property="og:locale" content="<?= Security::e($_lang ?? 'tr') ?>">
-<?php if (!empty($head['og_image'])): ?>
-<meta property="og:image" content="<?= Security::e($head['og_image']) ?>">
+<?php
+/*
+ * Paylasim gorseli: sayfaya ozel gorsel yoksa varsayilan marka gorseli
+ * kullanilir. Boylece her sayfa paylasimda gorselli cikar.
+ * DOCS.md 17 (yayin oncesi teslim listesi)
+ */
+$ogImage = (string) ($head['og_image'] ?? '');
+if ($ogImage === '') {
+    $ogImage = path_url('/assets/img/og-default.png');
+}
+?>
+<meta property="og:image" content="<?= Security::e($ogImage) ?>">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<?php else: ?>
-<meta name="twitter:card" content="summary">
-<?php endif; ?>
 
 <?php $verification = (string) Settings::get('gsc_verification', ''); ?>
 <?php if ($verification !== ''): ?>

@@ -26,6 +26,12 @@ $router->post('/install', 'Front\InstallController@submit');
 $router->get('/robots.txt', 'Front\RobotsController@index');
 
 // ---------------------------------------------------------------------------
+// Anasayfa  (DOCS.md 4.1, 5)
+// ---------------------------------------------------------------------------
+
+$router->get('/', 'Front\HomeController@index');
+
+// ---------------------------------------------------------------------------
 // Yonetim paneli  (DOCS.md 9)
 // Panel yolu config.php ile degistirilebilir.
 // ---------------------------------------------------------------------------

@@ -26,6 +26,29 @@ test('U-12', 'Router {slug} desenini eslestirir ve dogru isleyiciyi cagirir', fu
     assertSame('Front\HomeController@index', $home['handler']);
 });
 
+test('U-12a2', 'Ozel alt desenli yer tutucular calisir', function (): void {
+    $router = new Router();
+    $router->get('/panel/kullanicilar/{id:[0-9]+}', 'Admin\UserController@edit');
+    $router->get('/{slug:[^/]+}', 'Front\PageController@show');
+
+    $user = $router->match('GET', '/panel/kullanicilar/42');
+    assertTrue($user !== null, 'Sayisal kimlik eslesmeli');
+    assertSame('42', $user['params']['id']);
+    assertSame('Admin\UserController@edit', $user['handler']);
+
+    // Alt desen gercekten kisitlamali: harfli kimlik kullanici rotasiyla
+    // eslesmez ve tek duzey sayfa desenine de uymaz.
+    assertSame(null, $router->match('GET', '/panel/kullanicilar/abc'), 'Harfli kimlik eslesmemeli');
+
+    $page = $router->match('GET', '/edremit-web-tasarim');
+    assertSame('edremit-web-tasarim', $page['params']['slug'], 'Tek duzey slug eslesmeli');
+
+    // Cok duzeyli yol tek duzey desene uymaz.
+    $deep = new Router();
+    $deep->get('/{slug:[^/]+}', 'Front\PageController@show');
+    assertSame(null, $deep->match('GET', '/blog/yazi'), 'Cok duzeyli yol eslesmemeli');
+});
+
 test('U-12b', 'Eslesmeyen yol icin son care isleyicisi dondurulur', function (): void {
     $router = new Router();
     $router->get('/hakkimizda', 'A@b');

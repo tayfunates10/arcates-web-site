@@ -296,6 +296,12 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 
 Toplam açılış 1.4 saniyede tamamlanır. Bu süre uzatılmaz; kullanıcı içeriği beklemiş hissetmemelidir.
 
+**Uygulama notu.** 1.4 saniye *içerik* için geçerlidir: rozet, üç başlık satırı, açıklama ve
+butonlar bölüm 7.2'deki sürelerle en geç 1460 ms'te yerine oturur. Dekoratif şekiller ve
+grafik çizgisi, yine 7.2'deki 950 ms giriş süresi ve yukarıdaki gecikmelerle bir miktar
+sonra tamamlanır; bunlar `aria-hidden` taşıyan süslemelerdir ve kullanıcı onları beklemez.
+Bu iki tablo (7.2 süreleri ve 7.3 gecikmeleri) değiştirilmeden korunur.
+
 ### 7.4 Scroll'a bağlı hareketler
 - **İlerleme çubuğu:** sayfa ilerlemesine göre `scaleX`.
 - **Sabit üst menü:** 24px sonrası küçülür ve alt çizgi kazanır.

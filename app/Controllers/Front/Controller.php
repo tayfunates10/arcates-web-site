@@ -29,6 +29,17 @@ abstract class Controller
     /** On yuz duzeni icinde sablon isler. */
     protected function render(string $template, array $data = [], int $status = 200): Response
     {
+        // Sayfaya ozel paylasim gorseli varsa mutlak adrese cevrilir.
+        if (isset($data['head']['og_image_id']) && (int) $data['head']['og_image_id'] > 0) {
+            $media = \Arcates\Core\Media::find((int) $data['head']['og_image_id']);
+            if ($media !== null) {
+                $variant = $media['variants']['large'] ?? null;
+                $data['head']['og_image'] = path_url(
+                    \Arcates\Core\Media::url((string) ($variant['path'] ?? $media['path']))
+                );
+            }
+        }
+
         $data['head'] = array_merge([
             'title'       => (string) Settings::get('site_name', ''),
             'description' => (string) Settings::get('meta_description', ''),

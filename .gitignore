@@ -1,6 +1,7 @@
 /config/config.php
 /public/uploads/*
 !/public/uploads/.htaccess
+/storage/installed.lock
 /storage/logs/*
 /storage/cache/*
 /storage/backups/*

@@ -14,6 +14,7 @@ use Arcates\Core\Security;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Oturum dogrulanamadi</title>
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 </head>
 <body>
