@@ -69,6 +69,13 @@ $router->post($panel . '/sayfalar/{id:[0-9]+}/sil', 'Admin\PageController@destro
 $router->get($panel . '/menuler', 'Admin\MenuController@index');
 $router->post($panel . '/menuler', 'Admin\MenuController@save');
 
+// Medya
+$router->get($panel . '/medya', 'Admin\MediaController@index');
+$router->post($panel . '/medya/yukle', 'Admin\MediaController@upload');
+$router->get($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@show');
+$router->post($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@update');
+$router->post($panel . '/medya/{id:[0-9]+}/sil', 'Admin\MediaController@destroy');
+
 // Islem gunlugu (yalnizca yonetici)
 $router->get($panel . '/islem-gunlugu', 'Admin\ActivityController@index');
 

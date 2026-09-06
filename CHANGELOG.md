@@ -31,6 +31,13 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
   cozumu ve 404 kaydi.
 - Faz 3: Bakim modu `App::handle` icinde devrede.
 - Faz 3 testleri: U-06, U-09…U-11, U-13, F-01…F-05, F-10.
+- Faz 4: `Media` sinifi — MIME dogrulamali guvenli yukleme, cift uzanti
+  reddi, tahmin edilemez dosya adi, `uploads/YYYY/MM/` klasorlemesi,
+  thumb/medium/large + WebP varyantlari, SVG temizligi, kullanim yeri
+  cozumlemesi ve guvenli silme.
+- Faz 4: Panel medya kitapligi — coklu yukleme, izgara gorunum, alt metni
+  eksik uyari rozeti, varyant tablosu, kullanimdaki dosya icin silme onayi.
+- Faz 4 testleri: U-08, S-05, S-06, F-06, F-07.
 
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
