@@ -43,6 +43,7 @@ Basarisizlikta cikis kodu 1 doner.
 
 ```
 0 3 * * * php /home/kullanici/arcates-web-site/tools/backup.php
+15 3 * * * php /home/kullanici/arcates-web-site/tools/purge_submissions.php
 30 3 * * * php /home/kullanici/arcates-web-site/tools/rollup_visits.php
 ```
 

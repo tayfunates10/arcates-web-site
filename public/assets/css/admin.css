@@ -523,3 +523,9 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
   border: 1px solid var(--line); border-radius: var(--radius-sm);
   font: inherit; font-size: 13px;
 }
+
+.message-body {
+  background: var(--mist-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  font-size: 15px; line-height: 1.7; margin: 0;
+}

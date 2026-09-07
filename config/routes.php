@@ -90,6 +90,14 @@ $router->get($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@show');
 $router->post($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@update');
 $router->post($panel . '/medya/{id:[0-9]+}/sil', 'Admin\MediaController@destroy');
 
+// Form kayitlari
+$router->get($panel . '/formlar', 'Admin\SubmissionController@index');
+$router->get($panel . '/formlar/csv', 'Admin\SubmissionController@export');
+$router->post($panel . '/formlar/temizle', 'Admin\SubmissionController@purge');
+$router->get($panel . '/formlar/{id:[0-9]+}', 'Admin\SubmissionController@show');
+$router->post($panel . '/formlar/{id:[0-9]+}', 'Admin\SubmissionController@update');
+$router->post($panel . '/formlar/{id:[0-9]+}/sil', 'Admin\SubmissionController@destroy');
+
 // Yonlendirmeler ve 404
 $router->get($panel . '/yonlendirmeler', 'Admin\RedirectController@index');
 $router->post($panel . '/yonlendirmeler', 'Admin\RedirectController@store');
@@ -104,6 +112,14 @@ $router->get($panel . '/seo/sitemap', 'Admin\SeoController@sitemap');
 
 // Islem gunlugu (yalnizca yonetici)
 $router->get($panel . '/islem-gunlugu', 'Admin\ActivityController@index');
+
+// ---------------------------------------------------------------------------
+// Teklif formu ve tesekkur sayfasi  (DOCS.md 12)
+// ---------------------------------------------------------------------------
+
+$router->get('/iletisim', 'Front\ContactController@show');
+$router->post('/iletisim', 'Front\ContactController@submit');
+$router->get('/tesekkurler', 'Front\ContactController@thanks');
 
 // ---------------------------------------------------------------------------
 // On yuz sayfalari  (DOCS.md 4.1 - 4.4)

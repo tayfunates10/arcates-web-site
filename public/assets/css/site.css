@@ -1058,3 +1058,63 @@ html.js .coast__dot.is-lit text { opacity: 1; }
   .wrap { width: auto; }
   a[href^="/"]::after { content: " (" attr(href) ")"; font-size: .85em; color: #555; }
 }
+
+/* ==========================================================================
+   Bolum 16: Teklif formu ve tesekkur sayfasi
+   DOCS.md 12, 10.8, 10.9
+   ========================================================================== */
+
+.section--form { background: var(--mist-2); }
+
+.form { display: grid; gap: 4px; }
+.form__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 20px; }
+
+.form .field { margin-bottom: 18px; }
+.form .field label { display: block; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.form .field input[type="text"],
+.form .field input[type="tel"],
+.form .field input[type="email"],
+.form .field select,
+.form .field textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: 16px;
+  background: var(--white);
+  color: var(--navy);
+}
+.form .field textarea { min-height: 150px; resize: vertical; line-height: 1.65; }
+.form .field input:focus, .form .field select:focus, .form .field textarea:focus { border-color: var(--blue-bright); }
+
+.form .field--check label { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; font-size: 15px; }
+.form .field--check input { width: auto; margin-top: 3px; flex: 0 0 auto; }
+
+.form__actions { margin-top: 6px; }
+
+/*
+ * Honeypot alani.
+ *
+ * `display:none` bazi botlar tarafindan taninir; alan gorunur akistan
+ * cikarilir ama DOM'da normal bir alan gibi durur. `aria-hidden` ve
+ * `tabindex="-1"` sayesinde ekran okuyucular ve klavye kullanicilari
+ * alana ulasmaz.  DOCS.md 10.8
+ */
+.form__trap {
+  position: absolute;
+  inset-inline-start: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.thanks { text-align: center; display: grid; gap: 14px; justify-items: center; padding: 40px 0; }
+.thanks__mark {
+  width: 74px; height: 74px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(37, 201, 137, .14); color: #12805a;
+}
+.thanks__mark svg { width: 34px; height: 34px; }
+
+.section__more { margin-top: 32px; }

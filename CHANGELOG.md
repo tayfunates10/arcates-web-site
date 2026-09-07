@@ -85,6 +85,18 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - Dil onekli adresler icin oneksiz yonlendirme kaydi da cozulur.
 - Faz 8 testleri: F-11, F-12, S-18 ve yonlendirme zinciri denetimleri.
 
+### Eklendi (faz 9)
+- Teklif formu: ad, telefon, e-posta, hizmet, mesaj, KVKK onayi, honeypot,
+  zaman damgasi ve CSRF token.
+- Spam korumasi: honeypot sessiz reddi, 3 saniye alt siniri, IP basina
+  saatlik gonderim siniri, sunucu tarafi dogrulama.
+- `source_url`, `referrer`, UTM, dil, IP ve tarayici otomatik saklanir.
+- Tesekkur sayfasi ayri adreste ve `noindex`.
+- Panel form ekrani: durum etiketleri, not alani, kaynak sayfa, donusum
+  raporu, kaynak dagilimi, CSV disa aktarma, saklama suresi temizligi.
+- `tools/purge_submissions.php` gunluk gorevi.
+- Faz 9 testleri: F-08, F-09, S-14, S-15, S-16, E-06.
+
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
   `{slug}` eslesmiyordu.
