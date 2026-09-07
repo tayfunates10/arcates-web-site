@@ -33,14 +33,12 @@ test('S-07', 'uploads klasöründe PHP çalıştırılması engellenir', functio
 });
 
 test('S-11', 'Yapılandırma ve kaynak klasörleri web kökünün dışındadır', function (): void {
-    // Alan adi document root olarak public/ klasorunu gosterir. DOCS.md 13
     foreach (['config', 'app', 'storage', 'views', 'db', 'tests', 'tools', 'lang'] as $dir) {
         assertFalse(
             is_dir(ARC_ROOT . '/public/' . $dir),
             "{$dir} klasörü public/ altında olmamalı"
         );
 
-        // Hosting web kokunu disari alamiyorsa ikinci kat koruma bulunur.
         assertTrue(
             is_file(ARC_ROOT . '/' . $dir . '/.htaccess'),
             "{$dir}/.htaccess ikinci kat koruma olarak bulunmalı"
@@ -69,29 +67,48 @@ test('S-12', 'Sürüm kontrolü klasörü web kökünün dışında', function (
 test('S-13', 'Kurulum tamamlandıktan sonra /install kapanır', function (): void {
     arc_test_config();
 
-    $lock       = ARC_ROOT . '/storage/installed.lock';
-    $hadLock    = is_file($lock);
-    $controller = new Arcates\Controllers\Front\InstallController();
+    $lock    = ARC_ROOT . '/storage/installed.lock';
+    $hadLock = is_file($lock);
+    $oldBody = $hadLock ? (string) file_get_contents($lock) : null;
 
-    if (!$hadLock) {
-        // Kilit dosyasi kurulum tamamlandiginda yazilir. DOCS.md 13 adim 4
-        skip('installed.lock yok; kurulum akışı henüz çalıştırılmadı.');
+    if (!is_dir(dirname($lock))) {
+        mkdir(dirname($lock), 0775, true);
     }
+    file_put_contents($lock, "test-installed\n");
 
-    $response = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
-    assertSame(404, $response->status(), 'Kurulum kapalı olmalı');
+    try {
+        $controller = new Arcates\Controllers\Front\InstallController();
+        $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
+        assertSame(404, $response->status(), 'Kurulum kapalı olmalı');
+    } finally {
+        if ($hadLock) {
+            file_put_contents($lock, (string) $oldBody);
+        } else {
+            @unlink($lock);
+        }
+    }
 });
 
 test('S-13b', 'Kurulum kilidi olmadan panel kurulum sihirbazına yönlenir', function (): void {
     arc_test_config();
 
-    if (Arcates\Core\App::isInstalled()) {
-        skip('Bu ortamda kurulum tamamlanmış.');
+    $lock    = ARC_ROOT . '/storage/installed.lock';
+    $hadLock = is_file($lock);
+    $oldBody = $hadLock ? (string) file_get_contents($lock) : null;
+
+    if ($hadLock) {
+        @unlink($lock);
     }
 
-    $controller = new Arcates\Controllers\Front\InstallController();
-    $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
+    try {
+        $controller = new Arcates\Controllers\Front\InstallController();
+        $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
 
-    assertSame(200, $response->status(), 'Kurulum ekranı açık olmalı');
-    assertContains('Kurulum', $response->body(), 'Kurulum başlığı görünmeli');
+        assertSame(200, $response->status(), 'Kurulum ekranı açık olmalı');
+        assertContains('Kurulum', $response->body(), 'Kurulum başlığı görünmeli');
+    } finally {
+        if ($hadLock) {
+            file_put_contents($lock, (string) $oldBody);
+        }
+    }
 });
