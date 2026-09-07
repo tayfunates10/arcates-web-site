@@ -514,3 +514,12 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
 
 .issues--compact { gap: 5px; }
 .issues--compact .issues__item { padding: 6px 9px; font-size: 12.5px; }
+
+/* --- Satir ici form (404 -> yonlendirme) --------------------------------- */
+
+.inline-form { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; }
+.inline-form input {
+  width: 100%; min-width: 160px; padding: 7px 10px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  font: inherit; font-size: 13px;
+}

@@ -78,6 +78,13 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - `public/.htaccess` icinde `www` kanoniklestirmesi; tercih tek yonde sabit.
 - Faz 7 testleri: U-14, F-13, O-01…O-08.
 
+### Eklendi (faz 8)
+- Panel yonlendirme ekrani: liste, elle ekleme, dongu kontrolu, silme.
+- 404 listesi ve tek tikla yonlendirmeye donusturme; cevrilen kayit
+  listeden duser ve isabet sayaci islemeye baslar.
+- Dil onekli adresler icin oneksiz yonlendirme kaydi da cozulur.
+- Faz 8 testleri: F-11, F-12, S-18 ve yonlendirme zinciri denetimleri.
+
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
   `{slug}` eslesmiyordu.

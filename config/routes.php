@@ -90,6 +90,13 @@ $router->get($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@show');
 $router->post($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@update');
 $router->post($panel . '/medya/{id:[0-9]+}/sil', 'Admin\MediaController@destroy');
 
+// Yonlendirmeler ve 404
+$router->get($panel . '/yonlendirmeler', 'Admin\RedirectController@index');
+$router->post($panel . '/yonlendirmeler', 'Admin\RedirectController@store');
+$router->post($panel . '/yonlendirmeler/{id:[0-9]+}/sil', 'Admin\RedirectController@destroy');
+$router->post($panel . '/yonlendirmeler/404/{id:[0-9]+}', 'Admin\RedirectController@convert');
+$router->post($panel . '/yonlendirmeler/404/{id:[0-9]+}/sil', 'Admin\RedirectController@forget');
+
 // SEO
 $router->get($panel . '/seo', 'Admin\SeoController@index');
 $router->post($panel . '/seo', 'Admin\SeoController@update');
