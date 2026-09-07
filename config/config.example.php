@@ -14,7 +14,7 @@ return [
 
     'app' => [
         // Sondaki egik cizgi olmadan tam adres.
-        'base_url'   => 'https://arcates.com',
+        'base_url'   => 'https://arcatesyazilim.com',
         // 'production' veya 'local'
         'env'        => 'production',
         // Canlida daima false. DOCS.md 10.7
@@ -43,10 +43,10 @@ return [
     'mail' => [
         // 'mail' (PHP mail) veya 'log' (storage/logs/mail.log)
         'method'    => 'mail',
-        'from'      => 'site@arcates.com',
+        'from'      => 'site@arcatesyazilim.com',
         'from_name' => 'Arcates Yazilim',
         // Form bildirimlerinin gidecegi adres
-        'to'        => 'info@arcates.com',
+        'to'        => 'info@arcatesyazilim.com',
     ],
 
     'security' => [

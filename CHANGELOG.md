@@ -205,3 +205,12 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
   tüm dilleri veriyor.
 - Yeni testler F-P16-a…d. Çok dilli davranışı sınayan mevcut testler (F-04,
   F-05, F-P8-c) ihtiyaç duydukları dili `arc_activate_langs()` ile açıyor.
+
+### Eklendi (işletme bilgileri)
+- Gerçek NAP bilgileri varsayılanlara yazıldı: adres (Tuzcumurat Mah. 27016 Sk.
+  Uysal Apt. No: 5 Kat: 3 Daire: 8, Edremit / Balıkesir), telefon
+  (+90 545 946 50 73) ve e-posta (info@arcatesyazilim.com). Telefon uluslararası
+  biçimde saklanıyor; `tel:` bağlantısı ve yapısal veri bu biçimi bekliyor.
+- `config/config.example.php` içindeki örnek alan adı ve e-posta adresleri
+  `arcatesyazilim.com` olarak güncellendi.
+- Posta kodu hâlâ boş; işletme girecek.
