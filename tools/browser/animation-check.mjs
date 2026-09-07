@@ -15,7 +15,23 @@
  * Cikis kodu: tum denetimler gecerse 0, aksi halde 1.
  */
 
-import { chromium } from 'playwright';
+/*
+ * Playwright kurulu degilse ya da genel (global) kurulmussa modul cozumu
+ * basarisiz olabilir. PLAYWRIGHT_PATH ile modulun tam yolu verilebilir.
+ * Ornek:
+ *   PLAYWRIGHT_PATH=/opt/node22/lib/node_modules/playwright/index.mjs \
+ *   CHROMIUM_PATH=/opt/pw-browsers/chromium \
+ *   node tools/browser/animation-check.mjs
+ */
+let chromium;
+try {
+  ({ chromium } = await import(process.env.PLAYWRIGHT_PATH || 'playwright'));
+} catch (error) {
+  console.error('Playwright bulunamadi. Kurun ya da PLAYWRIGHT_PATH verin.');
+  console.error(String(error.message || error));
+  process.exit(2);
+}
+
 const URL = process.argv[2] || 'http://127.0.0.1:8321/';
 const launchOptions = process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {};
 const browser = await chromium.launch(launchOptions);

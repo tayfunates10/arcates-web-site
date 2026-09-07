@@ -28,16 +28,42 @@ Composer, npm veya derleme adimi yoktur.
 4. Tarayicidan `/install` adresini acin; baglanti testi yapilir, `db/schema.sql`
    uygulanir, ilk yonetici olusturulur.
 5. `storage/` ve `public/uploads/` klasorlerini yazilabilir yapin.
+6. Baslangic icerigini yazin: `php tools/seed_content.php`
+   (bolum 4'teki URL haritasinin tamami, ilce sayfalari, referans ve SSS
+   ornekleri. Var olan kayitlarin uzerine yazmaz.)
+7. Yayina cikmadan once teslim listesini denetleyin:
+   `php tools/preflight.php`
 
 Kurulum bitince `storage/installed.lock` yazilir ve `/install` kapanir.
 
 ## Testler
 
 ```
-php tests/run.php
+php tests/run.php                 # tum gruplar
+php tests/run.php unit            # yalnizca birim testleri
 ```
 
-Basarisizlikta cikis kodu 1 doner.
+Basarisizlikta cikis kodu 1 doner. Veritabani gerektiren testler icin
+`ARC_TEST_DB_NAME` ve kardes ortam degiskenleri tanimlanir; tanimli degilse
+o testler atlanir ve surec kirmizi olmaz.
+
+Tarayicida calisan animasyon denetimleri istege baglidir:
+
+```
+php -S 127.0.0.1:8321 -t public &
+node tools/browser/animation-check.mjs
+```
+
+## Araclar
+
+| Arac | Isi |
+|------|-----|
+| `tools/migrate.php` | Bekleyen sema goclerini uygular |
+| `tools/seed_content.php` | Baslangic icerigini yazar |
+| `tools/preflight.php` | Yayin oncesi teslim listesini denetler |
+| `tools/backup.php` | Veritabani yedegi alir |
+| `tools/rollup_visits.php` | Eski ziyaretleri gunluk tabloya toplar |
+| `tools/purge_submissions.php` | Saklama suresi dolan form kayitlarini siler |
 
 ## Zamanlanmis gorevler
 

@@ -117,6 +117,21 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - `tools/backup.php` ve `tools/rollup_visits.php` gunluk gorevleri.
 - Faz 11 testleri: U-15 bot ayrimi, F-19 yedek/geri yukleme, toplama.
 
+### Eklendi (faz 12)
+- `db/seed/` altinda baslangic icerigi: bolum 4'teki URL haritasinin tamami
+  (8 ana sayfa, 6 hizmet, 8 ilce, 6 sektor), 8 referans ve 23 SSS kaydi.
+- Ilce sayfalari bolum 4.7'ye uygun: her biri 500+ kelime ozgun metin,
+  kendi ilcesine ait referans, ilceye ozel SSS. Sayfalar arasi en yuksek
+  ortusme 0.28 (esik 0.70).
+- `tools/seed_content.php`: icerigi yazar, var olan kayitlarin uzerine
+  yazmaz; `--dry` ve `--force` secenekleri.
+- `tools/preflight.php`: bolum 17'deki yayin oncesi teslim listesinin
+  makine tarafindan denetlenebilir maddelerini kontrol eder.
+- `tools/browser/animation-check.mjs` tasinabilir hale getirildi
+  (`PLAYWRIGHT_PATH`, `CHROMIUM_PATH`).
+- Faz 12 testleri: URL haritasi butunlugu, ilce kelime ve benzerlik
+  kurallari, referans/SSS kapsamasi, tohum iceriginin guvenligi.
+
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
   `{slug}` eslesmiyordu.
