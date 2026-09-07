@@ -7,6 +7,18 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
+# www tercihi tek yonde sabit: www.alanadi.com -> alanadi.com
+# Ters tercihi kullanacaksaniz bu blogu kapatip asagidakini acin.
+# DOCS.md 14.8 (O-08), 17 (yayin oncesi teslim listesi)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Ters tercih (alanadi.com -> www.alanadi.com):
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteCond %{HTTP_HOST} !^localhost [NC]
+# RewriteCond %{HTTP_HOST} !^127\. [NC]
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
 # Tek giris noktasi
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

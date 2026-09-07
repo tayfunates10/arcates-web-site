@@ -24,6 +24,7 @@ $router->post('/install', 'Front\InstallController@submit');
 // ---------------------------------------------------------------------------
 
 $router->get('/robots.txt', 'Front\RobotsController@index');
+$router->get('/sitemap.xml', 'Front\SitemapController@index');
 
 // ---------------------------------------------------------------------------
 // Anasayfa  (DOCS.md 4.1, 5)
@@ -88,6 +89,11 @@ $router->post($panel . '/medya/yukle', 'Admin\MediaController@upload');
 $router->get($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@show');
 $router->post($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@update');
 $router->post($panel . '/medya/{id:[0-9]+}/sil', 'Admin\MediaController@destroy');
+
+// SEO
+$router->get($panel . '/seo', 'Admin\SeoController@index');
+$router->post($panel . '/seo', 'Admin\SeoController@update');
+$router->get($panel . '/seo/sitemap', 'Admin\SeoController@sitemap');
 
 // Islem gunlugu (yalnizca yonetici)
 $router->get($panel . '/islem-gunlugu', 'Admin\ActivityController@index');

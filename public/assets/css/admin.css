@@ -502,3 +502,15 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
 }
 .hero-preview__btn--ghost { background: var(--white); color: var(--blue); border: 1px solid var(--line); }
 .hero-preview__btn:empty { display: none; }
+
+/* --- SEO paneli ---------------------------------------------------------- */
+
+.code-block {
+  background: var(--navy); color: rgba(255, 255, 255, .9);
+  padding: 14px 16px; border-radius: var(--radius-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 0 0 14px;
+}
+
+.issues--compact { gap: 5px; }
+.issues--compact .issues__item { padding: 6px 9px; font-size: 12.5px; }

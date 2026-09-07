@@ -70,6 +70,14 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
   tasinabilir, JavaScript kapaliyken sayi alanlarindan girilebilir.
 - Faz 6 testleri: F-14, F-15, F-16 panel tarafi.
 
+### Eklendi (faz 7)
+- `sitemap.xml` dinamik uretimi: yalnizca yayinlanmis ve dizine girmesine
+  izin verilen icerik, `lastmod` alani, `xhtml:link` ile dil karsiliklari.
+- Panel SEO ekrani: `robots.txt` duzenleyici, sitemap durumu, varsayilan
+  meta sablonu, Search Console alani, tum sayfalarin meta durumu tablosu.
+- `public/.htaccess` icinde `www` kanoniklestirmesi; tercih tek yonde sabit.
+- Faz 7 testleri: U-14, F-13, O-01…O-08.
+
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
   `{slug}` eslesmiyordu.
