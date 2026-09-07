@@ -131,7 +131,7 @@ final class Settings
             'site_name'          => 'Arcates Yazılım',
             'site_tagline'       => 'Edremit Körfezi için web tasarım ve yazılım',
             'nap_name'           => 'Arcates Yazılım',
-            'nap_street'         => 'Tuzcumurat Mah. 27016 Sk. Uysal Apt. No: 5 Kat: 3 Daire: 8',
+            'nap_street'         => 'Tuzcumurat Mah. 27016 Sk. No: 5',
             'nap_district'       => 'Edremit',
             'nap_city'           => 'Balıkesir',
             'nap_postcode'       => '',
