@@ -33,14 +33,12 @@ test('S-07', 'uploads klasöründe PHP çalıştırılması engellenir', functio
 });
 
 test('S-11', 'Yapılandırma ve kaynak klasörleri web kökünün dışındadır', function (): void {
-    // Alan adi document root olarak public/ klasorunu gosterir. DOCS.md 13
     foreach (['config', 'app', 'storage', 'views', 'db', 'tests', 'tools', 'lang'] as $dir) {
         assertFalse(
             is_dir(ARC_ROOT . '/public/' . $dir),
             "{$dir} klasörü public/ altında olmamalı"
         );
 
-        // Hosting web kokunu disari alamiyorsa ikinci kat koruma bulunur.
         assertTrue(
             is_file(ARC_ROOT . '/' . $dir . '/.htaccess'),
             "{$dir}/.htaccess ikinci kat koruma olarak bulunmalı"
@@ -66,32 +64,69 @@ test('S-12', 'Sürüm kontrolü klasörü web kökünün dışında', function (
     assertTrue(is_dir(ARC_ROOT . '/.git') || getenv('CI') !== false, 'Depo kökünde .git beklenir');
 });
 
+/**
+ * Kurulum durum testleri icin config.php ve installed.lock dosyalarini gecici
+ * olarak istenen duruma getirir; test sonunda calisma alanini aynen geri kurar.
+ */
+function arc_with_install_state(bool $installed, callable $fn): void
+{
+    $config      = ARC_ROOT . '/config/config.php';
+    $configSeed  = ARC_ROOT . '/config/config.example.php';
+    $lock        = ARC_ROOT . '/storage/installed.lock';
+    $hadConfig   = is_file($config);
+    $configBody  = $hadConfig ? (string) file_get_contents($config) : null;
+    $hadLock     = is_file($lock);
+    $lockBody    = $hadLock ? (string) file_get_contents($lock) : null;
+
+    if (!$hadConfig) {
+        copy($configSeed, $config);
+    }
+
+    if ($installed) {
+        file_put_contents($lock, "test-installed\n");
+    } else {
+        @unlink($lock);
+    }
+
+    try {
+        $fn();
+    } finally {
+        if ($hadLock) {
+            file_put_contents($lock, (string) $lockBody);
+        } else {
+            @unlink($lock);
+        }
+
+        if ($hadConfig) {
+            file_put_contents($config, (string) $configBody);
+        } else {
+            @unlink($config);
+        }
+    }
+}
+
 test('S-13', 'Kurulum tamamlandıktan sonra /install kapanır', function (): void {
     arc_test_config();
 
-    $lock       = ARC_ROOT . '/storage/installed.lock';
-    $hadLock    = is_file($lock);
-    $controller = new Arcates\Controllers\Front\InstallController();
+    arc_with_install_state(true, function (): void {
+        assertTrue(Arcates\Core\App::isInstalled(), 'Config ve kilit varken uygulama kurulmuş sayılmalı');
 
-    if (!$hadLock) {
-        // Kilit dosyasi kurulum tamamlandiginda yazilir. DOCS.md 13 adim 4
-        skip('installed.lock yok; kurulum akışı henüz çalıştırılmadı.');
-    }
-
-    $response = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
-    assertSame(404, $response->status(), 'Kurulum kapalı olmalı');
+        $controller = new Arcates\Controllers\Front\InstallController();
+        $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
+        assertSame(404, $response->status(), 'Kurulum kapalı olmalı');
+    });
 });
 
 test('S-13b', 'Kurulum kilidi olmadan panel kurulum sihirbazına yönlenir', function (): void {
     arc_test_config();
 
-    if (Arcates\Core\App::isInstalled()) {
-        skip('Bu ortamda kurulum tamamlanmış.');
-    }
+    arc_with_install_state(false, function (): void {
+        assertFalse(Arcates\Core\App::isInstalled(), 'Kilit yokken uygulama kurulmuş sayılmamalı');
 
-    $controller = new Arcates\Controllers\Front\InstallController();
-    $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
+        $controller = new Arcates\Controllers\Front\InstallController();
+        $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
 
-    assertSame(200, $response->status(), 'Kurulum ekranı açık olmalı');
-    assertContains('Kurulum', $response->body(), 'Kurulum başlığı görünmeli');
+        assertSame(200, $response->status(), 'Kurulum ekranı açık olmalı');
+        assertContains('Kurulum', $response->body(), 'Kurulum başlığı görünmeli');
+    });
 });
