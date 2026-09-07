@@ -97,6 +97,16 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - `tools/purge_submissions.php` gunluk gorevi.
 - Faz 9 testleri: F-08, F-09, S-14, S-15, S-16, E-06.
 
+### Eklendi (faz 10)
+- Referanslar: liste, detay, galeri, ilceye gore ilgili calismalar,
+  `CreativeWork` semasi; panel ekrani ile musteri adi, sektor, ilce, canli
+  site linki, gorseller ve yapilan isler.
+- Blog: liste, kategori suzgeci, sayfalama, yazi sayfasi, `Article` semasi;
+  ileri tarihli yayin tarihi gelene kadar gorunmez ve haritaya girmez.
+  Slug degisiminde otomatik 301.
+- SSS: `/sss` sayfasi, sayfa ve anasayfa atamalari, `FAQPage` semasi.
+- Faz 10 testleri: referans, blog ve SSS davranis testleri.
+
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
   `{slug}` eslesmiyordu.

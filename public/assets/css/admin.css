@@ -529,3 +529,19 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
   border-radius: var(--radius-sm); padding: 14px 16px;
   font-size: 15px; line-height: 1.7; margin: 0;
 }
+
+/* --- Onay kutusu izgarasi ------------------------------------------------ */
+
+.fieldset { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; margin: 0 0 18px; }
+.fieldset legend { font-family: var(--font-head); font-weight: 600; font-size: 14px; padding: 0 6px; }
+
+.checkbox-grid {
+  display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  max-height: 280px; overflow-y: auto;
+}
+.checkbox-grid label {
+  display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 400;
+  padding: 5px 7px; border-radius: 6px;
+}
+.checkbox-grid label:hover { background: var(--mist-2); }
+.checkbox-grid input { width: auto; flex: 0 0 auto; }

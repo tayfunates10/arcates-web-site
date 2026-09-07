@@ -83,6 +83,30 @@ $router->post($panel . '/anasayfa/coast/ilceler', 'Admin\HomeController@saveDist
 $router->get($panel . '/menuler', 'Admin\MenuController@index');
 $router->post($panel . '/menuler', 'Admin\MenuController@save');
 
+// Referanslar
+$router->get($panel . '/referanslar', 'Admin\ProjectController@index');
+$router->get($panel . '/referanslar/yeni', 'Admin\ProjectController@create');
+$router->post($panel . '/referanslar/yeni', 'Admin\ProjectController@store');
+$router->get($panel . '/referanslar/{id:[0-9]+}', 'Admin\ProjectController@edit');
+$router->post($panel . '/referanslar/{id:[0-9]+}', 'Admin\ProjectController@store');
+$router->post($panel . '/referanslar/{id:[0-9]+}/sil', 'Admin\ProjectController@destroy');
+
+// Blog
+$router->get($panel . '/blog', 'Admin\PostController@index');
+$router->get($panel . '/blog/yeni', 'Admin\PostController@create');
+$router->post($panel . '/blog/yeni', 'Admin\PostController@store');
+$router->get($panel . '/blog/{id:[0-9]+}', 'Admin\PostController@edit');
+$router->post($panel . '/blog/{id:[0-9]+}', 'Admin\PostController@store');
+$router->post($panel . '/blog/{id:[0-9]+}/sil', 'Admin\PostController@destroy');
+
+// SSS
+$router->get($panel . '/sss', 'Admin\FaqController@index');
+$router->get($panel . '/sss/yeni', 'Admin\FaqController@create');
+$router->post($panel . '/sss/yeni', 'Admin\FaqController@store');
+$router->get($panel . '/sss/{id:[0-9]+}', 'Admin\FaqController@edit');
+$router->post($panel . '/sss/{id:[0-9]+}', 'Admin\FaqController@store');
+$router->post($panel . '/sss/{id:[0-9]+}/sil', 'Admin\FaqController@destroy');
+
 // Medya
 $router->get($panel . '/medya', 'Admin\MediaController@index');
 $router->post($panel . '/medya/yukle', 'Admin\MediaController@upload');
@@ -112,6 +136,18 @@ $router->get($panel . '/seo/sitemap', 'Admin\SeoController@sitemap');
 
 // Islem gunlugu (yalnizca yonetici)
 $router->get($panel . '/islem-gunlugu', 'Admin\ActivityController@index');
+
+// ---------------------------------------------------------------------------
+// Referanslar, blog ve SSS  (DOCS.md 4.1)
+// ---------------------------------------------------------------------------
+
+$router->get('/referanslar', 'Front\ProjectController@index');
+$router->get('/referanslar/{slug:[^/]+}', 'Front\ProjectController@show');
+
+$router->get('/blog', 'Front\PostController@index');
+$router->get('/blog/{slug:[^/]+}', 'Front\PostController@show');
+
+$router->get('/sss', 'Front\FaqController@index');
 
 // ---------------------------------------------------------------------------
 // Teklif formu ve tesekkur sayfasi  (DOCS.md 12)
