@@ -16,7 +16,7 @@ $message = $message ?? 'Sitemiz kısa süreliğine bakımda.';
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Bakım çalışması</title>
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 </head>
 <body>

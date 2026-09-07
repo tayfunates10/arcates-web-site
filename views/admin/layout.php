@@ -28,7 +28,7 @@ $_user   = $_user ?? null;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title><?= Security::e($title !== '' ? $title . ' — Arcates Panel' : 'Arcates Panel') ?></title>
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin.css')) ?>">
 </head>
 <body class="admin">
@@ -39,8 +39,8 @@ $_user   = $_user ?? null;
 
   <aside class="admin__side">
     <a class="admin__brand" href="<?= Security::e(admin_url()) ?>">
-      <span class="admin__mark" aria-hidden="true"></span>
-      <span>Arcates</span>
+      <img class="admin__logo" src="/assets/img/logo-wordmark.png" alt="Arcates Yazılım"
+           width="158" height="53" decoding="async">
     </a>
 
     <nav class="admin__nav" aria-label="Panel menusu">

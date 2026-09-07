@@ -90,6 +90,8 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
   overflow-y: auto;
 }
 
+.admin__logo { display: block; width: 158px; height: auto; }
+
 .admin__brand {
   display: flex; align-items: center; gap: 10px;
   color: var(--white); text-decoration: none;

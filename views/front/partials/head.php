@@ -57,7 +57,7 @@ if ($ogImage === '') {
 <meta name="google-site-verification" content="<?= Security::e($verification) ?>">
 <?php endif; ?>
 
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 
 <?php /* Google Fonts — preconnect + display=swap. DOCS.md 2, 6 */ ?>

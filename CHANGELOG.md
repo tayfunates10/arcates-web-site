@@ -178,3 +178,19 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 ### Düzeltildi
 - Türkçe yazım turunda diş hekimliği bağlamındaki üç yer "dış" olmuştu:
   "Örnek Diş Polikliniği", "Edremit diş kliniği", "diş hekimi".
+
+### Eklendi (blog içeriği ve marka görselleri)
+- `db/seed/posts.php`: altı başlangıç blog yazısı — yerel SEO ve İşletme
+  Profili, site hızı ve mobil kullanım, form dönüşümü, çoklu dilde yayın,
+  yedekleme ve bakım, sezonluk içerik takvimi. Her biri 300+ kelime, kendi
+  kategorisi, özeti, meta alanları ve iç linkleriyle.
+- `tools/seed_content.php` blog yazılarını da yazıyor; var olan kaydın
+  üzerine yazmıyor. Kapak görseli bilerek boş bırakıldı — işletme kendi
+  fotoğrafını Medya ekranından yükleyip yazıya bağlar.
+- Marka görselleri: `logo-mark.png` (üst menü işareti), `logo-wordmark.png`
+  (alt bilgi ve panel, saydam zeminli), `favicon-32.png`,
+  `apple-touch-icon.png` ve yazılı logoyla üretilmiş `og-default.png`.
+  Yer tutucu `favicon.svg` kaldırıldı, tüm şablonlar PNG faviconu gösteriyor.
+- Yeni testler F-P15-a…e: blog tohumunun kelime sayısı, meta alanları, iç
+  link ve güvenli işaretleme denetimi; marka görsellerinin varlığı ve
+  şablonlarda bağlanmış olması.

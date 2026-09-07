@@ -28,6 +28,7 @@ use Arcates\Core\Security;
 use Arcates\Core\Seeder;
 use Arcates\Models\Faq;
 use Arcates\Models\Page;
+use Arcates\Models\Post;
 use Arcates\Models\Project;
 
 Config::load();
@@ -165,6 +166,46 @@ foreach (require ARC_ROOT . '/db/seed/projects.php' as $item) {
     echo '  + ' . $item['district'] . ' — ' . $item['title'] . "\n";
 }
 
+// --- Blog yazilari ----------------------------------------------------------
+
+echo "\nBlog yazıları:\n";
+$postsAdded = 0;
+foreach (require ARC_ROOT . '/db/seed/posts.php' as $item) {
+    $exists = $db->first(
+        'SELECT post_id FROM post_translations WHERE lang = :lang AND slug = :slug',
+        [':lang' => 'tr', ':slug' => $item['slug']]
+    );
+
+    if ($exists !== null && !$force) {
+        continue;
+    }
+
+    if (!$dry) {
+        // Kapak gorseli bilerek bos; isletme kendi fotografini Medya
+        // ekranindan yukleyip yaziya bagliyor.
+        Post::save(
+            [
+                'category'     => $item['category'],
+                'status'       => 'published',
+                'published_at' => $item['published_at'],
+            ],
+            ['tr' => [
+                'title'            => $item['title'],
+                'slug'             => $item['slug'],
+                'excerpt'          => $item['excerpt'],
+                'content'          => $item['content'],
+                'meta_title'       => $item['meta_title'],
+                'meta_description' => $item['meta_description'],
+                'robots'           => 'index,follow',
+            ]],
+            $exists !== null ? (int) $exists['post_id'] : null
+        );
+    }
+
+    $postsAdded++;
+    echo '  + ' . $item['category'] . ' — ' . $item['title'] . "\n";
+}
+
 // --- SSS --------------------------------------------------------------------
 
 echo "\nSSS kayıtları:\n";
@@ -230,11 +271,12 @@ if (!$dry) {
 
 echo "\n";
 echo $dry ? "Kuru çalışma; hiçbir kayıt yazılmadı.\n" : "Tamamlandı.\n";
-printf("Sayfa: %d eklendi, %d atlandı. Referans: %d. SSS: %d.\n", $added, $skipped, $projectsAdded, $faqsAdded);
+printf("Sayfa: %d eklendi, %d atlandı. Örnek site: %d. Blog: %d. SSS: %d.\n", $added, $skipped, $projectsAdded, $postsAdded, $faqsAdded);
 
 if (!$dry) {
     Logger::info('Başlangıç içeriği yazıldı', [
-        'sayfa' => $added, 'referans' => $projectsAdded, 'sss' => $faqsAdded,
+        'sayfa' => $added, 'ornek_site' => $projectsAdded,
+        'blog' => $postsAdded, 'sss' => $faqsAdded,
     ]);
 }
 

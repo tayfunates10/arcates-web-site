@@ -327,10 +327,11 @@ img[width][height] { height: auto; }
 
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--navy); }
 .brand__mark {
-  width: 30px; height: 30px; border-radius: 9px;
-  background: linear-gradient(135deg, var(--blue-bright), var(--cyan));
-  box-shadow: 0 6px 16px rgba(28, 123, 242, .30);
-  display: inline-block;
+  width: 34px; height: 34px; border-radius: 10px;
+  /* Logo koyu zemin icin tasarlandi; acik ust menude kendi plakasiyla durur. */
+  background: #000 url('../img/logo-mark.png') center / cover no-repeat;
+  box-shadow: 0 6px 16px rgba(6, 34, 68, .22);
+  display: inline-block; flex: none;
 }
 .brand__name { font-family: var(--font-head); font-weight: 700; font-size: 19px; letter-spacing: -.02em; }
 
@@ -732,6 +733,7 @@ img[width][height] { height: auto; }
   gap: 36px;
 }
 .site-foot .brand__name { color: var(--white); font-size: 20px; }
+.site-foot__logo { display: block; width: 208px; height: auto; margin-bottom: 4px; }
 .site-foot__about { margin: 12px 0 0; font-size: 14px; max-width: 42ch; }
 .site-foot__title { font-family: var(--font-head); font-size: 14px; color: var(--white); margin: 0 0 14px; letter-spacing: .02em; }
 .site-foot__title--sub { margin-top: 22px; }

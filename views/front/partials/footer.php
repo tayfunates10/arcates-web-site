@@ -20,7 +20,8 @@ $legal         = $footerContent['legal'] ?? [];
   <div class="wrap site-foot__inner">
 
     <div class="site-foot__brand">
-      <span class="brand__name"><?= Security::e($_site['name'] ?? '') ?></span>
+      <img class="site-foot__logo" src="<?= Security::e(asset('img/logo-wordmark.png')) ?>"
+           alt="<?= Security::e($_site['name'] ?? '') ?>" width="208" height="70" loading="lazy" decoding="async">
       <?php if (($footerContent['about'] ?? '') !== ''): ?>
         <p class="site-foot__about"><?= Security::e($footerContent['about']) ?></p>
       <?php endif; ?>

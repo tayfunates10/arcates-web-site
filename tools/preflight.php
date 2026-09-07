@@ -100,7 +100,7 @@ if (!$db->canConnect()) {
     check('Panel şifresi güçlü', null, 'elle doğrulanır', 'elle');
 
     // Favicon ve OG gorseli
-    check('Favicon mevcut', is_file(ARC_ROOT . '/public/assets/img/favicon.svg'));
+    check('Favicon mevcut', is_file(ARC_ROOT . '/public/assets/img/favicon-32.png'));
     check('Varsayılan OG görseli mevcut', is_file(ARC_ROOT . '/public/assets/img/og-default.png'));
 
     // NAP bilgileri
