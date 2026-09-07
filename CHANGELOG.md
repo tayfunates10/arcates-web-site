@@ -59,6 +59,16 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - `.skip-link` `top` gecisi ve ust menu `padding` gecisi bolum 7.1 kural 1'i
   ihlal ediyordu; ikisi de kaldirildi.
 - 360 px genisligde ust menu tasiyordu; panel duzeni yeniden kuruldu.
+- Bos `db/migrations` klasoru git'te tutulmadigi icin temiz klonda iskelet
+  denetimi kaliyordu; aciklamali `.gitkeep` eklendi.
+
+### Eklendi (faz 6)
+- Panel anasayfa yoneticisi: bolum listesi, ac/kapat anahtari, bolum basina
+  duzenleme ekrani, kahraman bolumunde canli onizleme.
+- Bolge haritasi duzenleyicisi: ilce noktalari surukle-birak ile
+  konumlandirilir, `map_x`/`map_y` otomatik hesaplanir; klavye ile de
+  tasinabilir, JavaScript kapaliyken sayi alanlarindan girilebilir.
+- Faz 6 testleri: F-14, F-15, F-16 panel tarafi.
 
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin

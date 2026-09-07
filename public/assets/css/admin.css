@@ -451,3 +451,54 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
   width: 100%; padding: 10px 12px; border: 1px dashed var(--line);
   border-radius: var(--radius-sm); font: inherit; font-size: 14px; background: var(--mist-2);
 }
+
+/* --- Bolge haritasi duzenleyicisi ---------------------------------------- */
+
+.map-canvas {
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--mist-2); padding: 12px; margin-bottom: 18px; overflow-x: auto;
+}
+.map-canvas__svg { width: 100%; height: auto; display: block; min-width: 620px; touch-action: none; }
+.map-canvas__bg { fill: var(--white); stroke: var(--line); stroke-width: 1; rx: 8; }
+
+.map-canvas__dot { cursor: grab; }
+.map-canvas__dot.is-dragging { cursor: grabbing; }
+.map-canvas__dot circle { fill: var(--blue); stroke: var(--white); stroke-width: 3; }
+.map-canvas__dot:hover circle,
+.map-canvas__dot:focus circle { fill: var(--blue-bright); }
+.map-canvas__dot:focus { outline: none; }
+.map-canvas__dot:focus circle { stroke: var(--blue-bright); stroke-width: 5; }
+.map-canvas__dot text {
+  font-family: var(--font-head); font-size: 15px; font-weight: 600;
+  fill: var(--navy); text-anchor: middle; pointer-events: none;
+}
+
+/* --- Kahraman canli onizlemesi ------------------------------------------- */
+
+.hero-preview {
+  display: grid; gap: 10px; margin-top: 18px; padding: 26px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--mist-2), var(--white));
+}
+.hero-preview__badge {
+  justify-self: start; font-size: 12px; font-weight: 600;
+  padding: 5px 12px; border-radius: 999px;
+  background: var(--white); border: 1px solid var(--line); color: var(--blue);
+}
+.hero-preview__title {
+  display: grid; gap: 2px;
+  font-family: var(--font-head); font-size: 28px; font-weight: 800;
+  line-height: 1.1; letter-spacing: -.02em; color: var(--navy);
+}
+.hero-preview__accent {
+  background: linear-gradient(92deg, var(--blue), var(--blue-bright) 46%, var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-preview__text { color: var(--ink-soft); font-size: 14px; max-width: 52ch; }
+.hero-preview__actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.hero-preview__btn {
+  padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  font-family: var(--font-head); background: var(--blue); color: var(--white);
+}
+.hero-preview__btn--ghost { background: var(--white); color: var(--blue); border: 1px solid var(--line); }
+.hero-preview__btn:empty { display: none; }

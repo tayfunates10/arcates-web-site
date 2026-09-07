@@ -71,6 +71,13 @@ $router->post($panel . '/sayfalar/{id:[0-9]+}', 'Admin\PageController@store');
 $router->post($panel . '/sayfalar/{id:[0-9]+}/durum', 'Admin\PageController@toggle');
 $router->post($panel . '/sayfalar/{id:[0-9]+}/sil', 'Admin\PageController@destroy');
 
+// Anasayfa bolum yoneticisi
+$router->get($panel . '/anasayfa', 'Admin\HomeController@index');
+$router->get($panel . '/anasayfa/{key:[a-z]+}', 'Admin\HomeController@edit');
+$router->post($panel . '/anasayfa/{key:[a-z]+}', 'Admin\HomeController@update');
+$router->post($panel . '/anasayfa/{key:[a-z]+}/durum', 'Admin\HomeController@toggle');
+$router->post($panel . '/anasayfa/coast/ilceler', 'Admin\HomeController@saveDistricts');
+
 // Menuler
 $router->get($panel . '/menuler', 'Admin\MenuController@index');
 $router->post($panel . '/menuler', 'Admin\MenuController@save');
