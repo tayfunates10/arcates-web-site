@@ -33,12 +33,16 @@ final class Seeder
 
     public function languages(): void
     {
+        // Yalnizca varsayilan dil acik baslar. Cevirisi girilmemis bir dil acik
+        // olsaydi ust menude gorunur, ziyaretci tiklayinca Turkce icerige
+        // duserdi. Isletme cevirileri girdikten sonra Ayarlar ekranindaki
+        // "Yayindaki diller" anahtarindan aciyor. DOCS.md 11.3
         $rows = [
             ['code' => 'tr', 'name' => 'Türkçe',  'direction' => 'ltr', 'is_default' => 1, 'is_active' => 1, 'sort' => 1],
-            ['code' => 'en', 'name' => 'English', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 1, 'sort' => 2],
-            ['code' => 'de', 'name' => 'Deutsch', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 1, 'sort' => 3],
+            ['code' => 'en', 'name' => 'English', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 0, 'sort' => 2],
+            ['code' => 'de', 'name' => 'Deutsch', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 0, 'sort' => 3],
             // Arapca sagdan sola yazilir. DOCS.md 11.3
-            ['code' => 'ar', 'name' => 'العربية',  'direction' => 'rtl', 'is_default' => 0, 'is_active' => 1, 'sort' => 4],
+            ['code' => 'ar', 'name' => 'العربية',  'direction' => 'rtl', 'is_default' => 0, 'is_active' => 0, 'sort' => 4],
         ];
 
         foreach ($rows as $row) {

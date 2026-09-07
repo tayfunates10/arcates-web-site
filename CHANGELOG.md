@@ -194,3 +194,14 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Yeni testler F-P15-a…e: blog tohumunun kelime sayısı, meta alanları, iç
   link ve güvenli işaretleme denetimi; marka görsellerinin varlığı ve
   şablonlarda bağlanmış olması.
+
+### Değiştirildi (dil yayın anahtarı)
+- Kurulum artık yalnızca varsayılan dili açık bırakıyor. Önceden EN/DE/AR
+  açıktı ama çevirileri yoktu; üst menüde görünüyor, tıklayan ziyaretçi Türkçe
+  içeriğe düşüyordu. Kapalı dil üst menüde görünmüyor, `hreflang` setine
+  girmiyor, önekli adresleri 404 dönüyor.
+- Ayarlar ekranına **Yayındaki diller** anahtarı eklendi; varsayılan dil her
+  zaman açık kalıyor ve kapatılamıyor. `Lang::allLanguages()` kapalılar dahil
+  tüm dilleri veriyor.
+- Yeni testler F-P16-a…d. Çok dilli davranışı sınayan mevcut testler (F-04,
+  F-05, F-P8-c) ihtiyaç duydukları dili `arc_activate_langs()` ile açıyor.

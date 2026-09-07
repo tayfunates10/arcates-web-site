@@ -555,3 +555,21 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
 .restore-row:last-child { border-bottom: 0; }
 .restore-row label { display: flex; align-items: center; gap: 7px; margin-inline-start: auto; }
 .restore-row input { width: auto; }
+
+/* --- Dil yayin anahtarlari ------------------------------------------------ */
+.field__label {
+  display: block; font-weight: 600; font-size: 14px; margin-bottom: 7px;
+}
+.switch-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.switch-list__item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 11px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--white); font-size: 14px; cursor: pointer;
+}
+.switch-list__item input { width: auto; margin: 0; }
+.switch-list__item input:disabled { cursor: default; }
+.badge {
+  margin-inline-start: auto; font-size: 12px; font-weight: 600;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--mist); color: var(--blue);
+}

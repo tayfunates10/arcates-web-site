@@ -130,6 +130,26 @@ function arc_need_db(): Database
     return $db;
 }
 
+/**
+ * Verilen dilleri acar, kalanlari kapatir.
+ *
+ * Tohum yalnizca varsayilan dili acik birakir; cok dilli davranisi sinayan
+ * testler ihtiyaci olan dili once acmalidir. DOCS.md 11.3
+ */
+function arc_activate_langs(array $codes): void
+{
+    $db = arc_test_db();
+    if ($db === null) {
+        return;
+    }
+
+    foreach (Lang::allLanguages() as $code => $row) {
+        $db->update('languages', ['is_active' => in_array($code, $codes, true) ? 1 : 0], ['code' => $code]);
+    }
+    Lang::reset();
+    Settings::flush();
+}
+
 /** Test icin oturum durumunu sifirlar. */
 function arc_reset_session(): void
 {

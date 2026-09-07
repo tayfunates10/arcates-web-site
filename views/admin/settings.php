@@ -51,6 +51,28 @@ $value = static function (string $key) use ($settings): string {
       </select>
       <span class="field__hint">Varsayılan dil adres önekiyle yayınlanmaz.</span>
     </div>
+
+    <div class="field">
+      <span class="field__label">Yayındaki diller</span>
+      <ul class="switch-list">
+        <?php foreach ($allLanguages as $code => $lang): ?>
+          <?php $isDefault = $code === $current; ?>
+          <li>
+            <label class="switch-list__item">
+              <input type="checkbox" name="active_langs[]" value="<?= Security::e($code) ?>"
+                     <?= ((int) $lang['is_active'] === 1 || $isDefault) ? 'checked' : '' ?>
+                     <?= $isDefault ? 'disabled' : '' ?>>
+              <span><?= Security::e($lang['name']) ?> (<?= Security::e($code) ?>)</span>
+              <?php if ($isDefault): ?><span class="badge">varsayılan</span><?php endif; ?>
+            </label>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+      <span class="field__hint">
+        Kapalı dil üst menüde görünmez ve <code>hreflang</code> setine girmez.
+        Bir dili, çevirileri girildikten sonra açın; yoksa ziyaretçi Türkçe içeriğe düşer.
+      </span>
+    </div>
   </section>
 
   <section class="panel panel--form">

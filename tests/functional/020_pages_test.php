@@ -141,6 +141,7 @@ test('F-03', 'Slug değişince eski adres 301 ile yeniye gider', function (): vo
 test('F-04', 'İngilizce çeviri eklenince /en/slug çalışır ve hreflang doğru olur', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
+    arc_activate_langs(['tr', 'en']);
     arc_login_as($db, 'admin');
 
     arc_save_page([
@@ -176,6 +177,7 @@ test('F-04', 'İngilizce çeviri eklenince /en/slug çalışır ve hreflang doğ
 test('F-05', 'Arapça sayfa rtl yönünde açılır', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
+    arc_activate_langs(['tr', 'ar']);
     arc_login_as($db, 'admin');
 
     arc_save_page([

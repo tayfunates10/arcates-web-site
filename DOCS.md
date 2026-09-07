@@ -741,6 +741,13 @@ Tek `H1`, `H2` ile bölümlenmiş yapı, 60 karakterlik title, 155 karakterlik d
 ### 11.3 Çok dil
 `hreflang` seti her sayfada tüm dil karşılıklarını ve `x-default`'u içerir. Karşılığı olmayan dil için `hreflang` verilmez. Arapça sayfalarda `<html dir="rtl">` ve mantıksal CSS özellikleri (`margin-inline-start`) kullanılır.
 
+**Uygulama notu — dil yayın anahtarı.** Kurulum yalnızca varsayılan dili açık
+bırakır. Çevirisi girilmemiş bir dil açık olsaydı üst menüde görünür, ziyaretçi
+tıklayınca Türkçe içeriğe düşerdi. Diller Ayarlar ekranındaki **Yayındaki
+diller** anahtarından açılır; varsayılan dil kapatılamaz. Kapalı bir dil üst
+menüde görünmez, `hreflang` setine girmez ve `/en/...` gibi önekli adresleri
+404 döner.
+
 ### 11.4 Teknik
 `sitemap.xml` dinamik üretilir, yalnızca yayınlanmış içerik girer, `lastmod` `updated_at`'ten gelir. Görseller WebP, `loading="lazy"`, `width`/`height` yazılı. Slug üretiminde Türkçe karakter dönüşümü: `ç→c, ğ→g, ı→i, İ→i, ö→o, ş→s, ü→u`.
 

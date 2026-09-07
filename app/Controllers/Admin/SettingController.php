@@ -55,7 +55,8 @@ final class SettingController extends Controller
             'settings'  => Settings::all(),
             'hours'     => Settings::getArray('opening_hours'),
             'social'    => Settings::getArray('social_links'),
-            'languages' => Lang::languages(),
+            'languages'    => Lang::languages(),
+            'allLanguages' => Lang::allLanguages(),
         ]);
     }
 
@@ -124,7 +125,21 @@ final class SettingController extends Controller
             $pairs['default_lang'] = $default;
             $this->db()->run('UPDATE languages SET is_default = 0');
             $this->db()->update('languages', ['is_default' => 1], ['code' => $default]);
+        } else {
+            $default = Lang::defaultCode();
         }
+
+        // Dil yayin anahtarlari. Cevirisi girilmemis bir dil acik kalirsa
+        // ziyaretci Turkce icerige duser; bu yuzden yayin kararini isletme
+        // verir. Varsayilan dil her zaman acik kalir. DOCS.md 11.3
+        $wanted = array_map('strval', $request->arr('active_langs'));
+        foreach (Lang::allLanguages() as $code => $row) {
+            $active = ($code === $default || in_array($code, $wanted, true)) ? 1 : 0;
+            if ((int) $row['is_active'] !== $active) {
+                $this->db()->update('languages', ['is_active' => $active], ['code' => $code]);
+            }
+        }
+        Lang::reset();
 
         Settings::setMany($pairs);
         Logger::activity('settings.update', 'settings', null, implode(', ', array_keys($pairs)));

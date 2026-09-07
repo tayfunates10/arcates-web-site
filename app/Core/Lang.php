@@ -56,6 +56,34 @@ final class Lang
         return self::$languages = $indexed;
     }
 
+    /**
+     * Kapalilar dahil tum diller.
+     *
+     * Panelde yayin anahtarlarini cizmek icin gerekir; on yuz yalnizca
+     * `languages()` ile etkin dilleri gorur. DOCS.md 9, 11.3
+     */
+    public static function allLanguages(): array
+    {
+        try {
+            $rows = Database::instance()->all(
+                'SELECT code, name, direction, is_default, is_active FROM languages ORDER BY sort, code'
+            );
+        } catch (\Throwable) {
+            $rows = [];
+        }
+
+        if (!$rows) {
+            return self::languages();
+        }
+
+        $indexed = [];
+        foreach ($rows as $row) {
+            $indexed[$row['code']] = $row;
+        }
+
+        return $indexed;
+    }
+
     public static function codes(): array
     {
         return array_keys(self::languages());

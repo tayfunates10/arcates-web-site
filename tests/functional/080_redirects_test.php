@@ -167,6 +167,7 @@ test('F-P8-c', 'Dil önekli adresler için de yönlendirme çözülür', functio
     $db = arc_need_db();
     $db->run('DELETE FROM redirects');
     $db->run('DELETE FROM not_found');
+    arc_activate_langs(['tr', 'en']);
 
     Redirect::put('/eski-sayfa', '/yeni-sayfa', 301);
 
