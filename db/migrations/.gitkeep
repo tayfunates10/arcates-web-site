@@ -1,0 +1,7 @@
+Bu klasor sema goclerini tutar.
+
+Her sema degisikligi buraya `YYYY_MM_DD_NNNN_aciklama.sql` olarak eklenir ve
+uygulandiginda `migrations` tablosuna yazilir. `db/schema.sql` elle
+duzenlenmez.  DOCS.md 8.6
+
+Klasor bos oldugunda surum kontrolunde kalabilmesi icin bu dosya durur.

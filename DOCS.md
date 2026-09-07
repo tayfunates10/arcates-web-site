@@ -604,6 +604,14 @@ Referans: müşteri adı, sektör, ilçe, canlı site linki, görseller, yapıla
 Blog: kategori, kapak, yayın tarihi, ileri tarihli yayın.
 SSS: soru, cevap, hangi sayfalara atanacağı.
 
+**Uygulama notu — örnek site sunumu.** Gerçek müşteri işleri yayına girene
+kadar `project` kayıtları ön yüzde "Örnek Siteler" olarak sunulur. Adres
+bölüm 4'teki gibi `/referanslar` ve `/referanslar/{slug}` olarak kalır; böylece
+gerçek işler eklendiğinde yönlendirme gerekmez. Ayarlardaki **Örnek site notu**
+(`projects_notice`) liste, detay, anasayfa bloğu ve ilçe sayfasındaki blokta
+görünür ve bu kayıtların teslim edilmiş müşteri işi olmadığını açıkça söyler.
+Gerçek işler yayına alındığında bu ayar boşaltılır, not kendiliğinden kaybolur.
+
 ### 9.5 Medya
 Çoklu yükleme, ızgara görünüm, alt metin alanı (boşsa uyarı rozeti), varyant bilgisi, kullanım yeri gösterimi, kullanımdaki dosya için silme uyarısı.
 
@@ -732,6 +740,13 @@ Tek `H1`, `H2` ile bölümlenmiş yapı, 60 karakterlik title, 155 karakterlik d
 
 ### 11.3 Çok dil
 `hreflang` seti her sayfada tüm dil karşılıklarını ve `x-default`'u içerir. Karşılığı olmayan dil için `hreflang` verilmez. Arapça sayfalarda `<html dir="rtl">` ve mantıksal CSS özellikleri (`margin-inline-start`) kullanılır.
+
+**Uygulama notu — dil yayın anahtarı.** Kurulum yalnızca varsayılan dili açık
+bırakır. Çevirisi girilmemiş bir dil açık olsaydı üst menüde görünür, ziyaretçi
+tıklayınca Türkçe içeriğe düşerdi. Diller Ayarlar ekranındaki **Yayındaki
+diller** anahtarından açılır; varsayılan dil kapatılamaz. Kapalı bir dil üst
+menüde görünmez, `hreflang` setine girmez ve `/en/...` gibi önekli adresleri
+404 döner.
 
 ### 11.4 Teknik
 `sitemap.xml` dinamik üretilir, yalnızca yayınlanmış içerik girer, `lastmod` `updated_at`'ten gelir. Görseller WebP, `loading="lazy"`, `width`/`height` yazılı. Slug üretiminde Türkçe karakter dönüşümü: `ç→c, ğ→g, ı→i, İ→i, ö→o, ş→s, ü→u`.

@@ -1,0 +1,15 @@
+# Arcates Web Site — uploads/.htaccess
+# DOCS.md 10.6 — yuklenen dosyalarda PHP calistirilmaz.
+
+php_flag engine off
+
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>
+
+<FilesMatch "\.(php|phtml|php[0-9]|phar|cgi|pl)$">
+  Require all denied
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+AddHandler default-handler .php .phtml .phar .cgi .pl

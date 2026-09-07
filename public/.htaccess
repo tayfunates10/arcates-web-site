@@ -1,0 +1,49 @@
+# Arcates Web Site — public/.htaccess
+# DOCS.md 10.10
+
+RewriteEngine On
+
+# HTTPS zorunlu
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# www tercihi tek yonde sabit: www.alanadi.com -> alanadi.com
+# Ters tercihi kullanacaksaniz bu blogu kapatip asagidakini acin.
+# DOCS.md 14.8 (O-08), 17 (yayin oncesi teslim listesi)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Ters tercih (alanadi.com -> www.alanadi.com):
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteCond %{HTTP_HOST} !^localhost [NC]
+# RewriteCond %{HTTP_HOST} !^127\. [NC]
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Tek giris noktasi
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+Options -Indexes
+
+<FilesMatch "\.(env|ini|log|sql|md)$">
+  Require all denied
+</FilesMatch>
+
+# Guvenlik basliklari (PHP tarafinda da gonderilir; sunucu seviyesinde ikinci kat)
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Statik varlik onbellegi
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType image/webp "access plus 180 days"
+  ExpiresByType image/jpeg "access plus 180 days"
+  ExpiresByType image/png "access plus 180 days"
+  ExpiresByType image/svg+xml "access plus 180 days"
+</IfModule>
