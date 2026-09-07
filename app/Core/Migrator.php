@@ -50,7 +50,7 @@ final class Migrator
         $path     = ARC_ROOT . '/db/migrations/' . $filename;
 
         if (!is_file($path)) {
-            throw new RuntimeException('Goc dosyasi bulunamadi: ' . $filename);
+            throw new RuntimeException('Göç dosyası bulunamadı: ' . $filename);
         }
 
         $sql = (string) file_get_contents($path);

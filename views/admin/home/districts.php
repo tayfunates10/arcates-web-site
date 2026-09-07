@@ -24,11 +24,11 @@ $rows = $districts ?: [[
   <?= csrf_field() ?>
 
   <section class="panel">
-    <h2 class="panel__title">Ilce noktalari</h2>
+    <h2 class="panel__title">İlçe noktaları</h2>
     <p class="muted">
-      Noktalari surukleyerek konumlandirin; yatay ve dikey degerler otomatik
-      hesaplanir. Fare kullanamiyorsaniz asagidaki sayi alanlarindan da
-      girebilirsiniz. Yatay 0-1000, dikey 0-190 arasindadir.
+      Noktaları sürükleyerek konumlandırın; yatay ve dikey değerler otomatik
+      hesaplanır. Fare kullanamıyorsanız aşağıdaki sayı alanlarından da
+      girebilirsiniz. Yatay 0-1000, dikey 0-190 arasındadır.
     </p>
 
     <?php /* Surukle-birak tuvali; JavaScript yoksa yalnizca onizleme olarak
@@ -57,7 +57,7 @@ $rows = $districts ?: [[
           <input type="hidden" name="districts[<?= (int) $i ?>][id]" value="<?= (int) ($district['id'] ?? 0) ?>">
 
           <div class="field">
-            <label for="d_name_<?= (int) $i ?>">Ilce adi</label>
+            <label for="d_name_<?= (int) $i ?>">İlçe adı</label>
             <input type="text" id="d_name_<?= (int) $i ?>" name="districts[<?= (int) $i ?>][name]"
                    maxlength="60" value="<?= Security::e($district['name'] ?? '') ?>" data-map-name>
           </div>
@@ -75,7 +75,7 @@ $rows = $districts ?: [[
           </div>
 
           <div class="field">
-            <label for="d_page_<?= (int) $i ?>">Bagli sayfa</label>
+            <label for="d_page_<?= (int) $i ?>">Bağlı sayfa</label>
             <select id="d_page_<?= (int) $i ?>" name="districts[<?= (int) $i ?>][page_id]">
               <option value="0">— yok —</option>
               <?php foreach ($pages as $page): ?>
@@ -88,7 +88,7 @@ $rows = $districts ?: [[
           </div>
 
           <div class="field">
-            <label for="d_sort_<?= (int) $i ?>">Sira</label>
+            <label for="d_sort_<?= (int) $i ?>">Sıra</label>
             <input type="number" id="d_sort_<?= (int) $i ?>" name="districts[<?= (int) $i ?>][sort]"
                    value="<?= (int) ($district['sort'] ?? $i + 1) ?>">
           </div>
@@ -97,7 +97,7 @@ $rows = $districts ?: [[
             <label>
               <input type="checkbox" name="districts[<?= (int) $i ?>][label_above]" value="1"
                      <?= (int) ($district['label_above'] ?? 0) === 1 ? 'checked' : '' ?>>
-              Etiket ustte
+              Etiket üstte
             </label>
             <label>
               <input type="checkbox" name="districts[<?= (int) $i ?>][is_active]" value="1"
@@ -106,7 +106,7 @@ $rows = $districts ?: [[
             </label>
           </div>
 
-          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
         </div>
       <?php endforeach; ?>
     </div>
@@ -115,6 +115,6 @@ $rows = $districts ?: [[
   </section>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit">Ilce noktalarini kaydet</button>
+    <button class="btn btn--primary" type="submit">İlçe noktalarını kaydet</button>
   </div>
 </form>

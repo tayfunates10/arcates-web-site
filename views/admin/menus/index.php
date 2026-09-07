@@ -34,8 +34,8 @@ $rows = $items ?: [[
 
   <section class="panel">
     <p class="muted">
-      Sira sayisi kucukten buyuge dizilir. Bir ogeyi kaldirmak icin tum dillerdeki
-      etiketlerini bosaltip kaydedin.
+      Sıra sayısı küçükten büyüğe dizilir. Bir ögeyi kaldırmak için tüm dillerdeki
+      etiketlerini boşaltıp kaydedin.
     </p>
 
     <div class="menu-rows repeat" data-repeat="menu">
@@ -74,7 +74,7 @@ $rows = $items ?: [[
           </div>
 
           <div class="field">
-            <label for="sort_<?= (int) $i ?>">Sira</label>
+            <label for="sort_<?= (int) $i ?>">Sıra</label>
             <input type="number" id="sort_<?= (int) $i ?>" name="items[<?= (int) $i ?>][sort]"
                    value="<?= (int) ($row['sort'] ?? $i + 1) ?>">
           </div>
@@ -82,20 +82,20 @@ $rows = $items ?: [[
           <div class="field">
             <label for="target_<?= (int) $i ?>">Hedef</label>
             <select id="target_<?= (int) $i ?>" name="items[<?= (int) $i ?>][target]">
-              <option value="_self" <?= ($row['target'] ?? '_self') === '_self' ? 'selected' : '' ?>>Ayni sekme</option>
+              <option value="_self" <?= ($row['target'] ?? '_self') === '_self' ? 'selected' : '' ?>>Aynı sekme</option>
               <option value="_blank" <?= ($row['target'] ?? '') === '_blank' ? 'selected' : '' ?>>Yeni sekme</option>
             </select>
           </div>
 
-          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
         </div>
       <?php endforeach; ?>
     </div>
 
-    <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="menu">Oge ekle</button>
+    <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="menu">Öge ekle</button>
   </section>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit">Menuyu kaydet</button>
+    <button class="btn btn--primary" type="submit">Menüyü kaydet</button>
   </div>
 </form>

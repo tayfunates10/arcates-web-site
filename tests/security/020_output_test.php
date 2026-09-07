@@ -7,24 +7,24 @@ declare(strict_types=1);
 
 use Arcates\Core\Security;
 
-test('S-02', 'Sayfa basligindaki script metin olarak gorunur, calismaz', function (): void {
+test('S-02', 'Sayfa başlığındaki script metin olarak görünür, çalışmaz', function (): void {
     $payload = '<script>alert(1)</script>';
     $escaped = Security::e($payload);
 
-    assertNotContains('<script>', $escaped, 'Ham etiket ciktiya girmemeli');
-    assertContains('&lt;script&gt;', $escaped, 'Etiket kacirilmis olmali');
-    assertContains('alert(1)', $escaped, 'Metin okunur kalmali');
+    assertNotContains('<script>', $escaped, 'Ham etiket çıktıya girmemeli');
+    assertContains('&lt;script&gt;', $escaped, 'Etiket kaçırılmış olmalı');
+    assertContains('alert(1)', $escaped, 'Metin okunur kalmalı');
 });
 
-test('S-02b', 'Nitelik baglaminda tirnak kacisi kirilmaz', function (): void {
+test('S-02b', 'Nitelik bağlamında tırnak kaçışı kırılmaz', function (): void {
     $payload = '" onmouseover="alert(1)';
     $escaped = Security::attr($payload);
 
-    assertNotContains('" onmouseover="', $escaped, 'Nitelik kirilmamali');
-    assertContains('&quot;', $escaped, 'Cift tirnak kacirilmali');
+    assertNotContains('" onmouseover="', $escaped, 'Nitelik kırılmamalı');
+    assertContains('&quot;', $escaped, 'Çift tırnak kaçırılmalı');
 });
 
-test('S-17', 'Zararli SVG yuklemesinde script ve on* nitelikleri temizlenir', function (): void {
+test('S-17', 'Zararlı SVG yüklemesinde script ve on* nitelikleri temizlenir', function (): void {
     $svg = '<?xml version="1.0"?>'
         . '<!DOCTYPE svg [<!ENTITY xxe SYSTEM "file:///etc/passwd">]>'
         . '<svg xmlns="http://www.w3.org/2000/svg" onload="alert(1)" viewBox="0 0 10 10">'
@@ -36,27 +36,27 @@ test('S-17', 'Zararli SVG yuklemesinde script ve on* nitelikleri temizlenir', fu
 
     $clean = Security::sanitizeSvg($svg);
 
-    assertNotContains('<script', $clean, 'script bloklari kaldirilmali');
-    assertNotContains('onload', $clean, 'onload niteligi kaldirilmali');
-    assertNotContains('onclick', $clean, 'onclick niteligi kaldirilmali');
-    assertNotContains('xlink:href', $clean, 'xlink:href kaldirilmali');
-    assertNotContains('javascript:', $clean, 'javascript: semasi kaldirilmali');
-    assertNotContains('<!DOCTYPE', $clean, 'DOCTYPE kaldirilmali (XXE)');
-    assertNotContains('<!ENTITY', $clean, 'ENTITY bildirimi kaldirilmali');
-    assertContains('<circle', $clean, 'Zararsiz sekiller korunmali');
+    assertNotContains('<script', $clean, 'script blokları kaldırılmalı');
+    assertNotContains('onload', $clean, 'onload niteliği kaldırılmalı');
+    assertNotContains('onclick', $clean, 'onclick niteliği kaldırılmalı');
+    assertNotContains('xlink:href', $clean, 'xlink:href kaldırılmalı');
+    assertNotContains('javascript:', $clean, 'javascript: şeması kaldırılmalı');
+    assertNotContains('<!DOCTYPE', $clean, 'DOCTYPE kaldırılmalı (XXE)');
+    assertNotContains('<!ENTITY', $clean, 'ENTITY bildirimi kaldırılmalı');
+    assertContains('<circle', $clean, 'Zararsız şekiller korunmalı');
 });
 
-test('S-02c', 'Icerik guvenlik politikasi panelde satir ici scripte izin vermez', function (): void {
+test('S-02c', 'İçerik güvenlik politikası panelde satır içi scripte izin vermez', function (): void {
     arc_test_config();
 
     $adminCsp = Security::csp(true);
-    assertContains("script-src 'self'", $adminCsp, 'Panel yalnizca kendi kaynagindan script yuklemeli');
-    assertNotContains('unsafe-inline', $adminCsp, 'unsafe-inline bulunmamali');
-    assertNotContains('unsafe-eval', $adminCsp, 'unsafe-eval bulunmamali');
+    assertContains("script-src 'self'", $adminCsp, 'Panel yalnızca kendi kaynağından script yüklemeli');
+    assertNotContains('unsafe-inline', $adminCsp, 'unsafe-inline bulunmamalı');
+    assertNotContains('unsafe-eval', $adminCsp, 'unsafe-eval bulunmamalı');
 
     $frontCsp = Security::csp(false);
-    assertNotContains('unsafe-inline', $frontCsp, 'On yuzde de unsafe-inline bulunmamali');
+    assertNotContains('unsafe-inline', $frontCsp, 'On yüzde de unsafe-inline bulunmamalı');
     assertContains("object-src 'none'", $frontCsp);
     assertContains("base-uri 'self'", $frontCsp);
-    assertContains('https://fonts.googleapis.com', $frontCsp, 'Yalnizca Google Fonts stil kaynagi');
+    assertContains('https://fonts.googleapis.com', $frontCsp, 'Yalnızca Google Fonts stil kaynağı');
 });

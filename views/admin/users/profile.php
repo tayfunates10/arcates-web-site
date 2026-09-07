@@ -24,26 +24,26 @@ use Arcates\Core\Security;
     <div class="field">
       <label>E-posta</label>
       <input type="email" value="<?= Security::e($user['email'] ?? '') ?>" disabled>
-      <span class="field__hint">E-posta adresini yalnizca yonetici degistirebilir.</span>
+      <span class="field__hint">E-posta adresini yalnızca yönetici değiştirebilir.</span>
     </div>
 
     <hr class="rule">
 
     <div class="field">
-      <label for="current_password">Mevcut sifre</label>
+      <label for="current_password">Mevcut şifre</label>
       <input type="password" id="current_password" name="current_password" autocomplete="current-password">
       <?php if ($m = error_for('current_password')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
     </div>
 
     <div class="field">
-      <label for="password">Yeni sifre</label>
+      <label for="password">Yeni şifre</label>
       <input type="password" id="password" name="password" autocomplete="new-password">
-      <span class="field__hint">En az 10 karakter. Degistirmek istemiyorsaniz bos birakin.</span>
+      <span class="field__hint">En az 10 karakter. Değiştirmek istemiyorsanız boş bırakın.</span>
       <?php if ($m = error_for('password')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
     </div>
 
     <div class="field">
-      <label for="password_confirm">Yeni sifre tekrar</label>
+      <label for="password_confirm">Yeni şifre tekrar</label>
       <input type="password" id="password_confirm" name="password_confirm" autocomplete="new-password">
       <?php if ($m = error_for('password_confirm')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
     </div>

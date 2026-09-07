@@ -33,14 +33,14 @@ $value = static function (string $key) use ($settings): string {
                maxlength="<?= Security::e((string) $fields[$key][1]) ?>"
                value="<?= Security::e($value($key)) ?>">
         <?php if ($key === 'meta_title_pattern'): ?>
-          <span class="field__hint">Kullanilabilir yer tutucular: <code>%title%</code>, <code>%site%</code>.</span>
+          <span class="field__hint">Kullanılabilir yer tutucular: <code>%title%</code>, <code>%site%</code>.</span>
         <?php endif; ?>
         <?php if ($m = error_for($key)): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
       </div>
     <?php endforeach; ?>
 
     <div class="field">
-      <label for="default_lang">Varsayilan dil</label>
+      <label for="default_lang">Varsayılan dil</label>
       <select id="default_lang" name="default_lang">
         <?php $current = (string) old('default_lang', $settings['default_lang'] ?? 'tr'); ?>
         <?php foreach ($languages as $code => $lang): ?>
@@ -49,15 +49,15 @@ $value = static function (string $key) use ($settings): string {
           </option>
         <?php endforeach; ?>
       </select>
-      <span class="field__hint">Varsayilan dil adres onekiyle yayinlanmaz.</span>
+      <span class="field__hint">Varsayılan dil adres önekiyle yayınlanmaz.</span>
     </div>
   </section>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Isletme bilgileri (NAP)</h2>
+    <h2 class="panel__title">İşletme bilgileri (NAP)</h2>
     <p class="muted">
-      Bu alanlar yapisal veride <code>ProfessionalService</code> olarak yayinlanir ve
-      Google Isletme Profili ile <strong>birebir ayni</strong> yazilmalidir.
+      Bu alanlar yapısal veride <code>ProfessionalService</code> olarak yayınlanır ve
+      Google İşletme Profili ile <strong>birebir aynı</strong> yazılmalıdır.
     </p>
 
     <div class="grid grid--2">
@@ -74,33 +74,33 @@ $value = static function (string $key) use ($settings): string {
   </section>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Calisma saatleri</h2>
-    <p class="muted">Gun bicimi schema.org standardindadir: <code>Mo-Fr</code>, <code>Sa</code>, <code>Su</code>.</p>
+    <h2 class="panel__title">Çalışma saatleri</h2>
+    <p class="muted">Gün biçimi schema.org standardındadır: <code>Mo-Fr</code>, <code>Sa</code>, <code>Su</code>.</p>
 
     <div class="repeat" data-repeat="hours">
       <?php $rows = $hours ?: [['days' => '', 'opens' => '', 'closes' => '']]; ?>
       <?php foreach ($rows as $i => $row): ?>
         <div class="repeat__row">
           <div class="field">
-            <label for="hours_days_<?= (int) $i ?>">Gunler</label>
+            <label for="hours_days_<?= (int) $i ?>">Günler</label>
             <input type="text" id="hours_days_<?= (int) $i ?>" name="hours_days[]" maxlength="40"
                    value="<?= Security::e($row['days'] ?? '') ?>">
           </div>
           <div class="field">
-            <label for="hours_opens_<?= (int) $i ?>">Acilis</label>
+            <label for="hours_opens_<?= (int) $i ?>">Açılış</label>
             <input type="time" id="hours_opens_<?= (int) $i ?>" name="hours_opens[]"
                    value="<?= Security::e($row['opens'] ?? '') ?>">
           </div>
           <div class="field">
-            <label for="hours_closes_<?= (int) $i ?>">Kapanis</label>
+            <label for="hours_closes_<?= (int) $i ?>">Kapanış</label>
             <input type="time" id="hours_closes_<?= (int) $i ?>" name="hours_closes[]"
                    value="<?= Security::e($row['closes'] ?? '') ?>">
           </div>
-          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
         </div>
       <?php endforeach; ?>
     </div>
-    <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="hours">Satir ekle</button>
+    <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="hours">Satır ekle</button>
   </section>
 
   <section class="panel panel--form">
@@ -120,33 +120,33 @@ $value = static function (string $key) use ($settings): string {
             <input type="url" id="social_url_<?= (int) $i ?>" name="social_url[]" maxlength="255"
                    value="<?= Security::e($row['url'] ?? '') ?>">
           </div>
-          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+          <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
         </div>
       <?php endforeach; ?>
     </div>
-    <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="social">Satir ekle</button>
+    <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="social">Satır ekle</button>
   </section>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Bakim modu</h2>
+    <h2 class="panel__title">Bakım modu</h2>
 
     <div class="field field--check">
       <label>
         <input type="checkbox" name="maintenance_mode" value="1"
                <?= (string) ($settings['maintenance_mode'] ?? '0') === '1' ? 'checked' : '' ?>>
-        Bakim modunu ac
+        Bakım modunu aç
       </label>
-      <span class="field__hint">Ziyaretciler bakim sayfasini gorur; oturum acmis yoneticiler siteyi normal gorur.</span>
+      <span class="field__hint">Ziyaretçiler bakım sayfasını görür; oturum açmış yöneticiler siteyi normal görür.</span>
     </div>
 
     <div class="field">
-      <label for="maintenance_text">Bakim mesaji</label>
+      <label for="maintenance_text">Bakım mesajı</label>
       <input type="text" id="maintenance_text" name="maintenance_text" maxlength="320"
              value="<?= Security::e($value('maintenance_text')) ?>">
     </div>
   </section>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit">Ayarlari kaydet</button>
+    <button class="btn btn--primary" type="submit">Ayarları kaydet</button>
   </div>
 </form>

@@ -75,7 +75,7 @@ final class PageController extends Controller
         $page = Page::find($id);
 
         if ($page === null) {
-            return $this->back(admin_url('sayfalar'), 'error', 'Sayfa bulunamadi.');
+            return $this->back(admin_url('sayfalar'), 'error', 'Sayfa bulunamadı.');
         }
 
         $translations = [];
@@ -84,7 +84,7 @@ final class PageController extends Controller
         }
 
         return $this->view('pages/form', [
-            'title'        => 'Sayfayi duzenle',
+            'title'        => 'Sayfayı düzenle',
             'page'         => $page,
             'translations' => $translations,
             'types'        => Page::TYPES,
@@ -114,7 +114,7 @@ final class PageController extends Controller
             'status' => $request->str('status'),
             'title'  => trim((string) ($input[$defaultLang]['title'] ?? '')),
         ], [
-            'title' => 'Varsayilan dildeki baslik',
+            'title' => 'Varsayılan dildeki başlık',
         ]);
 
         $validator->in('type', array_keys(Page::TYPES))
@@ -223,7 +223,7 @@ final class PageController extends Controller
         $page = Page::find($id);
 
         if ($page === null) {
-            return $this->back(admin_url('sayfalar'), 'error', 'Sayfa bulunamadi.');
+            return $this->back(admin_url('sayfalar'), 'error', 'Sayfa bulunamadı.');
         }
 
         $next = $page['status'] === 'published' ? 'draft' : 'published';
@@ -246,10 +246,10 @@ final class PageController extends Controller
         Logger::activity('page.status', 'page', $id, $next);
 
         if ($warning !== '') {
-            return $this->back(admin_url('sayfalar'), 'warning', 'Sayfa yayinlandi ancak: ' . $warning);
+            return $this->back(admin_url('sayfalar'), 'warning', 'Sayfa yayınlandı ancak: ' . $warning);
         }
 
-        return $this->back(admin_url('sayfalar'), 'success', $next === 'published' ? 'Sayfa yayinlandi.' : 'Sayfa taslaga alindi.');
+        return $this->back(admin_url('sayfalar'), 'success', $next === 'published' ? 'Sayfa yayınlandı.' : 'Sayfa taslağa alındı.');
     }
 
     // --- Yardimcilar --------------------------------------------------------

@@ -11,8 +11,8 @@ use Arcates\Core\Security;
 ?>
 
 <div class="panel__head">
-  <p class="muted"><?= Security::e((string) count($users)) ?> kullanici</p>
-  <a class="btn btn--primary btn--sm" href="<?= Security::e(admin_url('kullanicilar/yeni')) ?>">Yeni kullanici</a>
+  <p class="muted"><?= Security::e((string) count($users)) ?> kullanıcı</p>
+  <a class="btn btn--primary btn--sm" href="<?= Security::e(admin_url('kullanicilar/yeni')) ?>">Yeni kullanıcı</a>
 </div>
 
 <section class="panel">
@@ -23,8 +23,8 @@ use Arcates\Core\Security;
         <th scope="col">E-posta</th>
         <th scope="col">Rol</th>
         <th scope="col">Durum</th>
-        <th scope="col">Son giris</th>
-        <th scope="col"><span class="visually-hidden">Islemler</span></th>
+        <th scope="col">Son giriş</th>
+        <th scope="col"><span class="visually-hidden">İşlemler</span></th>
       </tr>
     </thead>
     <tbody>
@@ -32,17 +32,17 @@ use Arcates\Core\Security;
       <tr>
         <td><?= Security::e($user['name']) ?></td>
         <td><?= Security::e($user['email']) ?></td>
-        <td><?= Security::e($user['role'] === 'admin' ? 'Yonetici' : 'Editor') ?></td>
+        <td><?= Security::e($user['role'] === 'admin' ? 'Yönetici' : 'Editör') ?></td>
         <td>
           <span class="tag tag--<?= (int) $user['status'] === 1 ? 'ok' : 'off' ?>">
-            <?= (int) $user['status'] === 1 ? 'Etkin' : 'Kapali' ?>
+            <?= (int) $user['status'] === 1 ? 'Etkin' : 'Kapalı' ?>
           </span>
         </td>
         <td><?= Security::e(format_date($user['last_login_at'], true) ?: '—') ?></td>
         <td class="row-actions">
-          <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('kullanicilar/' . (int) $user['id'])) ?>">Duzenle</a>
+          <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('kullanicilar/' . (int) $user['id'])) ?>">Düzenle</a>
           <form method="post" action="<?= Security::e(admin_url('kullanicilar/' . (int) $user['id'] . '/sil')) ?>"
-                data-confirm="<?= Security::e($user['name']) ?> kullanicisini silmek istiyor musunuz?">
+                data-confirm="<?= Security::e($user['name']) ?> kullanıcısını silmek istiyor musunuz?">
             <?= csrf_field() ?>
             <button class="btn btn--danger btn--sm" type="submit">Sil</button>
           </form>

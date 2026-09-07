@@ -16,17 +16,17 @@ use Arcates\Core\Security;
 
 <section class="panel">
   <p class="muted">
-    Bolum sirasi sabittir. Her bolum acilip kapatilabilir; kapatilan bolum
-    on yuzde hic basilmaz.
+    Bölüm sırası sabittir. Her bölüm açılıp kapatılabilir; kapatılan bölüm
+    on yüzde hiç basılmaz.
   </p>
 
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Sira</th>
-        <th scope="col">Bolum</th>
+        <th scope="col">Sıra</th>
+        <th scope="col">Bölüm</th>
         <th scope="col">Durum</th>
-        <th scope="col"><span class="visually-hidden">Islemler</span></th>
+        <th scope="col"><span class="visually-hidden">İşlemler</span></th>
       </tr>
     </thead>
     <tbody>
@@ -41,15 +41,15 @@ use Arcates\Core\Security;
           </td>
           <td>
             <span class="tag tag--<?= $section['is_active'] ? 'ok' : 'off' ?>">
-              <?= $section['is_active'] ? 'Acik' : 'Kapali' ?>
+              <?= $section['is_active'] ? 'Açık' : 'Kapalı' ?>
             </span>
           </td>
           <td class="row-actions">
-            <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('anasayfa/' . $key)) ?>">Duzenle</a>
+            <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('anasayfa/' . $key)) ?>">Düzenle</a>
             <form method="post" action="<?= Security::e(admin_url('anasayfa/' . $key . '/durum')) ?>">
               <?= csrf_field() ?>
               <button class="btn btn--ghost btn--sm" type="submit">
-                <?= $section['is_active'] ? 'Kapat' : 'Ac' ?>
+                <?= $section['is_active'] ? 'Kapat' : 'Aç' ?>
               </button>
             </form>
           </td>
@@ -60,7 +60,7 @@ use Arcates\Core\Security;
 </section>
 
 <section class="panel">
-  <h2 class="panel__title">Onizleme</h2>
-  <p class="muted">Anasayfayi yeni sekmede acarak degisiklikleri gorebilirsiniz.</p>
-  <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener">Anasayfayi ac</a>
+  <h2 class="panel__title">Önizleme</h2>
+  <p class="muted">Anasayfayı yeni sekmede açarak değişiklikleri görebilirsiniz.</p>
+  <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener">Anasayfayı aç</a>
 </section>

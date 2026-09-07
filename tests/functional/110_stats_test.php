@@ -25,7 +25,7 @@ function arc_visit_row(Database $db, string $path, string $device = 'desktop', s
     ]);
 }
 
-test('U-15e', 'Bot istekleri kaydedilir ama grafige girmez', function (): void {
+test('U-15e', 'Bot istekleri kaydedilir ama grafiğe girmez', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM visits');
     $db->run('DELETE FROM visits_daily');
@@ -35,7 +35,7 @@ test('U-15e', 'Bot istekleri kaydedilir ama grafige girmez', function (): void {
     arc_visit_row($db, '/edremit-web-tasarim', 'bot', 'now', 'googlebot');
     arc_visit_row($db, '/edremit-web-tasarim', 'bot', 'now', 'bingbot');
 
-    assertSame(4, (int) $db->count('visits'), 'Dort kayit olmali');
+    assertSame(4, (int) $db->count('visits'), 'Dört kayıt olmalı');
 
     $series = Visits::series(7);
     $today  = null;
@@ -45,10 +45,10 @@ test('U-15e', 'Bot istekleri kaydedilir ama grafige girmez', function (): void {
         }
     }
 
-    assertTrue($today !== null, 'Bugun serisi bulunmali');
-    assertSame(2, $today['views'], 'Yalnizca bot olmayan istekler sayilmali');
-    assertSame(2, $today['sessions'], 'Iki farkli oturum sayilmali');
-    assertSame(2, Visits::botCount(7), 'Bot sayisi ayri raporlanmali');
+    assertTrue($today !== null, 'Bugün serisi bulunmalı');
+    assertSame(2, $today['views'], 'Yalnızca bot olmayan istekler sayılmalı');
+    assertSame(2, $today['sessions'], 'İki farklı oturum sayılmalı');
+    assertSame(2, Visits::botCount(7), 'Bot sayısı ayrı raporlanmalı');
 
     $top = Visits::topPaths(7);
     assertSame('/edremit-web-tasarim', $top[0]['path']);
@@ -56,12 +56,12 @@ test('U-15e', 'Bot istekleri kaydedilir ama grafige girmez', function (): void {
 
     $devices = Visits::breakdown('device', 7);
     $labels  = array_column($devices, 'label');
-    assertFalse(in_array('bot', $labels, true), 'Cihaz dagiliminda bot olmamali');
+    assertFalse(in_array('bot', $labels, true), 'Cihaz dağılımında bot olmamalı');
 
     $db->run('DELETE FROM visits');
 });
 
-test('F-P11-a', 'Panel ve varlik istekleri ziyaret olarak sayilmaz', function (): void {
+test('F-P11-a', 'Panel ve varlık istekleri ziyaret olarak sayılmaz', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM visits');
     arc_logout_test();
@@ -80,12 +80,12 @@ test('F-P11-a', 'Panel ve varlik istekleri ziyaret olarak sayilmaz', function ()
         'tr'
     );
 
-    assertSame(1, (int) $db->count('visits'), 'On yuz sayfasi kaydedilmeli');
+    assertSame(1, (int) $db->count('visits'), 'On yüz sayfası kaydedilmeli');
 
     $db->run('DELETE FROM visits');
 });
 
-test('F-P11-b', 'Panel oturumu acikken ziyaret sayilmaz', function (): void {
+test('F-P11-b', 'Panel oturumu açıkken ziyaret sayılmaz', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM visits');
 
@@ -96,7 +96,7 @@ test('F-P11-b', 'Panel oturumu acikken ziyaret sayilmaz', function (): void {
         'tr'
     );
 
-    assertSame(0, (int) $db->count('visits'), 'Yonetici kendi ziyaretini saymamali');
+    assertSame(0, (int) $db->count('visits'), 'Yönetici kendi ziyaretini saymamalı');
 
     arc_logout_test();
 
@@ -105,12 +105,12 @@ test('F-P11-b', 'Panel oturumu acikken ziyaret sayilmaz', function (): void {
         'tr'
     );
 
-    assertSame(1, (int) $db->count('visits'), 'Ziyaretci kaydi tutulmali');
+    assertSame(1, (int) $db->count('visits'), 'Ziyaretçi kaydı tutulmalı');
 
     $db->run('DELETE FROM visits');
 });
 
-test('F-P11-c', 'Eski ziyaretler gunluk tabloya toplanir ve silinir', function (): void {
+test('F-P11-c', 'Eski ziyaretler günlük tabloya toplanır ve silinir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM visits');
     $db->run('DELETE FROM visits_daily');
@@ -124,22 +124,22 @@ test('F-P11-c', 'Eski ziyaretler gunluk tabloya toplanir ve silinir', function (
 
     $result = Visits::rollup(90);
 
-    assertSame(1, $result['rolled'], 'Bir gun/adres satiri toplanmali');
-    assertSame(3, $result['deleted'], 'Uc eski kayit silinmeli (botlar dahil)');
+    assertSame(1, $result['rolled'], 'Bir gün/adres satırı toplanmalı');
+    assertSame(3, $result['deleted'], 'Üç eski kayıt silinmeli (botlar dahil)');
 
     $daily = $db->first('SELECT * FROM visits_daily WHERE path = :path', [':path' => '/eski-sayfa']);
-    assertTrue($daily !== null, 'Gunluk kayit olusmali');
+    assertTrue($daily !== null, 'Günlük kayıt oluşmalı');
     assertSame(2, (int) $daily['views'], 'Botlar toplamaya girmemeli');
     assertSame(2, (int) $daily['sessions']);
 
-    assertSame(1, (int) $db->count('visits'), 'Yeni kayit kalmali');
+    assertSame(1, (int) $db->count('visits'), 'Yeni kayıt kalmalı');
     assertSame('/yeni-sayfa', (string) $db->value('SELECT path FROM visits LIMIT 1'));
 
     $db->run('DELETE FROM visits');
     $db->run('DELETE FROM visits_daily');
 });
 
-test('F-P11-d', 'Aylik CSV rapor uretilir', function (): void {
+test('F-P11-d', 'Aylık CSV rapor üretilir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM visits');
 
@@ -147,14 +147,14 @@ test('F-P11-d', 'Aylik CSV rapor uretilir', function (): void {
 
     $csv = Visits::monthlyCsv(date('Y-m'));
 
-    assertContains('Gun', $csv, 'Baslik satiri bulunmali');
-    assertContains('/rapor-sayfasi', $csv, 'Adres raporda olmali');
-    assertContains('mobile', $csv, 'Cihaz raporda olmali');
+    assertContains('Gün', $csv, 'Başlık satırı bulunmalı');
+    assertContains('/rapor-sayfasi', $csv, 'Adres raporda olmalı');
+    assertContains('mobile', $csv, 'Cihaz raporda olmalı');
 
     $db->run('DELETE FROM visits');
 });
 
-test('F-19', 'Yedek alinir ve geri yuklendiginde veri kaybi olmaz', function (): void {
+test('F-19', 'Yedek alınır ve geri yüklendiğinde veri kaybı olmaz', function (): void {
     $db = arc_need_db();
 
     if (!function_exists('gzopen')) {
@@ -176,51 +176,51 @@ test('F-19', 'Yedek alinir ve geri yuklendiginde veri kaybi olmaz', function ():
 
     // Yedek al.
     $filename = Backup::create();
-    assertTrue(Backup::path($filename) !== null, 'Yedek dosyasi olusmali');
-    assertContains('.sql.gz', $filename, 'Sikistirilmis SQL olmali');
+    assertTrue(Backup::path($filename) !== null, 'Yedek dosyası oluşmalı');
+    assertContains('.sql.gz', $filename, 'Sıkıştırılmış SQL olmalı');
 
     // Veriyi boz: kaydi sil ve yeni bir kayit ekle.
     $db->run('DELETE FROM projects WHERE id = :id', [':id' => $projectId]);
     $db->insert('projects', ['client_name' => 'Yedekten sonra eklendi', 'status' => 'draft']);
 
-    assertSame(null, $db->first('SELECT id FROM projects WHERE client_name = :n', [':n' => $marker]), 'Kayit silinmis olmali');
+    assertSame(null, $db->first('SELECT id FROM projects WHERE client_name = :n', [':n' => $marker]), 'Kayıt silinmiş olmalı');
 
     // Geri yukle.
     $statements = Backup::restore($filename);
-    assertGreaterThan(0, $statements, 'Ifadeler calistirilmali');
+    assertGreaterThan(0, $statements, 'İfadeler çalıştırılmalı');
 
     // Veri geri gelmeli, sonradan eklenen kayit gitmis olmali.
     $restored = $db->first('SELECT * FROM projects WHERE client_name = :n', [':n' => $marker]);
-    assertTrue($restored !== null, 'Silinen kayit geri gelmeli');
+    assertTrue($restored !== null, 'Silinen kayıt geri gelmeli');
     assertSame('Edremit', $restored['district'], 'Alanlar bozulmadan geri gelmeli');
-    assertSame($before, (int) $db->count('projects'), 'Kayit sayisi yedek anindaki gibi olmali');
+    assertSame($before, (int) $db->count('projects'), 'Kayıt sayısı yedek anındaki gibi olmalı');
 
     assertSame(
         null,
         $db->first('SELECT id FROM projects WHERE client_name = :n', [':n' => 'Yedekten sonra eklendi']),
-        'Yedekten sonraki kayit geri yuklemede gitmeli'
+        'Yedekten sonraki kayıt geri yüklemede gitmeli'
     );
 
     // Turkce karakterler ve tablo yapisi korunmali.
-    assertTrue($db->tableExists('page_translations'), 'Tum tablolar geri gelmeli');
+    assertTrue($db->tableExists('page_translations'), 'Tüm tablolar geri gelmeli');
     assertTrue($db->tableExists('home_sections'));
 
     Backup::delete($filename);
     $db->run('DELETE FROM projects');
 });
 
-test('F-19b', 'Yedek listesi son 10 kayitla sinirlanir ve yol disina cikilamaz', function (): void {
+test('F-19b', 'Yedek listesi son 10 kayıtla sınırlanır ve yol dışına çıkılamaz', function (): void {
     arc_need_db();
 
-    assertSame(10, Backup::KEEP, 'Sartnamedeki sinir 10 olmali');
+    assertSame(10, Backup::KEEP, 'Şartnamedeki sınır 10 olmalı');
 
     // Klasor disina cikma denemeleri reddedilir.
-    assertSame(null, Backup::path('../../config/config.php'), 'Ust klasore cikilamamali');
+    assertSame(null, Backup::path('../../config/config.php'), 'Üst klasöre çıkılamamalı');
     assertSame(null, Backup::path('rastgele.sql.gz'), 'Beklenmeyen ad reddedilmeli');
-    assertSame(null, Backup::path('arcates-2026-01-01-000000.sql.gz'), 'Var olmayan dosya null dondurmeli');
+    assertSame(null, Backup::path('arcates-2026-01-01-000000.sql.gz'), 'Var olmayan dosya null döndürmeli');
 });
 
-test('F-P11-e', 'Panel istatistik ve yedekleme ekranlari acilir', function (): void {
+test('F-P11-e', 'Panel istatistik ve yedekleme ekranları açılır', function (): void {
     $db = arc_need_db();
     arc_login_as($db, 'admin');
     $db->run('DELETE FROM visits');
@@ -231,23 +231,23 @@ test('F-P11-e', 'Panel istatistik ve yedekleme ekranlari acilir', function (): v
         Request::make('GET', admin_url('istatistik')),
         []
     );
-    assertSame(200, $stats->status(), 'Istatistik ekrani acilmali');
-    assertContains('/istatistik-testi', $stats->body(), 'Sayfa listede olmali');
-    assertContains('Cihaz dagilimi', $stats->body(), 'Cihaz dagilimi bulunmali');
-    assertContains('Dil dagilimi', $stats->body(), 'Dil dagilimi bulunmali');
+    assertSame(200, $stats->status(), 'İstatistik ekranı açılmalı');
+    assertContains('/istatistik-testi', $stats->body(), 'Sayfa listede olmalı');
+    assertContains('Cihaz dağılımı', $stats->body(), 'Cihaz dağılımı bulunmalı');
+    assertContains('Dil dağılımı', $stats->body(), 'Dil dağılımı bulunmalı');
 
     $backups = (new Arcates\Controllers\Admin\BackupController())->index(
         Request::make('GET', admin_url('yedekleme')),
         []
     );
-    assertSame(200, $backups->status(), 'Yedekleme ekrani acilmali');
-    assertContains('Simdi yedek al', $backups->body(), 'Elle yedek alma bulunmali');
+    assertSame(200, $backups->status(), 'Yedekleme ekranı açılmalı');
+    assertContains('Şimdi yedek al', $backups->body(), 'Elle yedek alma bulunmalı');
 
     $db->run('DELETE FROM visits');
     arc_logout_test();
 });
 
-test('S-P11-a', 'Editor rolu yedeklemeye erisemez', function (): void {
+test('S-P11-a', 'Editör rolü yedeklemeye erişemez', function (): void {
     $db = arc_need_db();
     $id = arc_login_as($db, 'editor');
 
@@ -255,14 +255,14 @@ test('S-P11-a', 'Editor rolu yedeklemeye erisemez', function (): void {
         Request::make('GET', admin_url('yedekleme')),
         []
     );
-    assertSame(403, $response->status(), 'Editor icin 403 donmeli');
+    assertSame(403, $response->status(), 'Editör için 403 dönmeli');
 
     // Istatistik editore aciktir.
     $stats = (new Arcates\Controllers\Admin\StatsController())->index(
         Request::make('GET', admin_url('istatistik')),
         []
     );
-    assertSame(200, $stats->status(), 'Editor istatistigi gorebilmeli');
+    assertSame(200, $stats->status(), 'Editör istatistiği görebilmeli');
 
     arc_logout_test();
     $db->run('DELETE FROM users WHERE id = :id', [':id' => $id]);

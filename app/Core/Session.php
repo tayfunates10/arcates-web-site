@@ -53,7 +53,7 @@ final class Session
         if (is_int($last) && (time() - $last) > $idle) {
             self::destroy();
             self::start();
-            self::flash('warning', 'Oturumunuz islemsizlik nedeniyle sonlandirildi.');
+            self::flash('warning', 'Oturumunuz işlemsizlik nedeniyle sonlandırıldı.');
         }
 
         $_SESSION['_last_activity'] = time();

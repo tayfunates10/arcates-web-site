@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit("Bu arac yalnizca komut satirindan calisir.\n");
+    exit("Bu araç yalnızca komut satırından çalışır.\n");
 }
 
 define('ARC_ROOT', dirname(__DIR__));
@@ -29,7 +29,7 @@ date_default_timezone_set((string) Config::get('app.timezone', 'Europe/Istanbul'
 try {
     Database::instance()->connect();
 } catch (Throwable $e) {
-    fwrite(STDERR, 'Veritabanina baglanilamadi: ' . $e->getMessage() . "\n");
+    fwrite(STDERR, 'Veritabanına bağlanılamadı: ' . $e->getMessage() . "\n");
     exit(1);
 }
 
@@ -38,12 +38,12 @@ try {
     $path     = Backup::path($filename);
     $size     = $path !== null ? filesize($path) : 0;
 
-    Logger::info('Yedek alindi', ['dosya' => $filename, 'boyut' => $size]);
-    echo "Yedek alindi: {$filename} (" . number_format((float) $size / 1024, 1) . " KB)\n";
+    Logger::info('Yedek alındı', ['dosya' => $filename, 'boyut' => $size]);
+    echo "Yedek alındı: {$filename} (" . number_format((float) $size / 1024, 1) . " KB)\n";
     echo 'Saklanan yedek: ' . count(Backup::listing()) . "\n";
 } catch (Throwable $e) {
-    Logger::error('Yedek alinamadi: ' . $e->getMessage());
-    fwrite(STDERR, 'Yedek alinamadi: ' . $e->getMessage() . "\n");
+    Logger::error('Yedek alınamadı: ' . $e->getMessage());
+    fwrite(STDERR, 'Yedek alınamadı: ' . $e->getMessage() . "\n");
     exit(1);
 }
 

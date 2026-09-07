@@ -23,7 +23,7 @@ use Arcates\Core\Security;
   <div class="field">
     <label for="durum">Durum</label>
     <select id="durum" name="durum">
-      <option value="">Tumu</option>
+      <option value="">Tümü</option>
       <?php foreach ($statuses as $key => $label): ?>
         <option value="<?= Security::e($key) ?>" <?= $status === $key ? 'selected' : '' ?>>
           <?= Security::e($label) ?>
@@ -45,7 +45,7 @@ use Arcates\Core\Security;
 </form>
 
 <section class="panel">
-  <h2 class="panel__title"><?= Security::e((string) $total) ?> kayit</h2>
+  <h2 class="panel__title"><?= Security::e((string) $total) ?> kayıt</h2>
 
   <div class="table-scroll">
     <table class="table">
@@ -53,7 +53,7 @@ use Arcates\Core\Security;
         <tr>
           <th scope="col">Tarih</th>
           <th scope="col">Ad</th>
-          <th scope="col">Iletisim</th>
+          <th scope="col">İletişim</th>
           <th scope="col">Hizmet</th>
           <th scope="col">Kaynak sayfa</th>
           <th scope="col">Durum</th>
@@ -61,7 +61,7 @@ use Arcates\Core\Security;
       </thead>
       <tbody>
         <?php if (!$rows): ?>
-          <tr><td colspan="6" class="muted">Kayit yok.</td></tr>
+          <tr><td colspan="6" class="muted">Kayıt yok.</td></tr>
         <?php endif; ?>
 
         <?php foreach ($rows as $row): ?>
@@ -106,19 +106,19 @@ use Arcates\Core\Security;
 <div class="grid grid--2">
 
   <section class="panel">
-    <h2 class="panel__title">Hangi sayfa is getiriyor</h2>
-    <p class="muted">Son 90 gun. Kaynak sayfa, formun gonderildigi adrestir.</p>
+    <h2 class="panel__title">Hangi sayfa iş getiriyor</h2>
+    <p class="muted">Son 90 gün. Kaynak sayfa, formun gönderildiği adrestir.</p>
 
     <?php if (!$conversion): ?>
-      <p class="muted">Henuz veri yok.</p>
+      <p class="muted">Henüz veri yok.</p>
     <?php else: ?>
       <table class="table">
         <thead>
           <tr>
             <th scope="col">Sayfa</th>
-            <th scope="col" class="num">Kayit</th>
-            <th scope="col" class="num">Surecte</th>
-            <th scope="col" class="num">Kazanildi</th>
+            <th scope="col" class="num">Kayıt</th>
+            <th scope="col" class="num">Süreçte</th>
+            <th scope="col" class="num">Kazanıldı</th>
           </tr>
         </thead>
         <tbody>
@@ -138,10 +138,10 @@ use Arcates\Core\Security;
   </section>
 
   <section class="panel">
-    <h2 class="panel__title">Kaynak dagilimi</h2>
+    <h2 class="panel__title">Kaynak dağılımı</h2>
 
     <?php if (!$sources): ?>
-      <p class="muted">Henuz veri yok.</p>
+      <p class="muted">Henüz veri yok.</p>
     <?php else: ?>
       <?php $max = max(1, max(array_column($sources, 'count'))); ?>
       <ul class="funnel">
@@ -160,10 +160,10 @@ use Arcates\Core\Security;
 </div>
 
 <section class="panel panel--form">
-  <h2 class="panel__title">Saklama suresi</h2>
+  <h2 class="panel__title">Saklama süresi</h2>
   <p class="muted">
-    KVKK geregi kayitlar sinirsiz saklanmaz. Suresi dolan kayitlar bu
-    ekrandan veya gunluk gorevle silinir.
+    KVKK gereği kayıtlar sınırsız saklanmaz. Süresi dolan kayıtlar bu
+    ekrandan veya günlük görevle silinir.
   </p>
 
   <form method="post" action="<?= Security::e(admin_url('formlar/temizle')) ?>"
@@ -171,13 +171,13 @@ use Arcates\Core\Security;
     <?= csrf_field() ?>
 
     <div class="field">
-      <label for="days">Saklama suresi (gun)</label>
+      <label for="days">Saklama süresi (gün)</label>
       <input type="number" id="days" name="days" min="30" max="3650" value="<?= (int) $retention ?>">
-      <span class="field__hint">Bu suredan eski kayitlar silinir.</span>
+      <span class="field__hint">Bu süreden eski kayıtlar silinir.</span>
     </div>
 
     <div class="form__actions">
-      <button class="btn btn--danger" type="submit">Suresi dolanlari sil</button>
+      <button class="btn btn--danger" type="submit">Süresi dolanları sil</button>
     </div>
   </form>
 </section>

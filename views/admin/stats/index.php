@@ -23,23 +23,23 @@ $totalSessions = array_sum(array_column($series, 'sessions'));
 
 <form class="filters" method="get" action="<?= Security::e(admin_url('istatistik')) ?>">
   <div class="field">
-    <label for="gun">Donem</label>
+    <label for="gun">Dönem</label>
     <select id="gun" name="gun">
-      <?php foreach ([7 => 'Son 7 gun', 30 => 'Son 30 gun', 90 => 'Son 90 gun', 365 => 'Son 1 yil'] as $value => $label): ?>
+      <?php foreach ([7 => 'Son 7 gün', 30 => 'Son 30 gün', 90 => 'Son 90 gün', 365 => 'Son 1 yıl'] as $value => $label): ?>
         <option value="<?= (int) $value ?>" <?= $days === $value ? 'selected' : '' ?>><?= Security::e($label) ?></option>
       <?php endforeach; ?>
     </select>
   </div>
-  <button class="btn btn--ghost btn--sm" type="submit">Goster</button>
+  <button class="btn btn--ghost btn--sm" type="submit">Göster</button>
   <a class="btn btn--ghost btn--sm"
      href="<?= Security::e(admin_url('istatistik/csv') . '?ay=' . rawurlencode($month)) ?>">
-    Aylik CSV
+    Aylık CSV
   </a>
 </form>
 
 <div class="cards">
   <div class="card card--stat">
-    <span class="card__label">Goruntuleme</span>
+    <span class="card__label">Görüntüleme</span>
     <strong class="card__value"><?= Security::e(number_format($totalViews, 0, ',', '.')) ?></strong>
   </div>
   <div class="card card--stat">
@@ -47,27 +47,27 @@ $totalSessions = array_sum(array_column($series, 'sessions'));
     <strong class="card__value"><?= Security::e(number_format($totalSessions, 0, ',', '.')) ?></strong>
   </div>
   <div class="card card--stat">
-    <span class="card__label">Gunluk ortalama</span>
+    <span class="card__label">Günlük ortalama</span>
     <strong class="card__value"><?= Security::e(number_format($totalViews / max(1, $days), 1, ',', '.')) ?></strong>
   </div>
   <div class="card card--stat">
-    <span class="card__label">Bot istegi (grafikte yok)</span>
+    <span class="card__label">Bot isteği (grafikte yok)</span>
     <strong class="card__value"><?= Security::e(number_format($bots, 0, ',', '.')) ?></strong>
   </div>
 </div>
 
 <section class="panel">
-  <h2 class="panel__title">Gunluk goruntuleme</h2>
+  <h2 class="panel__title">Günlük görüntüleme</h2>
 
   <?php if ($totalViews === 0): ?>
-    <p class="muted">Bu donemde ziyaret kaydi yok.</p>
+    <p class="muted">Bu dönemde ziyaret kaydı yok.</p>
   <?php else: ?>
     <div class="chart" role="img"
-         aria-label="Son <?= (int) $days ?> gunun gunluk goruntulemesi. Toplam <?= (int) $totalViews ?>.">
+         aria-label="Son <?= (int) $days ?> günün günlük görüntülemesi. Toplam <?= (int) $totalViews ?>.">
       <?php foreach ($series as $day): ?>
         <?php $step = max(5, (int) (round(((int) $day['views'] / $maxViews) * 20) * 5)); ?>
         <span class="chart__bar is-h<?= Security::e((string) $step) ?>"
-              title="<?= Security::e(format_date($day['day']) . ': ' . $day['views'] . ' goruntuleme, ' . $day['sessions'] . ' oturum') ?>"></span>
+              title="<?= Security::e(format_date($day['day']) . ': ' . $day['views'] . ' görüntüleme, ' . $day['sessions'] . ' oturum') ?>"></span>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
@@ -76,12 +76,12 @@ $totalSessions = array_sum(array_column($series, 'sessions'));
 <div class="grid grid--2">
 
   <section class="panel">
-    <h2 class="panel__title">En cok girilen sayfalar</h2>
+    <h2 class="panel__title">En çok girilen sayfalar</h2>
     <?php if (!$topPaths): ?>
-      <p class="muted">Kayit yok.</p>
+      <p class="muted">Kayıt yok.</p>
     <?php else: ?>
       <table class="table">
-        <thead><tr><th scope="col">Adres</th><th scope="col" class="num">Goruntuleme</th><th scope="col" class="num">Oturum</th></tr></thead>
+        <thead><tr><th scope="col">Adres</th><th scope="col" class="num">Görüntüleme</th><th scope="col" class="num">Oturum</th></tr></thead>
         <tbody>
           <?php foreach ($topPaths as $row): ?>
             <tr>
@@ -96,9 +96,9 @@ $totalSessions = array_sum(array_column($series, 'sessions'));
   </section>
 
   <section class="panel">
-    <h2 class="panel__title">Referans kaynaklari</h2>
+    <h2 class="panel__title">Referans kaynakları</h2>
     <?php if (!$referrers): ?>
-      <p class="muted">Kayit yok.</p>
+      <p class="muted">Kayıt yok.</p>
     <?php else: ?>
       <?php $maxRef = max(1, max(array_column($referrers, 'count'))); ?>
       <ul class="funnel">
@@ -119,9 +119,9 @@ $totalSessions = array_sum(array_column($series, 'sessions'));
 <div class="grid grid--2">
 
   <section class="panel">
-    <h2 class="panel__title">Cihaz dagilimi</h2>
+    <h2 class="panel__title">Cihaz dağılımı</h2>
     <?php if (!$devices): ?>
-      <p class="muted">Kayit yok.</p>
+      <p class="muted">Kayıt yok.</p>
     <?php else: ?>
       <?php $maxDevice = max(1, max(array_column($devices, 'total'))); ?>
       <ul class="funnel">
@@ -138,9 +138,9 @@ $totalSessions = array_sum(array_column($series, 'sessions'));
   </section>
 
   <section class="panel">
-    <h2 class="panel__title">Dil dagilimi</h2>
+    <h2 class="panel__title">Dil dağılımı</h2>
     <?php if (!$languages): ?>
-      <p class="muted">Kayit yok.</p>
+      <p class="muted">Kayıt yok.</p>
     <?php else: ?>
       <?php $maxLang = max(1, max(array_column($languages, 'total'))); ?>
       <ul class="funnel">

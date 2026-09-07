@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit("Bu arac yalnizca komut satirindan calisir.\n");
+    exit("Bu araç yalnızca komut satırından çalışır.\n");
 }
 
 define('ARC_ROOT', dirname(__DIR__));
@@ -32,7 +32,7 @@ try {
     $db = Database::instance();
     $db->connect();
 } catch (Throwable $e) {
-    fwrite(STDERR, 'Veritabanina baglanilamadi: ' . $e->getMessage() . "\n");
+    fwrite(STDERR, 'Veritabanına bağlanılamadı: ' . $e->getMessage() . "\n");
     exit(1);
 }
 
@@ -40,29 +40,29 @@ $migrator = new Migrator($db);
 $pending  = $migrator->pending();
 
 if (!$pending) {
-    echo "Bekleyen goc yok.\n";
+    echo "Bekleyen göç yok.\n";
     exit(0);
 }
 
-echo count($pending) . " bekleyen goc bulundu:\n";
+echo count($pending) . " bekleyen göç bulundu:\n";
 foreach ($pending as $file) {
     echo '  - ' . $file . "\n";
 }
 
 if ($dry) {
-    echo "Kuru calisma; hicbir sey uygulanmadi.\n";
+    echo "Kuru çalışma; hiçbir şey uygulanmadı.\n";
     exit(0);
 }
 
 foreach ($pending as $file) {
     try {
         $migrator->apply($file);
-        echo "Uygulandi: {$file}\n";
+        echo "Uygulandı: {$file}\n";
     } catch (Throwable $e) {
-        fwrite(STDERR, "Basarisiz: {$file}\n  " . $e->getMessage() . "\n");
+        fwrite(STDERR, "Başarısız: {$file}\n  " . $e->getMessage() . "\n");
         exit(1);
     }
 }
 
-echo "Tum gocler uygulandi.\n";
+echo "Tüm göçler uygulandı.\n";
 exit(0);

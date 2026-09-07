@@ -88,9 +88,9 @@ final class DashboardController extends Controller
     {
         $labels = [
             'new'       => 'Yeni',
-            'contacted' => 'Arandi',
+            'contacted' => 'Arandı',
             'quoted'    => 'Teklif',
-            'won'       => 'Kazanildi',
+            'won'       => 'Kazanıldı',
             'lost'      => 'Kaybedildi',
         ];
 

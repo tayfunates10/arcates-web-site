@@ -168,7 +168,7 @@ final class Lang
     private static function nativeName(string $code): string
     {
         return match ($code) {
-            'tr'    => 'Turkce',
+            'tr'    => 'Türkçe',
             'en'    => 'English',
             'de'    => 'Deutsch',
             'ar'    => 'العربية',

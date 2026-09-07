@@ -60,7 +60,7 @@ final class Redirect extends Model
 
             if (isset($seen[$next])) {
                 // Dongu; ilk hedefte dur ve kaydet.
-                Logger::warning('Yonlendirme dongusu', ['from' => $path, 'at' => $next]);
+                Logger::warning('Yönlendirme döngüsü', ['from' => $path, 'at' => $next]);
                 $target = $next;
                 break;
             }
@@ -101,31 +101,31 @@ final class Redirect extends Model
         $to   = self::normalise($to);
 
         if ($from === '' || $to === '') {
-            return ['ok' => false, 'message' => 'Kaynak ve hedef adres bos olamaz.'];
+            return ['ok' => false, 'message' => 'Kaynak ve hedef adres boş olamaz.'];
         }
 
         if ($from === $to) {
-            return ['ok' => false, 'message' => 'Kaynak ve hedef adres ayni olamaz.'];
+            return ['ok' => false, 'message' => 'Kaynak ve hedef adres aynı olamaz.'];
         }
 
         if (self::wouldLoop($from, $to, $ignoreId)) {
-            return ['ok' => false, 'message' => 'Bu kayit bir yonlendirme dongusu olusturur.'];
+            return ['ok' => false, 'message' => 'Bu kayıt bir yönlendirme döngüsü oluşturur.'];
         }
 
         $existing = self::byFrom($from);
 
         if ($existing !== null && (int) $existing['id'] !== ($ignoreId ?? 0)) {
             self::db()->update('redirects', ['to_path' => $to, 'code' => $code], ['id' => (int) $existing['id']]);
-            return ['ok' => true, 'message' => 'Yonlendirme guncellendi.'];
+            return ['ok' => true, 'message' => 'Yönlendirme güncellendi.'];
         }
 
         if ($ignoreId !== null && $ignoreId > 0) {
             self::db()->update('redirects', ['from_path' => $from, 'to_path' => $to, 'code' => $code], ['id' => $ignoreId]);
-            return ['ok' => true, 'message' => 'Yonlendirme guncellendi.'];
+            return ['ok' => true, 'message' => 'Yönlendirme güncellendi.'];
         }
 
         self::db()->insert('redirects', ['from_path' => $from, 'to_path' => $to, 'code' => $code]);
-        return ['ok' => true, 'message' => 'Yonlendirme eklendi.'];
+        return ['ok' => true, 'message' => 'Yönlendirme eklendi.'];
     }
 
     /**
@@ -173,7 +173,7 @@ final class Redirect extends Model
         $result = self::put($from, $to, 301);
 
         if (!$result['ok']) {
-            Logger::warning('Slug degisimi icin yonlendirme yazilamadi', [
+            Logger::warning('Slug değişimi için yönlendirme yazılamadı', [
                 'from'   => $from,
                 'to'     => $to,
                 'reason' => $result['message'],

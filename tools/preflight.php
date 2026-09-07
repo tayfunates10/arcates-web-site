@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit("Bu arac yalnizca komut satirindan calisir.\n");
+    exit("Bu araç yalnızca komut satırından çalışır.\n");
 }
 
 define('ARC_ROOT', dirname(__DIR__));
@@ -52,23 +52,23 @@ function check(string $label, ?bool $ok, string $detail = '', string $level = 'e
 // --- Yapilandirma -----------------------------------------------------------
 
 check('config/config.php mevcut', Config::exists());
-check('display_errors kapali (app.debug)', !(bool) Config::get('app.debug', false),
+check('display_errors kapalı (app.debug)', !(bool) Config::get('app.debug', false),
     'app.debug = ' . (Config::get('app.debug') ? 'true' : 'false'));
-check('base_url https ile basliyor', str_starts_with((string) Config::get('app.base_url', ''), 'https://'),
+check('base_url https ile başlıyor', str_starts_with((string) Config::get('app.base_url', ''), 'https://'),
     (string) Config::get('app.base_url', ''));
-check('Oturum cerezi secure', (bool) Config::get('security.cookie_secure', true));
+check('Oturum çerezi secure', (bool) Config::get('security.cookie_secure', true));
 
 // --- Kurulum ve dosya erisimi -----------------------------------------------
 
-check('/install erisilemez (installed.lock)', is_file(ARC_ROOT . '/storage/installed.lock'));
-check('config klasoru web kokunun disinda', !is_dir(ARC_ROOT . '/public/config'));
-check('.git klasoru web kokunun disinda', !is_dir(ARC_ROOT . '/public/.git'));
+check('/install erişilemez (installed.lock)', is_file(ARC_ROOT . '/storage/installed.lock'));
+check('config klasörü web kökünün dışında', !is_dir(ARC_ROOT . '/public/config'));
+check('.git klasörü web kökünün dışında', !is_dir(ARC_ROOT . '/public/.git'));
 
 $uploads = (string) @file_get_contents(ARC_ROOT . '/public/uploads/.htaccess');
-check('uploads klasorunde PHP kapali', str_contains($uploads, 'php_flag engine off'));
+check('uploads klasöründe PHP kapalı', str_contains($uploads, 'php_flag engine off'));
 
 $htaccess = (string) @file_get_contents(ARC_ROOT . '/public/.htaccess');
-check('SSL ve https yonlendirmesi', str_contains($htaccess, 'RewriteCond %{HTTPS} off'));
+check('SSL ve https yönlendirmesi', str_contains($htaccess, 'RewriteCond %{HTTPS} off'));
 
 $activeRules = 0;
 foreach (explode("\n", $htaccess) as $line) {
@@ -77,12 +77,12 @@ foreach (explode("\n", $htaccess) as $line) {
         $activeRules++;
     }
 }
-check('www tercihi tek yonde sabit', $activeRules === 2, $activeRules . ' etkin 301 kurali');
+check('www tercihi tek yönde sabit', $activeRules === 2, $activeRules . ' etkin 301 kuralı');
 
 // --- Yazilabilirlik ---------------------------------------------------------
 
 foreach (['storage', 'storage/logs', 'storage/backups', 'public/uploads'] as $dir) {
-    check('Yazilabilir: ' . $dir, is_writable(ARC_ROOT . '/' . $dir));
+    check('Yazılabilir: ' . $dir, is_writable(ARC_ROOT . '/' . $dir));
 }
 
 // --- Veritabani ve icerik ---------------------------------------------------
@@ -90,18 +90,18 @@ foreach (['storage', 'storage/logs', 'storage/backups', 'public/uploads'] as $di
 $db = Database::instance();
 
 if (!$db->canConnect()) {
-    check('Veritabani baglantisi', false, 'baglanilamadi');
+    check('Veritabanı bağlantısı', false, 'baglanilamadi');
 } else {
-    check('Veritabani baglantisi', true);
+    check('Veritabanı bağlantısı', true);
 
     // Guclu sifre kontrolu yapilamaz (karma saklanir); en az bir admin olmali.
     $admins = (int) $db->value('SELECT COUNT(*) FROM users WHERE role = :r AND status = 1', [':r' => 'admin']);
-    check('En az bir etkin yonetici', $admins > 0, $admins . ' yonetici');
-    check('Panel sifresi guclu', null, 'elle dogrulanir', 'elle');
+    check('En az bir etkin yönetici', $admins > 0, $admins . ' yönetici');
+    check('Panel şifresi güçlü', null, 'elle doğrulanır', 'elle');
 
     // Favicon ve OG gorseli
     check('Favicon mevcut', is_file(ARC_ROOT . '/public/assets/img/favicon.svg'));
-    check('Varsayilan OG gorseli mevcut', is_file(ARC_ROOT . '/public/assets/img/og-default.png'));
+    check('Varsayılan OG görseli mevcut', is_file(ARC_ROOT . '/public/assets/img/og-default.png'));
 
     // NAP bilgileri
     $nap = ['nap_name', 'nap_phone', 'nap_district', 'nap_city'];
@@ -112,19 +112,19 @@ if (!$db->canConnect()) {
         }
     }
     check('NAP bilgileri dolu', $eksikNap === [], $eksikNap ? 'eksik: ' . implode(', ', $eksikNap) : '');
-    check('NAP Google Isletme Profili ile ayni', null, 'elle dogrulanir', 'elle');
+    check('NAP Google İşletme Profili ile aynı', null, 'elle doğrulanır', 'elle');
 
     // Sitemap ve robots
     $entries = (new SitemapController())->entries();
-    check('sitemap.xml icerik uretiyor', count($entries) > 0, count($entries) . ' adres');
-    check('sitemap.xml Search Console\'a gonderildi', null, 'elle dogrulanir', 'elle');
+    check('sitemap.xml içerik üretiyor', count($entries) > 0, count($entries) . ' adres');
+    check('sitemap.xml Search Console\'a gönderildi', null, 'elle doğrulanır', 'elle');
 
     $robots = (new RobotsController())->body();
-    check('robots.txt sitemap satiri iceriyor', str_contains($robots, 'Sitemap:'));
+    check('robots.txt sitemap satırı içeriyor', str_contains($robots, 'Sitemap:'));
     check('robots.txt panel yolunu engelliyor', str_contains($robots, 'Disallow: /' . trim((string) Config::get('app.admin_path', 'panel'), '/')));
 
     // 404 sayfasi
-    check('404 sayfasi mevcut', is_file(ARC_ROOT . '/views/errors/404.php'));
+    check('404 sayfası mevcut', is_file(ARC_ROOT . '/views/errors/404.php'));
 
     // Icerik skoru: guclu uyari tasiyan sayfa olmamali
     $strong = [];
@@ -146,7 +146,7 @@ if (!$db->canConnect()) {
             }
         }
     }
-    check('Guclu icerik uyarisi yok', $strong === [], $strong ? implode('; ', array_slice($strong, 0, 3)) : count($pages) . ' sayfa denetlendi');
+    check('Güçlü içerik uyarısı yok', $strong === [], $strong ? implode('; ', array_slice($strong, 0, 3)) : count($pages) . ' sayfa denetlendi');
 
     // Ilce sayfalari — bolum 4.7
     $locations = $db->all(
@@ -169,31 +169,31 @@ if (!$db->canConnect()) {
         }
     }
 
-    check('Ilce sayfalari 500+ kelime', $thin === [], $thin ? implode(', ', $thin) : count($locations) . ' ilce');
-    check('Her ilcenin referansi var', $noRef === [], $noRef ? implode(', ', $noRef) : '');
-    check('Her ilcenin SSS kaydi var', $noFaq === [], $noFaq ? implode(', ', $noFaq) : '');
+    check('İlçe sayfaları 500+ kelime', $thin === [], $thin ? implode(', ', $thin) : count($locations) . ' ilçe');
+    check('Her ilçenin referansı var', $noRef === [], $noRef ? implode(', ', $noRef) : '');
+    check('Her ilçenin SSS kaydı var', $noFaq === [], $noFaq ? implode(', ', $noFaq) : '');
 
     // Demo icerik
-    $demo = (int) $db->value('SELECT COUNT(*) FROM projects WHERE client_name LIKE :q', [':q' => 'Ornek %']);
-    check('Demo icerik temizlendi', $demo === 0, $demo > 0 ? $demo . ' ornek referans kayitli' : '', 'uyari');
+    $demo = (int) $db->value('SELECT COUNT(*) FROM projects WHERE client_name LIKE :q', [':q' => 'Örnek %']);
+    check('Demo içerik temizlendi', $demo === 0, $demo > 0 ? $demo . ' örnek referans kayıtlı' : '', 'uyari');
 
     // Form
-    check('Form test edildi, e-posta ulasiyor', null, 'elle dogrulanir', 'elle');
+    check('Form test edildi, e-posta ulaşıyor', null, 'elle doğrulanır', 'elle');
 
     // Yedek
     $backups = Backup::listing();
     check('En az bir yedek mevcut', $backups !== [], count($backups) . ' yedek');
-    check('Otomatik yedek cron\'u kuruldu', null, 'elle dogrulanir', 'elle');
-    check('Yedekten bir kez geri yuklendi', null, 'elle dogrulanir', 'elle');
+    check('Otomatik yedek cron\'u kuruldu', null, 'elle doğrulanır', 'elle');
+    check('Yedekten bir kez geri yüklendi', null, 'elle doğrulanır', 'elle');
 
     // Yapisal veri
-    check('Yapisal veri Rich Results testinden gecti', null, 'elle dogrulanir', 'elle');
-    check('Analytics baglandi', trim((string) Settings::get('analytics_code', '')) !== '', '', 'uyari');
+    check('Yapısal veri Rich Results testinden geçti', null, 'elle doğrulanır', 'elle');
+    check('Analytics bağlandı', trim((string) Settings::get('analytics_code', '')) !== '', '', 'uyari');
 }
 
 // --- Cikti ------------------------------------------------------------------
 
-echo "\nArcates — yayin oncesi teslim listesi (DOCS.md 17)\n";
+echo "\nArcates — yayın öncesi teslim listesi (DOCS.md 17)\n";
 echo str_repeat('=', 70), "\n";
 
 foreach ($rows as $row) {
@@ -202,16 +202,18 @@ foreach ($rows as $row) {
         $row['ok'] === false => $row['level'] === 'engel' ? '  [!!]  ' : '  [uy]  ',
         default              => '  [el]  ',
     };
-    printf("%s%-44s %s\n", $mark, $row['label'], $row['detail']);
+    // Turkce harfler cok baytlidir; hizalama karakter sayisina gore yapilir.
+    $pad = max(0, 44 - mb_strlen((string) $row['label'], 'UTF-8'));
+    echo $mark . $row['label'] . str_repeat(' ', $pad) . ' ' . $row['detail'] . "\n";
 }
 
 echo str_repeat('=', 70), "\n";
-echo "[ok] gecti   [!!] engelleyici   [uy] uyari   [el] elle dogrulanir\n";
+echo "[ok] geçti   [!!] engelleyici   [uy] uyarı   [el] elle doğrulanır\n";
 
 if ($blocking > 0) {
-    printf("\n%d engelleyici madde var; yayina cikmadan once giderin.\n\n", $blocking);
+    printf("\n%d engelleyici madde var; yayına çıkmadan önce giderin.\n\n", $blocking);
     exit(1);
 }
 
-echo "\nEngelleyici madde yok. Elle dogrulanacak maddeleri tamamlayin.\n\n";
+echo "\nEngelleyici madde yok. Elle doğrulanacak maddeleri tamamlayın.\n\n";
 exit(0);

@@ -15,7 +15,7 @@ function arc_seed(string $name): array
     return require ARC_ROOT . '/db/seed/' . $name . '.php';
 }
 
-test('F-P12-a', 'Tohum verisi bolum 4\'teki URL haritasinin tamamini kapsar', function (): void {
+test('F-P12-a', 'Tohum verisi bölüm 4\'teki URL haritasının tamamını kapsar', function (): void {
     $expected = [
         'page' => [
             'hakkimizda', 'iletisim', 'fiyatlar', 'referanslar', 'blog', 'sss',
@@ -52,30 +52,30 @@ test('F-P12-a', 'Tohum verisi bolum 4\'teki URL haritasinin tamamini kapsar', fu
         foreach ($slugs as $slug) {
             assertTrue(
                 in_array($slug, $have[$type] ?? [], true),
-                "Tohumda eksik {$type} sayfasi: /{$slug}"
+                "Tohumda eksik {$type} sayfası: /{$slug}"
             );
         }
     }
 
     // Hizmet sayfasi sayisi sartnamedeki gibi (bolum 4.2)
     assertCount(6, array_filter(arc_seed('pages'), static fn (array $i): bool => $i['type'] === 'service'));
-    assertCount(8, arc_seed('locations'), 'Sekiz ilce sayfasi olmali (bolum 4.3)');
-    assertCount(6, arc_seed('sectors'), 'Alti sektor sayfasi olmali (bolum 4.4)');
+    assertCount(8, arc_seed('locations'), 'Sekiz ilçe sayfası olmalı (bölüm 4.3)');
+    assertCount(6, arc_seed('sectors'), 'Altı sektör sayfası olmalı (bölüm 4.4)');
 });
 
-test('F-P12-b', 'Her ilce sayfasi en az 500 kelime ozgun metin icerir', function (): void {
+test('F-P12-b', 'Her ilçe sayfası en az 500 kelime özgün metin içerir', function (): void {
     // DOCS.md 4.7 — kritik kural
     foreach (arc_seed('locations') as $key => $item) {
         $words = Security::wordCount($item['content']);
         assertGreaterThan(
             499,
             $words,
-            "{$item['slug']} yalnizca {$words} kelime; en az 500 gerekir"
+            "{$item['slug']} yalnızca {$words} kelime; en az 500 gerekir"
         );
     }
 });
 
-test('F-P12-c', 'Ilce sayfalari birbirinin kopyasi degil', function (): void {
+test('F-P12-c', 'İlçe sayfaları birbirinin kopyası değil', function (): void {
     // DOCS.md 4.7 ve 9.6 — %70 uzeri ortusme doorway page riski
     $pages = arc_seed('locations');
     $keys  = array_keys($pages);
@@ -96,17 +96,17 @@ test('F-P12-c', 'Ilce sayfalari birbirinin kopyasi degil', function (): void {
     assertLessThan(
         Seo::SIMILARITY_LIMIT,
         $highest,
-        sprintf('En yuksek ortusme %.2f (%s); esik %.2f', $highest, $pair, Seo::SIMILARITY_LIMIT)
+        sprintf('En yüksek örtüşme %.2f (%s); eşik %.2f', $highest, $pair, Seo::SIMILARITY_LIMIT)
     );
 
     // Ayni ilce adi degistirilmis kopya olmadigini ayrica dogrula:
     // her sayfa kendi ilcesine ozgu en az bir terim tasimali.
     $ozgun = [
-        'edremit'   => 'Kaz Daglari',
-        'akcay'     => 'sahil seridi',
-        'altinoluk' => 'site yonetimi',
-        'burhaniye' => 'Oren',
-        'havran'    => 'seftali',
+        'edremit'   => 'Kaz Dağları',
+        'akcay'     => 'sahil şeridi',
+        'altinoluk' => 'site yönetimi',
+        'burhaniye' => 'Ören',
+        'havran'    => 'şeftali',
         'ayvalik'   => 'Cunda',
         'gomec'     => 'karavan',
         'balikesir' => 'organize sanayi',
@@ -115,12 +115,12 @@ test('F-P12-c', 'Ilce sayfalari birbirinin kopyasi degil', function (): void {
     foreach ($ozgun as $key => $terim) {
         assertTrue(
             isset($pages[$key]) && stripos($pages[$key]['content'], $terim) !== false,
-            "{$key} sayfasi kendine ozgu terimi icermeli: {$terim}"
+            "{$key} sayfası kendine özgü terimi içermeli: {$terim}"
         );
     }
 });
 
-test('F-P12-d', 'Her ilcenin referansi ve kendine ozel SSS kaydi var', function (): void {
+test('F-P12-d', 'Her ilçenin referansı ve kendine özel SSS kaydı var', function (): void {
     // DOCS.md 4.7
     $districts = array_column(arc_seed('locations'), 'district');
     $projects  = array_column(arc_seed('projects'), 'district');
@@ -128,7 +128,7 @@ test('F-P12-d', 'Her ilcenin referansi ve kendine ozel SSS kaydi var', function 
     foreach ($districts as $district) {
         assertTrue(
             in_array($district, $projects, true),
-            "Ilceye ait referans bulunmali: {$district}"
+            "İlçeye ait referans bulunmalı: {$district}"
         );
     }
 
@@ -142,7 +142,7 @@ test('F-P12-d', 'Her ilcenin referansi ve kendine ozel SSS kaydi var', function 
     foreach (arc_seed('locations') as $item) {
         assertTrue(
             isset($faqPages[$item['slug']]),
-            "Ilce sayfasina atanmis SSS bulunmali: {$item['slug']}"
+            "İlçe sayfasına atanmış SSS bulunmalı: {$item['slug']}"
         );
     }
 
@@ -153,36 +153,36 @@ test('F-P12-d', 'Her ilcenin referansi ve kendine ozel SSS kaydi var', function 
         }
         assertTrue(
             isset($faqPages[$item['slug']]),
-            "Hizmet sayfasina atanmis SSS bulunmali: {$item['slug']}"
+            "Hizmet sayfasına atanmış SSS bulunmalı: {$item['slug']}"
         );
     }
 });
 
-test('F-P12-e', 'Tohum icerigi zararli isaretleme icermez', function (): void {
+test('F-P12-e', 'Tohum içeriği zararlı işaretleme içermez', function (): void {
     foreach (['pages', 'locations', 'sectors', 'projects'] as $file) {
         foreach (arc_seed($file) as $item) {
             $content = (string) ($item['content'] ?? '');
 
-            assertNotContains('<script', $content, "Tohum iceriginde script olmamali: {$file}");
-            assertNotContains('javascript:', $content, "javascript: semasi olmamali: {$file}");
-            assertNotContains('onclick', $content, "Olay niteligi olmamali: {$file}");
+            assertNotContains('<script', $content, "Tohum içeriğinde script olmamalı: {$file}");
+            assertNotContains('javascript:', $content, "javascript: şeması olmamalı: {$file}");
+            assertNotContains('onclick', $content, "Olay niteliği olmamalı: {$file}");
 
             // Temizleyiciden gecince icerik kaybolmamali.
             $clean = Security::sanitizeHtml($content);
             assertGreaterThan(
                 0,
                 Security::wordCount($clean),
-                'Temizlik sonrasi icerik bos kalmamali: ' . ($item['slug'] ?? $file)
+                'Temizlik sonrası içerik boş kalmamalı: ' . ($item['slug'] ?? $file)
             );
         }
     }
 
     foreach (arc_seed('faqs') as $faq) {
-        assertNotContains('<script', $faq['a'], 'SSS cevabinda script olmamali');
+        assertNotContains('<script', $faq['a'], 'SSS cevabında script olmamalı');
     }
 });
 
-test('F-P12-f', 'Tohum sayfalari ic link tasir', function (): void {
+test('F-P12-f', 'Tohum sayfaları iç link taşır', function (): void {
     // DOCS.md 11.1 — her sayfada en az 3 ic link onerilir; sablon menu ve
     // alt bilgi zaten link uretir, burada icerik govdesindeki linkler sayilir.
     foreach (['pages', 'locations', 'sectors'] as $file) {
@@ -191,32 +191,32 @@ test('F-P12-f', 'Tohum sayfalari ic link tasir', function (): void {
             assertGreaterThan(
                 1,
                 $links,
-                "{$item['slug']} icerik govdesinde en az 2 ic link tasimali (bulunan: {$links})"
+                "{$item['slug']} içerik gövdesinde en az 2 iç link taşımalı (bulunan: {$links})"
             );
         }
     }
 });
 
-test('F-P12-g', 'Yayin oncesi denetim araci calisir ve maddeleri raporlar', function (): void {
+test('F-P12-g', 'Yayın öncesi denetim aracı çalışır ve maddeleri raporlar', function (): void {
     $tool = ARC_ROOT . '/tools/preflight.php';
-    assertTrue(is_file($tool), 'preflight araci bulunmali');
+    assertTrue(is_file($tool), 'preflight aracı bulunmalı');
 
     $source = (string) file_get_contents($tool);
 
     // DOCS.md 17'deki teslim listesi maddelerinin karsiliklari.
     foreach ([
-        'SSL ve https yonlendirmesi',
-        'www tercihi tek yonde sabit',
-        'display_errors kapali',
-        '/install erisilemez',
-        'Panel sifresi guclu',
+        'SSL ve https yönlendirmesi',
+        'www tercihi tek yönde sabit',
+        'display_errors kapalı',
+        '/install erişilemez',
+        'Panel şifresi güçlü',
         'Form test edildi',
         'Search Console',
-        'Analytics baglandi',
+        'Analytics bağlandı',
         'Rich Results',
-        '404 sayfasi mevcut',
+        '404 sayfası mevcut',
         'Favicon mevcut',
-        'Demo icerik temizlendi',
+        'Demo içerik temizlendi',
         'NAP',
         'Otomatik yedek',
     ] as $madde) {
@@ -224,10 +224,10 @@ test('F-P12-g', 'Yayin oncesi denetim araci calisir ve maddeleri raporlar', func
     }
 });
 
-test('F-P12-h', 'Tohum araci var olan icerigin uzerine yazmaz', function (): void {
+test('F-P12-h', 'Tohum aracı var olan içeriğin üzerine yazmaz', function (): void {
     $source = (string) file_get_contents(ARC_ROOT . '/tools/seed_content.php');
 
-    assertContains('--force', $source, 'Zorlama secenegi bulunmali');
-    assertContains('--dry', $source, 'Kuru calisma secenegi bulunmali');
-    assertContains('if ($existing !== null && !$force)', $source, 'Var olan kayit korunmali');
+    assertContains('--force', $source, 'Zorlama seçeneği bulunmalı');
+    assertContains('--dry', $source, 'Kuru çalışma seçeneği bulunmalı');
+    assertContains('if ($existing !== null && !$force)', $source, 'Var olan kayıt korunmalı');
 });

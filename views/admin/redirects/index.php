@@ -13,7 +13,7 @@ use Arcates\Core\Security;
 ?>
 
 <section class="panel panel--form">
-  <h2 class="panel__title">Yeni yonlendirme</h2>
+  <h2 class="panel__title">Yeni yönlendirme</h2>
 
   <form method="post" action="<?= Security::e(admin_url('yonlendirmeler')) ?>">
     <?= csrf_field() ?>
@@ -36,28 +36,28 @@ use Arcates\Core\Security;
       <div class="field">
         <label for="code">Kod</label>
         <select id="code" name="code">
-          <option value="301">301 — kalici</option>
-          <option value="302">302 — gecici</option>
-          <option value="307">307 — gecici, yontem korunur</option>
-          <option value="308">308 — kalici, yontem korunur</option>
+          <option value="301">301 — kalıcı</option>
+          <option value="302">302 — geçici</option>
+          <option value="307">307 — geçici, yöntem korunur</option>
+          <option value="308">308 — kalıcı, yöntem korunur</option>
         </select>
       </div>
     </div>
 
     <p class="muted">
-      Dongu olusturan kayitlar kabul edilmez: <code>/a → /b</code> varken
+      Döngü oluşturan kayıtlar kabul edilmez: <code>/a → /b</code> varken
       <code>/b → /a</code> eklenemez.
     </p>
 
     <div class="form__actions">
-      <button class="btn btn--primary" type="submit">Yonlendirme ekle</button>
+      <button class="btn btn--primary" type="submit">Yönlendirme ekle</button>
     </div>
   </form>
 </section>
 
 <section class="panel">
   <div class="panel__head">
-    <h2 class="panel__title"><?= Security::e((string) count($redirects)) ?> yonlendirme</h2>
+    <h2 class="panel__title"><?= Security::e((string) count($redirects)) ?> yönlendirme</h2>
 
     <form class="filters" method="get" action="<?= Security::e(admin_url('yonlendirmeler')) ?>">
       <div class="field">
@@ -75,14 +75,14 @@ use Arcates\Core\Security;
           <th scope="col">Kaynak</th>
           <th scope="col">Hedef</th>
           <th scope="col">Kod</th>
-          <th scope="col" class="num">Isabet</th>
+          <th scope="col" class="num">İsabet</th>
           <th scope="col">Son isabet</th>
-          <th scope="col"><span class="visually-hidden">Islemler</span></th>
+          <th scope="col"><span class="visually-hidden">İşlemler</span></th>
         </tr>
       </thead>
       <tbody>
         <?php if (!$redirects): ?>
-          <tr><td colspan="6" class="muted">Yonlendirme yok.</td></tr>
+          <tr><td colspan="6" class="muted">Yönlendirme yok.</td></tr>
         <?php endif; ?>
 
         <?php foreach ($redirects as $row): ?>
@@ -109,8 +109,8 @@ use Arcates\Core\Security;
 <section class="panel">
   <h2 class="panel__title">Bulunamayan adresler</h2>
   <p class="muted">
-    Ziyaretcilerin gelip 404 aldigi adresler. Tek tikla yonlendirmeye
-    cevirebilirsiniz.
+    Ziyaretçilerin gelip 404 aldığı adresler. Tek tıkla yönlendirmeye
+    çevirebilirsiniz.
   </p>
 
   <div class="table-scroll">
@@ -118,15 +118,15 @@ use Arcates\Core\Security;
       <thead>
         <tr>
           <th scope="col">Adres</th>
-          <th scope="col" class="num">Istek</th>
-          <th scope="col">Son gorulme</th>
-          <th scope="col">Geldigi yer</th>
-          <th scope="col">Yonlendir</th>
+          <th scope="col" class="num">İstek</th>
+          <th scope="col">Son görülme</th>
+          <th scope="col">Geldiği yer</th>
+          <th scope="col">Yönlendir</th>
         </tr>
       </thead>
       <tbody>
         <?php if (!$notFound): ?>
-          <tr><td colspan="5" class="muted">Kirik adres yok.</td></tr>
+          <tr><td colspan="5" class="muted">Kırık adres yok.</td></tr>
         <?php endif; ?>
 
         <?php foreach ($notFound as $row): ?>
@@ -142,7 +142,7 @@ use Arcates\Core\Security;
                 <label class="visually-hidden" for="to_<?= (int) $row['id'] ?>">Hedef adres</label>
                 <input type="text" id="to_<?= (int) $row['id'] ?>" name="to_path" maxlength="255"
                        placeholder="/hedef-adres" required>
-                <button class="btn btn--ghost btn--sm" type="submit">Cevir</button>
+                <button class="btn btn--ghost btn--sm" type="submit">Çevir</button>
               </form>
 
               <form method="post" action="<?= Security::e(admin_url('yonlendirmeler/404/' . (int) $row['id'] . '/sil')) ?>">

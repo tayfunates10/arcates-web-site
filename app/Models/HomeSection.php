@@ -22,15 +22,15 @@ final class HomeSection extends Model
 
     /** Bolum anahtari => insan okunur ad. DOCS.md 5 */
     public const LABELS = [
-        'header'   => 'Ust menu',
+        'header'   => 'Üst menü',
         'hero'     => 'Kahraman',
-        'strip'    => 'Sektor seridi',
-        'services' => 'Hizmet kartlari',
-        'coast'    => 'Bolge haritasi',
-        'steps'    => 'Surec',
+        'strip'    => 'Sektör şeridi',
+        'services' => 'Hizmet kartları',
+        'coast'    => 'Bölge haritası',
+        'steps'    => 'Süreç',
         'works'    => 'Referanslar',
         'faq'      => 'SSS',
-        'cta'      => 'Cagri bandi',
+        'cta'      => 'Çağrı bandı',
         'footer'   => 'Alt bilgi',
     ];
 

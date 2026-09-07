@@ -128,12 +128,12 @@ final class Settings
     public static function defaults(): array
     {
         return [
-            'site_name'          => 'Arcates Yazilim',
-            'site_tagline'       => 'Edremit Korfezi icin web tasarim ve yazilim',
-            'nap_name'           => 'Arcates Yazilim',
+            'site_name'          => 'Arcates Yazılım',
+            'site_tagline'       => 'Edremit Körfezi için web tasarım ve yazılım',
+            'nap_name'           => 'Arcates Yazılım',
             'nap_street'         => '',
             'nap_district'       => 'Edremit',
-            'nap_city'           => 'Balikesir',
+            'nap_city'           => 'Balıkesir',
             'nap_postcode'       => '',
             'nap_country'        => 'TR',
             'nap_phone'          => '',
@@ -151,7 +151,7 @@ final class Settings
             'gsc_verification'   => '',
             'analytics_code'     => '',
             'maintenance_mode'   => '0',
-            'maintenance_text'   => 'Sitemiz kisa sureligine bakimda. Kisa sure sonra tekrar deneyin.',
+            'maintenance_text'   => 'Sitemiz kısa süreliğine bakımda. Kısa süre sonra tekrar deneyin.',
             'default_lang'       => 'tr',
             'works_limit'        => '6',
             'submission_days'    => '730',

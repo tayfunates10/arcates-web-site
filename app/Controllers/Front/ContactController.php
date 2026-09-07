@@ -88,7 +88,7 @@ final class ContactController extends Controller
 
         // 2. Honeypot — dolu ise sessizce reddedilir. Test S-15
         if (trim((string) $request->post(self::HONEYPOT, '')) !== '') {
-            Logger::info('Honeypot yakalandi', ['ip' => $request->ip()]);
+            Logger::info('Honeypot yakalandı', ['ip' => $request->ip()]);
             // Bot basarili sanmali; gercek bir kayit olusmaz.
             return Response::redirect(url('/tesekkurler'));
         }
@@ -98,19 +98,19 @@ final class ContactController extends Controller
         $minimum = (int) Config::get('security.form_min_seconds', 3);
 
         if ($opened <= 0 || (time() - $opened) < $minimum) {
-            Logger::info('Cok hizli form gonderimi', ['ip' => $request->ip(), 'sure' => time() - $opened]);
-            return $this->reject($return, 'Form cok hizli gonderildi. Lutfen tekrar deneyin.');
+            Logger::info('Çok hızlı form gönderimi', ['ip' => $request->ip(), 'sure' => time() - $opened]);
+            return $this->reject($return, 'Form çok hızlı gönderildi. Lütfen tekrar deneyin.');
         }
 
         // Cok eski form (24 saatten fazla acik kalmis) da kabul edilmez.
         if ((time() - $opened) > 86400) {
-            return $this->reject($return, 'Form suresi doldu. Sayfayi yenileyip tekrar gonderin.');
+            return $this->reject($return, 'Form süresi doldu. Sayfayı yenileyip tekrar gönderin.');
         }
 
         // 4. IP basina saatlik sinir. Test S-16
         if ($this->overHourlyLimit($request->ip())) {
-            Logger::info('Saatlik form siniri asildi', ['ip' => $request->ip()]);
-            return $this->reject($return, 'Kisa surede cok fazla gonderim yapildi. Bir sure sonra tekrar deneyin.');
+            Logger::info('Saatlik form sınırı asıldı', ['ip' => $request->ip()]);
+            return $this->reject($return, 'Kısa sürede çok fazla gönderim yapıldı. Bir süre sonra tekrar deneyin.');
         }
 
         // 5. Sunucu tarafi dogrulama. DOCS.md 10.8
@@ -126,7 +126,7 @@ final class ContactController extends Controller
             ->required('email')->email('email')
             ->max('service', 80)
             ->required('message')->min('message', 10)->max('message', 4000)
-            ->accepted('kvkk', 'Aydinlatma metnini onaylamaniz gerekir.');
+            ->accepted('kvkk', 'Aydınlatma metnini onaylamanız gerekir.');
 
         if ($validator->fails()) {
             Session::flashErrors($validator->firstErrors(), [
@@ -164,7 +164,7 @@ final class ContactController extends Controller
             ]);
         } catch (Throwable $e) {
             Logger::exception($e);
-            return $this->reject($return, 'Mesajiniz kaydedilemedi. Kisa sure sonra tekrar deneyin.');
+            return $this->reject($return, 'Mesajınız kaydedilemedi. Kısa süre sonra tekrar deneyin.');
         }
 
         // 7. Yoneticiye e-posta
@@ -240,11 +240,11 @@ final class ContactController extends Controller
             $request->str('message'),
             '',
             'Kaynak sayfa : ' . (string) $request->post('_source', ''),
-            'Geldigi yer  : ' . ((string) $request->referrer() ?: '—'),
+            'Geldiği yer  : ' . ((string) $request->referrer() ?: '—'),
             'Dil          : ' . Lang::current(),
-            'Kayit no     : #' . $id,
+            'Kayıt no     : #' . $id,
             '',
-            'Panelden goruntuleyin: ' . path_url(admin_url('formlar/' . $id)),
+            'Panelden görüntüleyin: ' . path_url(admin_url('formlar/' . $id)),
         ];
 
         Mailer::send(

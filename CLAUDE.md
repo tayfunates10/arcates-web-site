@@ -1,32 +1,32 @@
-# CLAUDE.md — Arcates Web Site calisma kurallari
+# CLAUDE.md — Arcates Web Site çalışma kuralları
 
-Bu depoda calisan her yapay zeka oturumu asagidaki kurallara uyar.
-Kurallar `DOCS.md` bolum 16'dan gelir; celiski halinde `DOCS.md` esas alinir.
+Bu depoda çalışan her yapay zeka oturumu aşağıdaki kurallara uyar.
+Kurallar `DOCS.md` bölüm 16'dan gelir; çelişki halinde `DOCS.md` esas alınır.
 
-1. Bu dosyayi ve `DOCS.md`'yi oku, sonra calis.
-2. Tek seferde tek modul, tek dal.
-3. Dosyayi degistirmeden once oku. Var olan dosyanin ustune kor yazma.
+1. Bu dosyayı ve `DOCS.md`'yi oku, sonra çalış.
+2. Tek seferde tek modül, tek dal.
+3. Dosyayı değiştirmeden önce oku. Var olan dosyanın üstüne kör yazma.
 4. Composer, framework, npm paketi ekleme. Harici script ekleme.
-   Tek harici kaynak Google Fonts'tur.
-5. Sema degisikligi `db/migrations/YYYY_MM_DD_NNNN_aciklama.sql` altina yeni
-   dosya olarak yazilir; `db/schema.sql` elle duzenlenmez.
-6. Her SQL hazirlanmis ifade. Her cikti `Security::e()`. Her POST formunda CSRF.
-7. Animasyon eklerken `DOCS.md` bolum 7'deki kurallari uygula: sadece
-   `transform`/`opacity`, `html.js` korumasi, `prefers-reduced-motion`.
-8. Sablona sabit metin gomme. Her metin panelden gelmeli.
-9. Modul bitince: testleri yaz, `CHANGELOG.md`'ye satir ekle, `DOCS.md`'yi guncelle.
-10. Her turun sonunda soyle: hangi dosyalar degisti, ne kirilmis olabilir, elle
-    hangi test numaralari calistirilmali.
-11. "Test ettim, calisiyor" deme. Test dosyasini yaz; calistirma insana aittir.
+   Tek harici kaynak Google Fonts'tür.
+5. Şema değişikliği `db/migrations/YYYY_MM_DD_NNNN_aciklama.sql` altına yeni
+   dosya olarak yazılır; `db/schema.sql` elle düzenlenmez.
+6. Her SQL hazırlanmış ifade. Her çıktı `Security::e()`. Her POST formunda CSRF.
+7. Animasyon eklerken `DOCS.md` bölüm 7'deki kuralları uygula: sadece
+   `transform`/`opacity`, `html.js` koruması, `prefers-reduced-motion`.
+8. Şablona sabit metin gömme. Her metin panelden gelmeli.
+9. Modül bitince: testleri yaz, `CHANGELOG.md`'ye satır ekle, `DOCS.md`'yi güncelle.
+10. Her türün sonunda söyle: hangi dosyalar değişti, ne kırılmış olabilir, elle
+    hangi test numaraları çalıştırılmalı.
+11. "Test ettim, çalışıyor" deme. Test dosyasını yaz; çalıştırma insana aittir.
 
 ## Dur ve sor
 
-- Sema degisikligi gerekiyorsa
-- Cekirdek sinif imzasi degisecekse
-- Bir guvenlik kurali isi zorlastiriyorsa
-- Bir animasyon performans hedefini asiyorsa
+- Şema değişikliği gerekiyorsa
+- Çekirdek sınıf imzası değişecekse
+- Bir güvenlik kuralı işi zorlaştırıyorsa
+- Bir animasyon performans hedefini aşıyorsa
 
-## Hizli komutlar
+## Hızlı komutlar
 
 ```
 php tests/run.php                 # tum testler
@@ -35,12 +35,12 @@ find app views config tests -name "*.php" -print0 | xargs -0 -n1 php -l
 php tools/migrate.php             # bekleyen gocleri uygula
 ```
 
-## Kabul kapisi (DOCS.md 14.9)
+## Kabul kapısı (DOCS.md 14.9)
 
-Bir modul su sartlar saglanmadan `main` dalina giremez:
-- Ilgili U testleri geciyor
-- S testlerinin tamami geciyor
-- Degisiklik on yuzu etkiliyorsa A ve E testleri geciyor
-- `php -l` tum dosyalarda temiz
-- `CHANGELOG.md` guncellendi
-- `DOCS.md`'de eksik varsa guncellendi
+Bir modül şu şartlar sağlanmadan `main` dalına giremez:
+- İlgili U testleri geçiyor
+- S testlerinin tamamı geçiyor
+- Değişiklik on yüzü etkiliyorsa A ve E testleri geçiyor
+- `php -l` tüm dosyalarda temiz
+- `CHANGELOG.md` güncellendi
+- `DOCS.md`'de eksik varsa güncellendi

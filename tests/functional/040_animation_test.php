@@ -33,7 +33,7 @@ function arc_site_js(): string
     return $js;
 }
 
-test('A-01', 'JavaScript kapaliyken hicbir icerik gizli kalmaz', function (): void {
+test('A-01', 'JavaScript kapalıyken hiçbir içerik gizli kalmaz', function (): void {
     $css = arc_site_css();
 
     // Gizleyen her kural `html.js` ile baslamalidir. DOCS.md 7.1 kural 2
@@ -63,48 +63,48 @@ test('A-01', 'JavaScript kapaliyken hicbir icerik gizli kalmaz', function (): vo
     assertCount(
         0,
         $hidingSelectors,
-        'Gizleyen kurallar yalnizca html.js altinda olmali. Ihlal: ' . implode(' | ', array_slice($hidingSelectors, 0, 5))
+        'Gizleyen kurallar yalnızca html.js altında olmalı. İhlal: ' . implode(' | ', array_slice($hidingSelectors, 0, 5))
     );
 
     // Mobilde menu paneli JavaScript yoksa gorunur kalir.
-    assertContains('html:not(.js) .site-head__panel', $css, 'JS yoksa menu paneli acik kalmali');
-    assertContains('html:not(.js) .site-nav__toggle { display: none; }', $css, 'JS yoksa acma dugmesi gizlenmeli');
+    assertContains('html:not(.js) .site-head__panel', $css, 'JS yoksa menü paneli açık kalmalı');
+    assertContains('html:not(.js) .site-nav__toggle { display: none; }', $css, 'JS yoksa açma düğmesi gizlenmeli');
 });
 
-test('A-01b', 'Satir ici js bayragi CSP karmasiyla birebir ayni', function (): void {
+test('A-01b', 'Satır içi js bayrağı CSP karmasıyla birebir aynı', function (): void {
     arc_test_config();
 
     $head = (string) file_get_contents(ARC_ROOT . '/views/front/partials/head.php');
-    assertContains('Security::JS_FLAG_SCRIPT', $head, 'Bayrak sabitten basilmali');
+    assertContains('Security::JS_FLAG_SCRIPT', $head, 'Bayrak sabitten basılmalı');
 
     // Karma bu govdeden uretilir; metin degisirse CSP kirar.
     $expected = base64_encode(hash('sha256', Arcates\Core\Security::JS_FLAG_SCRIPT, true));
-    assertSame($expected, Arcates\Core\Security::jsFlagHash(), 'Karma govdeden uretilmeli');
-    assertContains("sha256-" . $expected, Arcates\Core\Security::csp(false), 'CSP karmayi tasimali');
-    assertContains("' js'", Arcates\Core\Security::JS_FLAG_SCRIPT, 'Bayrak js sinifini eklemeli');
+    assertSame($expected, Arcates\Core\Security::jsFlagHash(), 'Karma gövdeden üretilmeli');
+    assertContains("sha256-" . $expected, Arcates\Core\Security::csp(false), 'CSP karmayı taşımalı');
+    assertContains("' js'", Arcates\Core\Security::JS_FLAG_SCRIPT, 'Bayrak js sınıfını eklemeli');
 });
 
-test('A-02', 'prefers-reduced-motion tum animasyonlari kapatir ve son durumu gosterir', function (): void {
+test('A-02', 'prefers-reduced-motion tüm animasyonları kapatır ve son durumu gösterir', function (): void {
     $css = arc_site_css();
 
-    assertContains('@media (prefers-reduced-motion: reduce)', $css, 'Azaltilmis hareket bloku bulunmali');
+    assertContains('@media (prefers-reduced-motion: reduce)', $css, 'Azaltılmış hareket bloku bulunmalı');
 
     $start = strpos($css, '@media (prefers-reduced-motion: reduce)');
     $block = substr($css, (int) $start, 2600);
 
-    assertContains('animation-duration: .001ms !important', $block, 'Animasyon suresi sifirlanmali');
-    assertContains('transition-duration: .001ms !important', $block, 'Gecis suresi sifirlanmali');
-    assertContains('opacity: 1 !important', $block, 'Ogeler gorunur duruma alinmali');
-    assertContains('transform: none !important', $block, 'Son konum gosterilmeli');
-    assertContains('.strip__track { animation: none !important; }', $block, 'Serit dongusu durmali');
+    assertContains('animation-duration: .001ms !important', $block, 'Animasyon süresi sıfırlanmalı');
+    assertContains('transition-duration: .001ms !important', $block, 'Geçiş süresi sıfırlanmalı');
+    assertContains('opacity: 1 !important', $block, 'Ögeler görünür duruma alınmalı');
+    assertContains('transform: none !important', $block, 'Son konum gösterilmeli');
+    assertContains('.strip__track { animation: none !important; }', $block, 'Şerit döngüsü durmalı');
 
     // Motor tarafinda da kontrol edilir.
     $js = arc_site_js();
-    assertContains('prefers-reduced-motion: reduce', $js, 'Motor tercihi okumali');
-    assertContains('if (prefersReducedMotion()) {', $js, 'Motor tercihe gore davranmali');
+    assertContains('prefers-reduced-motion: reduce', $js, 'Motor tercihi okumalı');
+    assertContains('if (prefersReducedMotion()) {', $js, 'Motor tercihe göre davranmalı');
 });
 
-test('A-03', 'Acilis sirasi ve gecikmeleri sartnameyle ayni', function (): void {
+test('A-03', 'Açılış sırası ve gecikmeleri şartnameyle aynı', function (): void {
     $css = arc_site_css();
 
     // DOCS.md 7.3 tablosu
@@ -126,70 +126,70 @@ test('A-03', 'Acilis sirasi ve gecikmeleri sartnameyle ayni', function (): void 
         assertContains(
             'animation-delay: ' . $delay,
             $css,
-            "{$selector} icin {$delay} gecikmesi tanimli olmali"
+            "{$selector} için {$delay} gecikmesi tanımlı olmalı"
         );
     }
 
     // Grafik cizgisi 1150 ms'te cizilir.
-    assertContains('animation-delay: 1150ms', $css, 'Grafik cizgisi 1150 ms\'te baslamali');
+    assertContains('animation-delay: 1150ms', $css, 'Grafik çizgisi 1150 ms\'te başlamalı');
 
     // Toplam acilis 1.4 saniyede biter; dongu bundan sonra baslar.
-    assertContains('HERO_SETTLE = 1400', arc_site_js(), 'Acilis 1.4 saniyede tamamlanmali');
+    assertContains('HERO_SETTLE = 1400', arc_site_js(), 'Açılış 1.4 saniyede tamamlanmalı');
 });
 
-test('A-04', 'Bolge haritasi scroll ilerlemesine gore cizilir', function (): void {
+test('A-04', 'Bölge haritası scroll ilerlemesine göre çizilir', function (): void {
     $js  = arc_site_js();
     $css = arc_site_css();
 
-    assertContains('--coast-offset', $js, 'Cizgi ofseti ilerlemeye gore ayarlanmali');
-    assertContains("classList.toggle('is-lit', progress >= at)", $js, 'Noktalar cizgi gectikce yanmali');
-    assertContains('stroke-dashoffset: var(--coast-offset', $css, 'CSS ofseti kullanmali');
-    assertContains('data-at', (string) file_get_contents(ARC_ROOT . '/views/front/partials/coast.php'), 'Her nokta esik degeri tasimali');
+    assertContains('--coast-offset', $js, 'Çizgi ofseti ilerlemeye göre ayarlanmalı');
+    assertContains("classList.toggle('is-lit', progress >= at)", $js, 'Noktalar çizgi geçtikçe yanmalı');
+    assertContains('stroke-dashoffset: var(--coast-offset', $css, 'CSS ofseti kullanmalı');
+    assertContains('data-at', (string) file_get_contents(ARC_ROOT . '/views/front/partials/coast.php'), 'Her nokta eşik değeri taşımalı');
 });
 
-test('A-05', 'Gorunmus ogeler tekrar oynatilmaz', function (): void {
+test('A-05', 'Görünmüş ögeler tekrar oynatılmaz', function (): void {
     $js = arc_site_js();
 
     // Kural 6: bir kez gorundukten sonra unobserve edilir.
-    assertContains('observer.unobserve(entries[i].target)', $js, 'Oge izlemeden cikarilmali');
-    assertNotContains("classList.remove('is-visible')", $js, 'Gorunurluk geri alinmamali');
+    assertContains('observer.unobserve(entries[i].target)', $js, 'Öge izlemeden çıkarılmalı');
+    assertNotContains("classList.remove('is-visible')", $js, 'Görünürlük geri alınmamalı');
 });
 
-test('A-06', 'Sekme arka plana alininca serit duraklatilir', function (): void {
+test('A-06', 'Sekme arka plana alınınca şerit duraklatılır', function (): void {
     $js = arc_site_js();
 
-    assertContains("doc.addEventListener('visibilitychange'", $js, 'Gorunurluk degisimi dinlenmeli');
-    assertContains('animationPlayState', $js, 'Animasyon duraklatilmali');
+    assertContains("doc.addEventListener('visibilitychange'", $js, 'Görünürlük değişimi dinlenmeli');
+    assertContains('animationPlayState', $js, 'Animasyon duraklatılmalı');
 });
 
-test('A-07', 'Pencere boyutlanmasinda harita cizgi uzunlugu yeniden hesaplanir', function (): void {
+test('A-07', 'Pencere boyutlanmasında harita çizgi uzunluğu yeniden hesaplanır', function (): void {
     $js = arc_site_js();
 
     assertContains("window.addEventListener('resize'", $js, 'Boyutlanma dinlenmeli');
-    assertContains('{ passive: true }', $js, 'Dinleyici passive olmali');
-    assertContains('measure();', $js, 'Uzunluk yeniden olculmeli');
+    assertContains('{ passive: true }', $js, 'Dinleyici passive olmalı');
+    assertContains('measure();', $js, 'Uzunluk yeniden ölçülmeli');
 });
 
-test('A-09', 'IntersectionObserver desteklenmiyorsa tum ogeler gorunur olur', function (): void {
+test('A-09', 'IntersectionObserver desteklenmiyorsa tüm ögeler görünür olur', function (): void {
     $js = arc_site_js();
 
-    assertContains("if (!('IntersectionObserver' in window)) {", $js, 'Destek kontrolu bulunmali');
-    assertContains('revealAll();', $js, 'Destek yoksa hepsi gorunur olmali');
+    assertContains("if (!('IntersectionObserver' in window)) {", $js, 'Destek kontrolü bulunmalı');
+    assertContains('revealAll();', $js, 'Destek yoksa hepsi görünür olmalı');
 });
 
-test('A-10', 'Sektor seridi kesintisiz doner', function (): void {
+test('A-10', 'Sektör şeridi kesintisiz döner', function (): void {
     $css  = arc_site_css();
     $strip = (string) file_get_contents(ARC_ROOT . '/views/front/partials/strip.php');
 
     // Grup sunucudan iki kez basilir; -%50 kaydiginda sicrama olmaz.
-    assertSame(2, substr_count($strip, 'strip__group'), 'Etiket grubu iki kez basilmali');
-    assertContains('to   { transform: translate3d(-50%, 0, 0); }', $css, 'Animasyon tam yarim tur kaymali');
-    assertContains('linear infinite', $css, 'Dongu dogrusal ve sonsuz olmali');
-    assertContains('--strip-loop: 34s', $css, 'Tam tur 34 saniye olmali');
-    assertContains('calc(var(--strip-loop) / 0.7)', $css, 'Mobilde hiz %70\'e dusmeli');
+    assertSame(2, substr_count($strip, 'strip__group'), 'Etiket grubu iki kez basılmalı');
+    assertContains('to   { transform: translate3d(-50%, 0, 0); }', $css, 'Animasyon tam yarım tur kaymalı');
+    assertContains('linear infinite', $css, 'Döngü doğrusal ve sonsuz olmalı');
+    assertContains('--strip-loop: 34s', $css, 'Tam tur 34 saniye olmalı');
+    assertContains('calc(var(--strip-loop) / 0.7)', $css, 'Mobilde hız %70\'e düşmeli');
 });
 
-test('A-P5-a', 'Yalnizca transform ve opacity animasyonu yapilir', function (): void {
+test('A-P5-a', 'Yalnızca transform ve opacity animasyonu yapılır', function (): void {
     $css = arc_site_css();
 
     // Yasak ozelliklerin gecis veya animasyon hedefi olmadigini dogrula.
@@ -199,7 +199,7 @@ test('A-P5-a', 'Yalnizca transform ve opacity animasyonu yapilir', function (): 
             foreach (['width', 'height', 'margin', 'padding', 'top', 'left', 'right', 'bottom'] as $banned) {
                 assertFalse(
                     preg_match('/(^|[\s,])' . $banned . '(\s|,|$)/i', $value) === 1,
-                    "Yasak ozellik gecise girmis: {$banned} — {$value}"
+                    "Yasak özellik geçişe girmiş: {$banned} — {$value}"
                 );
             }
         }
@@ -212,7 +212,7 @@ test('A-P5-a', 'Yalnizca transform ve opacity animasyonu yapilir', function (): 
                 foreach ($props[1] as $property) {
                     assertTrue(
                         in_array(strtolower($property), ['transform', 'opacity', 'stroke-dashoffset'], true),
-                        "Keyframe icinde izin verilmeyen ozellik: {$property}"
+                        "Keyframe içinde izin verilmeyen özellik: {$property}"
                     );
                 }
             }
@@ -220,35 +220,35 @@ test('A-P5-a', 'Yalnizca transform ve opacity animasyonu yapilir', function (): 
     }
 });
 
-test('A-P5-b', 'Scroll dinleyicileri passive ve rAF ile sinirlandirilmis', function (): void {
+test('A-P5-b', 'Scroll dinleyicileri passive ve rAF ile sınırlandırılmış', function (): void {
     $js = arc_site_js();
 
-    assertContains("window.addEventListener('scroll', requestScrollFrame, { passive: true })", $js, 'Scroll passive olmali');
-    assertContains('window.requestAnimationFrame(onScrollFrame)', $js, 'rAF ile sinirlandirilmali');
-    assertContains('if (ticking) return;', $js, 'Ayni karede iki kez calismamali');
+    assertContains("window.addEventListener('scroll', requestScrollFrame, { passive: true })", $js, 'Scroll passive olmalı');
+    assertContains('window.requestAnimationFrame(onScrollFrame)', $js, 'rAF ile sınırlandırılmalı');
+    assertContains('if (ticking) return;', $js, 'Aynı karede iki kez çalışmamalı');
 });
 
-test('A-P5-c', 'Hareket belirtecleri sartnamedeki degerlerle ayni', function (): void {
+test('A-P5-c', 'Hareket belirteçleri şartnamedeki değerlerle aynı', function (): void {
     $css = arc_site_css();
     $js  = arc_site_js();
 
     // DOCS.md 7.2
-    assertContains('--ease: cubic-bezier(.16, 1, .3, 1)', $css, 'Yumusatma egrisi');
-    assertContains('--dur-title: 1000ms', $css, 'Baslik maskesi 1000 ms');
-    assertContains('--dur-card: 800ms', $css, 'Kart girisi 800 ms');
-    assertContains('--dur-shape: 950ms', $css, 'Sekil girisi 950 ms');
-    assertContains('--float-a: 7s', $css, 'Suzulme dongusu 7 s');
-    assertContains('--float-b: 9s', $css, 'Suzulme dongusu 9 s');
+    assertContains('--ease: cubic-bezier(.16, 1, .3, 1)', $css, 'Yumuşatma eğrisi');
+    assertContains('--dur-title: 1000ms', $css, 'Başlık maskesi 1000 ms');
+    assertContains('--dur-card: 800ms', $css, 'Kart girişi 800 ms');
+    assertContains('--dur-shape: 950ms', $css, 'Şekil girişi 950 ms');
+    assertContains('--float-a: 7s', $css, 'Süzülme döngüsü 7 s');
+    assertContains('--float-b: 9s', $css, 'Süzülme döngüsü 9 s');
     assertContains('--reveal-delay: 80ms', $css, 'Kart kademesi 80 ms');
-    assertContains('--reveal-delay: 140ms', $css, 'Adim kademesi 140 ms');
+    assertContains('--reveal-delay: 140ms', $css, 'Adım kademesi 140 ms');
 
-    assertContains('THRESHOLD = 0.15', $js, 'Gorunurluk esigi 0.15');
-    assertContains("ROOT_MARGIN = '0px 0px -8% 0px'", $js, 'rootMargin sartnamedeki gibi');
-    assertContains('HEAD_STUCK_AT = 24', $js, 'Ust menu 24 px sonrasi kuculur');
-    assertContains('PARALLAX_LIMIT = 1.3', $js, 'Suruklenme ilk ekranin 1.3 kati icinde');
+    assertContains('THRESHOLD = 0.15', $js, 'Görünürlük eşiği 0.15');
+    assertContains("ROOT_MARGIN = '0px 0px -8% 0px'", $js, 'rootMargin şartnamedeki gibi');
+    assertContains('HEAD_STUCK_AT = 24', $js, 'Üst menü 24 px sonrası küçülür');
+    assertContains('PARALLAX_LIMIT = 1.3', $js, 'Sürüklenme ilk ekranın 1.3 katı içinde');
 });
 
-test('A-P5-d', 'Metin uzerinde dongu animasyonu yoktur', function (): void {
+test('A-P5-d', 'Metin üzerinde döngü animasyonu yoktur', function (): void {
     $css = arc_site_css();
 
     // Kural 7: sonsuz dongu yalnizca dekoratif sekillerde ve seritte.
@@ -256,7 +256,7 @@ test('A-P5-d', 'Metin uzerinde dongu animasyonu yoktur', function (): void {
         foreach ($matches as $rule) {
             $selector = trim(preg_replace('/\s+/', ' ', $rule[1]) ?? '');
             $allowed  = str_contains($selector, '.shape') || str_contains($selector, '.strip__track');
-            assertTrue($allowed, "Dongu animasyonu yalnizca sekil ve seritte olmali; bulunan: {$selector}");
+            assertTrue($allowed, "Döngü animasyonu yalnızca şekil ve şeritte olmalı; bulunan: {$selector}");
         }
     }
 });

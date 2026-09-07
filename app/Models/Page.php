@@ -22,8 +22,8 @@ final class Page extends Model
     public const TYPES = [
         'page'     => 'Sayfa',
         'service'  => 'Hizmet',
-        'location' => 'Ilce',
-        'sector'   => 'Sektor',
+        'location' => 'İlçe',
+        'sector'   => 'Sektör',
     ];
 
     /** Tur basina varsayilan sablon. DOCS.md 4 */

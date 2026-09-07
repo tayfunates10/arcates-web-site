@@ -18,9 +18,9 @@ use Arcates\Core\Security;
 
 <form class="filters" method="get" action="<?= Security::e(admin_url('islem-gunlugu')) ?>">
   <div class="field">
-    <label for="islem">Islem</label>
+    <label for="islem">İşlem</label>
     <select id="islem" name="islem">
-      <option value="">Tumu</option>
+      <option value="">Tümü</option>
       <?php foreach ($actions as $action): ?>
         <option value="<?= Security::e($action) ?>" <?= $filters['islem'] === $action ? 'selected' : '' ?>>
           <?= Security::e($action) ?>
@@ -30,9 +30,9 @@ use Arcates\Core\Security;
   </div>
 
   <div class="field">
-    <label for="kullanici">Kullanici</label>
+    <label for="kullanici">Kullanıcı</label>
     <select id="kullanici" name="kullanici">
-      <option value="0">Tumu</option>
+      <option value="0">Tümü</option>
       <?php foreach ($users as $user): ?>
         <option value="<?= (int) $user['id'] ?>" <?= (int) $filters['kullanici'] === (int) $user['id'] ? 'selected' : '' ?>>
           <?= Security::e($user['name']) ?>
@@ -45,22 +45,22 @@ use Arcates\Core\Security;
 </form>
 
 <section class="panel">
-  <p class="muted"><?= Security::e((string) $total) ?> kayit</p>
+  <p class="muted"><?= Security::e((string) $total) ?> kayıt</p>
 
   <table class="table">
     <thead>
       <tr>
         <th scope="col">Zaman</th>
-        <th scope="col">Kullanici</th>
-        <th scope="col">Islem</th>
-        <th scope="col">Kayit</th>
-        <th scope="col">Ayrinti</th>
+        <th scope="col">Kullanıcı</th>
+        <th scope="col">İşlem</th>
+        <th scope="col">Kayıt</th>
+        <th scope="col">Ayrıntı</th>
         <th scope="col">IP</th>
       </tr>
     </thead>
     <tbody>
       <?php if (!$rows): ?>
-        <tr><td colspan="6" class="muted">Kayit yok.</td></tr>
+        <tr><td colspan="6" class="muted">Kayıt yok.</td></tr>
       <?php endif; ?>
       <?php foreach ($rows as $row): ?>
         <tr>

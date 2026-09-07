@@ -24,7 +24,7 @@ use Arcates\Core\Security;
       <h1 class="page__title"><?= Security::e(__('form_success')) ?></h1>
 
       <p class="page__lead">
-        <?= Security::e($_site['name'] ?? '') ?> ekibi en kisa surede size donus yapacak.
+        <?= Security::e($_site['name'] ?? '') ?> ekibi en kısa sürede size dönüş yapacak.
       </p>
 
       <div class="system__actions">

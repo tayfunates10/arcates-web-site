@@ -37,10 +37,10 @@ $action = $isNew
       <label for="role">Rol</label>
       <select id="role" name="role">
         <?php $role = old('role', $user['role'] ?? 'editor'); ?>
-        <option value="editor" <?= $role === 'editor' ? 'selected' : '' ?>>Editor — yalnizca icerik</option>
-        <option value="admin" <?= $role === 'admin' ? 'selected' : '' ?>>Yonetici — tam yetki</option>
+        <option value="editor" <?= $role === 'editor' ? 'selected' : '' ?>>Editör — yalnızca içerik</option>
+        <option value="admin" <?= $role === 'admin' ? 'selected' : '' ?>>Yönetici — tam yetki</option>
       </select>
-      <span class="field__hint">Editor rolü kullanicilar, ayarlar ve yedekleme bolumlerini goremez.</span>
+      <span class="field__hint">Editör rolü kullanıcılar, ayarlar ve yedekleme bölümlerini göremez.</span>
     </div>
 
     <div class="field field--check">
@@ -52,7 +52,7 @@ $action = $isNew
     </div>
 
     <div class="field">
-      <label for="password">Sifre<?= $isNew ? '' : ' (degistirmek icin doldurun)' ?></label>
+      <label for="password">Şifre<?= $isNew ? '' : ' (değiştirmek için doldurun)' ?></label>
       <input type="password" id="password" name="password" autocomplete="new-password"
              <?= $isNew ? 'required' : '' ?>>
       <span class="field__hint">En az 10 karakter.</span>
@@ -60,15 +60,15 @@ $action = $isNew
     </div>
 
     <div class="field">
-      <label for="password_confirm">Sifre tekrar</label>
+      <label for="password_confirm">Şifre tekrar</label>
       <input type="password" id="password_confirm" name="password_confirm" autocomplete="new-password"
              <?= $isNew ? 'required' : '' ?>>
       <?php if ($m = error_for('password_confirm')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
     </div>
 
     <div class="form__actions">
-      <button class="btn btn--primary" type="submit"><?= $isNew ? 'Olustur' : 'Kaydet' ?></button>
-      <a class="btn btn--ghost" href="<?= Security::e(admin_url('kullanicilar')) ?>">Vazgec</a>
+      <button class="btn btn--primary" type="submit"><?= $isNew ? 'Oluştur' : 'Kaydet' ?></button>
+      <a class="btn btn--ghost" href="<?= Security::e(admin_url('kullanicilar')) ?>">Vazgeç</a>
     </div>
   </form>
 </section>

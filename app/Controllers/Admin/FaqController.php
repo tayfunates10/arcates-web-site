@@ -29,7 +29,7 @@ final class FaqController extends Controller
         }
 
         return $this->view('faqs/index', [
-            'title' => 'Sik sorulan sorular',
+            'title' => 'Sık sorulan sorular',
             'faqs'  => Faq::listing(Lang::defaultCode()),
         ]);
     }
@@ -51,7 +51,7 @@ final class FaqController extends Controller
 
         $faq = Faq::find((int) ($params['id'] ?? 0));
         if ($faq === null) {
-            return $this->back(admin_url('sss'), 'error', 'Kayit bulunamadi.');
+            return $this->back(admin_url('sss'), 'error', 'Kayıt bulunamadı.');
         }
 
         return $this->view('faqs/form', $this->formData($faq));
@@ -73,7 +73,7 @@ final class FaqController extends Controller
 
         $validator = new Validator(
             ['question' => trim((string) ($input[$default]['question'] ?? ''))],
-            ['question' => 'Varsayilan dildeki soru']
+            ['question' => 'Varsayılan dildeki soru']
         );
         $validator->required('question')->max('question', 300);
 
@@ -100,7 +100,7 @@ final class FaqController extends Controller
 
         Logger::activity($id > 0 ? 'faq.update' : 'faq.create', 'faq', $faqId);
 
-        return $this->back(admin_url('sss/' . $faqId), 'success', 'SSS kaydi kaydedildi.');
+        return $this->back(admin_url('sss/' . $faqId), 'success', 'SSS kaydı kaydedildi.');
     }
 
     public function destroy(Request $request, array $params): Response
@@ -116,7 +116,7 @@ final class FaqController extends Controller
         $this->db()->delete('faqs', ['id' => $id]);
         Logger::activity('faq.delete', 'faq', $id);
 
-        return $this->back(admin_url('sss'), 'success', 'Kayit silindi.');
+        return $this->back(admin_url('sss'), 'success', 'Kayıt silindi.');
     }
 
     private function formData(?array $faq): array
@@ -141,7 +141,7 @@ final class FaqController extends Controller
         }
 
         return [
-            'title'        => $faq === null ? 'Yeni SSS kaydi' : 'SSS kaydini duzenle',
+            'title'        => $faq === null ? 'Yeni SSS kaydı' : 'SSS kaydını düzenle',
             'faq'          => $faq,
             'translations' => $translations,
             'assigned'     => $pages,

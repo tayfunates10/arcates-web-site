@@ -65,9 +65,9 @@ abstract class Controller
         }
 
         if (!Auth::isAdmin()) {
-            Logger::activity('access.denied', 'admin', null, 'admin rolu gerekli');
+            Logger::activity('access.denied', 'admin', null, 'admin rolü gerekli');
             return Response::html(View::render('errors/403', [
-                'message' => 'Bu bolum yalnizca yonetici rolune aciktir.',
+                'message' => 'Bu bölüm yalnızca yönetici rolüne açıktır.',
             ]), 403);
         }
 
@@ -121,7 +121,7 @@ abstract class Controller
     protected function withErrors(string $to, array $errors, array $old = []): Response
     {
         Session::flashErrors($errors, $old);
-        Session::flash('error', 'Formda eksik veya hatali alanlar var.');
+        Session::flash('error', 'Formda eksik veya hatalı alanlar var.');
         return Response::redirect($to);
     }
 
@@ -141,15 +141,15 @@ abstract class Controller
             ['key' => 'posts',       'label' => 'Blog',            'url' => admin_url('blog'),            'ability' => 'posts.edit',       'icon' => 'pen'],
             ['key' => 'faqs',        'label' => 'SSS',             'url' => admin_url('sss'),             'ability' => 'faqs.edit',        'icon' => 'help'],
             ['key' => 'media',       'label' => 'Medya',           'url' => admin_url('medya'),           'ability' => 'media.edit',       'icon' => 'image'],
-            ['key' => 'menus',       'label' => 'Menuler',         'url' => admin_url('menuler'),         'ability' => 'pages.edit',       'icon' => 'list'],
+            ['key' => 'menus',       'label' => 'Menüler',         'url' => admin_url('menuler'),         'ability' => 'pages.edit',       'icon' => 'list'],
             ['key' => 'seo',         'label' => 'SEO',             'url' => admin_url('seo'),             'ability' => 'seo.view',         'icon' => 'search'],
-            ['key' => 'redirects',   'label' => 'Yonlendirmeler',  'url' => admin_url('yonlendirmeler'),  'ability' => null,               'icon' => 'arrow'],
+            ['key' => 'redirects',   'label' => 'Yönlendirmeler',  'url' => admin_url('yonlendirmeler'),  'ability' => null,               'icon' => 'arrow'],
             ['key' => 'submissions', 'label' => 'Formlar',         'url' => admin_url('formlar'),         'ability' => 'submissions.view', 'icon' => 'inbox'],
-            ['key' => 'stats',       'label' => 'Istatistik',      'url' => admin_url('istatistik'),      'ability' => 'stats.view',       'icon' => 'chart'],
-            ['key' => 'users',       'label' => 'Kullanicilar',    'url' => admin_url('kullanicilar'),    'ability' => 'users.manage',     'icon' => 'users'],
+            ['key' => 'stats',       'label' => 'İstatistik',      'url' => admin_url('istatistik'),      'ability' => 'stats.view',       'icon' => 'chart'],
+            ['key' => 'users',       'label' => 'Kullanıcılar',    'url' => admin_url('kullanicilar'),    'ability' => 'users.manage',     'icon' => 'users'],
             ['key' => 'settings',    'label' => 'Ayarlar',         'url' => admin_url('ayarlar'),         'ability' => 'settings.manage',  'icon' => 'gear'],
             ['key' => 'backups',     'label' => 'Yedekleme',       'url' => admin_url('yedekleme'),       'ability' => 'backups.manage',   'icon' => 'save'],
-            ['key' => 'activity',    'label' => 'Islem gunlugu',   'url' => admin_url('islem-gunlugu'),   'ability' => 'activity.view',    'icon' => 'clock'],
+            ['key' => 'activity',    'label' => 'İşlem günlüğü',   'url' => admin_url('islem-gunlugu'),   'ability' => 'activity.view',    'icon' => 'clock'],
         ];
 
         return array_values(array_filter($items, static function (array $item): bool {

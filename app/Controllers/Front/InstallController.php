@@ -80,7 +80,7 @@ final class InstallController
     private function applySchema(Request $request): Response
     {
         if (!$this->requirementsMet()) {
-            Session::flash('error', 'Once gereksinimleri karsilayin.');
+            Session::flash('error', 'Önce gereksinimleri karşılayın.');
             return Response::redirect(path_url('/install'));
         }
 
@@ -100,10 +100,10 @@ final class InstallController
 
             (new Seeder($db))->run();
 
-            Session::flash('success', 'Veritabani hazirlandi. Simdi yonetici hesabini olusturun.');
+            Session::flash('success', 'Veritabanı hazırlandı. Şimdi yönetici hesabını oluşturun.');
         } catch (Throwable $e) {
             Logger::exception($e);
-            Session::flash('error', 'Veritabani hazirlanamadi: ' . $e->getMessage());
+            Session::flash('error', 'Veritabanı hazırlanamadı: ' . $e->getMessage());
         }
 
         return Response::redirect(path_url('/install'));
@@ -115,7 +115,7 @@ final class InstallController
         $db = Database::instance();
 
         if (!$db->tableExists('users')) {
-            Session::flash('error', 'Once veritabani semasini uygulayin.');
+            Session::flash('error', 'Önce veritabanı şemasını uygulayın.');
             return Response::redirect(path_url('/install'));
         }
 
@@ -127,7 +127,7 @@ final class InstallController
         $validator->required('name')->max('name', 120)
             ->required('email')->email('email')
             ->required('password')->password('password')
-            ->matches('password_confirm', 'password', 'Sifreler birbiriyle ayni degil.');
+            ->matches('password_confirm', 'password', 'Şifreler birbiriyle aynı değil.');
 
         if ($validator->fails()) {
             Session::flashErrors($validator->firstErrors(), [
@@ -140,7 +140,7 @@ final class InstallController
         $email = mb_strtolower($request->str('email'));
 
         if ((int) $db->count('users') > 0) {
-            Session::flash('error', 'Yonetici hesabi zaten olusturulmus.');
+            Session::flash('error', 'Yönetici hesabı zaten oluşturulmuş.');
             return Response::redirect(path_url('/install'));
         }
 
@@ -156,15 +156,15 @@ final class InstallController
             // DOCS.md 13 adim 4 — kurulum kilidi.
             $lock = ARC_ROOT . '/storage/installed.lock';
             if (@file_put_contents($lock, date('c') . "\n") === false) {
-                Session::flash('error', 'storage/ klasoru yazilabilir degil; installed.lock olusturulamadi.');
+                Session::flash('error', 'storage/ klasörü yazılabilir değil; installed.lock oluşturulamadı.');
                 return Response::redirect(path_url('/install'));
             }
 
             Logger::activity('install.complete', 'user', $userId, null, $userId, $request->ip());
-            Session::flash('success', 'Kurulum tamamlandi. Panele giris yapabilirsiniz.');
+            Session::flash('success', 'Kurulum tamamlandı. Panele giriş yapabilirsiniz.');
         } catch (Throwable $e) {
             Logger::exception($e);
-            Session::flash('error', 'Yonetici olusturulamadi: ' . $e->getMessage());
+            Session::flash('error', 'Yönetici oluşturulamadı: ' . $e->getMessage());
             return Response::redirect(path_url('/install'));
         }
 
@@ -197,7 +197,7 @@ final class InstallController
         $checks = [];
 
         $checks[] = [
-            'label'  => 'PHP 8.1 veya ustu',
+            'label'  => 'PHP 8.1 veya üstü',
             'ok'     => PHP_VERSION_ID >= 80100,
             'detail' => PHP_VERSION,
         ];
@@ -220,16 +220,16 @@ final class InstallController
         foreach (['storage', 'storage/logs', 'storage/cache', 'storage/backups', 'public/uploads'] as $dir) {
             $path = ARC_ROOT . '/' . $dir;
             $checks[] = [
-                'label'  => 'Yazilabilir: ' . $dir,
+                'label'  => 'Yazılabilir: ' . $dir,
                 'ok'     => is_dir($path) && is_writable($path),
-                'detail' => is_dir($path) ? (is_writable($path) ? 'yazilabilir' : 'yazma izni yok') : 'klasor yok',
+                'detail' => is_dir($path) ? (is_writable($path) ? 'yazilabilir' : 'yazma izni yok') : 'klasör yok',
             ];
         }
 
         $checks[] = [
             'label'  => 'config/config.php mevcut',
             'ok'     => Config::exists(),
-            'detail' => Config::exists() ? 'var' : 'config.example.php dosyasini kopyalayin',
+            'detail' => Config::exists() ? 'var' : 'config.example.php dosyasını kopyalayın',
         ];
 
         return $checks;
@@ -273,8 +273,8 @@ final class InstallController
     private function closed(): Response
     {
         return Response::html(View::render('errors/404', [
-            'title'   => 'Kurulum kapali',
-            'message' => 'Bu site zaten kurulmus. Kurulum sihirbazi erisime kapalidir.',
+            'title'   => 'Kurulum kapalı',
+            'message' => 'Bu site zaten kurulmuş. Kurulum sihirbazı erişime kapalıdır.',
         ]), 404);
     }
 }

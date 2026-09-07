@@ -53,7 +53,7 @@ final class ProjectController extends Controller
 
         $project = Project::find((int) ($params['id'] ?? 0));
         if ($project === null) {
-            return $this->back(admin_url('referanslar'), 'error', 'Referans bulunamadi.');
+            return $this->back(admin_url('referanslar'), 'error', 'Referans bulunamadı.');
         }
 
         return $this->view('projects/form', $this->formData($project));
@@ -79,8 +79,8 @@ final class ProjectController extends Controller
             'title'       => trim((string) ($input[$default]['title'] ?? '')),
             'live_url'    => $request->str('live_url'),
         ], [
-            'client_name' => 'Musteri adi',
-            'title'       => 'Varsayilan dildeki baslik',
+            'client_name' => 'Müşteri adı',
+            'title'       => 'Varsayılan dildeki başlık',
         ]);
 
         $validator->required('client_name')->max('client_name', 150)
@@ -173,7 +173,7 @@ final class ProjectController extends Controller
         }
 
         return [
-            'title'        => $project === null ? 'Yeni referans' : 'Referansi duzenle',
+            'title'        => $project === null ? 'Yeni referans' : 'Referansı düzenle',
             'project'      => $project,
             'translations' => $translations,
             'gallery'      => array_map('intval', $gallery),

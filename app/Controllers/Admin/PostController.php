@@ -54,7 +54,7 @@ final class PostController extends Controller
 
         $post = Post::find((int) ($params['id'] ?? 0));
         if ($post === null) {
-            return $this->back(admin_url('blog'), 'error', 'Yazi bulunamadi.');
+            return $this->back(admin_url('blog'), 'error', 'Yazı bulunamadı.');
         }
 
         return $this->view('posts/form', $this->formData($post));
@@ -77,7 +77,7 @@ final class PostController extends Controller
 
         $validator = new Validator(
             ['title' => trim((string) ($input[$default]['title'] ?? ''))],
-            ['title' => 'Varsayilan dildeki baslik']
+            ['title' => 'Varsayılan dildeki başlık']
         );
         $validator->required('title')->max('title', 200);
 
@@ -143,7 +143,7 @@ final class PostController extends Controller
 
         Logger::activity($id > 0 ? 'post.update' : 'post.create', 'post', $postId, $translations[$default]['title'] ?? '');
 
-        return $this->back(admin_url('blog/' . $postId), 'success', 'Yazi kaydedildi.');
+        return $this->back(admin_url('blog/' . $postId), 'success', 'Yazı kaydedildi.');
     }
 
     public function destroy(Request $request, array $params): Response
@@ -159,7 +159,7 @@ final class PostController extends Controller
         $this->db()->delete('posts', ['id' => $id]);
         Logger::activity('post.delete', 'post', $id);
 
-        return $this->back(admin_url('blog'), 'success', 'Yazi silindi.');
+        return $this->back(admin_url('blog'), 'success', 'Yazı silindi.');
     }
 
     private function formData(?array $post): array
@@ -176,7 +176,7 @@ final class PostController extends Controller
         }
 
         return [
-            'title'        => $post === null ? 'Yeni yazi' : 'Yaziyi duzenle',
+            'title'        => $post === null ? 'Yeni yazı' : 'Yazıyı düzenle',
             'post'         => $post,
             'translations' => $translations,
             'langs'        => Lang::languages(),

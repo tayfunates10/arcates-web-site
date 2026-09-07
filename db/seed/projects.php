@@ -15,91 +15,91 @@ declare(strict_types=1);
 
 return [
     [
-        'client' => 'Ornek Korfez Otel', 'sector' => 'Konaklama', 'district' => 'Akcay',
-        'title' => 'Akcay pansiyon rezervasyon sitesi',
+        'client' => 'Örnek Körfez Otel', 'sector' => 'Konaklama', 'district' => 'Akçay',
+        'title' => 'Akçay pansiyon rezervasyon sitesi',
         'slug' => 'akcay-pansiyon-rezervasyon-sitesi',
-        'excerpt' => 'Komisyonsuz dogrudan rezervasyon ve Almanca yayin.',
-        'content' => '<h2>Ihtiyac</h2><p>Doluluğunun tamamini platformlardan saglayan '
-            . 'bir pansiyon, komisyon yukunu azaltmak istiyordu.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Musaitlik takvimi ve donem bazli fiyatlandirma</li>'
-            . '<li>Kapora ile dogrudan rezervasyon</li><li>Almanca ve Ingilizce yayin</li>'
-            . '<li>Sezon disi uzun konaklama sayfasi</li></ul>',
+        'excerpt' => 'Komisyonsuz doğrudan rezervasyon ve Almanca yayın.',
+        'content' => '<h2>İhtiyaç</h2><p>Doluluğunun tamamını platformlardan sağlayan '
+            . 'bir pansiyon, komisyon yükünü azaltmak istiyordu.</p>'
+            . '<h2>Yapılanlar</h2><ul><li>Müsaitlik takvimi ve dönem bazlı fiyatlandırma</li>'
+            . '<li>Kapora ile doğrudan rezervasyon</li><li>Almanca ve İngilizce yayın</li>'
+            . '<li>Sezon dışı uzun konaklama sayfası</li></ul>',
     ],
     [
-        'client' => 'Ornek Zeytin Kooperatifi', 'sector' => 'Zeytinyagi', 'district' => 'Burhaniye',
-        'title' => 'Kooperatif zeytinyagi e-ticaret magazasi',
+        'client' => 'Örnek Zeytin Kooperatifi', 'sector' => 'Zeytinyağı', 'district' => 'Burhaniye',
+        'title' => 'Kooperatif zeytinyağı e-ticaret mağazası',
         'slug' => 'burhaniye-kooperatif-e-ticaret',
-        'excerpt' => 'Hasat takvimine gore on siparis alan magaza.',
-        'content' => '<h2>Ihtiyac</h2><p>Uye ureticilerin urununu kendi markasiyla '
+        'excerpt' => 'Hasat takvimine göre on sipariş alan mağaza.',
+        'content' => '<h2>İhtiyaç</h2><p>Üye üreticilerin ürününü kendi markasıyla '
             . 'satmak isteyen bir kooperatif.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Litre ve kilogram varyantlariyla stok takibi</li>'
-            . '<li>Hasat donemi on siparisi ve bekleme listesi</li>'
-            . '<li>Bolgeye gore kargo ucreti</li><li>Uretici tanitim sayfalari</li></ul>',
+            . '<h2>Yapılanlar</h2><ul><li>Litre ve kilogram varyantlarıyla stok takibi</li>'
+            . '<li>Hasat dönemi on siparişi ve bekleme listesi</li>'
+            . '<li>Bölgeye göre kargo ücreti</li><li>Üretici tanıtım sayfaları</li></ul>',
     ],
     [
-        'client' => 'Ornek Dis Poliklinigi', 'sector' => 'Saglik', 'district' => 'Edremit',
+        'client' => 'Örnek Dış Polikliniği', 'sector' => 'Sağlık', 'district' => 'Edremit',
         'title' => 'Edremit poliklinik kurumsal sitesi',
         'slug' => 'edremit-poliklinik-kurumsal-site',
-        'excerpt' => 'Randevu formu ve hizmet bazli sayfalar.',
-        'content' => '<h2>Ihtiyac</h2><p>Harita sonuclarinda gorunen ama sitesi olmadigi '
-            . 'icin karsilastirmada geride kalan bir poliklinik.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Her tedavi icin ayri sayfa ve SSS</li>'
-            . '<li>Randevu formu ve calisma saatleri</li>'
-            . '<li>Google Isletme Profili ile birebir ayni iletisim bilgileri</li></ul>',
+        'excerpt' => 'Randevu formu ve hizmet bazlı sayfalar.',
+        'content' => '<h2>İhtiyaç</h2><p>Harita sonuçlarında görünen ama sitesi olmadığı '
+            . 'için karşılaştırmada geride kalan bir poliklinik.</p>'
+            . '<h2>Yapılanlar</h2><ul><li>Her tedavi için ayrı sayfa ve SSS</li>'
+            . '<li>Randevu formu ve çalışma saatleri</li>'
+            . '<li>Google İşletme Profili ile birebir aynı iletişim bilgileri</li></ul>',
     ],
     [
-        'client' => 'Ornek Emlak Ofisi', 'sector' => 'Emlak', 'district' => 'Altinoluk',
-        'title' => 'Altinoluk emlak ofisi bolge rehberi',
+        'client' => 'Örnek Emlak Ofisi', 'sector' => 'Emlak', 'district' => 'Altınoluk',
+        'title' => 'Altınoluk emlak ofisi bölge rehberi',
         'slug' => 'altinoluk-emlak-bolge-rehberi',
-        'excerpt' => 'Ilan listelemek yerine bolgeyi anlatan site.',
-        'content' => '<h2>Ihtiyac</h2><p>Portal bagimliligini azaltmak isteyen bir '
+        'excerpt' => 'İlan listelemek yerine bölgeyi anlatan site.',
+        'content' => '<h2>İhtiyaç</h2><p>Portal bağımlılığını azaltmak isteyen bir '
             . 'emlak ofisi.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Her mahalle icin bolge rehberi sayfasi</li>'
-            . '<li>Aidat, kis doluluğu ve mesafe bilgileri</li>'
-            . '<li>Ingilizce sayfalarda tapu ve oturma izni anlatimi</li></ul>',
+            . '<h2>Yapılanlar</h2><ul><li>Her mahalle için bölge rehberi sayfası</li>'
+            . '<li>Aidat, kış doluluğu ve mesafe bilgileri</li>'
+            . '<li>İngilizce sayfalarda tapu ve oturma izni anlatımı</li></ul>',
     ],
     [
-        'client' => 'Ornek Butik Otel', 'sector' => 'Konaklama', 'district' => 'Ayvalik',
-        'title' => 'Cunda butik otel coklu dil sitesi',
+        'client' => 'Örnek Butik Otel', 'sector' => 'Konaklama', 'district' => 'Ayvalık',
+        'title' => 'Cunda butik otel çoklu dil sitesi',
         'slug' => 'ayvalik-butik-otel-coklu-dil',
-        'excerpt' => 'Uc dilde gercek icerik ve hizli galeri.',
-        'content' => '<h2>Ihtiyac</h2><p>Yabanci misafir orani yuksek bir butik otel, '
-            . 'otomatik ceviriyle gorunur olamiyordu.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Turkce, Ingilizce ve Almanca ayri icerik</li>'
-            . '<li>WebP galeri; mobilde hizli yukleme</li>'
-            . '<li>Oda bazli gercek fotograf ve ayrinti anlatimi</li></ul>',
+        'excerpt' => 'Üç dilde gerçek içerik ve hızlı galeri.',
+        'content' => '<h2>İhtiyaç</h2><p>Yabancı misafir oranı yüksek bir butik otel, '
+            . 'otomatik çeviriyle görünür olamıyordu.</p>'
+            . '<h2>Yapılanlar</h2><ul><li>Türkçe, İngilizce ve Almanca ayrı içerik</li>'
+            . '<li>WebP galeri; mobilde hızlı yükleme</li>'
+            . '<li>Oda bazlı gerçek fotoğraf ve ayrıntı anlatımı</li></ul>',
     ],
     [
-        'client' => 'Ornek Tarim Bayii', 'sector' => 'Tarim', 'district' => 'Havran',
-        'title' => 'Havran tarim bayii urun sitesi',
+        'client' => 'Örnek Tarım Bayii', 'sector' => 'Tarım', 'district' => 'Havran',
+        'title' => 'Havran tarım bayii ürün sitesi',
         'slug' => 'havran-tarim-bayii-urun-sitesi',
-        'excerpt' => 'Mevsime gore urun sayfalari ve sade yonetim.',
-        'content' => '<h2>Ihtiyac</h2><p>Sulama ve hasat sezonlarinda arama trafigini '
-            . 'yakalamak isteyen bir tarim bayii.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Sezon oncesi yayinlanan urun sayfalari</li>'
-            . '<li>Hafif tasarim; dusuk baglanti hizinda hizli acilma</li>'
-            . '<li>Telefondan yonetilebilen panel</li></ul>',
+        'excerpt' => 'Mevsime göre ürün sayfaları ve sade yönetim.',
+        'content' => '<h2>İhtiyaç</h2><p>Sulama ve hasat sezonlarında arama trafiğini '
+            . 'yakalamak isteyen bir tarım bayii.</p>'
+            . '<h2>Yapılanlar</h2><ul><li>Sezon öncesi yayınlanan ürün sayfaları</li>'
+            . '<li>Hafif tasarım; düşük bağlantı hızında hızlı açılma</li>'
+            . '<li>Telefondan yönetilebilen panel</li></ul>',
     ],
     [
-        'client' => 'Ornek Apart', 'sector' => 'Konaklama', 'district' => 'Gomec',
-        'title' => 'Gomec apart uzun konaklama sitesi',
+        'client' => 'Örnek Apart', 'sector' => 'Konaklama', 'district' => 'Gömeç',
+        'title' => 'Gömeç apart uzun konaklama sitesi',
         'slug' => 'gomec-apart-uzun-konaklama',
-        'excerpt' => 'Haftalik ve aylik kiralama icin ayri sayfalar.',
-        'content' => '<h2>Ihtiyac</h2><p>Sezon disinda bos kalan apart daireler icin '
-            . 'uzun donem misafir.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Gunluk ve uzun donem icin ayri sayfalar</li>'
-            . '<li>Mutfak donanimi, internet hizi ve market mesafesi bilgileri</li>'
-            . '<li>Sezon oncesi hatirlatma icin musteri listesi</li></ul>',
+        'excerpt' => 'Haftalık ve aylık kiralama için ayrı sayfalar.',
+        'content' => '<h2>İhtiyaç</h2><p>Sezon dışında boş kalan apart daireler için '
+            . 'uzun dönem misafir.</p>'
+            . '<h2>Yapılanlar</h2><ul><li>Günlük ve uzun dönem için ayrı sayfalar</li>'
+            . '<li>Mutfak donanımı, internet hızı ve market mesafesi bilgileri</li>'
+            . '<li>Sezon öncesi hatırlatma için müşteri listesi</li></ul>',
     ],
     [
-        'client' => 'Ornek Makine Sanayi', 'sector' => 'Sanayi', 'district' => 'Balikesir',
-        'title' => 'Balikesir uretim firmasi teknik sitesi',
+        'client' => 'Örnek Makine Sanayi', 'sector' => 'Sanayi', 'district' => 'Balıkesir',
+        'title' => 'Balıkesir üretim firması teknik sitesi',
         'slug' => 'balikesir-uretim-teknik-site',
-        'excerpt' => 'Ingilizce teknik icerik ve indirilebilir dosyalar.',
-        'content' => '<h2>Ihtiyac</h2><p>Ihracat yapan bir uretim firmasi, teknik '
-            . 'bilgiyi karsi tarafa hizli ulastirmak istiyordu.</p>'
-            . '<h2>Yapilanlar</h2><ul><li>Urun kodu ve kapasite bazli liste</li>'
-            . '<li>Indirilebilir teknik dosyalar</li>'
-            . '<li>Ingilizce teknik terimlerle yazilmis ayri icerik</li></ul>',
+        'excerpt' => 'İngilizce teknik içerik ve indirilebilir dosyalar.',
+        'content' => '<h2>İhtiyaç</h2><p>İhracat yapan bir üretim firması, teknik '
+            . 'bilgiyi karşı tarafa hızlı ulaştırmak istiyordu.</p>'
+            . '<h2>Yapılanlar</h2><ul><li>Ürün kodu ve kapasite bazlı liste</li>'
+            . '<li>İndirilebilir teknik dosyalar</li>'
+            . '<li>İngilizce teknik terimlerle yazılmış ayrı içerik</li></ul>',
     ],
 ];

@@ -54,7 +54,7 @@ $returnPath = $returnPath ?? 'iletisim';
       <?php /* Honeypot. Gercek kullanicilar gormez ve doldurmaz.
                DOCS.md 10.8, test S-15 */ ?>
       <div class="form__trap" aria-hidden="true">
-        <label for="<?= Security::e(ContactController::HONEYPOT) ?>">Bu alani bos birakin</label>
+        <label for="<?= Security::e(ContactController::HONEYPOT) ?>">Bu alanı boş bırakın</label>
         <input type="text" id="<?= Security::e(ContactController::HONEYPOT) ?>"
                name="<?= Security::e(ContactController::HONEYPOT) ?>"
                tabindex="-1" autocomplete="off">

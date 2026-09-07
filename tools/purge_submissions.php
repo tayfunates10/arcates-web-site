@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit("Bu arac yalnizca komut satirindan calisir.\n");
+    exit("Bu araç yalnızca komut satırından çalışır.\n");
 }
 
 define('ARC_ROOT', dirname(__DIR__));
@@ -33,7 +33,7 @@ date_default_timezone_set((string) Config::get('app.timezone', 'Europe/Istanbul'
 try {
     Database::instance()->connect();
 } catch (Throwable $e) {
-    fwrite(STDERR, 'Veritabanina baglanilamadi: ' . $e->getMessage() . "\n");
+    fwrite(STDERR, 'Veritabanına bağlanılamadı: ' . $e->getMessage() . "\n");
     exit(1);
 }
 
@@ -47,11 +47,11 @@ $expired = (int) Database::instance()->value(
     [':cutoff' => $cutoff]
 );
 
-echo "Saklama suresi: {$days} gun (kesim: {$cutoff})\n";
-echo "Suresi dolan kayit: {$expired}\n";
+echo "Saklama süresi: {$days} gün (kesim: {$cutoff})\n";
+echo "Süresi dolan kayıt: {$expired}\n";
 
 if (in_array('--dry', $argv, true)) {
-    echo "Kuru calisma; hicbir kayit silinmedi.\n";
+    echo "Kuru çalışma; hiçbir kayıt silinmedi.\n";
     exit(0);
 }
 
@@ -60,7 +60,7 @@ if ($expired === 0) {
 }
 
 $deleted = Submission::purgeExpired($days);
-Logger::info('Form kayitlari temizlendi', ['silinen' => $deleted, 'gun' => $days]);
+Logger::info('Form kayıtları temizlendi', ['silinen' => $deleted, 'gun' => $days]);
 
-echo "{$deleted} kayit silindi.\n";
+echo "{$deleted} kayıt silindi.\n";
 exit(0);

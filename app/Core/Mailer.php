@@ -39,7 +39,7 @@ final class Mailer
     {
         $to = trim($to);
         if ($to === '' || filter_var($to, FILTER_VALIDATE_EMAIL) === false) {
-            Logger::warning('Gecersiz e-posta alicisi', ['to' => $to]);
+            Logger::warning('Geçersiz e-posta alıcısı', ['to' => $to]);
             return false;
         }
 
@@ -96,7 +96,7 @@ final class Mailer
         );
 
         if (!$sent) {
-            Logger::error('E-posta gonderilemedi', ['to' => $to, 'subject' => $subject]);
+            Logger::error('E-posta gönderilemedi', ['to' => $to, 'subject' => $subject]);
             self::toLog($message);
         }
 

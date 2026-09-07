@@ -25,21 +25,21 @@ final class SettingController extends Controller
 
     /** Duzenlenebilir metin ayarlari ve etiketleri. */
     private const TEXT_FIELDS = [
-        'site_name'          => ['Site adi', 120],
-        'site_tagline'       => ['Kisa tanim', 200],
-        'nap_name'           => ['Isletme adi (NAP)', 150],
-        'nap_street'         => ['Adres satiri', 200],
-        'nap_district'       => ['Ilce', 60],
-        'nap_city'           => ['Sehir', 60],
+        'site_name'          => ['Site adı', 120],
+        'site_tagline'       => ['Kısa tanım', 200],
+        'nap_name'           => ['İşletme adı (NAP)', 150],
+        'nap_street'         => ['Adres satırı', 200],
+        'nap_district'       => ['İlçe', 60],
+        'nap_city'           => ['Şehir', 60],
         'nap_postcode'       => ['Posta kodu', 12],
-        'nap_country'        => ['Ulke kodu', 2],
+        'nap_country'        => ['Ülke kodu', 2],
         'nap_phone'          => ['Telefon', 40],
         'nap_email'          => ['E-posta', 190],
         'nap_lat'            => ['Enlem', 20],
         'nap_lng'            => ['Boylam', 20],
-        'meta_title_pattern' => ['Baslik sablonu', 120],
-        'meta_description'   => ['Varsayilan aciklama', 320],
-        'maintenance_text'   => ['Bakim mesaji', 320],
+        'meta_title_pattern' => ['Başlık şablonu', 120],
+        'meta_description'   => ['Varsayılan açıklama', 320],
+        'maintenance_text'   => ['Bakım mesajı', 320],
     ];
 
     public function index(Request $request, array $params): Response

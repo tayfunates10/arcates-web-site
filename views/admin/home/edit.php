@@ -26,7 +26,7 @@ $config  = $section['config'] ?? [];
 $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' . $name . ']';
 ?>
 
-<p><a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('anasayfa')) ?>">← Bolum listesi</a></p>
+<p><a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('anasayfa')) ?>">← Bölüm listesi</a></p>
 
 <form method="post" action="<?= Security::e(admin_url('anasayfa/' . $key)) ?>" data-dirty-guard>
   <?= csrf_field() ?>
@@ -35,34 +35,34 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
     <div class="field field--check">
       <label>
         <input type="checkbox" name="is_active" value="1" <?= ($section['is_active'] ?? true) ? 'checked' : '' ?>>
-        Bu bolum anasayfada gosterilsin
+        Bu bölüm anasayfada gösterilsin
       </label>
     </div>
 
     <?php if ($key === 'strip'): ?>
       <div class="grid grid--2">
         <div class="field">
-          <label for="speed">Tam tur suresi (saniye)</label>
+          <label for="speed">Tam tur süresi (saniye)</label>
           <input type="number" id="speed" name="config[speed]" min="10" max="120"
                  value="<?= (int) ($config['speed'] ?? 34) ?>">
-          <span class="field__hint">Sartnamedeki deger 34 saniyedir.</span>
+          <span class="field__hint">Şartnamedeki değer 34 saniyedir.</span>
         </div>
         <div class="field">
-          <label for="mobile_speed">Mobil hiz (%)</label>
+          <label for="mobile_speed">Mobil hız (%)</label>
           <input type="number" id="mobile_speed" name="config[mobile_speed_percent]" min="30" max="100"
                  value="<?= (int) ($config['mobile_speed_percent'] ?? 70) ?>">
-          <span class="field__hint">Mobilde serit bu oranda yavaslar.</span>
+          <span class="field__hint">Mobilde şerit bu oranda yavaşlar.</span>
         </div>
       </div>
     <?php elseif ($key === 'works' || $key === 'faq'): ?>
       <div class="field">
-        <label for="limit">Gosterilecek kayit sayisi</label>
+        <label for="limit">Gösterilecek kayıt sayısı</label>
         <input type="number" id="limit" name="config[limit]" min="1" max="24"
                value="<?= (int) ($config['limit'] ?? 6) ?>">
       </div>
     <?php elseif ($key === 'services'): ?>
       <div class="field">
-        <label for="columns">Sutun sayisi</label>
+        <label for="columns">Sütun sayısı</label>
         <input type="number" id="columns" name="config[columns]" min="2" max="4"
                value="<?= (int) ($config['columns'] ?? 3) ?>">
       </div>
@@ -73,7 +73,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
     <?php foreach ($langs as $code => $lang): ?>
       <button class="tabs__button" type="button" role="tab" data-tab="<?= Security::e($code) ?>">
         <?= Security::e($lang['name']) ?>
-        <?php if ($code === $default): ?><span class="tabs__badge">varsayilan</span><?php endif; ?>
+        <?php if ($code === $default): ?><span class="tabs__badge">varsayılan</span><?php endif; ?>
       </button>
     <?php endforeach; ?>
   </div>
@@ -109,7 +109,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
         <?php foreach ([1, 2, 3] as $line): ?>
           <div class="field">
             <label for="line<?= $line ?>_<?= Security::e($code) ?>">
-              Baslik satiri <?= $line ?><?= $line === 3 ? ' (degrade renkli)' : '' ?>
+              Başlık satırı <?= $line ?><?= $line === 3 ? ' (degrade renkli)' : '' ?>
             </label>
             <input type="text" id="line<?= $line ?>_<?= Security::e($code) ?>"
                    name="<?= Security::e($field($code, 'line' . $line)) ?>" maxlength="120"
@@ -118,12 +118,12 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
         <?php endforeach; ?>
 
         <div class="field">
-          <label for="description_<?= Security::e($code) ?>">Aciklama</label>
+          <label for="description_<?= Security::e($code) ?>">Açıklama</label>
           <textarea id="description_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'description')) ?>"
                     maxlength="600" rows="4" data-preview="description"><?= Security::e($c['description'] ?? '') ?></textarea>
         </div>
 
-        <?php foreach (['cta1' => 'Birinci buton', 'cta2' => 'Ikinci buton'] as $cta => $ctaLabel): ?>
+        <?php foreach (['cta1' => 'Birinci buton', 'cta2' => 'İkinci buton'] as $cta => $ctaLabel): ?>
           <div class="grid grid--2">
             <div class="field">
               <label for="<?= Security::e($cta) ?>_label_<?= Security::e($code) ?>"><?= Security::e($ctaLabel) ?> metni</label>
@@ -158,7 +158,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
         <?php endif; ?>
 
       <?php elseif ($key === 'strip'): ?>
-        <p class="muted">Her satir bir etiket. Bos satirlar kaydedilmez.</p>
+        <p class="muted">Her satır bir etiket. Boş satırlar kaydedilmez.</p>
         <div class="repeat" data-repeat="tags-<?= Security::e($code) ?>">
           <?php $tags = $c['tags'] ?? ['']; ?>
           <?php foreach ($tags as $i => $tag): ?>
@@ -169,7 +169,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
                        name="c[<?= Security::e($code) ?>][tags][]" maxlength="60"
                        value="<?= Security::e($tag) ?>">
               </div>
-              <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+              <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
             </div>
           <?php endforeach; ?>
         </div>
@@ -177,12 +177,12 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
 
       <?php elseif ($key === 'services'): ?>
         <div class="field">
-          <label for="title_<?= Security::e($code) ?>">Bolum basligi</label>
+          <label for="title_<?= Security::e($code) ?>">Bölüm başlığı</label>
           <input type="text" id="title_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'title')) ?>"
                  maxlength="160" value="<?= Security::e($c['title'] ?? '') ?>">
         </div>
         <div class="field">
-          <label for="desc_<?= Security::e($code) ?>">Bolum aciklamasi</label>
+          <label for="desc_<?= Security::e($code) ?>">Bölüm açıklaması</label>
           <textarea id="desc_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'description')) ?>"
                     maxlength="400" rows="3"><?= Security::e($c['description'] ?? '') ?></textarea>
         </div>
@@ -193,10 +193,10 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
           <?php foreach ($cards as $i => $card): ?>
             <div class="repeat__row menu-row">
               <div class="field">
-                <label for="card_icon_<?= Security::e($code) ?>_<?= (int) $i ?>">Ikon</label>
+                <label for="card_icon_<?= Security::e($code) ?>_<?= (int) $i ?>">İkon</label>
                 <select id="card_icon_<?= Security::e($code) ?>_<?= (int) $i ?>"
                         name="c[<?= Security::e($code) ?>][cards][<?= (int) $i ?>][icon]">
-                  <?php foreach (['layout' => 'Duzen', 'cart' => 'Sepet', 'calendar' => 'Takvim', 'search' => 'Arama', 'globe' => 'Kure', 'shield' => 'Kalkan'] as $icon => $iconLabel): ?>
+                  <?php foreach (['layout' => 'Düzen', 'cart' => 'Sepet', 'calendar' => 'Takvim', 'search' => 'Arama', 'globe' => 'Küre', 'shield' => 'Kalkan'] as $icon => $iconLabel): ?>
                     <option value="<?= Security::e($icon) ?>" <?= ($card['icon'] ?? '') === $icon ? 'selected' : '' ?>>
                       <?= Security::e($iconLabel) ?>
                     </option>
@@ -215,7 +215,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
                 </select>
               </div>
               <div class="field">
-                <label for="card_title_<?= Security::e($code) ?>_<?= (int) $i ?>">Baslik</label>
+                <label for="card_title_<?= Security::e($code) ?>_<?= (int) $i ?>">Başlık</label>
                 <input type="text" id="card_title_<?= Security::e($code) ?>_<?= (int) $i ?>"
                        name="c[<?= Security::e($code) ?>][cards][<?= (int) $i ?>][title]" maxlength="120"
                        value="<?= Security::e($card['title'] ?? '') ?>">
@@ -227,12 +227,12 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
                        value="<?= Security::e($card['text'] ?? '') ?>">
               </div>
               <div class="field">
-                <label for="card_url_<?= Security::e($code) ?>_<?= (int) $i ?>">Baglanti</label>
+                <label for="card_url_<?= Security::e($code) ?>_<?= (int) $i ?>">Bağlantı</label>
                 <input type="text" id="card_url_<?= Security::e($code) ?>_<?= (int) $i ?>"
                        name="c[<?= Security::e($code) ?>][cards][<?= (int) $i ?>][url]" maxlength="255"
                        value="<?= Security::e($card['url'] ?? '') ?>">
               </div>
-              <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+              <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
             </div>
           <?php endforeach; ?>
         </div>
@@ -240,7 +240,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
 
       <?php elseif ($key === 'steps'): ?>
         <div class="field">
-          <label for="title_<?= Security::e($code) ?>">Bolum basligi</label>
+          <label for="title_<?= Security::e($code) ?>">Bölüm başlığı</label>
           <input type="text" id="title_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'title')) ?>"
                  maxlength="160" value="<?= Security::e($c['title'] ?? '') ?>">
         </div>
@@ -250,34 +250,34 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
           <?php foreach ($items as $i => $item): ?>
             <div class="repeat__row menu-row">
               <div class="field">
-                <label for="step_title_<?= Security::e($code) ?>_<?= (int) $i ?>">Adim basligi</label>
+                <label for="step_title_<?= Security::e($code) ?>_<?= (int) $i ?>">Adım başlığı</label>
                 <input type="text" id="step_title_<?= Security::e($code) ?>_<?= (int) $i ?>"
                        name="c[<?= Security::e($code) ?>][items][<?= (int) $i ?>][title]" maxlength="120"
                        value="<?= Security::e($item['title'] ?? '') ?>">
               </div>
               <div class="field field--wide">
-                <label for="step_text_<?= Security::e($code) ?>_<?= (int) $i ?>">Adim metni</label>
+                <label for="step_text_<?= Security::e($code) ?>_<?= (int) $i ?>">Adım metni</label>
                 <input type="text" id="step_text_<?= Security::e($code) ?>_<?= (int) $i ?>"
                        name="c[<?= Security::e($code) ?>][items][<?= (int) $i ?>][text]" maxlength="400"
                        value="<?= Security::e($item['text'] ?? '') ?>">
               </div>
-              <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldir</button>
+              <button class="btn btn--ghost btn--sm" type="button" data-repeat-remove>Kaldır</button>
             </div>
           <?php endforeach; ?>
         </div>
-        <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="steps-<?= Security::e($code) ?>">Adim ekle</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-repeat-add="steps-<?= Security::e($code) ?>">Adım ekle</button>
 
       <?php else: ?>
         <?php /* coast, works, faq, cta, footer icin ortak metin alanlari */ ?>
         <div class="field">
-          <label for="title_<?= Security::e($code) ?>">Baslik</label>
+          <label for="title_<?= Security::e($code) ?>">Başlık</label>
           <input type="text" id="title_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'title')) ?>"
                  maxlength="160" value="<?= Security::e($c['title'] ?? '') ?>">
         </div>
 
         <div class="field">
           <label for="text_<?= Security::e($code) ?>">
-            <?= $key === 'cta' ? 'Metin' : ($key === 'footer' ? 'Kisa tanim' : 'Aciklama') ?>
+            <?= $key === 'cta' ? 'Metin' : ($key === 'footer' ? 'Kısa tanım' : 'Açıklama') ?>
           </label>
           <textarea id="text_<?= Security::e($code) ?>" rows="3" maxlength="400"
                     name="<?= Security::e($field($code, $key === 'cta' ? 'text' : ($key === 'footer' ? 'about' : 'description'))) ?>"><?php
@@ -286,7 +286,7 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
         </div>
 
         <?php if (in_array($key, ['works', 'cta'], true)): ?>
-          <?php $ctaKeys = $key === 'cta' ? ['cta1' => 'Birinci buton', 'cta2' => 'Ikinci buton'] : ['cta' => 'Buton']; ?>
+          <?php $ctaKeys = $key === 'cta' ? ['cta1' => 'Birinci buton', 'cta2' => 'İkinci buton'] : ['cta' => 'Buton']; ?>
           <?php foreach ($ctaKeys as $ctaKey => $ctaLabel): ?>
             <div class="grid grid--2">
               <div class="field">
@@ -309,8 +309,8 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
   <?php endforeach; ?>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit">Bolumu kaydet</button>
-    <a class="btn btn--ghost" href="<?= Security::e(admin_url('anasayfa')) ?>">Listeye don</a>
+    <button class="btn btn--primary" type="submit">Bölümü kaydet</button>
+    <a class="btn btn--ghost" href="<?= Security::e(admin_url('anasayfa')) ?>">Listeye dön</a>
   </div>
 </form>
 

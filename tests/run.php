@@ -76,7 +76,7 @@ function test(string $id, string $name, callable $fn): void
         $status = 'fail';
     } elseif (!TestRunner::$assertions) {
         $status = 'fail';
-        $failed[] = 'Hicbir iddia calistirilmadi.';
+        $failed[] = 'Hiçbir iddia çalıştırılmadı.';
     } else {
         $status = 'pass';
     }
@@ -104,17 +104,17 @@ function skip(string $reason): void
     throw new SkippedTest($reason);
 }
 
-function assertTrue(mixed $value, string $message = 'Deger dogru olmali'): void
+function assertTrue(mixed $value, string $message = 'Değer doğru olmalı'): void
 {
     TestRunner::record($value === true, $message . ' — gelen: ' . arc_dump($value));
 }
 
-function assertFalse(mixed $value, string $message = 'Deger yanlis olmali'): void
+function assertFalse(mixed $value, string $message = 'Değer yanlış olmalı'): void
 {
     TestRunner::record($value === false, $message . ' — gelen: ' . arc_dump($value));
 }
 
-function assertSame(mixed $expected, mixed $actual, string $message = 'Degerler ayni olmali'): void
+function assertSame(mixed $expected, mixed $actual, string $message = 'Değerler aynı olmalı'): void
 {
     TestRunner::record(
         $expected === $actual,
@@ -122,12 +122,12 @@ function assertSame(mixed $expected, mixed $actual, string $message = 'Degerler 
     );
 }
 
-function assertNotSame(mixed $expected, mixed $actual, string $message = 'Degerler farkli olmali'): void
+function assertNotSame(mixed $expected, mixed $actual, string $message = 'Değerler farklı olmalı'): void
 {
     TestRunner::record($expected !== $actual, $message . ' — her ikisi: ' . arc_dump($actual));
 }
 
-function assertContains(string $needle, string $haystack, string $message = 'Metin icermeli'): void
+function assertContains(string $needle, string $haystack, string $message = 'Metin içermeli'): void
 {
     TestRunner::record(
         str_contains($haystack, $needle),
@@ -135,7 +135,7 @@ function assertContains(string $needle, string $haystack, string $message = 'Met
     );
 }
 
-function assertNotContains(string $needle, string $haystack, string $message = 'Metin icermemeli'): void
+function assertNotContains(string $needle, string $haystack, string $message = 'Metin içermemeli'): void
 {
     TestRunner::record(
         !str_contains($haystack, $needle),
@@ -143,23 +143,23 @@ function assertNotContains(string $needle, string $haystack, string $message = '
     );
 }
 
-function assertCount(int $expected, array|Countable $value, string $message = 'Oge sayisi eslesmeli'): void
+function assertCount(int $expected, array|Countable $value, string $message = 'Öge sayısı eşleşmeli'): void
 {
     TestRunner::record(count($value) === $expected, $message . ' — beklenen: ' . $expected . ', gelen: ' . count($value));
 }
 
-function assertGreaterThan(int|float $limit, int|float $value, string $message = 'Deger buyuk olmali'): void
+function assertGreaterThan(int|float $limit, int|float $value, string $message = 'Değer büyük olmalı'): void
 {
-    TestRunner::record($value > $limit, $message . ' — sinir: ' . $limit . ', gelen: ' . $value);
+    TestRunner::record($value > $limit, $message . ' — sınır: ' . $limit . ', gelen: ' . $value);
 }
 
-function assertLessThan(int|float $limit, int|float $value, string $message = 'Deger kucuk olmali'): void
+function assertLessThan(int|float $limit, int|float $value, string $message = 'Değer küçük olmalı'): void
 {
-    TestRunner::record($value < $limit, $message . ' — sinir: ' . $limit . ', gelen: ' . $value);
+    TestRunner::record($value < $limit, $message . ' — sınır: ' . $limit . ', gelen: ' . $value);
 }
 
 /** Verilen govde beklenen istisnayi firlatmali. */
-function assertThrows(string $class, callable $fn, string $message = 'Istisna beklendi'): void
+function assertThrows(string $class, callable $fn, string $message = 'İstisna beklendi'): void
 {
     try {
         $fn();
@@ -167,7 +167,7 @@ function assertThrows(string $class, callable $fn, string $message = 'Istisna be
         TestRunner::record($e instanceof $class, $message . ' — gelen: ' . get_class($e));
         return;
     }
-    TestRunner::record(false, $message . ' — hicbir istisna firlatilmadi');
+    TestRunner::record(false, $message . ' — hiçbir istisna fırlatılmadı');
 }
 
 function arc_dump(mixed $v): string
@@ -202,7 +202,7 @@ $started = microtime(true);
 foreach ($groups as $group) {
     $dir = __DIR__ . '/' . $group;
     if (!is_dir($dir)) {
-        fwrite(STDERR, "Uyari: '{$group}' grubu bulunamadi.\n");
+        fwrite(STDERR, "Uyarı: '{$group}' grubu bulunamadı.\n");
         continue;
     }
     TestRunner::$group = $group;
@@ -230,14 +230,14 @@ $colour = static function (string $text, string $code): string {
     return (PHP_SAPI === 'cli' && getenv('NO_COLOR') === false) ? "\033[{$code}m{$text}\033[0m" : $text;
 };
 
-echo "\nArcates test calistirici\n";
+echo "\nArcates test çalıştırıcı\n";
 echo str_repeat('=', 66), "\n";
 
 foreach ($byGroup as $group => $rows) {
     echo "\n", strtoupper($group), "\n", str_repeat('-', 66), "\n";
     foreach ($rows as $r) {
         $mark = match ($r['status']) {
-            'pass' => $colour('  GECTI', '32'),
+            'pass' => $colour('  GEÇTİ', '32'),
             'fail' => $colour('KALDI  ', '31'),
             default => $colour('ATLANDI', '33'),
         };
@@ -258,7 +258,7 @@ foreach ($byGroup as $group => $rows) {
 
 echo "\n", str_repeat('=', 66), "\n";
 printf(
-    "Toplam %d test — %s gecti, %s kaldi, %s atlandi (%d ms)\n\n",
+    "Toplam %d test — %s geçti, %s kaldı, %s atlandı (%d ms)\n\n",
     count(TestRunner::$results),
     $colour((string) $pass, '32'),
     $colour((string) $fail, $fail ? '31' : '0'),

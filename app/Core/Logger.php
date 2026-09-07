@@ -80,7 +80,7 @@ final class Logger
                 'ip'        => Security::packIp($ip ?? ($_SERVER['REMOTE_ADDR'] ?? null)),
             ]);
         } catch (Throwable $e) {
-            self::write('warning', 'Islem gunlugu yazilamadi: ' . $e->getMessage(), [
+            self::write('warning', 'İşlem günlüğü yazılamadı: ' . $e->getMessage(), [
                 'action' => $action,
                 'entity' => $entity,
             ]);

@@ -59,11 +59,11 @@ final class SubmissionController extends Controller
 
         $row = Submission::get((int) ($params['id'] ?? 0));
         if ($row === null) {
-            return $this->back(admin_url('formlar'), 'error', 'Kayit bulunamadi.');
+            return $this->back(admin_url('formlar'), 'error', 'Kayıt bulunamadı.');
         }
 
         return $this->view('submissions/show', [
-            'title'    => 'Form kaydi #' . $row['id'],
+            'title'    => 'Form kaydı #' . $row['id'],
             'row'      => $row,
             'statuses' => Submission::STATUSES,
         ]);
@@ -83,7 +83,7 @@ final class SubmissionController extends Controller
         $row = Submission::get($id);
 
         if ($row === null) {
-            return $this->back(admin_url('formlar'), 'error', 'Kayit bulunamadi.');
+            return $this->back(admin_url('formlar'), 'error', 'Kayıt bulunamadı.');
         }
 
         $status = $request->str('status');
@@ -98,7 +98,7 @@ final class SubmissionController extends Controller
 
         Logger::activity('submission.update', 'submission', $id, $status);
 
-        return $this->back(admin_url('formlar/' . $id), 'success', 'Kayit guncellendi.');
+        return $this->back(admin_url('formlar/' . $id), 'success', 'Kayıt güncellendi.');
     }
 
     public function destroy(Request $request, array $params): Response
@@ -114,7 +114,7 @@ final class SubmissionController extends Controller
         $this->db()->delete('submissions', ['id' => $id]);
         Logger::activity('submission.delete', 'submission', $id);
 
-        return $this->back(admin_url('formlar'), 'success', 'Kayit silindi.');
+        return $this->back(admin_url('formlar'), 'success', 'Kayıt silindi.');
     }
 
     /** CSV disa aktarma. DOCS.md 9.9 */
@@ -126,7 +126,7 @@ final class SubmissionController extends Controller
 
         $rows = Submission::listing($request->str('durum'), $request->str('ara'), 500);
 
-        Logger::activity('submission.export', 'submission', null, count($rows) . ' kayit');
+        Logger::activity('submission.export', 'submission', null, count($rows) . ' kayıt');
 
         return Response::csv(
             Submission::toCsv($rows),
@@ -150,12 +150,12 @@ final class SubmissionController extends Controller
         Settings::set('submission_days', (string) $days);
 
         $deleted = Submission::purgeExpired($days);
-        Logger::activity('submission.purge', 'submission', null, $deleted . ' kayit, ' . $days . ' gun');
+        Logger::activity('submission.purge', 'submission', null, $deleted . ' kayıt, ' . $days . ' gün');
 
         return $this->back(
             admin_url('formlar'),
             'success',
-            $deleted . ' kayit silindi. Saklama suresi ' . $days . ' gun olarak kaydedildi.'
+            $deleted . ' kayıt silindi. Saklama süresi ' . $days . ' gün olarak kaydedildi.'
         );
     }
 }

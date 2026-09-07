@@ -76,7 +76,7 @@ final class MediaController extends Controller
 
         $files = $request->file('files');
         if ($files === null || !isset($files['name'])) {
-            return $this->back(admin_url('medya'), 'error', 'Dosya secilmedi.');
+            return $this->back(admin_url('medya'), 'error', 'Dosya seçilmedi.');
         }
 
         $names   = is_array($files['name']) ? $files['name'] : [$files['name']];
@@ -108,7 +108,7 @@ final class MediaController extends Controller
         }
 
         if ($ok > 0) {
-            Session::flash('success', $ok . ' dosya yuklendi.');
+            Session::flash('success', $ok . ' dosya yüklendi.');
         }
         foreach (array_slice($errors, 0, 5) as $error) {
             Session::flash('error', $error);
@@ -129,7 +129,7 @@ final class MediaController extends Controller
 
         $id = (int) ($params['id'] ?? 0);
         if (Media::find($id) === null) {
-            return $this->back(admin_url('medya'), 'error', 'Dosya bulunamadi.');
+            return $this->back(admin_url('medya'), 'error', 'Dosya bulunamadı.');
         }
 
         foreach ($request->arr('alt') as $lang => $text) {
@@ -156,11 +156,11 @@ final class MediaController extends Controller
         $media = Media::find($id);
 
         if ($media === null) {
-            return $this->back(admin_url('medya'), 'error', 'Dosya bulunamadi.');
+            return $this->back(admin_url('medya'), 'error', 'Dosya bulunamadı.');
         }
 
         return $this->view('media/show', [
-            'title'  => 'Dosya ayrintisi',
+            'title'  => 'Dosya ayrıntısı',
             'media'  => $media,
             'usage'  => Media::usage($id),
             'alts'   => $this->db()->all('SELECT lang, alt, title FROM media_translations WHERE media_id = :id', [':id' => $id]),
@@ -185,7 +185,7 @@ final class MediaController extends Controller
         $media = Media::find($id);
 
         if ($media === null) {
-            return $this->back(admin_url('medya'), 'error', 'Dosya bulunamadi.');
+            return $this->back(admin_url('medya'), 'error', 'Dosya bulunamadı.');
         }
 
         $usage = Media::usage($id);
@@ -199,8 +199,8 @@ final class MediaController extends Controller
             return $this->back(
                 admin_url('medya/' . $id),
                 'warning',
-                'Bu dosya ' . count($usage) . ' yerde kullaniliyor (' . implode(', ', $labels)
-                . '). Silmek icin ayrinti ekranindaki onayi isaretleyin.'
+                'Bu dosya ' . count($usage) . ' yerde kullanılıyor (' . implode(', ', $labels)
+                . '). Silmek için ayrıntı ekranındaki onayı işaretleyin.'
             );
         }
 

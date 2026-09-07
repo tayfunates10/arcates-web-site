@@ -25,11 +25,11 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
 
 <div class="cards">
   <div class="card card--stat">
-    <span class="card__label">Son 30 gun goruntuleme</span>
+    <span class="card__label">Son 30 gün görüntüleme</span>
     <strong class="card__value"><?= Security::e(number_format($totalViews, 0, ',', '.')) ?></strong>
   </div>
   <div class="card card--stat">
-    <span class="card__label">Son 30 gun oturum</span>
+    <span class="card__label">Son 30 gün oturum</span>
     <strong class="card__value"><?= Security::e(number_format($totalSessions, 0, ',', '.')) ?></strong>
   </div>
   <div class="card card--stat">
@@ -37,18 +37,18 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
     <strong class="card__value"><?= Security::e((string) $newForms) ?></strong>
   </div>
   <div class="card card--stat">
-    <span class="card__label">Taslak icerik</span>
+    <span class="card__label">Taslak içerik</span>
     <strong class="card__value"><?= Security::e((string) array_sum($drafts)) ?></strong>
   </div>
 </div>
 
 <section class="panel">
-  <h2 class="panel__title">Son 30 gun</h2>
+  <h2 class="panel__title">Son 30 gün</h2>
   <?php if ($maxViews === 0): ?>
-    <p class="muted">Henuz ziyaret kaydi yok.</p>
+    <p class="muted">Henüz ziyaret kaydı yok.</p>
   <?php else: ?>
     <div class="chart" role="img"
-         aria-label="Son 30 gunun gunluk goruntuleme sayisi. Toplam <?= Security::e((string) $totalViews) ?> goruntuleme.">
+         aria-label="Son 30 günün günlük görüntüleme sayısı. Toplam <?= Security::e((string) $totalViews) ?> görüntüleme.">
       <?php foreach ($visits as $day): ?>
         <?php
         // Yukseklik satir ici stil yerine sinifla verilir; icerik guvenlik
@@ -58,7 +58,7 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
         $step  = max(5, (int) (round($ratio * 20) * 5));
         ?>
         <span class="chart__bar is-h<?= Security::e((string) $step) ?>"
-              title="<?= Security::e(format_date($day['day']) . ': ' . $day['views'] . ' goruntuleme') ?>"></span>
+              title="<?= Security::e(format_date($day['day']) . ': ' . $day['views'] . ' görüntüleme') ?>"></span>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
@@ -67,7 +67,7 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
 <div class="grid grid--2">
 
   <section class="panel">
-    <h2 class="panel__title">Donusum hunisi</h2>
+    <h2 class="panel__title">Dönüşüm hunisi</h2>
     <?php $funnelMax = max(1, max(array_column($funnel, 'count'))); ?>
     <ul class="funnel">
       <?php foreach ($funnel as $stage): ?>
@@ -79,15 +79,15 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
         </li>
       <?php endforeach; ?>
     </ul>
-    <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('formlar')) ?>">Form kayitlari</a>
+    <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('formlar')) ?>">Form kayıtları</a>
   </section>
 
   <section class="panel">
     <h2 class="panel__title">Sistem durumu</h2>
     <ul class="system__list">
-      <li><span>PHP surumu</span><span class="system__state"><?= Security::e($system['php']) ?></span></li>
+      <li><span>PHP sürümü</span><span class="system__state"><?= Security::e($system['php']) ?></span></li>
       <li>
-        <span>Disk bos alan</span>
+        <span>Disk boş alan</span>
         <span class="system__state">
           <?= $system['disk_free'] !== null ? Security::e(format_bytes($system['disk_free'])) : '—' ?>
         </span>
@@ -99,27 +99,27 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
         </span>
       </li>
       <li>
-        <span>storage/ yazilabilir</span>
+        <span>storage/ yazılabilir</span>
         <span class="system__state system__state--<?= $system['storage_ok'] ? 'ok' : 'bad' ?>">
           <?= $system['storage_ok'] ? 'evet' : 'hayir' ?>
         </span>
       </li>
       <li>
-        <span>uploads/ yazilabilir</span>
+        <span>uploads/ yazılabilir</span>
         <span class="system__state system__state--<?= $system['uploads_ok'] ? 'ok' : 'bad' ?>">
           <?= $system['uploads_ok'] ? 'evet' : 'hayir' ?>
         </span>
       </li>
       <li>
-        <span>Hata gosterimi</span>
+        <span>Hata gösterimi</span>
         <span class="system__state system__state--<?= $system['debug_on'] ? 'bad' : 'ok' ?>">
-          <?= $system['debug_on'] ? 'acik — canlida kapatin' : 'kapali' ?>
+          <?= $system['debug_on'] ? 'açık — canlıda kapatın' : 'kapali' ?>
         </span>
       </li>
       <li>
-        <span>Kurulum sihirbazi</span>
+        <span>Kurulum sihirbazı</span>
         <span class="system__state system__state--<?= $system['install_open'] ? 'bad' : 'ok' ?>">
-          <?= $system['install_open'] ? 'acik — kilitleyin' : 'kapali' ?>
+          <?= $system['install_open'] ? 'açık — kilitleyin' : 'kapali' ?>
         </span>
       </li>
     </ul>
@@ -130,12 +130,12 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
 <div class="grid grid--2">
 
   <section class="panel">
-    <h2 class="panel__title">En cok ziyaret edilen sayfalar</h2>
+    <h2 class="panel__title">En çok ziyaret edilen sayfalar</h2>
     <?php if (!$topPages): ?>
-      <p class="muted">Henuz kayit yok.</p>
+      <p class="muted">Henüz kayıt yok.</p>
     <?php else: ?>
       <table class="table">
-        <thead><tr><th scope="col">Adres</th><th scope="col" class="num">Goruntuleme</th></tr></thead>
+        <thead><tr><th scope="col">Adres</th><th scope="col" class="num">Görüntüleme</th></tr></thead>
         <tbody>
         <?php foreach ($topPages as $row): ?>
           <tr>
@@ -149,12 +149,12 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
   </section>
 
   <section class="panel">
-    <h2 class="panel__title">Son 404 kayitlari</h2>
+    <h2 class="panel__title">Son 404 kayıtları</h2>
     <?php if (!$notFound): ?>
-      <p class="muted">Kirik adres yok.</p>
+      <p class="muted">Kırık adres yok.</p>
     <?php else: ?>
       <table class="table">
-        <thead><tr><th scope="col">Adres</th><th scope="col" class="num">Istek</th><th scope="col">Son</th></tr></thead>
+        <thead><tr><th scope="col">Adres</th><th scope="col" class="num">İstek</th><th scope="col">Son</th></tr></thead>
         <tbody>
         <?php foreach ($notFound as $row): ?>
           <tr>
@@ -165,7 +165,7 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
         <?php endforeach; ?>
         </tbody>
       </table>
-      <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('yonlendirmeler')) ?>">Yonlendirmelere git</a>
+      <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('yonlendirmeler')) ?>">Yönlendirmelere git</a>
     <?php endif; ?>
   </section>
 

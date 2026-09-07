@@ -7,9 +7,9 @@ declare(strict_types=1);
 
 return [
     'skip_to_content'   => 'Skip to content',
-    'menu'              => 'Menu',
-    'open_menu'         => 'Open menu',
-    'close_menu'        => 'Close menu',
+    'menu'              => 'Menü',
+    'open_menu'         => 'Open menü',
+    'close_menu'        => 'Close menü',
     'home'              => 'Home',
     'back_to_home'      => 'Back to home',
     'read_more'         => 'Read more',

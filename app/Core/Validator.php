@@ -61,7 +61,7 @@ final class Validator
             || (is_array($value) && $value === []);
 
         if ($empty) {
-            $this->fail($field, $message ?? $this->label($field) . ' alani zorunludur.');
+            $this->fail($field, $message ?? $this->label($field) . ' alanı zorunludur.');
         }
         return $this;
     }
@@ -72,7 +72,7 @@ final class Validator
         $value = $this->str($field);
         if ($value !== '' && $this->clean($field)) {
             if (filter_var($value, FILTER_VALIDATE_EMAIL) === false || mb_strlen($value) > 190) {
-                $this->fail($field, $message ?? 'Gecerli bir e-posta adresi giriniz.');
+                $this->fail($field, $message ?? 'Geçerli bir e-posta adresi giriniz.');
             }
         }
         return $this;
@@ -85,7 +85,7 @@ final class Validator
         if ($value !== '' && $this->clean($field)) {
             $digits = preg_replace('/\D+/', '', $value) ?? '';
             if (strlen($digits) < 10 || strlen($digits) > 15) {
-                $this->fail($field, $message ?? 'Gecerli bir telefon numarasi giriniz.');
+                $this->fail($field, $message ?? 'Geçerli bir telefon numarası giriniz.');
             }
         }
         return $this;
@@ -95,7 +95,7 @@ final class Validator
     {
         $value = $this->str($field);
         if ($value !== '' && $this->clean($field) && mb_strlen($value) < $length) {
-            $this->fail($field, $message ?? $this->label($field) . " en az {$length} karakter olmalidir.");
+            $this->fail($field, $message ?? $this->label($field) . " en az {$length} karakter olmalıdır.");
         }
         return $this;
     }
@@ -114,7 +114,7 @@ final class Validator
         $value = $this->data[$field] ?? null;
         if ($value !== null && $value !== '' && $this->clean($field)) {
             if (filter_var($value, FILTER_VALIDATE_INT) === false) {
-                $this->fail($field, $message ?? $this->label($field) . ' tam sayi olmalidir.');
+                $this->fail($field, $message ?? $this->label($field) . ' tam sayı olmalıdır.');
             }
         }
         return $this;
@@ -126,7 +126,7 @@ final class Validator
         if ($value !== null && $value !== '' && $this->clean($field)) {
             $int = (int) $value;
             if ($int < $low || $int > $high) {
-                $this->fail($field, $message ?? $this->label($field) . " {$low} ile {$high} arasinda olmalidir.");
+                $this->fail($field, $message ?? $this->label($field) . " {$low} ile {$high} arasında olmalıdır.");
             }
         }
         return $this;
@@ -138,7 +138,7 @@ final class Validator
         $value = $this->data[$field] ?? null;
         if ($value !== null && $value !== '' && $this->clean($field)) {
             if (!in_array((string) $value, array_map('strval', $allowed), true)) {
-                $this->fail($field, $message ?? $this->label($field) . ' gecerli bir secim degil.');
+                $this->fail($field, $message ?? $this->label($field) . ' geçerli bir seçim değil.');
             }
         }
         return $this;
@@ -149,7 +149,7 @@ final class Validator
         $value = $this->str($field);
         if ($value !== '' && $this->clean($field)) {
             if (filter_var($value, FILTER_VALIDATE_URL) === false || preg_match('#^https?://#i', $value) !== 1) {
-                $this->fail($field, $message ?? 'Gecerli bir adres giriniz (http:// veya https://).');
+                $this->fail($field, $message ?? 'Geçerli bir adres giriniz (http:// veya https://).');
             }
         }
         return $this;
@@ -160,7 +160,7 @@ final class Validator
     {
         $value = $this->str($field);
         if ($value !== '' && $this->clean($field) && !Security::isCleanSlug($value)) {
-            $this->fail($field, $message ?? 'Adres yalnizca kucuk harf, rakam ve tire icerebilir.');
+            $this->fail($field, $message ?? 'Adres yalnızca küçük harf, rakam ve tire içerebilir.');
         }
         return $this;
     }
@@ -171,7 +171,7 @@ final class Validator
         $value = (string) ($this->data[$field] ?? '');
         $min   = (int) Config::get('security.password_min', 10);
         if ($this->clean($field) && mb_strlen($value) < $min) {
-            $this->fail($field, $message ?? "Sifre en az {$min} karakter olmalidir.");
+            $this->fail($field, $message ?? "Şifre en az {$min} karakter olmalıdır.");
         }
         return $this;
     }
@@ -179,7 +179,7 @@ final class Validator
     public function matches(string $field, string $otherField, ?string $message = null): self
     {
         if ($this->clean($field) && (string) ($this->data[$field] ?? '') !== (string) ($this->data[$otherField] ?? '')) {
-            $this->fail($field, $message ?? 'Degerler birbiriyle ayni degil.');
+            $this->fail($field, $message ?? 'Değerler birbiriyle aynı değil.');
         }
         return $this;
     }
@@ -189,7 +189,7 @@ final class Validator
     {
         $value = $this->data[$field] ?? null;
         if (!in_array($value, ['1', 1, true, 'on', 'evet', 'true'], true)) {
-            $this->fail($field, $message ?? 'Bu onayi vermeniz gerekir.');
+            $this->fail($field, $message ?? 'Bu onayı vermeniz gerekir.');
         }
         return $this;
     }

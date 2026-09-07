@@ -13,7 +13,7 @@ use Arcates\Core\Security;
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Sunucu hatasi</title>
+<title>Sunucu hatası</title>
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 </head>
@@ -21,12 +21,12 @@ use Arcates\Core\Security;
 <main class="system">
   <div class="system__card">
     <p class="system__code">500</p>
-    <h1>Beklenmeyen bir hata olustu</h1>
+    <h1>Beklenmeyen bir hata oluştu</h1>
     <p class="system__lead">
-      Kayit alindi ve inceleniyor. Kisa sure sonra tekrar deneyin.
+      Kayıt alındı ve inceleniyor. Kısa süre sonra tekrar deneyin.
     </p>
     <div class="system__actions">
-      <a class="btn btn--primary" href="/">Anasayfaya don</a>
+      <a class="btn btn--primary" href="/">Anasayfaya dön</a>
     </div>
   </div>
 </main>

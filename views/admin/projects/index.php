@@ -6,7 +6,7 @@ use Arcates\Core\Security;
 <form class="filters" method="get" action="<?= Security::e(admin_url('referanslar')) ?>">
   <div class="field">
     <label for="ara">Ara</label>
-    <input type="search" id="ara" name="ara" value="<?= Security::e($search) ?>" placeholder="Musteri, baslik, ilce">
+    <input type="search" id="ara" name="ara" value="<?= Security::e($search) ?>" placeholder="Müşteri, başlık, ilçe">
   </div>
   <button class="btn btn--ghost btn--sm" type="submit">Filtrele</button>
   <a class="btn btn--primary btn--sm" href="<?= Security::e(admin_url('referanslar/yeni')) ?>">Yeni referans</a>
@@ -17,12 +17,12 @@ use Arcates\Core\Security;
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Baslik</th>
-          <th scope="col">Musteri</th>
-          <th scope="col">Sektor</th>
-          <th scope="col">Ilce</th>
+          <th scope="col">Başlık</th>
+          <th scope="col">Müşteri</th>
+          <th scope="col">Sektör</th>
+          <th scope="col">İlçe</th>
           <th scope="col">Durum</th>
-          <th scope="col"><span class="visually-hidden">Islemler</span></th>
+          <th scope="col"><span class="visually-hidden">İşlemler</span></th>
         </tr>
       </thead>
       <tbody>
@@ -33,7 +33,7 @@ use Arcates\Core\Security;
           <tr>
             <td>
               <a href="<?= Security::e(admin_url('referanslar/' . (int) $row['id'])) ?>">
-                <?= Security::e($row['title'] ?? '(ceviri yok)') ?>
+                <?= Security::e($row['title'] ?? '(çeviri yok)') ?>
               </a>
               <?php if (!empty($row['slug'])): ?><br><code>/referanslar/<?= Security::e($row['slug']) ?></code><?php endif; ?>
             </td>
@@ -42,11 +42,11 @@ use Arcates\Core\Security;
             <td><?= Security::e($row['district'] ?? '—') ?></td>
             <td>
               <span class="tag tag--<?= $row['status'] === 'published' ? 'ok' : 'draft' ?>">
-                <?= $row['status'] === 'published' ? 'Yayinda' : 'Taslak' ?>
+                <?= $row['status'] === 'published' ? 'Yayında' : 'Taslak' ?>
               </span>
             </td>
             <td class="row-actions">
-              <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('referanslar/' . (int) $row['id'])) ?>">Duzenle</a>
+              <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('referanslar/' . (int) $row['id'])) ?>">Düzenle</a>
               <form method="post" action="<?= Security::e(admin_url('referanslar/' . (int) $row['id'] . '/sil')) ?>"
                     data-confirm="Bu referansi silmek istiyor musunuz?">
                 <?= csrf_field() ?>

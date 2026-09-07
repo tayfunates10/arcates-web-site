@@ -20,14 +20,14 @@ $default = Lang::defaultCode();
 
     <div class="grid grid--2">
       <div class="field">
-        <label for="client_name">Musteri adi</label>
+        <label for="client_name">Müşteri adı</label>
         <input type="text" id="client_name" name="client_name" maxlength="150" required
                value="<?= Security::e((string) old('client_name', $project['client_name'] ?? '')) ?>">
         <?php if ($m = error_for('client_name')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
       </div>
 
       <div class="field">
-        <label for="sector">Sektor</label>
+        <label for="sector">Sektör</label>
         <input type="text" id="sector" name="sector" maxlength="80"
                value="<?= Security::e((string) old('sector', $project['sector'] ?? '')) ?>">
       </div>
@@ -35,7 +35,7 @@ $default = Lang::defaultCode();
 
     <div class="grid grid--3">
       <div class="field">
-        <label for="district">Ilce</label>
+        <label for="district">İlçe</label>
         <input type="text" id="district" name="district" maxlength="60" list="district-list"
                value="<?= Security::e((string) old('district', $project['district'] ?? '')) ?>">
         <datalist id="district-list">
@@ -43,7 +43,7 @@ $default = Lang::defaultCode();
             <option value="<?= Security::e($name) ?>"></option>
           <?php endforeach; ?>
         </datalist>
-        <span class="field__hint">Ilce sayfalarindaki referans listesi bu ada gore eslesir.</span>
+        <span class="field__hint">İlçe sayfalarındaki referans listesi bu ada göre eşleşir.</span>
       </div>
 
       <div class="field">
@@ -51,25 +51,25 @@ $default = Lang::defaultCode();
         <select id="status" name="status">
           <?php $status = (string) old('status', $project['status'] ?? 'draft'); ?>
           <option value="draft" <?= $status === 'draft' ? 'selected' : '' ?>>Taslak</option>
-          <option value="published" <?= $status === 'published' ? 'selected' : '' ?>>Yayinda</option>
+          <option value="published" <?= $status === 'published' ? 'selected' : '' ?>>Yayında</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="sort">Sira</label>
+        <label for="sort">Sıra</label>
         <input type="number" id="sort" name="sort" value="<?= (int) old('sort', $project['sort'] ?? 0) ?>">
       </div>
     </div>
 
     <div class="field">
-      <label for="live_url">Canli site adresi</label>
+      <label for="live_url">Canlı site adresi</label>
       <input type="url" id="live_url" name="live_url" maxlength="255" placeholder="https://"
              value="<?= Security::e((string) old('live_url', $project['live_url'] ?? '')) ?>">
       <?php if ($m = error_for('live_url')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
     </div>
 
     <div class="field">
-      <label for="cover_id">Kapak gorseli</label>
+      <label for="cover_id">Kapak görseli</label>
       <select id="cover_id" name="cover_id">
         <option value="0">— yok —</option>
         <?php $cover = (int) old('cover_id', $project['cover_id'] ?? 0); ?>
@@ -82,7 +82,7 @@ $default = Lang::defaultCode();
     </div>
 
     <fieldset class="fieldset">
-      <legend>Galeri gorselleri</legend>
+      <legend>Galeri görselleri</legend>
       <div class="checkbox-grid">
         <?php foreach ($media as $file): ?>
           <label>
@@ -109,7 +109,7 @@ $default = Lang::defaultCode();
       <h2 class="panel__title"><?= Security::e($lang['name']) ?></h2>
 
       <div class="field">
-        <label for="title_<?= Security::e($code) ?>">Baslik</label>
+        <label for="title_<?= Security::e($code) ?>">Başlık</label>
         <input type="text" id="title_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][title]"
                maxlength="200" data-slug-source="slug_<?= Security::e($code) ?>"
                value="<?= Security::e($t['title'] ?? '') ?>">
@@ -125,13 +125,13 @@ $default = Lang::defaultCode();
       </div>
 
       <div class="field">
-        <label for="excerpt_<?= Security::e($code) ?>">Ozet</label>
+        <label for="excerpt_<?= Security::e($code) ?>">Özet</label>
         <textarea id="excerpt_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][excerpt]"
                   rows="3" maxlength="400"><?= Security::e($t['excerpt'] ?? '') ?></textarea>
       </div>
 
       <div class="field">
-        <label for="content_<?= Security::e($code) ?>">Yapilan isler</label>
+        <label for="content_<?= Security::e($code) ?>">Yapılan işler</label>
         <textarea id="content_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][content]"
                   rows="14"><?= Security::e($t['content'] ?? '') ?></textarea>
       </div>
@@ -139,13 +139,13 @@ $default = Lang::defaultCode();
       <details class="details">
         <summary>SEO</summary>
         <div class="field">
-          <label for="meta_title_<?= Security::e($code) ?>">Meta baslik</label>
+          <label for="meta_title_<?= Security::e($code) ?>">Meta başlık</label>
           <input type="text" id="meta_title_<?= Security::e($code) ?>"
                  name="t[<?= Security::e($code) ?>][meta_title]" maxlength="180" data-counter="60"
                  value="<?= Security::e($t['meta_title'] ?? '') ?>">
         </div>
         <div class="field">
-          <label for="meta_description_<?= Security::e($code) ?>">Meta aciklama</label>
+          <label for="meta_description_<?= Security::e($code) ?>">Meta açıklama</label>
           <textarea id="meta_description_<?= Security::e($code) ?>"
                     name="t[<?= Security::e($code) ?>][meta_description]" rows="3" maxlength="320"
                     data-counter="160"><?= Security::e($t['meta_description'] ?? '') ?></textarea>
@@ -155,7 +155,7 @@ $default = Lang::defaultCode();
   <?php endforeach; ?>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit"><?= $isNew ? 'Olustur' : 'Kaydet' ?></button>
-    <a class="btn btn--ghost" href="<?= Security::e(admin_url('referanslar')) ?>">Listeye don</a>
+    <button class="btn btn--primary" type="submit"><?= $isNew ? 'Oluştur' : 'Kaydet' ?></button>
+    <a class="btn btn--ghost" href="<?= Security::e(admin_url('referanslar')) ?>">Listeye dön</a>
   </div>
 </form>

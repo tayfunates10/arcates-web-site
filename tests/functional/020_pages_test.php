@@ -52,7 +52,7 @@ function arc_clean_pages(Database $db): void
     $db->run('DELETE FROM pages');
 }
 
-test('F-01', 'Sayfa olusturulup yayinlaninca on yuzde gorunur', function (): void {
+test('F-01', 'Sayfa oluşturulup yayınlanınca on yüzde görünür', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
     arc_login_as($db, 'admin');
@@ -63,11 +63,11 @@ test('F-01', 'Sayfa olusturulup yayinlaninca on yuzde gorunur', function (): voi
         'sort'   => 0,
         't'      => [
             'tr' => [
-                'title'   => 'Hakkimizda',
+                'title'   => 'Hakkımızda',
                 'slug'    => 'hakkimizda',
-                'excerpt' => 'Edremit Korfezinde yazilim gelistiriyoruz.',
-                'content' => '<h2>Kimiz</h2><p>Korfezde calisan kucuk bir ekibiz.</p>'
-                    . '<p><a href="/iletisim">Bize yazin</a> veya <a href="/referanslar">calismalarimiza</a> bakin.</p>',
+                'excerpt' => 'Edremit Körfezinde yazılım geliştiriyoruz.',
+                'content' => '<h2>Kimiz</h2><p>Körfezde çalışan küçük bir ekibiz.</p>'
+                    . '<p><a href="/iletisim">Bize yazın</a> veya <a href="/referanslar">çalışmalarımıza</a> bakın.</p>',
                 'robots'  => 'index,follow',
             ],
         ],
@@ -76,17 +76,17 @@ test('F-01', 'Sayfa olusturulup yayinlaninca on yuzde gorunur', function (): voi
     assertGreaterThan(0, $id, 'Sayfa kaydedilmeli');
 
     $response = arc_visit('hakkimizda');
-    assertSame(200, $response->status(), 'Yayindaki sayfa 200 dondurmeli');
+    assertSame(200, $response->status(), 'Yayındaki sayfa 200 döndürmeli');
 
     $body = $response->body();
-    assertContains('<h1 class="page__title">Hakkimizda</h1>', $body, 'Baslik H1 olarak basilmali');
-    assertContains('Korfezde calisan kucuk bir ekibiz', $body, 'Icerik gorunmeli');
-    assertSame(1, substr_count($body, '<h1'), 'Sayfada tek H1 bulunmali');
+    assertContains('<h1 class="page__title">Hakkımızda</h1>', $body, 'Başlık H1 olarak basılmalı');
+    assertContains('Körfezde çalışan küçük bir ekibiz', $body, 'İçerik görünmeli');
+    assertSame(1, substr_count($body, '<h1'), 'Sayfada tek H1 bulunmalı');
 
     arc_logout_test();
 });
 
-test('F-02', 'Taslaga alinan sayfa on yuzde 404 doner', function (): void {
+test('F-02', 'Taslağa alınan sayfa on yüzde 404 döner', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
     arc_login_as($db, 'admin');
@@ -96,49 +96,49 @@ test('F-02', 'Taslaga alinan sayfa on yuzde 404 doner', function (): void {
         't' => ['tr' => ['title' => 'Fiyatlar', 'slug' => 'fiyatlar', 'content' => '<p>Fiyat listesi.</p>']],
     ]);
 
-    assertSame(200, arc_visit('fiyatlar')->status(), 'Once yayinda olmali');
+    assertSame(200, arc_visit('fiyatlar')->status(), 'Önce yayında olmalı');
 
     $db->update('pages', ['status' => 'draft'], ['id' => $id]);
 
-    assertSame(404, arc_visit('fiyatlar')->status(), 'Taslak sayfa 404 dondurmeli');
+    assertSame(404, arc_visit('fiyatlar')->status(), 'Taslak sayfa 404 döndürmeli');
 
     arc_logout_test();
 });
 
-test('F-03', 'Slug degisince eski adres 301 ile yeniye gider', function (): void {
+test('F-03', 'Slug değişince eski adres 301 ile yeniye gider', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
     arc_login_as($db, 'admin');
 
     $id = arc_save_page([
         'type' => 'page', 'status' => 'published',
-        't' => ['tr' => ['title' => 'Web Tasarim', 'slug' => 'web-tasarim', 'content' => '<p>Hizmet.</p>']],
+        't' => ['tr' => ['title' => 'Web Tasarım', 'slug' => 'web-tasarim', 'content' => '<p>Hizmet.</p>']],
     ]);
 
-    assertSame(200, arc_visit('web-tasarim')->status(), 'Ilk adres calismali');
+    assertSame(200, arc_visit('web-tasarim')->status(), 'İlk adres çalışmalı');
 
     arc_save_page([
         'type' => 'page', 'status' => 'published',
-        't' => ['tr' => ['title' => 'Web Tasarim', 'slug' => 'edremit-web-tasarim', 'content' => '<p>Hizmet.</p>']],
+        't' => ['tr' => ['title' => 'Web Tasarım', 'slug' => 'edremit-web-tasarim', 'content' => '<p>Hizmet.</p>']],
     ], $id);
 
     $redirect = Redirect::byFrom('/web-tasarim');
-    assertTrue($redirect !== null, 'Otomatik yonlendirme kaydi olusmali');
-    assertSame('/edremit-web-tasarim', $redirect['to_path'], 'Hedef yeni adres olmali');
-    assertSame(301, (int) $redirect['code'], 'Kalici yonlendirme olmali');
+    assertTrue($redirect !== null, 'Otomatik yönlendirme kaydı oluşmalı');
+    assertSame('/edremit-web-tasarim', $redirect['to_path'], 'Hedef yeni adres olmalı');
+    assertSame(301, (int) $redirect['code'], 'Kalıcı yönlendirme olmalı');
 
     $response = (new Arcates\Controllers\Front\NotFoundController())
         ->handle(Request::make('GET', '/web-tasarim'));
 
-    assertSame(301, $response->status(), 'Eski adres 301 dondurmeli');
+    assertSame(301, $response->status(), 'Eski adres 301 döndürmeli');
     assertContains('/edremit-web-tasarim', (string) $response->headerLine('Location'), 'Yeni adrese gitmeli');
 
-    assertSame(200, arc_visit('edremit-web-tasarim')->status(), 'Yeni adres calismali');
+    assertSame(200, arc_visit('edremit-web-tasarim')->status(), 'Yeni adres çalışmalı');
 
     arc_logout_test();
 });
 
-test('F-04', 'Ingilizce ceviri eklenince /en/slug calisir ve hreflang dogru olur', function (): void {
+test('F-04', 'İngilizce çeviri eklenince /en/slug çalışır ve hreflang doğru olur', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
     arc_login_as($db, 'admin');
@@ -146,34 +146,34 @@ test('F-04', 'Ingilizce ceviri eklenince /en/slug calisir ve hreflang dogru olur
     arc_save_page([
         'type' => 'page', 'status' => 'published',
         't' => [
-            'tr' => ['title' => 'Hakkimizda', 'slug' => 'hakkimizda', 'content' => '<p>Turkce icerik.</p>'],
+            'tr' => ['title' => 'Hakkımızda', 'slug' => 'hakkimizda', 'content' => '<p>Türkçe içerik.</p>'],
             'en' => ['title' => 'About us', 'slug' => 'about-us', 'content' => '<p>English content.</p>'],
         ],
     ]);
 
     $en = arc_visit('about-us', 'en');
-    assertSame(200, $en->status(), 'Ingilizce sayfa acilmali');
+    assertSame(200, $en->status(), 'İngilizce sayfa açılmalı');
     assertContains('English content', $en->body());
-    assertContains('lang="en"', $en->body(), 'HTML dili en olmali');
+    assertContains('lang="en"', $en->body(), 'HTML dili en olmalı');
 
     $body = $en->body();
     // hreflang seti yalnizca <link rel="alternate"> ogeleriyle denetlenir;
     // dil degistiricideki baglantilar bu setin parcasi degildir.
-    assertContains('rel="alternate" hreflang="tr"', $body, 'Turkce karsilik hreflang setinde olmali');
-    assertContains('rel="alternate" hreflang="en"', $body, 'Ingilizce hreflang setinde olmali');
-    assertContains('rel="alternate" hreflang="x-default"', $body, 'x-default bulunmali');
-    assertNotContains('rel="alternate" hreflang="de"', $body, 'Cevirisi olmayan Almanca hreflang almamali');
-    assertNotContains('rel="alternate" hreflang="ar"', $body, 'Cevirisi olmayan Arapca hreflang almamali');
+    assertContains('rel="alternate" hreflang="tr"', $body, 'Türkçe karşılık hreflang setinde olmalı');
+    assertContains('rel="alternate" hreflang="en"', $body, 'İngilizce hreflang setinde olmalı');
+    assertContains('rel="alternate" hreflang="x-default"', $body, 'x-default bulunmalı');
+    assertNotContains('rel="alternate" hreflang="de"', $body, 'Çevirisi olmayan Almanca hreflang almamalı');
+    assertNotContains('rel="alternate" hreflang="ar"', $body, 'Çevirisi olmayan Arapça hreflang almamalı');
 
     $tr = arc_visit('hakkimizda', 'tr');
-    assertSame(200, $tr->status(), 'Turkce sayfa acilmali');
+    assertSame(200, $tr->status(), 'Türkçe sayfa açılmalı');
     assertContains('lang="tr"', $tr->body());
 
     Lang::use('tr');
     arc_logout_test();
 });
 
-test('F-05', 'Arapca sayfa rtl yonunde acilir', function (): void {
+test('F-05', 'Arapça sayfa rtl yönünde açılır', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
     arc_login_as($db, 'admin');
@@ -181,24 +181,24 @@ test('F-05', 'Arapca sayfa rtl yonunde acilir', function (): void {
     arc_save_page([
         'type' => 'page', 'status' => 'published',
         't' => [
-            'tr' => ['title' => 'Iletisim', 'slug' => 'iletisim', 'content' => '<p>Turkce.</p>'],
+            'tr' => ['title' => 'İletişim', 'slug' => 'iletisim', 'content' => '<p>Türkçe.</p>'],
             'ar' => ['title' => 'اتصل بنا', 'slug' => 'ittisal', 'content' => '<p>محتوى عربي.</p>'],
         ],
     ]);
 
     $ar = arc_visit('ittisal', 'ar');
-    assertSame(200, $ar->status(), 'Arapca sayfa acilmali');
+    assertSame(200, $ar->status(), 'Arapça sayfa açılmalı');
 
     $body = $ar->body();
-    assertContains('dir="rtl"', $body, 'Yon rtl olmali');
-    assertContains('lang="ar"', $body, 'HTML dili ar olmali');
-    assertContains('محتوى عربي', $body, 'Arapca icerik bozulmadan basilmali');
+    assertContains('dir="rtl"', $body, 'Yön rtl olmalı');
+    assertContains('lang="ar"', $body, 'HTML dili ar olmalı');
+    assertContains('محتوى عربي', $body, 'Arapça içerik bozulmadan basılmalı');
 
     Lang::use('tr');
     arc_logout_test();
 });
 
-test('U-06', 'Slug cakismasinda ikinci kayit -2 eki alir', function (): void {
+test('U-06', 'Slug çakışmasında ikinci kayıt -2 eki alır', function (): void {
     $db = arc_need_db();
     arc_clean_pages($db);
     arc_login_as($db, 'admin');
@@ -210,34 +210,34 @@ test('U-06', 'Slug cakismasinda ikinci kayit -2 eki alir', function (): void {
 
     $second = arc_save_page([
         'type' => 'page', 'status' => 'published',
-        't' => ['tr' => ['title' => 'Referanslar', 'slug' => 'referanslar', 'content' => '<p>Iki.</p>']],
+        't' => ['tr' => ['title' => 'Referanslar', 'slug' => 'referanslar', 'content' => '<p>İki.</p>']],
     ]);
 
-    assertGreaterThan(0, $second, 'Ikinci sayfa kaydedilmeli');
-    assertNotSame($first, $second, 'Iki ayri kayit olusmali');
+    assertGreaterThan(0, $second, 'İkinci sayfa kaydedilmeli');
+    assertNotSame($first, $second, 'İki ayrı kayıt oluşmalı');
 
     $slug = (string) $db->value(
         'SELECT slug FROM page_translations WHERE page_id = :id AND lang = :lang',
         [':id' => $second, ':lang' => 'tr']
     );
 
-    assertSame('referanslar-2', $slug, 'Ikinci kayit -2 eki almali');
+    assertSame('referanslar-2', $slug, 'İkinci kayıt -2 eki almalı');
 
     $third = arc_save_page([
         'type' => 'page', 'status' => 'published',
-        't' => ['tr' => ['title' => 'Referanslar', 'slug' => 'referanslar', 'content' => '<p>Uc.</p>']],
+        't' => ['tr' => ['title' => 'Referanslar', 'slug' => 'referanslar', 'content' => '<p>Üç.</p>']],
     ]);
 
     $thirdSlug = (string) $db->value(
         'SELECT slug FROM page_translations WHERE page_id = :id AND lang = :lang',
         [':id' => $third, ':lang' => 'tr']
     );
-    assertSame('referanslar-3', $thirdSlug, 'Ucuncu kayit -3 eki almali');
+    assertSame('referanslar-3', $thirdSlug, 'Üçüncü kayıt -3 eki almalı');
 
     arc_logout_test();
 });
 
-test('F-10', 'Menu sirasi degisince on yuze yansir', function (): void {
+test('F-10', 'Menü sırası değişince on yüze yansır', function (): void {
     $db = arc_need_db();
     arc_login_as($db, 'admin');
 
@@ -248,7 +248,7 @@ test('F-10', 'Menu sirasi degisince on yuze yansir', function (): void {
             '_token' => Security::csrfToken(),
             'menu'   => 'main',
             'items'  => [
-                ['id' => 0, 'labels' => ['tr' => 'Iletisim'], 'url' => '/iletisim', 'sort' => 2, 'target' => '_self'],
+                ['id' => 0, 'labels' => ['tr' => 'İletişim'], 'url' => '/iletisim', 'sort' => 2, 'target' => '_self'],
                 ['id' => 0, 'labels' => ['tr' => 'Hizmetler'], 'url' => '/web-tasarim', 'sort' => 1, 'target' => '_self'],
             ],
         ]),
@@ -256,16 +256,16 @@ test('F-10', 'Menu sirasi degisince on yuze yansir', function (): void {
     );
 
     $tree = Arcates\Models\MenuItem::tree('main', 'tr');
-    assertCount(2, $tree, 'Iki menu ogesi olmali');
-    assertSame('Hizmetler', $tree[0]['label'], 'Sira 1 olan oge basta gelmeli');
-    assertSame('Iletisim', $tree[1]['label']);
+    assertCount(2, $tree, 'İki menü ögesi olmalı');
+    assertSame('Hizmetler', $tree[0]['label'], 'Sıra 1 olan öge başta gelmeli');
+    assertSame('İletişim', $tree[1]['label']);
 
     // Sirayi ters cevir.
     $ids = $db->all('SELECT id, sort FROM menu_items ORDER BY sort');
     $db->update('menu_items', ['sort' => 9], ['id' => (int) $ids[0]['id']]);
 
     $reordered = Arcates\Models\MenuItem::tree('main', 'tr');
-    assertSame('Iletisim', $reordered[0]['label'], 'Yeni sira on yuze yansimali');
+    assertSame('İletişim', $reordered[0]['label'], 'Yeni sıra on yüze yansımalı');
 
     arc_logout_test();
     $db->run('DELETE FROM menu_items');

@@ -17,7 +17,7 @@ use Arcates\Core\Security;
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Panel girisi — Arcates</title>
+<title>Panel girişi — Arcates</title>
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin.css')) ?>">
 </head>
@@ -26,7 +26,7 @@ use Arcates\Core\Security;
   <div class="system__card system__card--narrow">
 
     <p class="system__code">Panel</p>
-    <h1>Giris yapin</h1>
+    <h1>Giriş yapın</h1>
 
     <?php foreach ($flash as $item): ?>
       <div class="notice notice--<?= Security::e($item['type']) ?>" role="status">
@@ -48,7 +48,7 @@ use Arcates\Core\Security;
       </div>
 
       <div class="field">
-        <label for="password">Sifre</label>
+        <label for="password">Şifre</label>
         <input type="password" id="password" name="password" required autocomplete="current-password">
         <?php if (isset($errors['password'])): ?>
           <span class="field__error"><?= Security::e($errors['password']) ?></span>
@@ -56,8 +56,8 @@ use Arcates\Core\Security;
       </div>
 
       <div class="system__actions">
-        <button class="btn btn--primary" type="submit">Giris yap</button>
-        <a class="btn btn--ghost" href="/">Siteye don</a>
+        <button class="btn btn--primary" type="submit">Giriş yap</button>
+        <a class="btn btn--ghost" href="/">Siteye dön</a>
       </div>
     </form>
 

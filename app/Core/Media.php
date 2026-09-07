@@ -60,26 +60,26 @@ final class Media
         $error = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);
         if ($error !== UPLOAD_ERR_OK) {
             return $fail(match ($error) {
-                UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Dosya sunucu sinirindan buyuk.',
-                UPLOAD_ERR_PARTIAL   => 'Dosya eksik yuklendi.',
-                UPLOAD_ERR_NO_FILE   => 'Dosya secilmedi.',
-                UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE => 'Sunucuda gecici klasore yazilamadi.',
-                default              => 'Dosya yuklenemedi.',
+                UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Dosya sunucu sınırından büyük.',
+                UPLOAD_ERR_PARTIAL   => 'Dosya eksik yüklendi.',
+                UPLOAD_ERR_NO_FILE   => 'Dosya seçilmedi.',
+                UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE => 'Sunucuda geçici klasöre yazılamadı.',
+                default              => 'Dosya yüklenemedi.',
             });
         }
 
         $tmp = (string) ($file['tmp_name'] ?? '');
         if ($tmp === '' || !is_file($tmp)) {
-            return $fail('Gecici dosya bulunamadi.');
+            return $fail('Geçici dosya bulunamadı.');
         }
 
         $maxSize = (int) Config::get('upload.max_size', 5 * 1024 * 1024);
         $size    = (int) ($file['size'] ?? 0);
         if ($size <= 0) {
-            return $fail('Dosya bos.');
+            return $fail('Dosya boş.');
         }
         if ($size > $maxSize) {
-            return $fail('Dosya ' . format_bytes($maxSize) . ' sinirini asiyor.');
+            return $fail('Dosya ' . format_bytes($maxSize) . ' sınırını aşıyor.');
         }
 
         // Uzanti kullanicidan gelen adin SON parcasindan alinir; `resim.php.jpg`
@@ -88,30 +88,30 @@ final class Media
         $ext      = strtolower((string) pathinfo($original, PATHINFO_EXTENSION));
 
         if ($ext === '' || !in_array($ext, self::allowedExtensions(), true)) {
-            return $fail('Bu dosya turu kabul edilmiyor.');
+            return $fail('Bu dosya türü kabul edilmiyor.');
         }
 
         // Cift uzantili adlar reddedilir: resim.php.jpg, belge.phtml.png
         $stem = strtolower((string) pathinfo($original, PATHINFO_FILENAME));
         if (preg_match('/\.(php|phtml|phar|php[0-9]|cgi|pl|sh|exe|htaccess|asp|aspx|jsp)$/i', $stem) === 1) {
-            return $fail('Cift uzantili dosya adlari kabul edilmiyor.');
+            return $fail('Çift uzantılı dosya adları kabul edilmiyor.');
         }
 
         // MIME dogrulamasi; uzantiyla eslesmeli. DOCS.md 10.6, test S-06
         $mime = self::detectMime($tmp);
         if ($mime === null) {
-            return $fail('Dosya turu belirlenemedi.');
+            return $fail('Dosya türü belirlenemedi.');
         }
 
         if (!in_array($mime, self::MIME_MAP[$ext] ?? [], true)) {
-            return $fail('Dosya icerigi uzantisiyla uyusmuyor.');
+            return $fail('Dosya içeriği uzantısıyla uyuşmuyor.');
         }
 
         // Goruntu dosyalari gercekten goruntu olmali.
         if (in_array($ext, self::RASTER, true)) {
             $info = @getimagesize($tmp);
             if ($info === false) {
-                return $fail('Gecerli bir goruntu dosyasi degil.');
+                return $fail('Geçerli bir görüntü dosyası değil.');
             }
         }
 
@@ -153,7 +153,7 @@ final class Media
         $dir      = self::uploadRoot() . '/' . $relative;
 
         if (!is_dir($dir) && !@mkdir($dir, 0775, true) && !is_dir($dir)) {
-            return ['ok' => false, 'error' => 'Yukleme klasoru olusturulamadi.', 'id' => 0];
+            return ['ok' => false, 'error' => 'Yükleme klasörü oluşturulamadı.', 'id' => 0];
         }
 
         // Ad tahmin edilemez; kullanicinin verdigi ad kullanilmaz. DOCS.md 10.6
@@ -165,12 +165,12 @@ final class Media
             $raw   = (string) file_get_contents((string) $file['tmp_name']);
             $clean = Security::sanitizeSvg($raw);
             if (@file_put_contents($target, $clean) === false) {
-                return ['ok' => false, 'error' => 'Dosya yazilamadi.', 'id' => 0];
+                return ['ok' => false, 'error' => 'Dosya yazılamadı.', 'id' => 0];
             }
         } else {
             $moved = self::moveUploaded((string) $file['tmp_name'], $target);
             if (!$moved) {
-                return ['ok' => false, 'error' => 'Dosya tasinamadi.', 'id' => 0];
+                return ['ok' => false, 'error' => 'Dosya taşınamadı.', 'id' => 0];
             }
         }
 
@@ -193,7 +193,7 @@ final class Media
         } catch (\Throwable $e) {
             @unlink($target);
             Logger::exception($e);
-            return ['ok' => false, 'error' => 'Kayit olusturulamadi.', 'id' => 0];
+            return ['ok' => false, 'error' => 'Kayıt oluşturulamadı.', 'id' => 0];
         }
 
         foreach ($alt as $lang => $text) {
@@ -385,18 +385,18 @@ final class Media
             ['sql' => 'SELECT p.id, t.title FROM pages p
                          JOIN page_translations t ON t.page_id = p.id
                         WHERE p.cover_id = :id GROUP BY p.id, t.title',
-             'type' => 'Sayfa kapagi'],
+             'type' => 'Sayfa kapağı'],
             ['sql' => 'SELECT t.page_id AS id, t.title FROM page_translations t WHERE t.og_image_id = :id',
-             'type' => 'Sayfa OG gorseli'],
+             'type' => 'Sayfa OG görseli'],
             ['sql' => 'SELECT id, client_name AS title FROM projects WHERE cover_id = :id',
-             'type' => 'Referans kapagi'],
+             'type' => 'Referans kapağı'],
             ['sql' => 'SELECT p.id, p.client_name AS title FROM project_media pm
                          JOIN projects p ON p.id = pm.project_id WHERE pm.media_id = :id',
              'type' => 'Referans galerisi'],
             ['sql' => 'SELECT p.id, t.title FROM posts p
                          JOIN post_translations t ON t.post_id = p.id
                         WHERE p.cover_id = :id GROUP BY p.id, t.title',
-             'type' => 'Blog kapagi'],
+             'type' => 'Blog kapağı'],
         ];
 
         foreach ($queries as $query) {
@@ -418,8 +418,8 @@ final class Media
         if ($media !== null) {
             $needle = '%' . self::url((string) $media['path']) . '%';
             foreach ([
-                ['sql' => 'SELECT page_id AS id, title FROM page_translations WHERE content LIKE :needle', 'type' => 'Sayfa icerigi'],
-                ['sql' => 'SELECT post_id AS id, title FROM post_translations WHERE content LIKE :needle', 'type' => 'Blog icerigi'],
+                ['sql' => 'SELECT page_id AS id, title FROM page_translations WHERE content LIKE :needle', 'type' => 'Sayfa içeriği'],
+                ['sql' => 'SELECT post_id AS id, title FROM post_translations WHERE content LIKE :needle', 'type' => 'Blog içeriği'],
             ] as $query) {
                 try {
                     foreach ($db->all($query['sql'], [':needle' => $needle]) as $row) {

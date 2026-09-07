@@ -189,8 +189,8 @@ if (!function_exists('format_date')) {
         }
 
         $months = [
-            1 => 'Ocak', 'Subat', 'Mart', 'Nisan', 'Mayis', 'Haziran',
-            'Temmuz', 'Agustos', 'Eylul', 'Ekim', 'Kasim', 'Aralik',
+            1 => 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+            'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
         ];
 
         $out = date('j', $time) . ' ' . $months[(int) date('n', $time)] . ' ' . date('Y', $time);

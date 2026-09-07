@@ -11,7 +11,7 @@ declare(strict_types=1);
 use Arcates\Core\Security;
 ?>
 
-<p><a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('formlar')) ?>">← Kayit listesi</a></p>
+<p><a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('formlar')) ?>">← Kayıt listesi</a></p>
 
 <div class="grid grid--2">
 
@@ -38,7 +38,7 @@ use Arcates\Core\Security;
       <li><span>Tarih</span><span class="system__state"><?= Security::e(format_date($row['created_at'], true)) ?></span></li>
       <li><span>Dil</span><span class="system__state"><?= Security::e(strtoupper((string) ($row['lang'] ?? ''))) ?></span></li>
       <li>
-        <span>KVKK onayi</span>
+        <span>KVKK onayı</span>
         <span class="system__state system__state--<?= (int) $row['kvkk_consent'] === 1 ? 'ok' : 'bad' ?>">
           <?= (int) $row['kvkk_consent'] === 1 ? 'verildi' : 'yok' ?>
         </span>
@@ -52,7 +52,7 @@ use Arcates\Core\Security;
   <div>
     <section class="panel">
       <h2 class="panel__title">Nereden geldi</h2>
-      <p class="muted">Bu alanlar hangi sayfanin is getirdigini gosterir.</p>
+      <p class="muted">Bu alanlar hangi sayfanın iş getirdiğini gösterir.</p>
 
       <ul class="system__list">
         <li>
@@ -60,7 +60,7 @@ use Arcates\Core\Security;
           <span class="system__state"><code><?= Security::e($row['source_url'] ?? '—') ?></code></span>
         </li>
         <li>
-          <span>Geldigi yer</span>
+          <span>Geldiği yer</span>
           <span class="system__state wrap-anywhere"><?= Security::e(str_limit((string) ($row['referrer'] ?? ''), 50) ?: '—') ?></span>
         </li>
         <?php foreach (['utm_source' => 'UTM kaynak', 'utm_medium' => 'UTM ortam', 'utm_campaign' => 'UTM kampanya'] as $key => $label): ?>
@@ -104,7 +104,7 @@ use Arcates\Core\Security;
       <form method="post" action="<?= Security::e(admin_url('formlar/' . (int) $row['id'] . '/sil')) ?>"
             data-confirm="Bu kaydi kalici olarak silmek istiyor musunuz?">
         <?= csrf_field() ?>
-        <button class="btn btn--danger btn--sm" type="submit">Kaydi sil</button>
+        <button class="btn btn--danger btn--sm" type="submit">Kaydı sil</button>
       </form>
     </section>
   </div>

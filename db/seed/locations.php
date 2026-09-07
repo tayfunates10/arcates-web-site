@@ -27,291 +27,291 @@ return [
     'edremit' => [
         'district' => 'Edremit',
         'slug'     => 'edremit-web-tasarim',
-        'title'    => 'Edremit Web Tasarim',
-        'meta_title' => 'Edremit web tasarim — yerel isletmeler icin | Arcates',
-        'meta_description' => 'Edremit merkezli isletmeler icin web tasarim, e-ticaret ve yerel SEO. Yerinde gorusme, olculebilir sonuc.',
-        'excerpt'  => 'Korfezin ticaret merkezinde, yerinde gorusen bir ekiple calisin.',
+        'title'    => 'Edremit Web Tasarım',
+        'meta_title' => 'Edremit web tasarım — yerel işletmeler için | Arcates',
+        'meta_description' => 'Edremit merkezli işletmeler için web tasarım, e-ticaret ve yerel SEO. Yerinde görüşme, ölçülebilir sonuç.',
+        'excerpt'  => 'Körfezin ticaret merkezinde, yerinde görüşen bir ekiple çalışın.',
         'content'  => <<<'HTML'
-<h2>Edremit ticaretinin kendine ozgu ritmi</h2>
-<p>Edremit, Korfezin idari ve ticari merkezi. Cevre ilcelerden gelen alisveris
-trafigi, hastane ve resmi kurumlarin yarattigi gunluk hareket, Kaz Daglari'na
-cikan yolun buradan gecmesi; hepsi ilcenin is hayatini komsu ilcelerden ayirir.
-Akcay ya da Altinoluk sezona bagli yasarken Edremit on iki ay ayni tempoda
-calisir.</p>
+<h2>Edremit ticaretinin kendine özgü ritmi</h2>
+<p>Edremit, Körfezin idari ve ticari merkezi. Çevre ilçelerden gelen alışveriş
+trafiği, hastane ve resmi kurumların yarattığı günlük hareket, Kaz Dağları'na
+çıkan yolun buradan geçmesi; hepsi ilçenin iş hayatını komşu ilçelerden ayırır.
+Akçay ya da Altınoluk sezona bağlı yaşarken Edremit on iki ay aynı tempoda
+çalışır.</p>
 
-<p>Bunun web tarafindaki karsiligi su: Edremitli bir isletmenin musterisi
-cogunlukla yazlikci degil, bolgede yasayan biri. Arama aliskanliklari da farkli.
-"Edremit oto servis", "Edremit dis klinigi", "Edremit mobilyaci" gibi aramalar
-akşam saatlerinde ve hafta ici yogunlasir. Yazlik bolgelerde ise trafik cuma
-gunu baslar, pazar aksami biter.</p>
+<p>Bunun web tarafındaki karşılığı şu: Edremitli bir işletmenin müşterisi
+çoğunlukla yazlıkçı değil, bölgede yaşayan biri. Arama alışkanlıkları da farklı.
+"Edremit oto servis", "Edremit dış kliniği", "Edremit mobilyacı" gibi aramalar
+akşam saatlerinde ve hafta içi yoğunlaşır. Yazlık bölgelerde ise trafik cuma
+günü başlar, pazar akşamı biter.</p>
 
-<h2>Hangi isletmeler ne ariyor</h2>
-<p>Ilcede en cok calistigimiz gruplar saglik kuruluslari, oto sektoru, mobilya ve
-yapi malzemesi satan isletmeler, muhasebe ve hukuk burolari. Bunlarin ortak
-sorunu ayni: harita sonuclarinda cikiyorlar ama sitesi olmadigi icin musteri
-karsilastirma yaptigi anda rakibe geciyor.</p>
+<h2>Hangi işletmeler ne arıyor</h2>
+<p>İlçede en çok çalıştığımız gruplar sağlık kuruluşları, oto sektörü, mobilya ve
+yapı malzemesi satan işletmeler, muhasebe ve hukuk büroları. Bunların ortak
+sorunu aynı: harita sonuçlarında çıkıyorlar ama sitesi olmadığı için müşteri
+karşılaştırma yaptığı anda rakibe geçiyor.</p>
 
-<p>Ikinci grup, cevre ilcelere de hizmet veren isletmeler. Bir yapi market
-Edremit'te dukkani olsa da Havran ve Burhaniye'ye teslimat yapiyor. Bu durumda
-tek bir "iletisim" sayfasi yetmiyor; hizmet verilen her bolge icin ayri ve
-gercekten farkli sayfalar gerekiyor.</p>
+<p>İkinci grup, çevre ilçelere de hizmet veren işletmeler. Bir yapı market
+Edremit'te dükkanı olsa da Havran ve Burhaniye'ye teslimat yapıyor. Bu durumda
+tek bir "iletişim" sayfası yetmiyor; hizmet verilen her bölge için ayrı ve
+gerçekten farklı sayfalar gerekiyor.</p>
 
-<h2>Kaz Daglari trafigini kacirmayin</h2>
-<p>Edremit uzerinden gecen dag turizmi, ilcedeki konaklama ve yeme icme
-isletmeleri icin ciddi bir potansiyel. Ancak bu trafik cogunlukla telefonundan
-arama yapan, yolda olan bir kitle. Sitenin mobilde iki saniyenin altinda
-acilmasi, telefon numarasinin ilk ekranda gorunmesi ve yol tarifi baglantisinin
-tek dokunusla calismasi burada dogrudan ciro demek.</p>
+<h2>Kaz Dağları trafiğini kaçırmayın</h2>
+<p>Edremit üzerinden geçen dağ turizmi, ilçedeki konaklama ve yeme içme
+işletmeleri için ciddi bir potansiyel. Ancak bu trafik çoğunlukla telefonundan
+arama yapan, yolda olan bir kitle. Sitenin mobilde iki saniyenin altında
+açılması, telefon numarasının ilk ekranda görünmesi ve yol tarifi bağlantısının
+tek dokunuşla çalışması burada doğrudan ciro demek.</p>
 
-<h2>Bizim yaptigimiz is</h2>
+<h2>Bizim yaptığımız iş</h2>
 <ul>
-  <li>Isletmenin hangi aramalarda gorunmesi gerektiginin tespiti</li>
-  <li>Mobil oncelikli, hizli acilan kurumsal site</li>
-  <li>Google Isletme Profili ile birebir ayni iletisim bilgileri</li>
-  <li>Cevre ilcelere hizmet veriliyorsa her bolge icin ayri sayfa</li>
-  <li>Hangi sayfanin telefon getirdiginin olculmesi</li>
+  <li>İşletmenin hangi aramalarda görünmesi gerektiğinin tespiti</li>
+  <li>Mobil öncelikli, hızlı açılan kurumsal site</li>
+  <li>Google İşletme Profili ile birebir aynı iletişim bilgileri</li>
+  <li>Çevre ilçelere hizmet veriliyorsa her bölge için ayrı sayfa</li>
+  <li>Hangi sayfanın telefon getirdiğinin ölçülmesi</li>
 </ul>
 
-<h2>Yerinde gorusme</h2>
-<p>Edremit merkezdeki isletmelerle gorusmeyi kendi mekanlarinda yapiyoruz. Bir
-mobilyacinin deposunu gormeden urun fotograflarinin nasil cekilecegine,
-bir klinigin randevu akisini dinlemeden formun nasil kurulacagina karar
-verilemez. Bu gorusme ucretsizdir ve bir saati gecmez.</p>
+<h2>Yerinde görüşme</h2>
+<p>Edremit merkezdeki işletmelerle görüşmeyi kendi mekanlarında yapıyoruz. Bir
+mobilyacının deposunu görmeden ürün fotoğraflarının nasıl çekileceğine,
+bir kliniğin randevu akışını dinlemeden formun nasıl kurulacağına karar
+verilemez. Bu görüşme ücretsizdir ve bir saati geçmez.</p>
 
-<p>Sonrasinda yazili fiyat ve takvim gonderiyoruz. Kurumsal bir site ucuncu
-haftanin sonunda yayinda oluyor. Detaylar icin
-<a href="/fiyatlar">fiyatlar sayfamiza</a>,
-yaptigimiz islere <a href="/referanslar">referanslar sayfasindan</a>
+<p>Sonrasında yazılı fiyat ve takvim gönderiyoruz. Kurumsal bir site üçüncü
+haftanın sonunda yayında oluyor. Detaylar için
+<a href="/fiyatlar">fiyatlar sayfamıza</a>,
+yaptığımız işlere <a href="/referanslar">referanslar sayfasından</a>
 bakabilirsiniz.</p>
 
-<h2>Rakip analizinden cikan tablo</h2>
-<p>Ilcedeki isletmelerin sitelerine bakildiginda tekrar eden uc sorun goze
-carpiyor. Birincisi, sitelerin buyuk bolumu masaustu icin tasarlanmis ve
-telefonda okunmuyor; oysa gelen trafigin dortte ucu mobil. Ikincisi, adres ve
-telefon bilgisi harita kaydiyla ayni yazilmamis, bu da arama motorunun
-isletmeyi dogrulamasini zorlastiriyor. Ucuncusu, sayfalarin cogunda hangi
-hizmetin verildigi genel cumlelerle geciliyor; arayan kisi arayacagi hizmeti
-sayfada goremeyince cikip gidiyor.</p>
+<h2>Rakip analizinden çıkan tablo</h2>
+<p>İlçedeki işletmelerin sitelerine bakıldığında tekrar eden üç sorun göze
+çarpıyor. Birincisi, sitelerin büyük bölümü masaüstü için tasarlanmış ve
+telefonda okunmuyor; oysa gelen trafiğin dörtte ucu mobil. İkincisi, adres ve
+telefon bilgisi harita kaydıyla aynı yazılmamış, bu da arama motorunun
+işletmeyi doğrulamasını zorlaştırıyor. Üçüncüsü, sayfaların çoğunda hangi
+hizmetin verildiği genel cümlelerle geçiliyor; arayan kişi arayacağı hizmeti
+sayfada göremeyince çıkıp gidiyor.</p>
 
-<p>Bu uc sorunun ucu de teknik degil, karar sorunudur ve cozumu pahali degildir.
-Bir isletmenin verdigi her hizmet icin ayri bir baslik ve birkac paragraf
-yazmasi, ilcedeki rakiplerinin cogunun onune gecmesine yetiyor.</p>
+<p>Bu üç sorunun ucu de teknik değil, karar sorunudur ve çözümü pahalı değildir.
+Bir işletmenin verdiği her hizmet için ayrı bir başlık ve birkaç paragraf
+yazması, ilçedeki rakiplerinin çoğunun önüne geçmesine yetiyor.</p>
 
-<h2>Olcum olmadan iyilestirme olmaz</h2>
-<p>Yayina aldigimiz her sitede hangi sayfanin telefon ya da form getirdigini
-kaydediyoruz. Uc ay sonra tablo genellikle sasirtici oluyor: isletmenin en cok
-onem verdigi anasayfa degil, kimsenin dikkate almadigi bir hizmet sayfasi is
-getiriyor. Bu bilgi olmadan icerigin nereye yatirilacagina karar vermek tahminden
-ibaret kalir.</p>
+<h2>Ölçüm olmadan iyileştirme olmaz</h2>
+<p>Yayına aldığımız her sitede hangi sayfanın telefon ya da form getirdiğini
+kaydediyoruz. Üç ay sonra tablo genellikle şaşırtıcı oluyor: işletmenin en çok
+önem verdiği anasayfa değil, kimsenin dikkate almadığı bir hizmet sayfası iş
+getiriyor. Bu bilgi olmadan içeriğin nereye yatırılacağına karar vermek tahminden
+ibaret kalır.</p>
 
-<p>Panelde bu veriyi isletmenin kendisi de goruyor. Kaynak sayfa, ziyaretcinin
-siteye nereden geldigi ve hangi aramanin sonuca dondugu ayni ekranda duruyor.</p>
+<p>Panelde bu veriyi işletmenin kendisi de görüyor. Kaynak sayfa, ziyaretçinin
+siteye nereden geldiği ve hangi aramanın sonuca döndüğü aynı ekranda duruyor.</p>
 
-<h2>Panelden yonetim: kim ne degistirebilir</h2>
-<p>Teslim ettigimiz her sitede metinlerin tamami panelden duzenlenebilir. Bu
-sadece bir kolaylik degil, sitenin canli kalmasinin sartidir. Fiyatini
-degistirmek icin bize yazmasi gereken bir isletme, ucuncu ayda fiyat
-guncellemekten vazgecer ve site eskimeye baslar.</p>
+<h2>Panelden yönetim: kim ne değiştirebilir</h2>
+<p>Teslim ettiğimiz her sitede metinlerin tamamı panelden düzenlenebilir. Bu
+sadece bir kolaylık değil, sitenin canlı kalmasının şartıdır. Fiyatını
+değiştirmek için bize yazması gereken bir işletme, üçüncü ayda fiyat
+güncellemekten vazgeçer ve site eskimeye başlar.</p>
 
-<p>Panelde iki rol vardir. Yonetici her seyi gorur; editor yalnizca icerik
-bolumlerine erisir. Boylece ofisteki bir calisan blog yazisi eklerken ayarlara
-ya da kullanici listesine dokunamaz. Her degisiklik kim tarafindan, ne zaman
-yapildigiyla birlikte islem gunlugune yazilir.</p>
+<p>Panelde iki rol vardır. Yönetici her şeyi görür; editör yalnızca içerik
+bölümlerine erişir. Böylece ofisteki bir çalışan blog yazısı eklerken ayarlara
+ya da kullanıcı listesine dokunamaz. Her değişiklik kim tarafından, ne zaman
+yapıldığıyla birlikte işlem günlüğüne yazılır.</p>
 
-<p>Cevredeki diger ilcelerde de calisiyoruz:
-<a href="/akcay-web-tasarim">Akcay</a>,
+<p>Çevredeki diğer ilçelerde de çalışıyoruz:
+<a href="/akcay-web-tasarim">Akçay</a>,
 <a href="/havran-web-tasarim">Havran</a> ve
-<a href="/burhaniye-web-tasarim">Burhaniye</a> sayfalarimiza goz atabilirsiniz.</p>
+<a href="/burhaniye-web-tasarim">Burhaniye</a> sayfalarımıza göz atabilirsiniz.</p>
 HTML,
     ],
 
     // -----------------------------------------------------------------------
     'akcay' => [
-        'district' => 'Akcay',
+        'district' => 'Akçay',
         'slug'     => 'akcay-web-tasarim',
-        'title'    => 'Akcay Web Tasarim',
-        'meta_title' => 'Akcay web tasarim — pansiyon ve restoran siteleri',
-        'meta_description' => 'Akcay pansiyon, otel ve restoranlari icin rezervasyon odakli web tasarim. Sezon disi doluluk icin yerel SEO.',
-        'excerpt'  => 'Sezonluk isletmeler icin rezervasyon ve doluluk odakli siteler.',
+        'title'    => 'Akçay Web Tasarım',
+        'meta_title' => 'Akçay web tasarım — pansiyon ve restoran siteleri',
+        'meta_description' => 'Akçay pansiyon, otel ve restoranları için rezervasyon odaklı web tasarım. Sezon dışı doluluk için yerel SEO.',
+        'excerpt'  => 'Sezonluk işletmeler için rezervasyon ve doluluk odaklı siteler.',
         'content'  => <<<'HTML'
-<h2>Dokuz aylik hazirlik, uc aylik sezon</h2>
-<p>Akcay'da is takvimi nettir: haziran basinda baslar, eylul ortasinda biter.
-Geri kalan dokuz ay hazirlik ve bekleyistir. Bu ritim, internet sitesinden
-beklentiyi de degistirir. Yil boyu ayni tempoda calisan bir isletmenin sitesiyle,
-gelirinin tamamini uc ayda yapan bir pansiyonun sitesi ayni sekilde
+<h2>Dokuz aylık hazırlık, üç aylık sezon</h2>
+<p>Akçay'da iş takvimi nettir: haziran başında başlar, eylül ortasında biter.
+Geri kalan dokuz ay hazırlık ve bekleyiştir. Bu ritim, internet sitesinden
+beklentiyi de değiştirir. Yıl boyu aynı tempoda çalışan bir işletmenin sitesiyle,
+gelirinin tamamını üç ayda yapan bir pansiyonun sitesi aynı şekilde
 kurgulanamaz.</p>
 
-<p>Sezonluk isletmede sitenin isi, aralik ile mayis arasinda yapilir. Misafir
-tatilini subatta planlar, martta karar verir, nisanda parayi yatirir. Haziranda
-sitenizi acan kisi cogu zaman yer arayan degil, yol tarifi arayan kisidir.</p>
+<p>Sezonluk işletmede sitenin işi, aralık ile mayıs arasında yapılır. Misafir
+tatilini şubatta planlar, martta karar verir, nisanda parayı yatırır. Haziranda
+sitenizi açan kişi çoğu zaman yer arayan değil, yol tarifi arayan kişidir.</p>
 
-<h2>Rezervasyon sitelerinin disina cikmak</h2>
-<p>Akcay'daki pansiyonlarin buyuk bolumu doluluğunun tamamini rezervasyon
-platformlarindan sagliyor. Komisyon oraninin yuzde on bes ile yirmi bes arasinda
-oldugu dusunulurse, otuz odali bir tesis icin sezonluk kayip ciddi bir rakama
-ulasiyor.</p>
+<h2>Rezervasyon sitelerinin dışına çıkmak</h2>
+<p>Akçay'daki pansiyonların büyük bölümü doluluğunun tamamını rezervasyon
+platformlarından sağlıyor. Komisyon oranının yüzde on beş ile yirmi beş arasında
+olduğu düşünülürse, otuz odalı bir tesis için sezonluk kayıp ciddi bir rakama
+ulaşıyor.</p>
 
-<p>Amac platformlari birakmak degil. Amac, oradan gelen misafiri bir sonraki
-sene dogrudan size getirmek. Bunun icin uc sey gerekir: misafirin adini ve
-e-postasini alan bir kanal, dogrudan rezervasyonda anlamli bir avantaj ve
-kendi sitenizde calisan bir musaitlik takvimi.</p>
+<p>Amaç platformları bırakmak değil. Amaç, oradan gelen misafiri bir sonraki
+sene doğrudan size getirmek. Bunun için üç şey gerekir: misafirin adını ve
+e-postasını alan bir kanal, doğrudan rezervasyonda anlamlı bir avantaj ve
+kendi sitenizde çalışan bir müsaitlik takvimi.</p>
 
-<h2>Sahil seridi ve yeme icme</h2>
-<p>Akcay sahilindeki restoran ve kafeler icin durum farkli. Burada rezervasyondan
-cok gunluk gorunurluk onemli. Aksam yemek yeri arayan bir aile telefonundan
-harita uygulamasini acar, ilk uc sonuca bakar ve fotograflara goz atar. Menunun
-guncel olmasi, fotograflarin gercek olmasi ve calisma saatlerinin dogru
-yazilmasi bu asamada karar verdirir.</p>
+<h2>Sahil şeridi ve yeme içme</h2>
+<p>Akçay sahilindeki restoran ve kafeler için durum farklı. Burada rezervasyondan
+çok günlük görünürlük önemli. Akşam yemek yeri arayan bir aile telefonundan
+harita uygulamasını açar, ilk üç sonuca bakar ve fotoğraflara göz atar. Menünün
+güncel olması, fotoğrafların gerçek olması ve çalışma saatlerinin doğru
+yazılması bu aşamada karar verdirir.</p>
 
-<h2>Almanca ve Ingilizce icerik</h2>
-<p>Bolgede yabanci misafir orani her yil artiyor. Otomatik ceviri eklentileri
-arama motorlari icin ayri sayfa uretmedigi icin Almanca arama yapan biri sizi
-bulamaz. Gercek coklu dil kurulumu, her dil icin ayri adres ve ayri metin
-demektir; bunu <a href="/coklu-dil-web-sitesi">coklu dil sayfamizda</a>
-anlatiyoruz.</p>
+<h2>Almanca ve İngilizce içerik</h2>
+<p>Bölgede yabancı misafir oranı her yıl artıyor. Otomatik çeviri eklentileri
+arama motorları için ayrı sayfa üretmediği için Almanca arama yapan biri sizi
+bulamaz. Gerçek çoklu dil kurulumu, her dil için ayrı adres ve ayrı metin
+demektir; bunu <a href="/coklu-dil-web-sitesi">çoklu dil sayfamızda</a>
+anlatıyoruz.</p>
 
-<h2>Ne zaman baslamali</h2>
-<p>Sezonluk bir isletme icin dogru zaman kasim ile ocak arasidir. Sitenin subatta
-yayinda olmasi, arama motorlarinin sayfayi taniyip siralamaya alacagi sureyi
-kazandirir. Mayista baslanan bir is o sezonu yakalayamaz.</p>
+<h2>Ne zaman başlamalı</h2>
+<p>Sezonluk bir işletme için doğru zaman kasım ile ocak arasıdır. Sitenin şubatta
+yayında olması, arama motorlarının sayfayı tanıyıp sıralamaya alacağı süreyi
+kazandırır. Mayısta başlanan bir iş o sezonu yakalayamaz.</p>
 
-<h2>Fotograf, metinden once konusur</h2>
-<p>Konaklama aramasinda karar cogunlukla fotografla verilir. Sahilde cekilmis
-genel bir manzara karesi degil, misafirin gercekten kalacagi odanin, banyonun ve
-kahvalti masasinin fotografi ise yarar. Gorseli guzellestirmek yerine dogru
-gostermek, sezon sonundaki yorum puanini korumanin en ucuz yolu.</p>
+<h2>Fotoğraf, metinden önce konuşur</h2>
+<p>Konaklama aramasında karar çoğunlukla fotoğrafla verilir. Sahilde çekilmiş
+genel bir manzara karesi değil, misafirin gerçekten kalacağı odanın, banyonun ve
+kahvaltı masasının fotoğrafı ise yarar. Görseli güzelleştirmek yerine doğru
+göstermek, sezon sonundaki yorum puanını korumanın en ucuz yolu.</p>
 
-<p>Cektigimiz ya da isletmeden aldigimiz her fotograf siteye yuklenirken kucuk,
-orta ve buyuk boyutlarda ve WebP bicimiyle yeniden uretiliyor. Boylece telefonla
-bakan misafir on iki fotografi saniyeler icinde goruyor, sayfa agirligi
-sismiyor.</p>
+<p>Çektiğimiz ya da işletmeden aldığımız her fotoğraf siteye yüklenirken küçük,
+orta ve büyük boyutlarda ve WebP biçimiyle yeniden üretiliyor. Böylece telefonla
+bakan misafir on iki fotoğrafı saniyeler içinde görüyor, sayfa ağırlığı
+şişmiyor.</p>
 
-<h2>Sezon disi doluluk</h2>
-<p>Akcay'da asil kazanc nisan-mayis ve eylul-ekim aylarinda gizli. Bu donemde
-gelen kitle aile degil; yuruyus yapan, sakinlik arayan, calisirken tatil yapan
-bir grup. Bu kitleye ulasmak icin sitenin yaz anlatisindan farkli bir dil
-kurmasi gerekiyor: sicaklik ortalamalari, acik kalan isletmeler, calisma icin
-internet hizi ve uzun konaklama fiyatlari.</p>
+<h2>Sezon dışı doluluk</h2>
+<p>Akçay'da asıl kazanç nisan-mayıs ve eylül-ekim aylarında gizli. Bu dönemde
+gelen kitle aile değil; yürüyüş yapan, sakinlik arayan, çalışırken tatil yapan
+bir grup. Bu kitleye ulaşmak için sitenin yaz anlatısından farklı bir dil
+kurması gerekiyor: sıcaklık ortalamaları, açık kalan işletmeler, çalışma için
+internet hızı ve uzun konaklama fiyatları.</p>
 
-<p>Bu iceriklerin yaz sezonunda yazilmasi, sonbaharda arama yapan kisinin
-karsisina cikmasi icin gereken sureyi kazandiriyor.</p>
+<p>Bu içeriklerin yaz sezonunda yazılması, sonbaharda arama yapan kişinin
+karşısına çıkması için gereken süreyi kazandırıyor.</p>
 
-<h2>Rezervasyon akisinda misafiri kaybettiren noktalar</h2>
-<p>Dogrudan rezervasyon denemelerinin cogu uc noktada kesilir. Birincisi, fiyat
-gorunmeden once bilgi istenmesi; misafir fiyati gormeden form doldurmaz.
-Ikincisi, musaitligin belirsiz olmasi; "sorunuz" yaziyorsa misafir sormaz,
-platforma doner. Ucuncusu, mobilde uzun form; alti alandan fazlasi terk
-oranini gozle gorulur artirir.</p>
+<h2>Rezervasyon akışında misafiri kaybettiren noktalar</h2>
+<p>Doğrudan rezervasyon denemelerinin çoğu üç noktada kesilir. Birincisi, fiyat
+görünmeden önce bilgi istenmesi; misafir fiyatı görmeden form doldurmaz.
+İkincisi, müsaitliğin belirsiz olması; "sorunuz" yazıyorsa misafir sormaz,
+platforma döner. Üçüncüsü, mobilde uzun form; altı alandan fazlası terk
+oranını gözle görülür artırır.</p>
 
-<p>Kurdugumuz akista once tarih ve kisi sayisi sorulur, hemen fiyat ve musaitlik
-gosterilir, ancak ondan sonra iletisim bilgisi istenir. Bu sira degisikligi tek
-basina donusum oranini belirgin sekilde yukseltiyor.</p>
+<p>Kurduğumuz akışta önce tarih ve kişi sayısı sorulur, hemen fiyat ve müsaitlik
+gösterilir, ancak ondan sonra iletişim bilgisi istenir. Bu sıra değişikliği tek
+başına dönüşüm oranını belirgin şekilde yükseltiyor.</p>
 
-<h2>Yorumlarla calismak</h2>
-<p>Tesis puani sezon boyunca en degerli varlik. Sitede uydurma yorum
-yayinlamiyoruz ve yapisal veride puan isaretlemesi yapmiyoruz; bu hem yanlis
-hem de yakalandiginda tum sayfalari riske atiyor. Bunun yerine gercek
-misafirlerden gelen yorumlari duzenli toplayacak bir akis kuruyoruz.</p>
+<h2>Yorumlarla çalışmak</h2>
+<p>Tesis puanı sezon boyunca en değerli varlık. Sitede uydurma yorum
+yayınlamıyoruz ve yapısal veride puan işaretlemesi yapmıyoruz; bu hem yanlış
+hem de yakalandığında tüm sayfaları riske atıyor. Bunun yerine gerçek
+misafirlerden gelen yorumları düzenli toplayacak bir akış kuruyoruz.</p>
 
-<p>Konaklama isletmelerine ozel kurdugumuz altyapiyi
-<a href="/rezervasyon-sistemi">rezervasyon sistemi sayfasinda</a>,
-tesis sitelerine ozel calismamizi
-<a href="/otel-pansiyon-web-sitesi">otel ve pansiyon sayfasinda</a>
+<p>Konaklama işletmelerine özel kurduğumuz altyapıyı
+<a href="/rezervasyon-sistemi">rezervasyon sistemi sayfasında</a>,
+tesis sitelerine özel çalışmamızı
+<a href="/otel-pansiyon-web-sitesi">otel ve pansiyon sayfasında</a>
 bulabilirsiniz.</p>
 HTML,
     ],
 
     // -----------------------------------------------------------------------
     'altinoluk' => [
-        'district' => 'Altinoluk',
+        'district' => 'Altınoluk',
         'slug'     => 'altinoluk-web-tasarim',
-        'title'    => 'Altinoluk Web Tasarim',
-        'meta_title' => 'Altinoluk web tasarim — emlak ve site yonetimi siteleri',
-        'meta_description' => 'Altinoluk emlak ofisleri, site yonetimleri ve konaklama isletmeleri icin web tasarim ve yerel SEO.',
-        'excerpt'  => 'Emlak, site yonetimi ve dag turizmi isletmeleri icin siteler.',
+        'title'    => 'Altınoluk Web Tasarım',
+        'meta_title' => 'Altınoluk web tasarım — emlak ve site yönetimi siteleri',
+        'meta_description' => 'Altınoluk emlak ofisleri, site yönetimleri ve konaklama işletmeleri için web tasarım ve yerel SEO.',
+        'excerpt'  => 'Emlak, site yönetimi ve dağ turizmi işletmeleri için siteler.',
         'content'  => <<<'HTML'
-<h2>Yazlik konut ekonomisi</h2>
-<p>Altinoluk'u Korfezin diger ilcelerinden ayiran sey, ekonomisinin buyuk
-bolumunun yazlik konut uzerine kurulu olmasi. Oksijen orani ve Kazdaglari
-eteklerindeki konumu nedeniyle burasi yillardir emeklilik ve ikinci konut
-tercihi. Bu da nufusun kis aylarinda dusuk, yaz aylarinda katlanarak arttigi
-bir yapi olusturuyor.</p>
+<h2>Yazlık konut ekonomisi</h2>
+<p>Altınoluk'u Körfezin diğer ilçelerinden ayıran şey, ekonomisinin büyük
+bölümünün yazlık konut üzerine kurulu olması. Oksijen oranı ve Kazdağları
+eteklerindeki konumu nedeniyle burası yıllardır emeklilik ve ikinci konut
+tercihi. Bu da nüfusun kış aylarında düşük, yaz aylarında katlanarak arttığı
+bir yapı oluşturuyor.</p>
 
-<p>Boyle bir yerde en yogun calisan iki sektor emlak ve site yonetimi hizmetleri.
-Ikisinin de internet ihtiyaci birbirinden cok farkli.</p>
+<p>Böyle bir yerde en yoğun çalışan iki sektör emlak ve site yönetimi hizmetleri.
+İkisinin de internet ihtiyacı birbirinden çok farklı.</p>
 
-<h2>Emlak ofisleri icin</h2>
-<p>Emlak ilanlarinin buyuk bolumu portallarda yayinlaniyor; bu degismeyecek.
-Ancak alici bir portalda ilani gordukten sonra ofisin adini aratir. O anda
-karsisina cikan sayfa, o ofisin bolgeyi ne kadar tanidigini gostermelidir.</p>
+<h2>Emlak ofisleri için</h2>
+<p>Emlak ilanlarının büyük bölümü portallarda yayınlanıyor; bu değişmeyecek.
+Ancak alıcı bir portalda ilanı gördükten sonra ofisin adını aratır. O anda
+karşısına çıkan sayfa, o ofisin bölgeyi ne kadar tanıdığını göstermelidir.</p>
 
-<p>Bizim onerdigimiz yapi su: portal ilanlarini birakip her mahalle icin bolge
-rehberi yazmak. Denize uzaklik, site aidatlari, kis aylarinda acik kalan
-isletmeler, saglik ocagi ve market mesafeleri. Alicinin gercekten merak ettigi
-bunlardir ve bu bilgiyi veren ofis, ilan listeleyen ofisten one gecer.</p>
+<p>Bizim önerdiğimiz yapı şu: portal ilanlarını bırakıp her mahalle için bölge
+rehberi yazmak. Denize uzaklık, site aidatları, kış aylarında açık kalan
+işletmeler, sağlık ocağı ve market mesafeleri. Alıcının gerçekten merak ettiği
+bunlardır ve bu bilgiyi veren ofis, ilan listeleyen ofisten öne geçer.</p>
 
-<h2>Site yonetimleri icin</h2>
-<p>Yuzlerce daireli sitelerde yonetimin en buyuk yuku iletisim. Aidat
-duyurusundan havuz bakim takvimine, genel kurul cagrisindan ariza bildirimine
-kadar her sey telefonla yurutuluyor. Basit bir duyuru sayfasi ve form bu yuku
-gozle gorulur sekilde azaltiyor.</p>
+<h2>Site yönetimleri için</h2>
+<p>Yüzlerce daireli sitelerde yönetimin en büyük yükü iletişim. Aidat
+duyurusundan havuz bakım takvimine, genel kurul çağrısından arıza bildirimine
+kadar her şey telefonla yürütülüyor. Basit bir duyuru sayfası ve form bu yükü
+gözle görülür şekilde azaltıyor.</p>
 
-<h2>Dag turizmi ve yuruyus</h2>
-<p>Kazdaglari'na yonelik doga yuruyusu, kamp ve butik konaklama isletmeleri son
-yillarda arttı. Bu isletmelerin musterisi genellikle sehirden gelen, planli ve
-internetten arastiran bir kitle. Rota anlatimi, mevsime gore tavsiye ve gercek
-fotograf bu grupta dogrudan rezervasyona donusuyor.</p>
+<h2>Dağ turizmi ve yürüyüş</h2>
+<p>Kazdağları'na yönelik doğa yürüyüşü, kamp ve butik konaklama işletmeleri son
+yıllarda arttı. Bu işletmelerin müşterisi genellikle şehirden gelen, planlı ve
+internetten araştıran bir kitle. Rota anlatımı, mevsime göre tavsiye ve gerçek
+fotoğraf bu grupta doğrudan rezervasyona dönüşüyor.</p>
 
-<h2>Bizim yaklasimimiz</h2>
+<h2>Bizim yaklaşımımız</h2>
 <ul>
-  <li>Sektore gore farkli site kurgusu; emlak ile konaklama ayni sablonla olmaz</li>
-  <li>Mahalle ve bolge bazli icerik; kopyala yapistir degil, gercek bilgi</li>
-  <li>Mobil hiz; alicinin cogu telefonundan bakiyor</li>
-  <li>Yabanci alici hedefleniyorsa Ingilizce ve Almanca yayin</li>
+  <li>Sektöre göre farklı site kurgusu; emlak ile konaklama aynı şablonla olmaz</li>
+  <li>Mahalle ve bölge bazlı içerik; kopyala yapıştır değil, gerçek bilgi</li>
+  <li>Mobil hız; alıcının çoğu telefonundan bakıyor</li>
+  <li>Yabancı alıcı hedefleniyorsa İngilizce ve Almanca yayın</li>
 </ul>
 
-<h2>Alicinin gercekten sordugu sorular</h2>
-<p>Yazlik alacak kisinin ilanlarda bulamadigi bilgiler bellidir: kis aylarinda
-sitede kac daire dolu kaliyor, market ve eczane yuruyus mesafesinde mi, aidat
-neyi kapsiyor, su kesintisi oluyor mu, en yakin saglik kurulusu ne kadar uzakta.
-Bu sorularin cevabini veren bir ofis, ilan listeleyen on ofisin onune gecer.</p>
+<h2>Alıcının gerçekten sorduğu sorular</h2>
+<p>Yazlık alacak kişinin ilanlarda bulamadığı bilgiler bellidir: kış aylarında
+sitede kaç daire dolu kalıyor, market ve eczane yürüyüş mesafesinde mi, aidat
+neyi kapsıyor, su kesintisi oluyor mu, en yakın sağlık kuruluşu ne kadar uzakta.
+Bu soruların cevabını veren bir ofis, ilan listeleyen on ofisin önüne geçer.</p>
 
-<p>Bu bilgiyi yazmak zaman ister ama bir kez yazilir ve yillarca calisir. Ustelik
-bu tur ayrintili sayfalar, alicinin aramada kullandigi uzun cumlelerle birebir
-ortustugu icin rekabetin en dusuk oldugu yerden trafik getirir.</p>
+<p>Bu bilgiyi yazmak zaman ister ama bir kez yazılır ve yıllarca çalışır. Üstelik
+bu tür ayrıntılı sayfalar, alıcının aramada kullandığı uzun cümlelerle birebir
+örtüştüğü için rekabetin en düşük olduğu yerden trafik getirir.</p>
 
-<h2>Yabanci aliciya satis</h2>
-<p>Bolgede yabanci alici ilgisi artiyor. Ancak ilan metnini otomatik ceviriyle
-Ingilizceye cevirmek yeterli degil; alicinin sordugu sorular farkli. Tapu
-sureci, oturma izni, vergi ve site aidatinin nasil odendigi gibi basliklar
-Turkiyeli alicinin zaten bildigi, yabanci alicinin ise hic bilmedigi
+<h2>Yabancı alıcıya satış</h2>
+<p>Bölgede yabancı alıcı ilgisi artıyor. Ancak ilan metnini otomatik çeviriyle
+İngilizceye çevirmek yeterli değil; alıcının sorduğu sorular farklı. Tapu
+süreci, oturma izni, vergi ve site aidatının nasıl ödendiği gibi başlıklar
+Türkiyeli alıcının zaten bildiği, yabancı alıcının ise hiç bilmediği
 konular.</p>
 
-<p>Bu yuzden coklu dil kurulumunu ceviri olarak degil, ayri icerik olarak
-yapiyoruz. Her dil kendi adresinde yayinlanir ve o dile ait metin, o kitlenin
-sorularina gore yazilir.</p>
+<p>Bu yüzden çoklu dil kurulumunu çeviri olarak değil, ayrı içerik olarak
+yapıyoruz. Her dil kendi adresinde yayınlanır ve o dile ait metin, o kitlenin
+sorularına göre yazılır.</p>
 
-<h2>Site yonetimi icin duyuru ve ariza akisi</h2>
-<p>Buyuk sitelerde yonetici en cok zamani tekrarlayan sorulara harcar: aidat ne
-zaman yatiyor, havuz ne zaman aciliyor, genel kurul ne zaman. Bu sorularin
-cevabini tasiyan basit bir duyuru sayfasi telefon trafigini belirgin sekilde
-azaltir.</p>
+<h2>Site yönetimi için duyuru ve arıza akışı</h2>
+<p>Büyük sitelerde yönetici en çok zamanı tekrarlayan sorulara harcar: aidat ne
+zaman yatıyor, havuz ne zaman açılıyor, genel kurul ne zaman. Bu soruların
+cevabını taşıyan basit bir duyuru sayfası telefon trafiğini belirgin şekilde
+azaltır.</p>
 
-<p>Ariza bildirimi icin kurdugumuz form, bildirimi yapan daireyi, konuyu ve
-fotografi tek ekranda topluyor ve yoneticiye e-posta olarak gonderiyor. Kayitlar
-panelde durum etiketiyle takip ediliyor; hangi arizanin ne zaman kapandigi genel
-kurulda tartisma konusu olmaktan cikiyor.</p>
+<p>Arıza bildirimi için kurduğumuz form, bildirimi yapan daireyi, konuyu ve
+fotoğrafı tek ekranda topluyor ve yöneticiye e-posta olarak gönderiyor. Kayıtlar
+panelde durum etiketiyle takip ediliyor; hangi arızanın ne zaman kapandığı genel
+kurulda tartışma konusu olmaktan çıkıyor.</p>
 
-<h2>Sezon disi gorunurluk</h2>
-<p>Altinoluk'ta arama trafigi subat ile mayis arasinda zirve yapar; alici karari
-bu aylarda verir. Sitenin bu donemde hazir olmasi, ocak ayindan once icerigin
-yayinlanmis olmasini gerektirir. Nisanda yayina alinan bir emlak sitesi o yilin
-sezonunu buyuk olcude kacirir.</p>
+<h2>Sezon dışı görünürlük</h2>
+<p>Altınoluk'ta arama trafiği şubat ile mayıs arasında zirve yapar; alıcı kararı
+bu aylarda verir. Sitenin bu dönemde hazır olması, ocak ayından önce içeriğin
+yayınlanmış olmasını gerektirir. Nisanda yayına alınan bir emlak sitesi o yılın
+sezonunu büyük ölçüde kaçırır.</p>
 
-<p>Bolgedeki calismalarimizi <a href="/referanslar">referanslar sayfasinda</a>
-gorebilir, emlak sektorune ozel yaklasimimizi
-<a href="/emlak-web-sitesi">emlak web sitesi sayfasinda</a> okuyabilirsiniz.
-Komsu ilce icin <a href="/akcay-web-tasarim">Akcay sayfamiza</a> da
+<p>Bölgedeki çalışmalarımızı <a href="/referanslar">referanslar sayfasında</a>
+görebilir, emlak sektörüne özel yaklaşımımızı
+<a href="/emlak-web-sitesi">emlak web sitesi sayfasında</a> okuyabilirsiniz.
+Komşu ilçe için <a href="/akcay-web-tasarim">Akçay sayfamıza</a> da
 bakabilirsiniz.</p>
 HTML,
     ],
@@ -320,94 +320,94 @@ HTML,
     'burhaniye' => [
         'district' => 'Burhaniye',
         'slug'     => 'burhaniye-web-tasarim',
-        'title'    => 'Burhaniye Web Tasarim',
-        'meta_title' => 'Burhaniye web tasarim — uretici ve kooperatif siteleri',
-        'meta_description' => 'Burhaniye zeytin ureticileri, kooperatifler ve Oren isletmeleri icin e-ticaret ve web tasarim.',
-        'excerpt'  => 'Zeytin uretimi ve Oren turizmi; iki farkli is, iki farkli site.',
+        'title'    => 'Burhaniye Web Tasarım',
+        'meta_title' => 'Burhaniye web tasarım — üretici ve kooperatif siteleri',
+        'meta_description' => 'Burhaniye zeytin üreticileri, kooperatifler ve Ören işletmeleri için e-ticaret ve web tasarım.',
+        'excerpt'  => 'Zeytin üretimi ve Ören turizmi; iki farklı iş, iki farklı site.',
         'content'  => <<<'HTML'
-<h2>Iki ayri ekonomi, tek ilce</h2>
-<p>Burhaniye'de birbirinden bagimsiz iki ekonomi yan yana calisir. Biri ic
-kesimdeki zeytin uretimi ve tarim; digeri Oren sahilindeki yazlik ve konaklama
-hareketi. Ayni ilcede olmalarina ragmen musteri kitleleri, sezon takvimleri ve
-internet ihtiyaclari ortusmez.</p>
+<h2>İki ayrı ekonomi, tek ilçe</h2>
+<p>Burhaniye'de birbirinden bağımsız iki ekonomi yan yana çalışır. Biri iç
+kesimdeki zeytin üretimi ve tarım; diğeri Ören sahilindeki yazlık ve konaklama
+hareketi. Aynı ilçede olmalarına rağmen müşteri kitleleri, sezon takvimleri ve
+internet ihtiyaçları örtüşmez.</p>
 
-<h2>Uretici ve kooperatifler</h2>
-<p>Zeytin ve zeytinyagi ureticisinin en buyuk kaybi araciya kalan paydir. Yagini
-tenekeyle veren bir uretici ile kendi etiketiyle satan uretici arasindaki fark
-kat kat. Ancak kendi markasiyla satmak, kutu tasarimindan kargo anlasmasina,
-etiket mevzuatindan musteri iletisimine uzanan yeni bir is demek.</p>
+<h2>Üretici ve kooperatifler</h2>
+<p>Zeytin ve zeytinyağı üreticisinin en büyük kaybı aracıya kalan paydır. Yağını
+tenekeyle veren bir üretici ile kendi etiketiyle satan üretici arasındaki fark
+kat kat. Ancak kendi markasıyla satmak, kutu tasarımından kargo anlaşmasına,
+etiket mevzuatından müşteri iletişimine uzanan yeni bir iş demek.</p>
 
-<p>Web tarafinda bizim isimiz sunlar: hasat donemine gore on siparis alan bir
-magaza, litre ve kilogram varyantlariyla stok takibi, bolgeye gore kargo ucreti
-ve tekrar siparisi kolaylastiran bir musteri hesabi yapisi. Kooperatifler icin
-ayrica uye ureticilerin gorunurlugu ve ortak marka anlatisi.</p>
+<p>Web tarafında bizim işimiz şunlar: hasat dönemine göre on sipariş alan bir
+mağaza, litre ve kilogram varyantlarıyla stok takibi, bölgeye göre kargo ücreti
+ve tekrar siparişi kolaylaştıran bir müşteri hesabı yapısı. Kooperatifler için
+ayrıca üye üreticilerin görünürlüğü ve ortak marka anlatısı.</p>
 
-<p>Ayrintilari <a href="/zeytinyagi-e-ticaret-sitesi">zeytinyagi e-ticaret
-sayfamizda</a> anlatiyoruz.</p>
+<p>Ayrıntıları <a href="/zeytinyagi-e-ticaret-sitesi">zeytinyağı e-ticaret
+sayfamızda</a> anlatıyoruz.</p>
 
-<h2>Oren sahili</h2>
-<p>Oren, Korfezin daha sakin sahil noktalarindan biri. Buradaki pansiyon ve
-apart isletmelerinin musterisi, Akcay'in kalabaligindan kacan ve sessizlik
-arayan bir kitle. Bu farki sitede anlatmak gerekiyor; "denize sifir" cumlesi
-yeterli degil, "aksam sekizde sahil bosaliyor" bilgisi karar verdiriyor.</p>
+<h2>Ören sahili</h2>
+<p>Ören, Körfezin daha sakin sahil noktalarından biri. Buradaki pansiyon ve
+apart işletmelerinin müşterisi, Akçay'in kalabalığından kaçan ve sessizlik
+arayan bir kitle. Bu farkı sitede anlatmak gerekiyor; "denize sıfır" cümlesi
+yeterli değil, "akşam sekizde sahil boşalıyor" bilgisi karar verdiriyor.</p>
 
-<p>Oren isletmelerinin cogu tek kisiyle yonetiliyor. Bu yuzden kurdugumuz
-sistemlerde yonetim panelinin sadeligi tasarimdan daha onemli: fiyat
-degistirmek uc tiklama surmemeli.</p>
+<p>Ören işletmelerinin çoğu tek kişiyle yönetiliyor. Bu yüzden kurduğumuz
+sistemlerde yönetim panelinin sadeliği tasarımdan daha önemli: fiyat
+değiştirmek üç tıklama sürmemeli.</p>
 
-<h2>Uretici pazari ve yerel esnaf</h2>
-<p>Ilcedeki uretici pazari ve carsi esnafi icin durum daha basit. Burada gereken
-buyuk bir site degil; dogru bilgilerle kurulmus bir sayfa ve harita kaydi.
-Calisma saati, guncel telefon, gercek fotograf ve birkac musteri sorusunun
-cevabi cogu esnaf icin yeterli.</p>
+<h2>Üretici pazarı ve yerel esnaf</h2>
+<p>İlçedeki üretici pazarı ve çarşı esnafı için durum daha basit. Burada gereken
+büyük bir site değil; doğru bilgilerle kurulmuş bir sayfa ve harita kaydı.
+Çalışma saati, güncel telefon, gerçek fotoğraf ve birkaç müşteri sorusunun
+cevabı çoğu esnaf için yeterli.</p>
 
-<h2>Nasil basliyoruz</h2>
-<p>Uretici isletmelerde gorusmeyi hasat disi donemde, isletmenin kendi tesisinde
-yapiyoruz. Sikma tesisini gormeden urun anlatisinin nasil kurulacagina karar
-vermek zor. Gorusme ucretsiz, bir saatlik.</p>
+<h2>Nasıl başlıyoruz</h2>
+<p>Üretici işletmelerde görüşmeyi hasat dışı dönemde, işletmenin kendi tesisinde
+yapıyoruz. Sıkma tesisini görmeden ürün anlatısının nasıl kurulacağına karar
+vermek zor. Görüşme ücretsiz, bir saatlik.</p>
 
-<h2>Etiketten kargoya: dogrudan satisin adimlari</h2>
-<p>Kendi markasiyla satmaya baslayan bir ureticinin karsisina cikan basliklar
-sirasiyla sunlar: urun adi ve etiket bilgisi, litre bazli fiyatlandirma,
-kirilabilir urun icin uygun koli, kargo firmasiyla anlasma ve iade sureci. Bu
-adimlarin hicbiri tek basina zor degil, ancak birlikte planlanmadiginda ilk
-siparislerde sorun cikariyor.</p>
+<h2>Etiketten kargoya: doğrudan satışın adımları</h2>
+<p>Kendi markasıyla satmaya başlayan bir üreticinin karşısına çıkan başlıklar
+sırasıyla şunlar: ürün adı ve etiket bilgisi, litre bazlı fiyatlandırma,
+kırılabilir ürün için uygun koli, kargo firmasıyla anlaşma ve iade süreci. Bu
+adımların hiçbiri tek başına zor değil, ancak birlikte planlanmadığında ilk
+siparişlerde sorun çıkarıyor.</p>
 
-<p>Kurdugumuz magazalarda bu adimlarin hepsi bastan tanimli geliyor. Uretici
-yalnizca urununu, fiyatini ve stogunu giriyor; kargo ucreti bolgeye gore
-otomatik hesaplaniyor, siparis onayi musteriye e-posta ile gidiyor.</p>
+<p>Kurduğumuz mağazalarda bu adımların hepsi baştan tanımlı geliyor. Üretici
+yalnızca ürününü, fiyatını ve stoğunu giriyor; kargo ücreti bölgeye göre
+otomatik hesaplanıyor, sipariş onayı müşteriye e-posta ile gidiyor.</p>
 
-<h2>Hasat takvimine gore satis</h2>
-<p>Zeytinyagi satisi yil boyunca ayni degildir. Kasim-aralik doneminde yeni
-hasat talebi patlar, ilkbaharda duser, yaz aylarinda hediye amacli siparis
-artar. Magazanin bu ritmi tanimasi gerekir: on siparis donemi, stok bittiginde
-bekleme listesi ve yeni hasat duyurusu icin e-posta listesi.</p>
+<h2>Hasat takvimine göre satış</h2>
+<p>Zeytinyağı satışı yıl boyunca aynı değildir. Kasım-aralık döneminde yeni
+hasat talebi patlar, ilkbaharda düşer, yaz aylarında hediye amaçlı sipariş
+artar. Mağazanın bu ritmi tanıması gerekir: on sipariş dönemi, stok bittiğinde
+bekleme listesi ve yeni hasat duyurusu için e-posta listesi.</p>
 
-<p>Bir ureticinin en degerli varligi, gecen yil urununu begenip bu yil yine
-arayacak musteri listesidir. Pazaryerinde satan uretici bu listeye sahip
+<p>Bir üreticinin en değerli varlığı, geçen yıl ürününü beğenip bu yıl yine
+arayacak müşteri listesidir. Pazaryerinde satan üretici bu listeye sahip
 olamaz.</p>
 
-<h2>Ambalaj ve anlati birlikte calisir</h2>
-<p>Zeytinyagi satisinda urunun kendisi kadar anlatisi da satar. Agacin yasi,
-hasadin elle mi makineyle mi yapildigi, sikim tesisine kac saatte ulasildigi ve
-asitlik degeri; bunlar meraklı musteri icin fiyat farkini mesrulastiran
-bilgilerdir. Ayni bilgiler arama motorlarinda da uzun kuyruklu aramalarla
-ortusur.</p>
+<h2>Ambalaj ve anlatı birlikte çalışır</h2>
+<p>Zeytinyağı satışında ürünün kendisi kadar anlatısı da satar. Ağacın yaşı,
+hasadın elle mi makineyle mi yapıldığı, sıkım tesisine kaç saatte ulaşıldığı ve
+asitlik değeri; bunlar meraklı müşteri için fiyat farkını meşrulaştıran
+bilgilerdir. Aynı bilgiler arama motorlarında da uzun kuyruklu aramalarla
+örtüşür.</p>
 
-<p>Bu yuzden urun sayfalarini katalog gibi degil, uretim anlatisi gibi
-kuruyoruz. Her urunun altinda hasat yili, bolgesi ve analiz degerleri duruyor.
-Ayni sayfa hem musteriyi ikna ediyor hem arama sonuclarinda ayrisiyor.</p>
+<p>Bu yüzden ürün sayfalarını katalog gibi değil, üretim anlatısı gibi
+kuruyoruz. Her ürünün altında hasat yılı, bölgesi ve analiz değerleri duruyor.
+Aynı sayfa hem müşteriyi ikna ediyor hem arama sonuçlarında ayrışıyor.</p>
 
-<h2>Oren'de sezon disi kullanim</h2>
-<p>Oren'deki apart ve pansiyonlarin bir bolumu kis aylarinda uzun donem kiraya
-veriliyor. Bu kitle tatilci degil; bolgede gecici olarak calisan ya da kisi
-sakin gecirmek isteyen bir grup. Sitede bu secenegin ayri bir sayfayla
-anlatilmasi, bos gecen aylarin bir bolumunu doldurabiliyor.</p>
+<h2>Ören'de sezon dışı kullanım</h2>
+<p>Ören'deki apart ve pansiyonların bir bölümü kış aylarında uzun dönem kiraya
+veriliyor. Bu kitle tatilci değil; bölgede geçici olarak çalışan ya da kişi
+sakin geçirmek isteyen bir grup. Sitede bu seçeneğin ayrı bir sayfayla
+anlatılması, boş geçen ayların bir bölümünü doldurabiliyor.</p>
 
 <p><a href="/e-ticaret-sitesi">E-ticaret hizmetimize</a> ve
-<a href="/fiyatlar">fiyat araliklarina</a> bakabilir,
-komsu ilceler icin <a href="/havran-web-tasarim">Havran</a> ve
-<a href="/gomec-web-tasarim">Gomec</a> sayfalarimizi inceleyebilirsiniz.</p>
+<a href="/fiyatlar">fiyat aralıklarına</a> bakabilir,
+komşu ilçeler için <a href="/havran-web-tasarim">Havran</a> ve
+<a href="/gomec-web-tasarim">Gömeç</a> sayfalarımızı inceleyebilirsiniz.</p>
 HTML,
     ],
 
@@ -415,385 +415,385 @@ HTML,
     'havran' => [
         'district' => 'Havran',
         'slug'     => 'havran-web-tasarim',
-        'title'    => 'Havran Web Tasarim',
-        'meta_title' => 'Havran web tasarim — tarim ve esnaf siteleri',
-        'meta_description' => 'Havran tarim isletmeleri, uretici ve carsi esnafi icin sade, hizli ve yonetimi kolay web siteleri.',
-        'excerpt'  => 'Tarim ve esnaf agirlikli bir ilcede sade ve ise yarayan siteler.',
+        'title'    => 'Havran Web Tasarım',
+        'meta_title' => 'Havran web tasarım — tarım ve esnaf siteleri',
+        'meta_description' => 'Havran tarım işletmeleri, üretici ve çarşı esnafı için sade, hızlı ve yönetimi kolay web siteleri.',
+        'excerpt'  => 'Tarım ve esnaf ağırlıklı bir ilçede sade ve ise yarayan siteler.',
         'content'  => <<<'HTML'
-<h2>Sahilden ic kesime</h2>
-<p>Havran, Korfezin sahil ilcelerinin aksine ekonomisini turizmden degil tarimdan
-alan bir ilce. Zeytin, seftali, ceviz ve buyukbas hayvancilik burada gelirin
-omurgasini olusturuyor. Pazar gunu kurulan ilce pazari, cevre koylerden gelen
-ureticinin dogrudan satis yaptigi ana kanal.</p>
+<h2>Sahilden iç kesime</h2>
+<p>Havran, Körfezin sahil ilçelerinin aksine ekonomisini turizmden değil tarımdan
+alan bir ilçe. Zeytin, şeftali, ceviz ve büyükbaş hayvancılık burada gelirin
+omurgasını oluşturuyor. Pazar günü kurulan ilçe pazarı, çevre köylerden gelen
+üreticinin doğrudan satış yaptığı ana kanal.</p>
 
-<p>Boyle bir yapida internetten beklenti de farkli. Havranli bir isletmenin
-ihtiyaci gorkemli bir tanitim sitesi degil; dogru bulunmak, telefonun calmasi ve
-urunun sorulmasi.</p>
+<p>Böyle bir yapıda internetten beklenti de farklı. Havranlı bir işletmenin
+ihtiyacı görkemli bir tanıtım sitesi değil; doğru bulunmak, telefonun çalması ve
+ürünün sorulması.</p>
 
-<h2>Kucuk isletme icin dogru olcek</h2>
-<p>Ilcede en sik karsilastigimiz durum su: isletme sahibi yillar once bir siteyi
-yaptirmis, sifresini kaybetmis, icerik guncellenmemis ve site artik telefon
-numarasi bile yanlis gosteriyor. Bu durumda yeni ve buyuk bir site yapmak
-degil, dogru bilgiyi tasiyan sade bir sayfa kurmak daha faydali.</p>
+<h2>Küçük işletme için doğru ölçek</h2>
+<p>İlçede en sık karşılaştığımız durum şu: işletme sahibi yıllar önce bir siteyi
+yaptırmış, şifresini kaybetmiş, içerik güncellenmemiş ve site artık telefon
+numarası bile yanlış gösteriyor. Bu durumda yeni ve büyük bir site yapmak
+değil, doğru bilgiyi taşıyan sade bir sayfa kurmak daha faydalı.</p>
 
-<p>Uc-bes sayfalik, telefonu ilk ekranda duran, harita kaydiyla birebir ayni
-adresi gosteren ve isletmecinin kendi telefonundan guncelleyebildigi bir yapi
-cogu esnaf icin fazlasiyla yeterli.</p>
+<p>Üç-beş sayfalık, telefonu ilk ekranda duran, harita kaydıyla birebir aynı
+adresi gösteren ve işletmecinin kendi telefonundan güncelleyebildiği bir yapı
+çoğu esnaf için fazlasıyla yeterli.</p>
 
-<h2>Uretici icin dogrudan satis</h2>
-<p>Havran seftalisi ve cevizi bolge disinda taninan urunler. Ancak uretici
-cogunlukla komisyoncuya teslim ediyor ve son fiyati gormuyor. Sezonluk kucuk
-partilerle dogrudan satis, bir e-ticaret altyapisi gerektirmeyecek kadar basit
-kurulabilir: sezon acildiginda alinan on siparis, kapali gruplarla duyuru ve
-kargo anlasmasi.</p>
+<h2>Üretici için doğrudan satış</h2>
+<p>Havran şeftalisi ve cevizi bölge dışında tanınan ürünler. Ancak üretici
+çoğunlukla komisyoncuya teslim ediyor ve son fiyatı görmüyor. Sezonluk küçük
+partilerle doğrudan satış, bir e-ticaret altyapısı gerektirmeyecek kadar basit
+kurulabilir: sezon açıldığında alınan on sipariş, kapalı gruplarla duyuru ve
+kargo anlaşması.</p>
 
-<p>Isin buyudugu noktada gercek bir magazaya gecmek gerekir; bunu
-<a href="/e-ticaret-sitesi">e-ticaret sayfamizda</a> anlatiyoruz.</p>
+<p>İşin büyüdüğü noktada gerçek bir mağazaya geçmek gerekir; bunu
+<a href="/e-ticaret-sitesi">e-ticaret sayfamızda</a> anlatıyoruz.</p>
 
-<h2>Tarim makineleri ve hizmet saglayicilar</h2>
-<p>Ilcede traktor yedek parcasi, sulama sistemi, gubre ve tohum satan isletmeler
-icin arama trafigi mevsimseldir ve cok nettir. Sulama sezonu yaklastiginda
-"damla sulama" aramalari, hasat oncesinde ise makine kiralama aramalari
-yukselir. Sitenin bu doneme hazir olmasi, urun sayfalarinin sezondan iki ay once
-yazilmis olmasini gerektirir.</p>
+<h2>Tarım makineleri ve hizmet sağlayıcılar</h2>
+<p>İlçede traktör yedek parçası, sulama sistemi, gübre ve tohum satan işletmeler
+için arama trafiği mevsimseldir ve çok nettir. Sulama sezonu yaklaştığında
+"damla sulama" aramaları, hasat öncesinde ise makine kiralama aramaları
+yükselir. Sitenin bu döneme hazır olması, ürün sayfalarının sezondan iki ay önce
+yazılmış olmasını gerektirir.</p>
 
-<h2>Sadelik bir tercih degil, gereklilik</h2>
-<p>Ilcedeki internet baglantisi ve kullanilan telefonlar dikkate alindiginda,
-agir bir sitenin bedelini dogrudan isletme oduyor. Kurdugumuz sayfalar gorsel
-agirligi dusuk, yazi tipi sayisi sinirli ve tek bir stil dosyasiyla calisir.
-Amac guzel gorunmek degil, uc saniyeden once acilmak.</p>
+<h2>Sadelik bir tercih değil, gereklilik</h2>
+<p>İlçedeki internet bağlantısı ve kullanılan telefonlar dikkate alındığında,
+ağır bir sitenin bedelini doğrudan işletme ödüyor. Kurduğumuz sayfalar görsel
+ağırlığı düşük, yazı tipi sayısı sınırlı ve tek bir stil dosyasıyla çalışır.
+Amaç güzel görünmek değil, üç saniyeden önce açılmak.</p>
 
-<p>Yonetim tarafinda da ayni sadelik gecerli: fiyat degistirmek, calisma saati
-guncellemek ya da yeni bir fotograf eklemek panelde tek ekranda yapilir.</p>
+<p>Yönetim tarafında da aynı sadelik geçerli: fiyat değiştirmek, çalışma saati
+güncellemek ya da yeni bir fotoğraf eklemek panelde tek ekranda yapılır.</p>
 
-<h2>Nasil basliyoruz</h2>
-<p>Gorusmeyi isletmenin kendi yerinde yapiyoruz. Bir tarim bayisinin deposunu
-gormeden urun listesini nasil duzenleyecegimize karar veremeyiz. Gorusme
-ucretsiz, bir saatlik ve sonrasinda yazili fiyat gonderiyoruz.</p>
+<h2>Nasıl başlıyoruz</h2>
+<p>Görüşmeyi işletmenin kendi yerinde yapıyoruz. Bir tarım bayisinin deposunu
+görmeden ürün listesini nasıl düzenleyeceğimize karar veremeyiz. Görüşme
+ücretsiz, bir saatlik ve sonrasında yazılı fiyat gönderiyoruz.</p>
 
-<h2>Harita kaydi coguna yeter</h2>
-<p>Ilcedeki kucuk isletmelerin buyuk bolumu icin gelen trafigin cogunlugu arama
-motorunun kendisinden degil harita sonuclarindan geliyor. Bu yuzden ilk is
-Google Isletme Profili kaydini duzgun kurmak: kategori dogru secilmis, calisma
-saatleri guncel, telefon numarasi sitedekiyle birebir ayni ve icerideki
-fotograflar gercek olmali.</p>
+<h2>Harita kaydı çoğuna yeter</h2>
+<p>İlçedeki küçük işletmelerin büyük bölümü için gelen trafiğin çoğunluğu arama
+motorunun kendisinden değil harita sonuçlarından geliyor. Bu yüzden ilk iş
+Google İşletme Profili kaydını düzgün kurmak: kategori doğru seçilmiş, çalışma
+saatleri güncel, telefon numarası sitedekiyle birebir aynı ve içerideki
+fotoğraflar gerçek olmalı.</p>
 
-<p>Bu kaydin siteyle celismesi durumunda arama motoru hangi bilginin dogru
-oldugunu anlayamiyor ve isletmeyi geriye atiyor. En sik gordugumuz hata,
-sitede eski telefon numarasinin unutulmus olmasi. Kucuk gorunen bu ayrinti
-siralamada olculebilir bir kayba yol aciyor.</p>
+<p>Bu kaydın siteyle çelişmesi durumunda arama motoru hangi bilginin doğru
+olduğunu anlayamıyor ve işletmeyi geriye atıyor. En sık gördüğümüz hata,
+sitede eski telefon numarasının unutulmuş olması. Küçük görünen bu ayrıntı
+sıralamada ölçülebilir bir kayba yol açıyor.</p>
 
-<h2>Mevsime gore icerik takvimi</h2>
-<p>Tarim agirlikli bir ilcede icerik takvimi de tarim takvimine baglidir.
-Budama donemi, gubreleme, ilaclama ve hasat; her biri oncesinde arama hacmi
-yukselen basliklar. Bu iceriklerin sezondan iki ay once yayinlanmasi, arama
-motorunun sayfayi taniyip siralamaya almasi icin gereken sureyi kazandirir.</p>
+<h2>Mevsime göre içerik takvimi</h2>
+<p>Tarım ağırlıklı bir ilçede içerik takvimi de tarım takvimine bağlıdır.
+Budama dönemi, gübreleme, ilaçlama ve hasat; her biri öncesinde arama hacmi
+yükselen başlıklar. Bu içeriklerin sezondan iki ay önce yayınlanması, arama
+motorunun sayfayı tanıyıp sıralamaya alması için gereken süreyi kazandırır.</p>
 
-<p>Yil boyunca duzenli birkac yazi, ilcedeki cogu rakibin hic yapmadigi bir sey
-oldugu icin uzun vadede belirgin fark yaratiyor. Bu yazilarin uzun olmasi da
-gerekmiyor; dogru soruyu net cevaplamasi yeterli.</p>
+<p>Yıl boyunca düzenli birkaç yazı, ilçedeki çoğu rakibin hiç yapmadığı bir şey
+olduğu için uzun vadede belirgin fark yaratıyor. Bu yazıların uzun olması da
+gerekmiyor; doğru soruyu net cevaplaması yeterli.</p>
 
-<h2>Teslim sonrasi</h2>
-<p>Site yayina alindiktan sonra bir ay boyunca ucretsiz destek veriyoruz. Bu
-surede isletmeci panelde metin ve fotograf degistirmeyi ogreniyor. Amac
-bagimlilik kurmak degil; isletmenin kendi sitesini kendi yonetebilmesi.</p>
+<h2>Teslim sonrası</h2>
+<p>Site yayına alındıktan sonra bir ay boyunca ücretsiz destek veriyoruz. Bu
+sürede işletmeci panelde metin ve fotoğraf değiştirmeyi öğreniyor. Amaç
+bağımlılık kurmak değil; işletmenin kendi sitesini kendi yönetebilmesi.</p>
 
-<p>Komsu ilcelerdeki calismalarimiz icin
+<p>Komşu ilçelerdeki çalışmalarımız için
 <a href="/edremit-web-tasarim">Edremit</a> ve
-<a href="/burhaniye-web-tasarim">Burhaniye</a> sayfalarimiza,
-fiyat araliklari icin <a href="/fiyatlar">fiyatlar sayfasina</a>
+<a href="/burhaniye-web-tasarim">Burhaniye</a> sayfalarımıza,
+fiyat aralıkları için <a href="/fiyatlar">fiyatlar sayfasına</a>
 bakabilirsiniz.</p>
 HTML,
     ],
 
     // -----------------------------------------------------------------------
     'ayvalik' => [
-        'district' => 'Ayvalik',
+        'district' => 'Ayvalık',
         'slug'     => 'ayvalik-web-tasarim',
-        'title'    => 'Ayvalik Web Tasarim',
-        'meta_title' => 'Ayvalik web tasarim — butik otel ve gastronomi siteleri',
-        'meta_description' => 'Ayvalik ve Cunda butik otelleri, restoranlari ve zeytinyagi ureticileri icin coklu dil web tasarim.',
-        'excerpt'  => 'Butik konaklama, gastronomi ve zeytinyagi; uc farkli kitle, uc farkli site.',
+        'title'    => 'Ayvalık Web Tasarım',
+        'meta_title' => 'Ayvalık web tasarım — butik otel ve gastronomi siteleri',
+        'meta_description' => 'Ayvalık ve Cunda butik otelleri, restoranları ve zeytinyağı üreticileri için çoklu dil web tasarım.',
+        'excerpt'  => 'Butik konaklama, gastronomi ve zeytinyağı; üç farklı kitle, üç farklı site.',
         'content'  => <<<'HTML'
-<h2>Korfezin en cok ziyaret edilen ilcesi</h2>
-<p>Ayvalik, bolgede turizm hacmi en yuksek ilce. Cunda adasindaki tas evler,
-tarihi carsi dokusu, yat limani ve Yunan adalarina gunubirlik feribot seferleri
-ilceyi yalnizca yazlikci degil, sehirli ve yabanci ziyaretci ceken bir noktaya
-donusturuyor. Bu, isletmeler icin hem daha buyuk bir pazar hem cok daha sert bir
+<h2>Körfezin en çok ziyaret edilen ilçesi</h2>
+<p>Ayvalık, bölgede turizm hacmi en yüksek ilçe. Cunda adasındaki taş evler,
+tarihi çarşı dokusu, yat limanı ve Yunan adalarına günübirlik feribot seferleri
+ilçeyi yalnızca yazlıkçı değil, şehirli ve yabancı ziyaretçi çeken bir noktaya
+dönüştürüyor. Bu, işletmeler için hem daha büyük bir pazar hem çok daha sert bir
 rekabet demek.</p>
 
-<h2>Butik konaklamada ayrismak</h2>
-<p>Ilcede yuzlerce butik otel ve pansiyon var. Hepsi ayni fotograflari cekiyor,
-ayni cumleleri yaziyor: "tarihi tas ev", "denize yurume mesafesi", "sicak bir
-atmosfer". Bu cumleler artik hicbir seyi ayirmiyor.</p>
+<h2>Butik konaklamada ayrışmak</h2>
+<p>İlçede yüzlerce butik otel ve pansiyon var. Hepsi aynı fotoğrafları çekiyor,
+aynı cümleleri yazıyor: "tarihi taş ev", "denize yürüme mesafesi", "sıcak bir
+atmosfer". Bu cümleler artık hiçbir şeyi ayırmıyor.</p>
 
-<p>Ayrismak icin gereken, o isletmenin gercekten farkli olan seyini yazmak.
-Kahvaltida hangi yerel uretici kullaniliyor, hangi odanin penceresi hangi
-saatte gunes aliyor, gece sessizlik kacta basliyor. Bu ayrintilari yazan bir
-site, ayni fiyattaki on rakibin onune gecer.</p>
+<p>Ayrışmak için gereken, o işletmenin gerçekten farklı olan şeyini yazmak.
+Kahvaltıda hangi yerel üretici kullanılıyor, hangi odanın penceresi hangi
+saatte güneş alıyor, gece sessizlik kaçta başlıyor. Bu ayrıntıları yazan bir
+site, aynı fiyattaki on rakibin önüne geçer.</p>
 
-<h2>Gastronomi ve carsi isletmeleri</h2>
-<p>Ayvalik'ta yeme icme kararlari cogunlukla yurume sirasinda, telefondan
-veriliyor. Bu yuzden restoran icin en kritik iki sey menunun guncel olmasi ve
-haritada dogru gorunmek. Sezonda degisen menuyu panelden bes dakikada
-guncelleyebilen bir isletme, kagit menuyu fotograflayip paylasandan onde
-baslar.</p>
+<h2>Gastronomi ve çarşı işletmeleri</h2>
+<p>Ayvalık'ta yeme içme kararları çoğunlukla yürüme sırasında, telefondan
+veriliyor. Bu yüzden restoran için en kritik iki şey menünün güncel olması ve
+haritada doğru görünmek. Sezonda değişen menüyü panelden beş dakikada
+güncelleyebilen bir işletme, kağıt menüyü fotoğraflayıp paylaşandan önde
+başlar.</p>
 
-<p>Ilcedeki kahvalti kulturunun ve yerel lezzetlerin arama hacmi ciddi.
-Bu aramalarin karsiligini veren icerik, sezon disinda bile duzenli trafik
+<p>İlçedeki kahvaltı kültürünün ve yerel lezzetlerin arama hacmi ciddi.
+Bu aramaların karşılığını veren içerik, sezon dışında bile düzenli trafik
 getiriyor.</p>
 
-<h2>Zeytinyagi ve sabun uretimi</h2>
-<p>Ilcenin ikinci ekonomisi zeytinyagi ve zeytinyagi sabunu. Bu urunlerin
-musterisi cogunlukla bolge disinda; dolayisiyla is dogrudan e-ticaret isi.
-Hediyelik paketleme, yurt disi kargo ve coklu dil urun anlatisi burada
+<h2>Zeytinyağı ve sabun üretimi</h2>
+<p>İlçenin ikinci ekonomisi zeytinyağı ve zeytinyağı sabunu. Bu ürünlerin
+müşterisi çoğunlukla bölge dışında; dolayısıyla iş doğrudan e-ticaret işi.
+Hediyelik paketleme, yurt dışı kargo ve çoklu dil ürün anlatısı burada
 belirleyici oluyor.</p>
 
-<p>Yurt disina satis yapan bir uretici icin Ingilizce ve Almanca sayfalar
-ceviriden ibaret olamaz; gumruk, teslim suresi ve saklama kosullari gibi
-basliklarin o dilde ayrica anlatilmasi gerekir. Yaklasimimizi
-<a href="/coklu-dil-web-sitesi">coklu dil sayfamizda</a> anlatiyoruz.</p>
+<p>Yurt dışına satış yapan bir üretici için İngilizce ve Almanca sayfalar
+çeviriden ibaret olamaz; gümrük, teslim süresi ve saklama koşulları gibi
+başlıkların o dilde ayrıca anlatılması gerekir. Yaklaşımımızı
+<a href="/coklu-dil-web-sitesi">çoklu dil sayfamızda</a> anlatıyoruz.</p>
 
-<h2>Yabanci ziyaretci ve dil</h2>
-<p>Feribot seferleri ve turlar nedeniyle ilcede yabanci ziyaretci orani yuksek.
-Menusu, oda anlatisi ve iletisim bilgisi Ingilizce olmayan bir isletme bu
-kitlenin buyuk bolumunu goremeden kaybediyor. Ikinci dil, ilcede artik bir
-ayricalik degil temel gereklilik.</p>
+<h2>Yabancı ziyaretçi ve dil</h2>
+<p>Feribot seferleri ve turlar nedeniyle ilçede yabancı ziyaretçi oranı yüksek.
+Menüsü, oda anlatısı ve iletişim bilgisi İngilizce olmayan bir işletme bu
+kitlenin büyük bölümünü göremeden kaybediyor. İkinci dil, ilçede artık bir
+ayrıcalık değil temel gereklilik.</p>
 
-<h2>Rekabetin sert oldugu yerde ne yapariz</h2>
+<h2>Rekabetin sert olduğu yerde ne yaparız</h2>
 <ul>
-  <li>Isletmenin gercekten farkli olan yanini bulup one cikarmak</li>
-  <li>Genel turizm aramalari yerine niyeti net aramalari hedeflemek</li>
-  <li>Gorsel agirligini dusurup mobilde hizli acilmayi garantilemek</li>
-  <li>Coklu dilde gercek icerik yayinlamak</li>
-  <li>Hangi sayfanin rezervasyon getirdigini olcmek</li>
+  <li>İşletmenin gerçekten farklı olan yanını bulup öne çıkarmak</li>
+  <li>Genel turizm aramaları yerine niyeti net aramaları hedeflemek</li>
+  <li>Görsel ağırlığını düşürüp mobilde hızlı açılmayı garantilemek</li>
+  <li>Çoklu dilde gerçek içerik yayınlamak</li>
+  <li>Hangi sayfanın rezervasyon getirdiğini ölçmek</li>
 </ul>
 
-<h2>Sezon disi trafik nereden gelir</h2>
-<p>Ayvalik'ta yaz aylarinin disinda da ciddi bir ziyaretci hareketi var. Sonbahar
-ve ilkbaharda hafta sonu gelen sehirli kitle, kis aylarinda ise gastronomi
-amacli kisa ziyaretler suruyor. Bu donemlerde arama yapan kisi tatil planlamiyor;
-belirli bir seyi ariyor: acik olan bir kahvalti yeri, hafta sonu musait bir oda,
-belirli bir urunun satildigi bir dukkan.</p>
+<h2>Sezon dışı trafik nereden gelir</h2>
+<p>Ayvalık'ta yaz aylarının dışında da ciddi bir ziyaretçi hareketi var. Sonbahar
+ve ilkbaharda hafta sonu gelen şehirli kitle, kış aylarında ise gastronomi
+amaçlı kısa ziyaretler sürüyor. Bu dönemlerde arama yapan kişi tatil planlamıyor;
+belirli bir şeyi arıyor: açık olan bir kahvaltı yeri, hafta sonu müsait bir oda,
+belirli bir ürünün satıldığı bir dükkan.</p>
 
-<p>Bu yuzden sezon disi trafik icin genel tanitim metinleri degil, net sorulara
-net cevap veren sayfalar gerekir. "Kis aylarinda acik miyiz" sorusunun cevabi
-sitede yaziyorsa, o sayfa tum sezon disi boyunca calisir.</p>
+<p>Bu yüzden sezon dışı trafik için genel tanıtım metinleri değil, net sorulara
+net cevap veren sayfalar gerekir. "Kış aylarında açık mıyız" sorusunun cevabı
+sitede yazıyorsa, o sayfa tüm sezon dışı boyunca çalışır.</p>
 
-<h2>Fotograf ve hiz dengesi</h2>
-<p>Turizm isletmelerinde gorsel vazgecilmez, ancak agir fotograflar mobil hizi
-oldurur. Yukledigimiz her gorsel uc farkli olcude ve WebP bicimiyle yeniden
-uretiliyor; ziyaretcinin ekranina uygun olan gonderiliyor. Boylece galeri dolu
-gorunurken sayfa agirligi kontrol altinda kaliyor.</p>
+<h2>Fotoğraf ve hız dengesi</h2>
+<p>Turizm işletmelerinde görsel vazgeçilmez, ancak ağır fotoğraflar mobil hızı
+öldürür. Yüklediğimiz her görsel üç farklı ölçüde ve WebP biçimiyle yeniden
+üretiliyor; ziyaretçinin ekranına uygun olan gönderiliyor. Böylece galeri dolu
+görünürken sayfa ağırlığı kontrol altında kalıyor.</p>
 
-<p>Ayrica her gorselin alt metni giriliyor. Bu hem gorme engelli ziyaretciler
-icin gerekli hem de gorsel aramalarindan gelen trafigin kaynagi.</p>
+<p>Ayrıca her görselin alt metni giriliyor. Bu hem görme engelli ziyaretçiler
+için gerekli hem de görsel aramalarından gelen trafiğin kaynağı.</p>
 
-<h2>Cunda ve merkez ayrimi</h2>
-<p>Cunda'daki bir isletme ile merkezdeki bir isletme ayni ilcede olsa da farkli
-bir kitleye hitap eder. Cunda daha planli, daha uzun sure kalan ve daha yuksek
-butceli bir ziyaretci ceker. Bu farkin site dilinde ve fiyat anlatiminda
-gorunmesi gerekir; ikisini ayni sablonla anlatmak ikisine de zarar verir.</p>
+<h2>Cunda ve merkez ayrımı</h2>
+<p>Cunda'daki bir işletme ile merkezdeki bir işletme aynı ilçede olsa da farklı
+bir kitleye hitap eder. Cunda daha planlı, daha uzun süre kalan ve daha yüksek
+bütçeli bir ziyaretçi çeker. Bu farkın site dilinde ve fiyat anlatımında
+görünmesi gerekir; ikisini aynı şablonla anlatmak ikisine de zarar verir.</p>
 
-<p>Konaklama isletmelerine ozel kurdugumuz sistemi
-<a href="/rezervasyon-sistemi">rezervasyon sistemi sayfasinda</a>,
-bolgedeki isleri <a href="/referanslar">referanslar sayfasinda</a>
-gorebilirsiniz.</p>
+<p>Konaklama işletmelerine özel kurduğumuz sistemi
+<a href="/rezervasyon-sistemi">rezervasyon sistemi sayfasında</a>,
+bölgedeki işleri <a href="/referanslar">referanslar sayfasında</a>
+görebilirsiniz.</p>
 HTML,
     ],
 
     // -----------------------------------------------------------------------
     'gomec' => [
-        'district' => 'Gomec',
+        'district' => 'Gömeç',
         'slug'     => 'gomec-web-tasarim',
-        'title'    => 'Gomec Web Tasarim',
-        'meta_title' => 'Gomec web tasarim — kamp, apart ve kucuk isletme siteleri',
-        'meta_description' => 'Gomec ve Karaagac bolgesindeki apart, kamp alani ve kucuk isletmeler icin sade ve hizli web siteleri.',
-        'excerpt'  => 'Sakinlik arayan misafire hitap eden kucuk olcekli isletmeler icin.',
+        'title'    => 'Gömeç Web Tasarım',
+        'meta_title' => 'Gömeç web tasarım — kamp, apart ve küçük işletme siteleri',
+        'meta_description' => 'Gömeç ve Karaağaç bölgesindeki apart, kamp alanı ve küçük işletmeler için sade ve hızlı web siteleri.',
+        'excerpt'  => 'Sakinlik arayan misafire hitap eden küçük ölçekli işletmeler için.',
         'content'  => <<<'HTML'
-<h2>Kucuk ilcenin avantaji</h2>
-<p>Gomec, Korfezin en kucuk ilcelerinden biri ve tam da bu yuzden belirli bir
-kitleyi ceker: kalabaliktan kacan, sakin bir sahil arayan, uzun konaklama yapan
-misafir. Karaagac ve cevresindeki kamp alanlari, apart daireler ve kucuk
-pansiyonlar bu talebi karsilar.</p>
+<h2>Küçük ilçenin avantajı</h2>
+<p>Gömeç, Körfezin en küçük ilçelerinden biri ve tam da bu yüzden belirli bir
+kitleyi çeker: kalabalıktan kaçan, sakin bir sahil arayan, uzun konaklama yapan
+misafir. Karaağaç ve çevresindeki kamp alanları, apart daireler ve küçük
+pansiyonlar bu talebi karşılar.</p>
 
-<p>Kucuk olcek, internette dezavantaj degil avantajdir. Rekabetin dusuk oldugu
-bir yerde dogru kurulmus bir sayfa, kisa surede arama sonuclarinda one gecebilir.
-Buyuk ilcelerde aylar suren bir yukselis burada haftalarla olculur.</p>
+<p>Küçük ölçek, internette dezavantaj değil avantajdır. Rekabetin düşük olduğu
+bir yerde doğru kurulmuş bir sayfa, kısa sürede arama sonuçlarında öne geçebilir.
+Büyük ilçelerde aylar süren bir yükseliş burada haftalarla ölçülür.</p>
 
 <h2>Kamp ve karavan turizmi</h2>
-<p>Son yillarda karavan ve kamp turizmi bolgede belirgin sekilde artti. Bu
-kitlenin arama davranisi cok net: elektrik var mi, su baglantisi nasil, tuvalet
-ve dus durumu, gece guvenligi, evcil hayvan kabul ediliyor mu, gunluk ucret ne
-kadar. Bu sorularin cevabini sayfasinda acikca yazan bir isletme telefon
-trafiginin yarisindan kurtulur ve dogru misafiri ceker.</p>
+<p>Son yıllarda karavan ve kamp turizmi bölgede belirgin şekilde arttı. Bu
+kitlenin arama davranışı çok net: elektrik var mı, su bağlantısı nasıl, tuvalet
+ve duş durumu, gece güvenliği, evcil hayvan kabul ediliyor mu, günlük ücret ne
+kadar. Bu soruların cevabını sayfasında açıkça yazan bir işletme telefon
+trafiğinin yarısından kurtulur ve doğru misafiri çeker.</p>
 
-<p>Fotograf tarafinda da beklenti farkli: parlak tanitim kareleri degil, alanin
-gercek halini gosteren fotograflar guven verir.</p>
+<p>Fotoğraf tarafında da beklenti farklı: parlak tanıtım kareleri değil, alanın
+gerçek halini gösteren fotoğraflar güven verir.</p>
 
-<h2>Apart ve uzun donem konaklama</h2>
-<p>Gomec'teki apartlarin onemli bir bolumu haftalik ya da aylik kiraliyor. Bu
-model, gunluk konaklamadan farkli bir anlatim ister. Mutfagin donanimi, camasir
-makinesi, internet hizi ve marketin uzakligi burada odanin manzarasindan daha
+<h2>Apart ve uzun dönem konaklama</h2>
+<p>Gömeç'teki apartların önemli bir bölümü haftalık ya da aylık kiralıyor. Bu
+model, günlük konaklamadan farklı bir anlatım ister. Mutfağın donanımı, çamaşır
+makinesi, internet hızı ve marketin uzaklığı burada odanın manzarasından daha
 belirleyici.</p>
 
-<p>Uzun donem misafirin ikinci kez gelme ihtimali yuksek oldugu icin, bu
-isletmelerde musteri listesini tutmak ve sezon oncesinde hatirlatma yapmak
-dogrudan doluluk getiriyor.</p>
+<p>Uzun dönem misafirin ikinci kez gelme ihtimali yüksek olduğu için, bu
+işletmelerde müşteri listesini tutmak ve sezon öncesinde hatırlatma yapmak
+doğrudan doluluk getiriyor.</p>
 
-<h2>Yerel uretim ve kucuk esnaf</h2>
-<p>Ilcede sut urunleri, bal ve kucuk olcekli tarim uretimi var. Bu ureticiler
-icin buyuk bir magaza kurmak gereksiz; onemli olan urunu taniten, uretim
-sureclerini anlatan ve iletisim bilgisi net bir sayfa. Siparis telefonla ya da
-basit bir formla alinabilir.</p>
+<h2>Yerel üretim ve küçük esnaf</h2>
+<p>İlçede süt ürünleri, bal ve küçük ölçekli tarım üretimi var. Bu üreticiler
+için büyük bir mağaza kurmak gereksiz; önemli olan ürünü tanıtan, üretim
+süreçlerini anlatan ve iletişim bilgisi net bir sayfa. Sipariş telefonla ya da
+basit bir formla alınabilir.</p>
 
-<h2>Butcenin dogru kullanimi</h2>
-<p>Kucuk isletmede butce sinirlidir ve yanlis yere harcanmamalidir. Bizim
-onerimiz genellikle sudur: once dogru kurulmus kucuk bir site ve duzgun bir
-harita kaydi. Bu ikisi calismaya basladiktan sonra, gelen talebe gore
-buyutmek her zaman mumkun.</p>
+<h2>Bütçenin doğru kullanımı</h2>
+<p>Küçük işletmede bütçe sınırlıdır ve yanlış yere harcanmamalıdır. Bizim
+önerimiz genellikle şudur: önce doğru kurulmuş küçük bir site ve düzgün bir
+harita kaydı. Bu ikisi çalışmaya başladıktan sonra, gelen talebe göre
+büyütmek her zaman mümkün.</p>
 
-<p>Bastan buyuk bir yatirim yapip icerigi guncelleyemeyen bir isletme, ikinci
-yilda daha kotu durumda oluyor.</p>
+<p>Baştan büyük bir yatırım yapıp içeriği güncelleyemeyen bir işletme, ikinci
+yılda daha kötü durumda oluyor.</p>
 
 <h2>Yorum ve tavsiye zinciri</h2>
-<p>Kucuk isletmelerde yeni misafirin buyuk bolumu tavsiyeyle gelir. Bu zinciri
-guclendirmenin en ucuz yolu, ayrilan misafire tek bir baglantiyla yorum
-birakabilecegi bir yol sunmaktir. Bu baglanti sitede sabit dursa bile isini
-gorur.</p>
+<p>Küçük işletmelerde yeni misafirin büyük bölümü tavsiyeyle gelir. Bu zinciri
+güçlendirmenin en ucuz yolu, ayrılan misafire tek bir bağlantıyla yorum
+bırakabileceği bir yol sunmaktır. Bu bağlantı sitede sabit dursa bile işini
+görür.</p>
 
-<p>Uydurma yorum yayinlamiyoruz ve yapisal veride puan isaretlemesi yapmiyoruz.
-Gercek yorumlar zaten yeterlidir; sahte olanlar yakalandiginda tum sayfalari
+<p>Uydurma yorum yayınlamıyoruz ve yapısal veride puan işaretlemesi yapmıyoruz.
+Gerçek yorumlar zaten yeterlidir; sahte olanlar yakalandığında tüm sayfaları
 riske atar.</p>
 
-<h2>Sezon disinda gorunur kalmak</h2>
-<p>Kucuk isletmelerin cogu ekim ile nisan arasinda sitesine hic dokunmuyor.
-Oysa gelecek sezonun rezervasyonu tam da bu aylarda araniyor. Kis aylarinda
-yapilacak birkac guncelleme, yaz gelmeden sitenin arama sonuclarinda hazir
-olmasini sagliyor.</p>
+<h2>Sezon dışında görünür kalmak</h2>
+<p>Küçük işletmelerin çoğu ekim ile nisan arasında sitesine hiç dokunmuyor.
+Oysa gelecek sezonun rezervasyonu tam da bu aylarda aranıyor. Kış aylarında
+yapılacak birkaç güncelleme, yaz gelmeden sitenin arama sonuçlarında hazır
+olmasını sağlıyor.</p>
 
-<p>En basit haliyle: fiyatlarin guncellenmesi, yeni fotograflarin eklenmesi ve
-gecen sezonun sik sorulan sorularinin sayfaya yazilmasi. Uc islem, bir saat.</p>
+<p>En basit haliyle: fiyatların güncellenmesi, yeni fotoğrafların eklenmesi ve
+geçen sezonun sık sorulan sorularının sayfaya yazılması. Üç işlem, bir saat.</p>
 
-<h2>Teknik yuk isletmede kalmasin</h2>
-<p>Kucuk isletmede teknik isi takip edecek kimse yoktur. Bu yuzden teslim
-ettigimiz sistemlerde gunluk yedek otomatik alinir, guncellemeler bizim
-tarafimizda yurutulur ve isletmeciye yalnizca icerik kalir. Bakim anlasmasinin
-kapsamini <a href="/web-sitesi-bakim">bakim sayfasinda</a> anlatiyoruz.</p>
+<h2>Teknik yük işletmede kalmasın</h2>
+<p>Küçük işletmede teknik işi takip edecek kimse yoktur. Bu yüzden teslim
+ettiğimiz sistemlerde günlük yedek otomatik alınır, güncellemeler bizim
+tarafımızda yürütülür ve işletmeciye yalnızca içerik kalır. Bakım anlaşmasının
+kapsamını <a href="/web-sitesi-bakim">bakım sayfasında</a> anlatıyoruz.</p>
 
-<h2>Ilcenin kendi takvimi</h2>
-<p>Gomec'te sezon Akcay ya da Ayvalik'tan biraz gec baslar ve biraz erken biter.
-Haziranin ilk yarisi genellikle sakin gecer, asil yogunluk temmuz ortasindan
-agustos sonuna kadar surer. Bu kisa pencerede doluluk kaybetmemek icin
-rezervasyonun mayis basinda acilmis olmasi gerekir.</p>
+<h2>İlçenin kendi takvimi</h2>
+<p>Gömeç'te sezon Akçay ya da Ayvalık'tan biraz geç başlar ve biraz erken biter.
+Haziranın ilk yarısı genellikle sakin geçer, asıl yoğunluk temmuz ortasından
+ağustos sonuna kadar sürer. Bu kısa pencerede doluluk kaybetmemek için
+rezervasyonun mayıs başında açılmış olması gerekir.</p>
 
-<p>Ayni sekilde eylul ayi, uzun konaklama arayan ve kalabaligi bekleyen bir
-kitle icin degerli. Bu iki donemi ayri ayri anlatan sayfalar, tek bir genel
-tanitim sayfasindan cok daha fazla is getiriyor.</p>
+<p>Aynı şekilde eylül ayı, uzun konaklama arayan ve kalabalığı bekleyen bir
+kitle için değerli. Bu iki dönemi ayrı ayrı anlatan sayfalar, tek bir genel
+tanıtım sayfasından çok daha fazla iş getiriyor.</p>
 
-<h2>Sahil ve koy arasindaki fark</h2>
-<p>Ilcede sahil seridi ile ic kesimdeki koyler farkli misafir cekiyor. Sahilde
-denize yakinlik belirleyiciyken koylerde sessizlik, bahce ve yerel uretim one
-cikiyor. Ikisini ayni cumlelerle anlatan bir site her ikisini de yeterince
-anlatamiyor.</p>
+<h2>Sahil ve köy arasındaki fark</h2>
+<p>İlçede sahil şeridi ile iç kesimdeki köyler farklı misafir çekiyor. Sahilde
+denize yakınlık belirleyiciyken köylerde sessizlik, bahçe ve yerel üretim öne
+çıkıyor. İkisini aynı cümlelerle anlatan bir site her ikisini de yeterince
+anlatamıyor.</p>
 
-<p>Kucuk bir isletme icin bile iki ayri sayfa yazmak, dogru misafiri dogru
-sayfaya getirdigi icin donusum oranini yukseltiyor.</p>
+<p>Küçük bir işletme için bile iki ayrı sayfa yazmak, doğru misafiri doğru
+sayfaya getirdiği için dönüşüm oranını yükseltiyor.</p>
 
-<p>Fiyat araliklarini <a href="/fiyatlar">fiyatlar sayfasinda</a>,
-komsu ilce calismalarini <a href="/burhaniye-web-tasarim">Burhaniye</a> ve
-<a href="/ayvalik-web-tasarim">Ayvalik</a> sayfalarinda bulabilirsiniz.</p>
+<p>Fiyat aralıklarını <a href="/fiyatlar">fiyatlar sayfasında</a>,
+komşu ilçe çalışmalarını <a href="/burhaniye-web-tasarim">Burhaniye</a> ve
+<a href="/ayvalik-web-tasarim">Ayvalık</a> sayfalarında bulabilirsiniz.</p>
 HTML,
     ],
 
     // -----------------------------------------------------------------------
     'balikesir' => [
-        'district' => 'Balikesir',
+        'district' => 'Balıkesir',
         'slug'     => 'balikesir-web-tasarim',
-        'title'    => 'Balikesir Web Tasarim',
-        'meta_title' => 'Balikesir web tasarim — kurumsal siteler ve e-ticaret',
-        'meta_description' => 'Balikesir merkezdeki kurumsal firmalar, sanayi isletmeleri ve hizmet saglayicilar icin web tasarim ve SEO.',
-        'excerpt'  => 'Il merkezinde rekabetin yuksek oldugu yerde ayrisan siteler.',
+        'title'    => 'Balıkesir Web Tasarım',
+        'meta_title' => 'Balıkesir web tasarım — kurumsal siteler ve e-ticaret',
+        'meta_description' => 'Balıkesir merkezdeki kurumsal firmalar, sanayi işletmeleri ve hizmet sağlayıcılar için web tasarım ve SEO.',
+        'excerpt'  => 'İl merkezinde rekabetin yüksek olduğu yerde ayrışan siteler.',
         'content'  => <<<'HTML'
-<h2>Il merkezinde rekabet baska</h2>
-<p>Balikesir merkez, Korfez ilcelerinden farkli bir oyun alani. Burada ayni
-hizmeti veren onlarca firma var, cogunun sitesi mevcut ve bir bolumu duzenli
-reklam veriyor. Ilcelerde ise yarayan "dogru kurulmus kucuk site" yaklasimi
-merkezde tek basina yetmiyor.</p>
+<h2>İl merkezinde rekabet başka</h2>
+<p>Balıkesir merkez, Körfez ilçelerinden farklı bir oyun alanı. Burada aynı
+hizmeti veren onlarca firma var, çoğunun sitesi mevcut ve bir bölümü düzenli
+reklam veriyor. İlçelerde ise yarayan "doğru kurulmuş küçük site" yaklaşımı
+merkezde tek başına yetmiyor.</p>
 
-<p>Bu ortamda one gecmenin yolu daha buyuk bir site yapmak degil, daha dar bir
-alanda en iyisi olmak. Genel "web tasarim" ya da "muhasebe" aramalarinda
-yarismak yerine, firmanin gercekten guclu oldugu alt basliklarda derinlesmek.</p>
+<p>Bu ortamda öne geçmenin yolu daha büyük bir site yapmak değil, daha dar bir
+alanda en iyisi olmak. Genel "web tasarım" ya da "muhasebe" aramalarında
+yarışmak yerine, firmanın gerçekten güçlü olduğu alt başlıklarda derinleşmek.</p>
 
-<h2>Sanayi ve uretim firmalari</h2>
-<p>Organize sanayi bolgesindeki uretim firmalarinin musterisi son tuketici degil,
-baska bir firma. Bu durumda site bir katalog degil, teknik guven belgesidir.
-Karsi taraf urun kodunu, kapasiteyi, sertifikalari ve referans listesini arar.
-Guzel bir anasayfadan cok, indirilebilir teknik dosyalar ve net bir urun
+<h2>Sanayi ve üretim firmaları</h2>
+<p>Organize sanayi bölgesindeki üretim firmalarının müşterisi son tüketici değil,
+başka bir firma. Bu durumda site bir katalog değil, teknik güven belgesidir.
+Karşı taraf ürün kodunu, kapasiteyi, sertifikaları ve referans listesini arar.
+Güzel bir anasayfadan çok, indirilebilir teknik dosyalar ve net bir ürün
 listesi ise yarar.</p>
 
-<p>Ihracat yapan firmalarda Ingilizce icerik zorunludur ve ceviriyle
-gecistirilemez. Karsi taraf teknik terimlerin dogru kullanildigini gormek
+<p>İhracat yapan firmalarda İngilizce içerik zorunludur ve çeviriyle
+geçiştirilemez. Karşı taraf teknik terimlerin doğru kullanıldığını görmek
 ister.</p>
 
-<h2>Universite ve genc nufus</h2>
-<p>Sehirdeki universite nufusu, ogrenciye yonelik isletmeler icin surekli
-yenilenen bir pazar yaratiyor. Bu kitle neredeyse tamamen telefondan ve sosyal
-medya uzerinden arama yapiyor. Onlar icin sitenin isi genellikle tek bir sey:
-sosyal medyadan gelen kisiyi telefona ya da adrese hizlica ulastirmak.</p>
+<h2>Üniversite ve genç nüfus</h2>
+<p>Şehirdeki üniversite nüfusu, öğrenciye yönelik işletmeler için sürekli
+yenilenen bir pazar yaratıyor. Bu kitle neredeyse tamamen telefondan ve sosyal
+medya üzerinden arama yapıyor. Onlar için sitenin işi genellikle tek bir şey:
+sosyal medyadan gelen kişiyi telefona ya da adrese hızlıca ulaştırmak.</p>
 
-<p>Bu durumda uzun kurumsal metinler yerine tek ekranda toplanmis bilgi ve
-buyuk dokunmatik butonlar daha iyi calisir.</p>
+<p>Bu durumda uzun kurumsal metinler yerine tek ekranda toplanmış bilgi ve
+büyük dokunmatik butonlar daha iyi çalışır.</p>
 
-<h2>Hizmet saglayicilar ve serbest meslek</h2>
-<p>Avukat, mali musavir, dis hekimi ve benzeri meslek gruplarinda karar guvene
-dayanir ve arayan kisi genellikle karsilastirma yapar. Burada belirleyici olan
-sey, mesleki icerigin varligidir: sik sorulan sorularin gercekten cevaplandigi,
-sureci anlatan yazilar.</p>
+<h2>Hizmet sağlayıcılar ve serbest meslek</h2>
+<p>Avukat, mali müşavir, dış hekimi ve benzeri meslek gruplarında karar güvene
+dayanır ve arayan kişi genellikle karşılaştırma yapar. Burada belirleyici olan
+şey, mesleki içeriğin varlığıdır: sık sorulan soruların gerçekten cevaplandığı,
+süreci anlatan yazılar.</p>
 
-<p>Bu tur icerik hem arama sonuclarinda uzun kuyruklu aramalari yakalar hem de
-ilk temasta guven kurar. Meslek etigi geregi reklam kisitlari olan alanlarda
-bilgilendirici icerik zaten en dogru yontemdir.</p>
+<p>Bu tür içerik hem arama sonuçlarında uzun kuyruklu aramaları yakalar hem de
+ilk temasta güven kurar. Meslek etiği gereği reklam kısıtları olan alanlarda
+bilgilendirici içerik zaten en doğru yöntemdir.</p>
 
-<h2>Bolge geneline hizmet verenler</h2>
-<p>Merkezdeki bircok firma tum ile hizmet veriyor. Bu durumda her ilce icin ayri
-ve gercekten farkli sayfalar gerekir. Ayni metni ilce adi degistirerek
-cogaltmak, kisa vadede sayfa sayisini artirsa da Google tarafindan
-yakalandiginda tum sayfalari birden degersizlestirir.</p>
+<h2>Bölge geneline hizmet verenler</h2>
+<p>Merkezdeki birçok firma tüm ile hizmet veriyor. Bu durumda her ilçe için ayrı
+ve gerçekten farklı sayfalar gerekir. Aynı metni ilçe adı değiştirerek
+çoğaltmak, kısa vadede sayfa sayısını artırsa da Google tarafından
+yakalandığında tüm sayfaları birden değersizleştirir.</p>
 
-<p>Biz her bolge sayfasini o bolgenin kendi ekonomisinden yazariz; bu sayfanin
-kendisi de buna ornektir. Yaklasimin ayrintisini
-<a href="/seo-hizmeti">SEO hizmeti sayfamizda</a> anlatiyoruz.</p>
+<p>Biz her bölge sayfasını o bölgenin kendi ekonomisinden yazarız; bu sayfanın
+kendisi de buna örnektir. Yaklaşımın ayrıntısını
+<a href="/seo-hizmeti">SEO hizmeti sayfamızda</a> anlatıyoruz.</p>
 
-<h2>Reklamla organik trafigin dengesi</h2>
-<p>Merkezde rekabet yuksek oldugu icin bircok firma dogrudan reklama yoneliyor.
-Reklam hizli sonuc verir ama musluk kapandiginda trafik de biter. Organik
-gorunurluk yavas kurulur, buna karsilik kalicidir.</p>
+<h2>Reklamla organik trafiğin dengesi</h2>
+<p>Merkezde rekabet yüksek olduğu için birçok firma doğrudan reklama yöneliyor.
+Reklam hızlı sonuç verir ama musluk kapandığında trafik de biter. Organik
+görünürlük yavaş kurulur, buna karşılık kalıcıdır.</p>
 
-<p>Bizim onerdigimiz denge sudur: reklami kisa vadeli talep icin, icerigi uzun
-vadeli gorunurluk icin kullanmak. Reklamdan gelen aramalarin hangi kelimelerde
-donusum getirdigini olcup, ayni kelimeler icin kalici icerik yazmak reklam
-butcesini zamanla dusurur.</p>
+<p>Bizim önerdiğimiz denge şudur: reklamı kısa vadeli talep için, içeriği uzun
+vadeli görünürlük için kullanmak. Reklamdan gelen aramaların hangi kelimelerde
+dönüşüm getirdiğini ölçüp, aynı kelimeler için kalıcı içerik yazmak reklam
+bütçesini zamanla düşürür.</p>
 
-<h2>Kurumsal sitede olcum ve raporlama</h2>
-<p>Merkezdeki firmalarda genellikle karar veren kisi ile siteyi kullanan kisi
-farklidir. Bu yuzden raporlamanin anlasilir olmasi gerekir: kac kisi geldi
-degil, hangi sayfa kac teklif talebi getirdi.</p>
+<h2>Kurumsal sitede ölçüm ve raporlama</h2>
+<p>Merkezdeki firmalarda genellikle karar veren kişi ile siteyi kullanan kişi
+farklıdır. Bu yüzden raporlamanın anlaşılır olması gerekir: kaç kişi geldi
+değil, hangi sayfa kaç teklif talebi getirdi.</p>
 
-<p>Panelde form kayitlari kaynak sayfasiyla birlikte tutuluyor. Uc ay sonra
-hangi hizmet sayfasinin gercekten is getirdigi net bir tabloya donusuyor ve
-icerik yatirimi buna gore yonlendiriliyor.</p>
+<p>Panelde form kayıtları kaynak sayfasıyla birlikte tutuluyor. Üç ay sonra
+hangi hizmet sayfasının gerçekten iş getirdiği net bir tabloya dönüşüyor ve
+içerik yatırımı buna göre yönlendiriliyor.</p>
 
-<h2>Sitenin devri ve bagimsizlik</h2>
-<p>Kurumsal musterilerimizin sik sordugu bir soru sudur: "Sizinle calismayi
-birakirsak ne olur?" Cevap net: sitenin tum dosyalari ve veritabani
-musterinindir. Kapali bir sistem, kiralik bir panel ya da disari cikilamayan
-bir altyapi kurmuyoruz. Isteyen musteri her seyi alip baska bir ekiple devam
+<h2>Sitenin devri ve bağımsızlık</h2>
+<p>Kurumsal müşterilerimizin sık sorduğu bir soru şudur: "Sizinle çalışmayı
+bırakırsak ne olur?" Cevap net: sitenin tüm dosyaları ve veritabanı
+müşterinindir. Kapalı bir sistem, kiralık bir panel ya da dışarı çıkılamayan
+bir altyapı kurmuyoruz. İsteyen müşteri her şeyi alıp başka bir ekiple devam
 edebilir.</p>
 
-<p>Korfez ilcelerindeki calismalarimiz icin
+<p>Körfez ilçelerindeki çalışmalarımız için
 <a href="/edremit-web-tasarim">Edremit</a> ve
-<a href="/ayvalik-web-tasarim">Ayvalik</a> sayfalarina bakabilirsiniz.</p>
+<a href="/ayvalik-web-tasarim">Ayvalık</a> sayfalarına bakabilirsiniz.</p>
 HTML,
     ],
 

@@ -19,15 +19,15 @@ use Arcates\Core\Seo;
 
 <div class="cards">
   <div class="card card--stat">
-    <span class="card__label">Site haritasindaki adres</span>
+    <span class="card__label">Site haritasındaki adres</span>
     <strong class="card__value"><?= Security::e((string) $entryCount) ?></strong>
   </div>
   <div class="card card--stat">
-    <span class="card__label">Denetlenen sayfa cevirisi</span>
+    <span class="card__label">Denetlenen sayfa çevirisi</span>
     <strong class="card__value"><?= Security::e((string) count($metaTable)) ?></strong>
   </div>
   <div class="card card--stat">
-    <span class="card__label">Guclu uyari tasiyan</span>
+    <span class="card__label">Güçlü uyarı taşıyan</span>
     <strong class="card__value"><?= Security::e((string) $issueCount) ?></strong>
   </div>
 </div>
@@ -36,45 +36,45 @@ use Arcates\Core\Seo;
   <?= csrf_field() ?>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Varsayilan meta</h2>
+    <h2 class="panel__title">Varsayılan meta</h2>
 
     <div class="field">
-      <label for="meta_title_pattern">Baslik sablonu</label>
+      <label for="meta_title_pattern">Başlık şablonu</label>
       <input type="text" id="meta_title_pattern" name="meta_title_pattern" maxlength="120"
              value="<?= Security::e((string) old('meta_title_pattern', $settings['meta_title_pattern'] ?? '%title% | %site%')) ?>">
       <span class="field__hint">
         Yer tutucular: <code>%title%</code>, <code>%site%</code>.
-        Sayfada meta baslik girilmisse o kullanilir.
+        Sayfada meta başlık girilmişse o kullanılır.
       </span>
     </div>
 
     <div class="field">
-      <label for="meta_description">Varsayilan aciklama</label>
+      <label for="meta_description">Varsayılan açıklama</label>
       <textarea id="meta_description" name="meta_description" maxlength="320" rows="3"
                 data-counter="<?= Seo::DESCRIPTION_MAX ?>"><?= Security::e((string) old('meta_description', $settings['meta_description'] ?? '')) ?></textarea>
     </div>
   </section>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Dogrulama ve olcum</h2>
+    <h2 class="panel__title">Doğrulama ve ölçüm</h2>
 
     <div class="field">
-      <label for="gsc_verification">Search Console dogrulama kodu</label>
+      <label for="gsc_verification">Search Console doğrulama kodu</label>
       <input type="text" id="gsc_verification" name="gsc_verification" maxlength="200"
              value="<?= Security::e((string) old('gsc_verification', $settings['gsc_verification'] ?? '')) ?>">
       <span class="field__hint">
-        Yalnizca <code>content</code> degerini yapistirin; etiket sablon tarafindan yazilir.
+        Yalnızca <code>content</code> değerini yapıştırın; etiket şablon tarafından yazılır.
       </span>
     </div>
 
     <div class="field">
-      <label for="analytics_code">Analytics olcum kimligi</label>
+      <label for="analytics_code">Analytics ölçüm kimliği</label>
       <input type="text" id="analytics_code" name="analytics_code" maxlength="200"
              value="<?= Security::e((string) old('analytics_code', $settings['analytics_code'] ?? '')) ?>">
       <span class="field__hint">
-        Icerik guvenlik politikasi satir ici script yasaklar; bu deger yalnizca
-        saklanir ve harici bir olcum betigi eklenmez. Sartname tek harici kaynak
-        olarak Google Fonts'a izin verir (bolum 2).
+        İçerik güvenlik politikası satır içi script yasaklar; bu değer yalnızca
+        saklanır ve harici bir ölçüm betiği eklenmez. Şartname tek harici kaynak
+        olarak Google Fonts'a izin verir (bölüm 2).
       </span>
     </div>
   </section>
@@ -83,34 +83,34 @@ use Arcates\Core\Seo;
     <h2 class="panel__title">robots.txt</h2>
 
     <div class="field">
-      <label for="robots_txt">Ozel icerik</label>
+      <label for="robots_txt">Özel içerik</label>
       <textarea id="robots_txt" name="robots_txt" rows="8" maxlength="4000"><?= Security::e((string) old('robots_txt', $robots)) ?></textarea>
       <span class="field__hint">
-        Bos birakilirsa guvenli varsayilan uretilir. Ne girerseniz girin
-        <code>Sitemap:</code> satiri eklenir.
+        Boş bırakılırsa güvenli varsayılan üretilir. Ne girerseniz girin
+        <code>Sitemap:</code> satırı eklenir.
       </span>
     </div>
 
     <details class="details">
-      <summary>Su an yayinlanan icerik</summary>
+      <summary>Şu an yayınlanan içerik</summary>
       <pre class="code-block"><?= Security::e($robotsPreview) ?></pre>
     </details>
   </section>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit">SEO ayarlarini kaydet</button>
+    <button class="btn btn--primary" type="submit">SEO ayarlarını kaydet</button>
     <a class="btn btn--ghost" href="<?= Security::e(admin_url('seo/sitemap')) ?>" target="_blank" rel="noopener">
-      Site haritasini gor
+      Site haritasını gör
     </a>
     <a class="btn btn--ghost" href="/robots.txt" target="_blank" rel="noopener">robots.txt</a>
   </div>
 </form>
 
 <section class="panel">
-  <h2 class="panel__title">Sayfalarin meta durumu</h2>
+  <h2 class="panel__title">Sayfaların meta durumu</h2>
   <p class="muted">
-    Icerik skoru kaydi engellemez; eksikleri listeler. Ilce sayfalarinda
-    500 kelime alti ve %70 uzeri benzerlik guclu uyaridir.
+    İçerik skoru kaydı engellemez; eksikleri listeler. İlçe sayfalarında
+    500 kelime altı ve %70 üzeri benzerlik güçlü uyarıdır.
   </p>
 
   <div class="table-scroll">
@@ -118,19 +118,19 @@ use Arcates\Core\Seo;
       <thead>
         <tr>
           <th scope="col">Sayfa</th>
-          <th scope="col">Tur</th>
+          <th scope="col">Tür</th>
           <th scope="col">Dil</th>
           <th scope="col" class="num">Kelime</th>
-          <th scope="col" class="num">Baslik</th>
-          <th scope="col" class="num">Aciklama</th>
-          <th scope="col">Yonerge</th>
+          <th scope="col" class="num">Başlık</th>
+          <th scope="col" class="num">Açıklama</th>
+          <th scope="col">Yönerge</th>
           <th scope="col" class="num">Skor</th>
-          <th scope="col">Uyarilar</th>
+          <th scope="col">Uyarılar</th>
         </tr>
       </thead>
       <tbody>
         <?php if (!$metaTable): ?>
-          <tr><td colspan="9" class="muted">Henuz sayfa yok.</td></tr>
+          <tr><td colspan="9" class="muted">Henüz sayfa yok.</td></tr>
         <?php endif; ?>
 
         <?php foreach ($metaTable as $row): ?>

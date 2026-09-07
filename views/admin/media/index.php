@@ -19,7 +19,7 @@ use Arcates\Core\Security;
 ?>
 
 <section class="panel">
-  <h2 class="panel__title">Dosya yukle</h2>
+  <h2 class="panel__title">Dosya yükle</h2>
 
   <form method="post" action="<?= Security::e(admin_url('medya/yukle')) ?>" enctype="multipart/form-data">
     <?= csrf_field() ?>
@@ -29,14 +29,14 @@ use Arcates\Core\Security;
       <input type="file" id="files" name="files[]" multiple
              accept="<?= Security::e('.' . implode(',.', $allowed)) ?>">
       <span class="field__hint">
-        Kabul edilen turler: <?= Security::e(implode(', ', $allowed)) ?>.
+        Kabul edilen türler: <?= Security::e(implode(', ', $allowed)) ?>.
         En fazla <?= Security::e(format_bytes($maxSize)) ?>.
-        Yuklenen goruntuler icin thumb, medium, large ve WebP karsiliklari uretilir.
+        Yüklenen görüntüler için thumb, medium, large ve WebP karşılıkları üretilir.
       </span>
     </div>
 
     <div class="form__actions">
-      <button class="btn btn--primary" type="submit">Yukle</button>
+      <button class="btn btn--primary" type="submit">Yükle</button>
     </div>
   </form>
 </section>
@@ -47,7 +47,7 @@ use Arcates\Core\Security;
   </div>
 
   <?php if (!$items): ?>
-    <p class="muted">Henuz dosya yuklenmemis.</p>
+    <p class="muted">Henüz dosya yüklenmemiş.</p>
   <?php else: ?>
     <ul class="media-grid">
       <?php foreach ($items as $item): ?>

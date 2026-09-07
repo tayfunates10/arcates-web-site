@@ -12,32 +12,32 @@ use Arcates\Core\Security;
 use Arcates\Models\District;
 use Arcates\Models\HomeSection;
 
-test('F-14b', 'Panelden bolum kapatilinca on yuzde gorunmez', function (): void {
+test('F-14b', 'Panelden bölüm kapatılınca on yüzde görünmez', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
 
-    assertContains('class="strip"', arc_home()->body(), 'Serit once gorunmeli');
+    assertContains('class="strip"', arc_home()->body(), 'Şerit önce görünmeli');
 
     $response = (new AdminHomeController())->toggle(
         Request::make('POST', admin_url('anasayfa/strip/durum'), ['_token' => Security::csrfToken()]),
         ['key' => 'strip']
     );
-    assertSame(302, $response->status(), 'Yonlendirme donmeli');
+    assertSame(302, $response->status(), 'Yönlendirme dönmeli');
 
-    assertNotContains('class="strip"', arc_home()->body(), 'Kapali bolum on yuzde basilmamali');
+    assertNotContains('class="strip"', arc_home()->body(), 'Kapalı bölüm on yüzde basılmamalı');
 
     // Geri ac.
     (new AdminHomeController())->toggle(
         Request::make('POST', admin_url('anasayfa/strip/durum'), ['_token' => Security::csrfToken()]),
         ['key' => 'strip']
     );
-    assertContains('class="strip"', arc_home()->body(), 'Yeniden acilinca gorunmeli');
+    assertContains('class="strip"', arc_home()->body(), 'Yeniden açılınca görünmeli');
 
     arc_logout_test();
 });
 
-test('F-15b', 'Panelden kaydedilen kahraman metni on yuze yansir', function (): void {
+test('F-15b', 'Panelden kaydedilen kahraman metni on yüze yansır', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
@@ -49,33 +49,33 @@ test('F-15b', 'Panelden kaydedilen kahraman metni on yuze yansir', function (): 
             'c'         => [
                 'tr' => [
                     'badge'       => 'Panelden girilen rozet',
-                    'line1'       => 'Birinci satir',
-                    'line2'       => 'Ikinci satir',
-                    'line3'       => 'Ucuncu satir degrade',
-                    'description' => 'Panelden girilen aciklama metni.',
-                    'cta1'        => ['label' => 'Teklif alin', 'url' => '/iletisim'],
-                    'cta2'        => ['label' => 'Calismalar', 'url' => '/referanslar'],
+                    'line1'       => 'Birinci satır',
+                    'line2'       => 'İkinci satır',
+                    'line3'       => 'Üçüncü satır degrade',
+                    'description' => 'Panelden girilen açıklama metni.',
+                    'cta1'        => ['label' => 'Teklif alın', 'url' => '/iletisim'],
+                    'cta2'        => ['label' => 'Çalışmalar', 'url' => '/referanslar'],
                 ],
             ],
         ]),
         ['key' => 'hero']
     );
 
-    assertSame(302, $response->status(), 'Yonlendirme donmeli');
+    assertSame(302, $response->status(), 'Yönlendirme dönmeli');
 
     $body = arc_home()->body();
-    assertContains('Panelden girilen rozet', $body, 'Rozet yansimali');
-    assertContains('Ucuncu satir degrade', $body, 'Ucuncu satir yansimali');
-    assertContains('Panelden girilen aciklama metni.', $body, 'Aciklama yansimali');
-    assertContains('Teklif alin', $body, 'Buton metni yansimali');
+    assertContains('Panelden girilen rozet', $body, 'Rozet yansımalı');
+    assertContains('Üçüncü satır degrade', $body, 'Üçüncü satır yansımalı');
+    assertContains('Panelden girilen açıklama metni.', $body, 'Açıklama yansımalı');
+    assertContains('Teklif alın', $body, 'Buton metni yansımalı');
 
     // Sablona sabit metin gomulmedigini dogrula: eski varsayilan artik yok.
-    assertNotContains('Korfezdeki isletmeler icin', $body, 'Eski metin sablonda kalmamali');
+    assertNotContains('Körfezdeki işletmeler için', $body, 'Eski metin şablonda kalmamalı');
 
     arc_logout_test();
 });
 
-test('F-15c', 'Bolum icerigi zararli girdiyle kirlenmez', function (): void {
+test('F-15c', 'Bölüm içeriği zararlı girdiyle kirlenmez', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
@@ -86,9 +86,9 @@ test('F-15c', 'Bolum icerigi zararli girdiyle kirlenmez', function (): void {
             'is_active' => '1',
             'c'         => [
                 'tr' => [
-                    'title' => '<script>alert(1)</script>Baslik',
+                    'title' => '<script>alert(1)</script>Başlık',
                     'text'  => 'Metin',
-                    'cta1'  => ['label' => 'Tikla', 'url' => 'javascript:alert(1)'],
+                    'cta1'  => ['label' => 'Tıkla', 'url' => 'javascript:alert(1)'],
                 ],
             ],
         ]),
@@ -96,14 +96,14 @@ test('F-15c', 'Bolum icerigi zararli girdiyle kirlenmez', function (): void {
     );
 
     $body = arc_home()->body();
-    assertNotContains('<script>alert(1)</script>', $body, 'Script ham gecmemeli');
-    assertContains('&lt;script&gt;', $body, 'Metin olarak kacirilmali');
-    assertNotContains('href="javascript:', $body, 'javascript: adresi basilmamali');
+    assertNotContains('<script>alert(1)</script>', $body, 'Script ham geçmemeli');
+    assertContains('&lt;script&gt;', $body, 'Metin olarak kaçırılmalı');
+    assertNotContains('href="javascript:', $body, 'javascript: adresi basılmamalı');
 
     arc_logout_test();
 });
 
-test('F-16b', 'Ilce noktalari panelden konumlandirilir ve haritaya yansir', function (): void {
+test('F-16b', 'İlçe noktaları panelden konumlandırılır ve haritaya yansır', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
@@ -115,7 +115,7 @@ test('F-16b', 'Ilce noktalari panelden konumlandirilir ve haritaya yansir', func
         'type' => 'location', 'template' => 'location', 'status' => 'published', 'district' => 'Havran',
     ]);
     $db->insert('page_translations', [
-        'page_id' => $pageId, 'lang' => 'tr', 'title' => 'Havran Web Tasarim', 'slug' => 'havran-web-tasarim',
+        'page_id' => $pageId, 'lang' => 'tr', 'title' => 'Havran Web Tasarım', 'slug' => 'havran-web-tasarim',
     ]);
 
     $response = (new AdminHomeController())->saveDistricts(
@@ -131,23 +131,23 @@ test('F-16b', 'Ilce noktalari panelden konumlandirilir ve haritaya yansir', func
         []
     );
 
-    assertSame(302, $response->status(), 'Yonlendirme donmeli');
+    assertSame(302, $response->status(), 'Yönlendirme dönmeli');
 
     $saved = $db->first('SELECT * FROM districts WHERE name = :name', [':name' => 'Havran']);
     assertTrue($saved !== null, 'Nokta kaydedilmeli');
     assertSame(312, (int) $saved['map_x'], 'Yatay konum kaydedilmeli');
     assertSame(104, (int) $saved['map_y'], 'Dikey konum kaydedilmeli');
-    assertSame($pageId, (int) $saved['page_id'], 'Sayfa baglantisi kaydedilmeli');
+    assertSame($pageId, (int) $saved['page_id'], 'Sayfa bağlantısı kaydedilmeli');
 
     $figure = arc_extract_coast(arc_home()->body());
-    assertContains('<circle cx="312" cy="104"', $figure, 'Nokta haritada dogru konumda olmali');
-    assertContains('/havran-web-tasarim', $figure, 'Nokta sayfaya baglanmali');
+    assertContains('<circle cx="312" cy="104"', $figure, 'Nokta haritada doğru konumda olmalı');
+    assertContains('/havran-web-tasarim', $figure, 'Nokta sayfaya bağlanmalı');
 
     $db->run('DELETE FROM pages');
     arc_logout_test();
 });
 
-test('F-16c', 'Sinir disi konum degerleri kirpilir', function (): void {
+test('F-16c', 'Sınır dışı konum değerleri kırpılır', function (): void {
     $db = arc_need_db();
     arc_login_as($db, 'admin');
 
@@ -157,30 +157,30 @@ test('F-16c', 'Sinir disi konum degerleri kirpilir', function (): void {
         Request::make('POST', admin_url('anasayfa/coast/ilceler'), [
             '_token'    => Security::csrfToken(),
             'districts' => [
-                ['id' => 0, 'name' => 'Sinir', 'map_x' => '4000', 'map_y' => '900', 'sort' => '1', 'is_active' => '1'],
+                ['id' => 0, 'name' => 'Sınır', 'map_x' => '4000', 'map_y' => '900', 'sort' => '1', 'is_active' => '1'],
             ],
         ]),
         []
     );
 
     // Dogrulama sinir disi degeri reddeder; kayit olusmaz.
-    $saved = $db->first('SELECT * FROM districts WHERE name = :name', [':name' => 'Sinir']);
-    assertSame(null, $saved, 'Sinir disi deger kabul edilmemeli');
+    $saved = $db->first('SELECT * FROM districts WHERE name = :name', [':name' => 'Sınır']);
+    assertSame(null, $saved, 'Sınır dışı değer kabul edilmemeli');
 
     arc_logout_test();
 });
 
-test('F-P6-a', 'Bolum listesi tum bolumleri sabit sirada gosterir', function (): void {
+test('F-P6-a', 'Bölüm listesi tüm bölümleri sabit sırada gösterir', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
 
     $response = (new AdminHomeController())->index(Request::make('GET', admin_url('anasayfa')), []);
-    assertSame(200, $response->status(), 'Liste acilmali');
+    assertSame(200, $response->status(), 'Liste açılmalı');
 
     $body = $response->body();
     foreach (HomeSection::LABELS as $key => $label) {
-        assertContains('<code>' . $key . '</code>', $body, "Bolum listede olmali: {$key}");
+        assertContains('<code>' . $key . '</code>', $body, "Bölüm listede olmalı: {$key}");
     }
 
     // Sira sartnamedeki gibi
@@ -190,17 +190,17 @@ test('F-P6-a', 'Bolum listesi tum bolumleri sabit sirada gosterir', function ():
     }
     $sorted = $positions;
     sort($sorted);
-    assertSame($sorted, $positions, 'Bolumler sabit sirada listelenmeli');
+    assertSame($sorted, $positions, 'Bölümler sabit sırada listelenmeli');
 
     arc_logout_test();
 });
 
-test('F-P6-b', 'Editor rolu anasayfa bolumlerini duzenleyebilir', function (): void {
+test('F-P6-b', 'Editör rolü anasayfa bölümlerini düzenleyebilir', function (): void {
     $db = arc_need_db();
     $id = arc_login_as($db, 'editor');
 
     $response = (new AdminHomeController())->index(Request::make('GET', admin_url('anasayfa')), []);
-    assertSame(200, $response->status(), 'Editor anasayfa yoneticisini gormeli');
+    assertSame(200, $response->status(), 'Editör anasayfa yöneticisini görmeli');
 
     arc_logout_test();
     $db->run('DELETE FROM users WHERE id = :id', [':id' => $id]);

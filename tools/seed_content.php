@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit("Bu arac yalnizca komut satirindan calisir.\n");
+    exit("Bu araç yalnızca komut satırından çalışır.\n");
 }
 
 define('ARC_ROOT', dirname(__DIR__));
@@ -40,12 +40,12 @@ try {
     $db = Database::instance();
     $db->connect();
 } catch (Throwable $e) {
-    fwrite(STDERR, 'Veritabanina baglanilamadi: ' . $e->getMessage() . "\n");
+    fwrite(STDERR, 'Veritabanına bağlanılamadı: ' . $e->getMessage() . "\n");
     exit(1);
 }
 
 if (!$db->tableExists('pages')) {
-    fwrite(STDERR, "Sema uygulanmamis. Once /install adimlarini tamamlayin.\n");
+    fwrite(STDERR, "Şema uygulanmamış. Önce /install adımlarını tamamlayın.\n");
     exit(1);
 }
 
@@ -53,7 +53,7 @@ if (!$db->tableExists('pages')) {
 if (!$dry) {
     (new Seeder($db))->run();
 }
-echo "Temel tohum verisi hazir.\n";
+echo "Temel tohum verisi hazır.\n";
 
 $added   = 0;
 $skipped = 0;
@@ -112,16 +112,16 @@ foreach (require ARC_ROOT . '/db/seed/pages.php' as $item) {
     $writePage($item, $item['type']);
 }
 
-echo "\nIlce sayfalari (DOCS.md 4.3, 4.7):\n";
+echo "\nİlçe sayfaları (DOCS.md 4.3, 4.7):\n";
 foreach (require ARC_ROOT . '/db/seed/locations.php' as $item) {
     $words = Security::wordCount($item['content']);
     if ($words < 500) {
-        fwrite(STDERR, '  ! ' . $item['slug'] . " yalnizca {$words} kelime; bolum 4.7 en az 500 kelime istiyor.\n");
+        fwrite(STDERR, '  ! ' . $item['slug'] . " yalnızca {$words} kelime; bölüm 4.7 en az 500 kelime istiyor.\n");
     }
     $writePage($item + ['sort' => 30], 'location');
 }
 
-echo "\nSektor sayfalari:\n";
+echo "\nSektör sayfaları:\n";
 foreach (require ARC_ROOT . '/db/seed/sectors.php' as $item) {
     $writePage($item, 'sector');
 }
@@ -167,7 +167,7 @@ foreach (require ARC_ROOT . '/db/seed/projects.php' as $item) {
 
 // --- SSS --------------------------------------------------------------------
 
-echo "\nSSS kayitlari:\n";
+echo "\nSSS kayıtları:\n";
 $faqsAdded = 0;
 foreach (require ARC_ROOT . '/db/seed/faqs.php' as $item) {
     $exists = $db->first(
@@ -223,17 +223,17 @@ if (!$dry) {
             $linked++;
         }
     }
-    echo "\nBolge haritasinda {$linked} ilce noktasi sayfasina baglandi.\n";
+    echo "\nBölge haritasında {$linked} ilçe noktası sayfasına bağlandı.\n";
 }
 
 // --- Menu -------------------------------------------------------------------
 
 echo "\n";
-echo $dry ? "Kuru calisma; hicbir kayit yazilmadi.\n" : "Tamamlandi.\n";
-printf("Sayfa: %d eklendi, %d atlandi. Referans: %d. SSS: %d.\n", $added, $skipped, $projectsAdded, $faqsAdded);
+echo $dry ? "Kuru çalışma; hiçbir kayıt yazılmadı.\n" : "Tamamlandı.\n";
+printf("Sayfa: %d eklendi, %d atlandı. Referans: %d. SSS: %d.\n", $added, $skipped, $projectsAdded, $faqsAdded);
 
 if (!$dry) {
-    Logger::info('Baslangic icerigi yazildi', [
+    Logger::info('Başlangıç içeriği yazıldı', [
         'sayfa' => $added, 'referans' => $projectsAdded, 'sss' => $faqsAdded,
     ]);
 }

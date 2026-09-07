@@ -45,7 +45,7 @@ final class MenuController extends Controller
         }
 
         return $this->view('menus/index', [
-            'title'   => 'Menuler',
+            'title'   => 'Menüler',
             'menuKey' => $menuKey,
             'keys'    => MenuItem::KEYS,
             'items'   => $items,
@@ -124,8 +124,8 @@ final class MenuController extends Controller
             }
         }
 
-        Logger::activity('menu.save', 'menu', null, $menuKey . ' — ' . count($kept) . ' oge');
+        Logger::activity('menu.save', 'menu', null, $menuKey . ' — ' . count($kept) . ' öge');
 
-        return $this->back(admin_url('menuler') . '?menu=' . $menuKey, 'success', 'Menu kaydedildi.');
+        return $this->back(admin_url('menuler') . '?menu=' . $menuKey, 'success', 'Menü kaydedildi.');
     }
 }

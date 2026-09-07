@@ -18,7 +18,7 @@ $default = Lang::defaultCode();
   <section class="panel panel--form">
     <div class="grid grid--2">
       <div class="field">
-        <label for="sort">Sira</label>
+        <label for="sort">Sıra</label>
         <input type="number" id="sort" name="sort" value="<?= (int) old('sort', $faq['sort'] ?? 0) ?>">
       </div>
 
@@ -29,7 +29,7 @@ $default = Lang::defaultCode();
         </label>
         <label>
           <input type="checkbox" name="on_home" value="1" <?= $onHome ? 'checked' : '' ?>>
-          Anasayfada goster
+          Anasayfada göster
         </label>
       </div>
     </div>
@@ -37,8 +37,8 @@ $default = Lang::defaultCode();
     <fieldset class="fieldset">
       <legend>Atanacak sayfalar</legend>
       <p class="field__hint">
-        Secilen sayfalarda bu soru gosterilir ve <code>FAQPage</code> yapisal
-        verisine girer. Ilce ve hizmet sayfalarinda en az bir SSS onerilir.
+        Seçilen sayfalarda bu soru gösterilir ve <code>FAQPage</code> yapısal
+        verisine girer. İlçe ve hizmet sayfalarında en az bir SSS önerilir.
       </p>
       <div class="checkbox-grid">
         <?php foreach ($pages as $page): ?>
@@ -85,7 +85,7 @@ $default = Lang::defaultCode();
   <?php endforeach; ?>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit"><?= $isNew ? 'Olustur' : 'Kaydet' ?></button>
-    <a class="btn btn--ghost" href="<?= Security::e(admin_url('sss')) ?>">Listeye don</a>
+    <button class="btn btn--primary" type="submit"><?= $isNew ? 'Oluştur' : 'Kaydet' ?></button>
+    <a class="btn btn--ghost" href="<?= Security::e(admin_url('sss')) ?>">Listeye dön</a>
   </div>
 </form>

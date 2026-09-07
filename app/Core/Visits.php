@@ -245,7 +245,7 @@ final class Visits
             return '';
         }
 
-        fputcsv($handle, ['Gun', 'Adres', 'Cihaz', 'Dil', 'Goruntuleme', 'Oturum']);
+        fputcsv($handle, ['Gün', 'Adres', 'Cihaz', 'Dil', 'Görüntüleme', 'Oturum']);
         foreach ($rows as $row) {
             fputcsv($handle, [
                 $row['day'], $row['path'], $row['device'], $row['lang'],

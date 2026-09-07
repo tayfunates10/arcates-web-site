@@ -47,10 +47,10 @@ final class BackupController extends Controller
         try {
             $filename = Backup::create();
             Logger::activity('backup.create', 'backup', null, $filename);
-            return $this->back(admin_url('yedekleme'), 'success', 'Yedek alindi: ' . $filename);
+            return $this->back(admin_url('yedekleme'), 'success', 'Yedek alındı: ' . $filename);
         } catch (Throwable $e) {
             Logger::exception($e);
-            return $this->back(admin_url('yedekleme'), 'error', 'Yedek alinamadi: ' . $e->getMessage());
+            return $this->back(admin_url('yedekleme'), 'error', 'Yedek alınamadı: ' . $e->getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ final class BackupController extends Controller
 
         $path = Backup::path((string) ($params['file'] ?? ''));
         if ($path === null) {
-            return $this->back(admin_url('yedekleme'), 'error', 'Yedek bulunamadi.');
+            return $this->back(admin_url('yedekleme'), 'error', 'Yedek bulunamadı.');
         }
 
         Logger::activity('backup.download', 'backup', null, basename($path));
@@ -91,7 +91,7 @@ final class BackupController extends Controller
         }
 
         if (!$request->bool('confirm')) {
-            return $this->back(admin_url('yedekleme'), 'error', 'Geri yukleme icin onay kutusunu isaretleyin.');
+            return $this->back(admin_url('yedekleme'), 'error', 'Geri yükleme için onay kutusunu işaretleyin.');
         }
 
         $filename = (string) ($params['file'] ?? '');
@@ -106,11 +106,11 @@ final class BackupController extends Controller
             return $this->back(
                 admin_url('yedekleme'),
                 'success',
-                'Yedek geri yuklendi. Islem oncesi durum ' . $safety . ' dosyasina alindi.'
+                'Yedek geri yüklendi. İşlem öncesi durum ' . $safety . ' dosyasına alındı.'
             );
         } catch (Throwable $e) {
             Logger::exception($e);
-            return $this->back(admin_url('yedekleme'), 'error', 'Geri yukleme basarisiz: ' . $e->getMessage());
+            return $this->back(admin_url('yedekleme'), 'error', 'Geri yükleme başarısız: ' . $e->getMessage());
         }
     }
 
@@ -130,6 +130,6 @@ final class BackupController extends Controller
             return $this->back(admin_url('yedekleme'), 'success', 'Yedek silindi.');
         }
 
-        return $this->back(admin_url('yedekleme'), 'error', 'Yedek bulunamadi.');
+        return $this->back(admin_url('yedekleme'), 'error', 'Yedek bulunamadı.');
     }
 }

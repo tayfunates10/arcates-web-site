@@ -33,7 +33,7 @@ $_user   = $_user ?? null;
 </head>
 <body class="admin">
 
-<a class="skip-link" href="#panel-icerik">Icerige gec</a>
+<a class="skip-link" href="#panel-icerik">İçeriğe geç</a>
 
 <div class="admin__shell">
 
@@ -58,7 +58,7 @@ $_user   = $_user ?? null;
     </nav>
 
     <div class="admin__side-foot">
-      <a class="admin__side-link" href="/" target="_blank" rel="noopener">Siteyi gor</a>
+      <a class="admin__side-link" href="/" target="_blank" rel="noopener">Siteyi gör</a>
     </div>
   </aside>
 
@@ -71,11 +71,11 @@ $_user   = $_user ?? null;
         <?php if ($_user !== null): ?>
           <a class="admin__account-link" href="<?= Security::e(admin_url('hesabim')) ?>">
             <?= Security::e($_user['name']) ?>
-            <span class="admin__role"><?= Security::e($_user['role'] === 'admin' ? 'Yonetici' : 'Editor') ?></span>
+            <span class="admin__role"><?= Security::e($_user['role'] === 'admin' ? 'Yönetici' : 'Editör') ?></span>
           </a>
           <form method="post" action="<?= Security::e(admin_url('cikis')) ?>" class="admin__logout">
             <?= csrf_field() ?>
-            <button class="btn btn--ghost btn--sm" type="submit">Cikis</button>
+            <button class="btn btn--ghost btn--sm" type="submit">Çıkış</button>
           </form>
         <?php endif; ?>
       </div>

@@ -31,7 +31,7 @@ final class RedirectController extends Controller
         $search = $request->str('ara');
 
         return $this->view('redirects/index', [
-            'title'     => 'Yonlendirmeler ve 404',
+            'title'     => 'Yönlendirmeler ve 404',
             'redirects' => Redirect::listing($search),
             'notFound'  => $this->notFoundList(),
             'search'    => $search,
@@ -97,13 +97,13 @@ final class RedirectController extends Controller
         $row = Redirect::find($id);
 
         if ($row === null) {
-            return $this->back(admin_url('yonlendirmeler'), 'error', 'Yonlendirme bulunamadi.');
+            return $this->back(admin_url('yonlendirmeler'), 'error', 'Yönlendirme bulunamadı.');
         }
 
         $this->db()->delete('redirects', ['id' => $id]);
         Logger::activity('redirect.delete', 'redirect', $id, (string) $row['from_path']);
 
-        return $this->back(admin_url('yonlendirmeler'), 'success', 'Yonlendirme silindi.');
+        return $this->back(admin_url('yonlendirmeler'), 'success', 'Yönlendirme silindi.');
     }
 
     /**
@@ -122,12 +122,12 @@ final class RedirectController extends Controller
         $row = $this->db()->first('SELECT * FROM not_found WHERE id = :id', [':id' => $id]);
 
         if ($row === null) {
-            return $this->back(admin_url('yonlendirmeler'), 'error', 'Kayit bulunamadi.');
+            return $this->back(admin_url('yonlendirmeler'), 'error', 'Kayıt bulunamadı.');
         }
 
         $target = $request->str('to_path');
         if ($target === '') {
-            return $this->back(admin_url('yonlendirmeler'), 'error', 'Hedef adres bos olamaz.');
+            return $this->back(admin_url('yonlendirmeler'), 'error', 'Hedef adres boş olamaz.');
         }
 
         $result = Redirect::put((string) $row['path'], $target, 301);
@@ -144,7 +144,7 @@ final class RedirectController extends Controller
         return $this->back(
             admin_url('yonlendirmeler'),
             'success',
-            $row['path'] . ' adresi ' . $target . ' hedefine yonlendirildi.'
+            $row['path'] . ' adresi ' . $target . ' hedefine yönlendirildi.'
         );
     }
 
@@ -160,7 +160,7 @@ final class RedirectController extends Controller
 
         $this->db()->delete('not_found', ['id' => (int) ($params['id'] ?? 0)]);
 
-        return $this->back(admin_url('yonlendirmeler'), 'success', 'Kayit listeden kaldirildi.');
+        return $this->back(admin_url('yonlendirmeler'), 'success', 'Kayıt listeden kaldırıldı.');
     }
 
     private function notFoundList(): array

@@ -18,7 +18,7 @@ function arc_words(int $count, string $seed = 'edremit'): string
     return '<p>' . implode(' ', $words) . '</p>';
 }
 
-test('U-09', 'Seo::score 200 kelimeyle kelime uyarisi dondurur', function (): void {
+test('U-09', 'Seo::score 200 kelimeyle kelime uyarısı döndürür', function (): void {
     arc_test_config();
 
     $result = Seo::score(
@@ -27,11 +27,11 @@ test('U-09', 'Seo::score 200 kelimeyle kelime uyarisi dondurur', function (): vo
     );
 
     $checks = array_column($result['issues'], 'check');
-    assertTrue(in_array('words', $checks, true), 'Kelime uyarisi bulunmali');
+    assertTrue(in_array('words', $checks, true), 'Kelime uyarısı bulunmalı');
 
     foreach ($result['issues'] as $issue) {
         if ($issue['check'] === 'words') {
-            assertSame('warn', $issue['level'], 'Sayfa turunde uyari seviyesi normal olmali');
+            assertSame('warn', $issue['level'], 'Sayfa türünde uyarı seviyesi normal olmalı');
         }
     }
 
@@ -40,10 +40,10 @@ test('U-09', 'Seo::score 200 kelimeyle kelime uyarisi dondurur', function (): vo
         ['id' => 0, 'type' => 'page'],
         ['lang' => 'tr', 'content' => arc_words(320), 'word_count' => 320, 'slug' => 'ornek-sayfa']
     );
-    assertFalse(in_array('words', array_column($ok['issues'], 'check'), true), '320 kelimede uyari olmamali');
+    assertFalse(in_array('words', array_column($ok['issues'], 'check'), true), '320 kelimede uyarı olmamalı');
 });
 
-test('U-10', 'Seo::score location turunde 400 kelimeyle guclu uyari dondurur', function (): void {
+test('U-10', 'Seo::score location türünde 400 kelimeyle güçlü uyarı döndürür', function (): void {
     arc_test_config();
 
     $result = Seo::score(
@@ -58,9 +58,9 @@ test('U-10', 'Seo::score location turunde 400 kelimeyle guclu uyari dondurur', f
         }
     }
 
-    assertTrue($strong !== null, 'Kelime uyarisi bulunmali');
-    assertSame('strong', $strong['level'], 'Ilce sayfasinda guclu uyari olmali');
-    assertContains('500', $strong['message'], 'Esik mesajda gecmeli');
+    assertTrue($strong !== null, 'Kelime uyarısı bulunmalı');
+    assertSame('strong', $strong['level'], 'İlçe sayfasında güçlü uyarı olmalı');
+    assertContains('500', $strong['message'], 'Eşik mesajda geçmeli');
 
     // 520 kelimede guclu uyari kalkmali.
     $ok = Seo::score(
@@ -73,35 +73,35 @@ test('U-10', 'Seo::score location turunde 400 kelimeyle guclu uyari dondurur', f
             $okChecks[] = $issue['level'];
         }
     }
-    assertCount(0, $okChecks, '520 kelimede kelime uyarisi olmamali');
+    assertCount(0, $okChecks, '520 kelimede kelime uyarısı olmamalı');
 });
 
-test('U-11', 'Ilce benzerlik olcumu %70 ustu ortusmeyi yakalar', function (): void {
+test('U-11', 'İlçe benzerlik ölçümü %70 üstü örtüşmeyi yakalar', function (): void {
     $base = '<p>' . implode(' ', array_map(static fn ($i) => 'kelime' . $i, range(1, 100))) . '</p>';
 
     // Yalnizca ilce adi degistirilmis metin — doorway page deseni.
-    $copy = str_replace('kelime5 ', 'akcay ', $base);
-    assertGreaterThan(0.70, Seo::similarity($base, $copy), 'Neredeyse ayni metin yakalanmali');
+    $copy = str_replace('kelime5 ', 'akçay ', $base);
+    assertGreaterThan(0.70, Seo::similarity($base, $copy), 'Neredeyse aynı metin yakalanmalı');
 
     // Tamamen farkli metin.
     $other = '<p>' . implode(' ', array_map(static fn ($i) => 'baska' . $i, range(1, 100))) . '</p>';
-    assertLessThan(0.10, Seo::similarity($base, $other), 'Farkli metin dusuk oran vermeli');
+    assertLessThan(0.10, Seo::similarity($base, $other), 'Farklı metin düşük oran vermeli');
 
     // Kelime sirasi degistirilmis metin de yakalanmali.
     $shuffled = '<p>' . implode(' ', array_reverse(array_map(static fn ($i) => 'kelime' . $i, range(1, 100)))) . '</p>';
-    assertGreaterThan(0.90, Seo::similarity($base, $shuffled), 'Sira degisimi ortusmeyi gizlememeli');
+    assertGreaterThan(0.90, Seo::similarity($base, $shuffled), 'Sıra değişimi örtüşmeyi gizlememeli');
 
-    assertSame(0.0, Seo::similarity('', 'herhangi bir metin'), 'Bos metin sifir dondurmeli');
+    assertSame(0.0, Seo::similarity('', 'herhangi bir metin'), 'Boş metin sıfır döndürmeli');
 });
 
-test('U-13', 'hreflang uretimi eksik ceviriyi listeye almaz', function (): void {
+test('U-13', 'hreflang üretimi eksik çeviriyi listeye almaz', function (): void {
     arc_test_config();
     Lang::reset();
     Lang::seed([
-        'tr' => ['code' => 'tr', 'name' => 'Turkce',  'direction' => 'ltr', 'is_default' => 1, 'is_active' => 1],
+        'tr' => ['code' => 'tr', 'name' => 'Türkçe',  'direction' => 'ltr', 'is_default' => 1, 'is_active' => 1],
         'en' => ['code' => 'en', 'name' => 'English', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 1],
         'de' => ['code' => 'de', 'name' => 'Deutsch', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 1],
-        'ar' => ['code' => 'ar', 'name' => 'Arapca',  'direction' => 'rtl', 'is_default' => 0, 'is_active' => 1],
+        'ar' => ['code' => 'ar', 'name' => 'Arapça',  'direction' => 'rtl', 'is_default' => 0, 'is_active' => 1],
     ], 'tr');
 
     $set = Seo::hreflang([
@@ -113,18 +113,18 @@ test('U-13', 'hreflang uretimi eksik ceviriyi listeye almaz', function (): void 
 
     $codes = array_column($set, 'hreflang');
 
-    assertTrue(in_array('tr', $codes, true), 'Turkce listede olmali');
-    assertTrue(in_array('en', $codes, true), 'Ingilizce listede olmali');
-    assertFalse(in_array('de', $codes, true), 'Cevirisi olmayan Almanca listede olmamali');
-    assertFalse(in_array('ar', $codes, true), 'Cevirisi olmayan Arapca listede olmamali');
-    assertTrue(in_array('x-default', $codes, true), 'x-default bulunmali');
+    assertTrue(in_array('tr', $codes, true), 'Türkçe listede olmalı');
+    assertTrue(in_array('en', $codes, true), 'İngilizce listede olmalı');
+    assertFalse(in_array('de', $codes, true), 'Çevirisi olmayan Almanca listede olmamalı');
+    assertFalse(in_array('ar', $codes, true), 'Çevirisi olmayan Arapça listede olmamalı');
+    assertTrue(in_array('x-default', $codes, true), 'x-default bulunmalı');
 
     foreach ($set as $item) {
         if ($item['hreflang'] === 'en') {
-            assertContains('/en/about-us', $item['href'], 'Ingilizce adres onekli olmali');
+            assertContains('/en/about-us', $item['href'], 'İngilizce adres önekli olmalı');
         }
         if ($item['hreflang'] === 'tr') {
-            assertNotContains('/tr/', $item['href'], 'Varsayilan dil oneksiz olmali');
+            assertNotContains('/tr/', $item['href'], 'Varsayılan dil öneksiz olmalı');
         }
     }
 
@@ -134,31 +134,31 @@ test('U-13', 'hreflang uretimi eksik ceviriyi listeye almaz', function (): void 
     Lang::reset();
 });
 
-test('U-13b', 'Alt metni eksik gorseller ve ic linkler sayilir', function (): void {
+test('U-13b', 'Alt metni eksik görseller ve iç linkler sayılır', function (): void {
     arc_test_config();
 
     $html = '<p><img src="/a.webp" alt="Edremit sahili"> <img src="/b.webp"> '
         . '<img src="/c.webp" alt=""> <img src="/d.webp" alt="" aria-hidden="true"></p>';
 
     // a: alt dolu, b: alt yok, c: alt bos, d: alt bos ama aria-hidden (dekoratif)
-    assertSame(2, Seo::countImagesWithoutAlt($html), 'Bos ve eksik alt metinler sayilmali, dekoratif olan sayilmamali');
+    assertSame(2, Seo::countImagesWithoutAlt($html), 'Boş ve eksik alt metinler sayılmalı, dekoratif olan sayılmamalı');
 
-    $links = '<p><a href="/iletisim">iletisim</a> <a href="https://baska.example">disari</a> '
-        . '<a href="#bolum">ayni sayfa</a> <a href="/fiyatlar">fiyatlar</a></p>';
+    $links = '<p><a href="/iletisim">iletişim</a> <a href="https://baska.example">dışarı</a> '
+        . '<a href="#bolum">aynı sayfa</a> <a href="/fiyatlar">fiyatlar</a></p>';
 
-    assertSame(2, Seo::countInternalLinks($links), 'Yalnizca ic linkler sayilmali');
+    assertSame(2, Seo::countInternalLinks($links), 'Yalnızca iç linkler sayılmalı');
 });
 
-test('U-13c', 'Meta baslik sablonu uygulanir ve canonical mutlak olur', function (): void {
+test('U-13c', 'Meta başlık şablonu uygulanır ve canonical mutlak olur', function (): void {
     arc_test_config();
 
-    $explicit = Seo::title('Edremit Web Tasarim', 'Ozel baslik');
-    assertSame('Ozel baslik', $explicit, 'Elle girilen meta baslik oldugu gibi kullanilmali');
+    $explicit = Seo::title('Edremit Web Tasarım', 'Özel başlık');
+    assertSame('Özel başlık', $explicit, 'Elle girilen meta başlık olduğu gibi kullanılmalı');
 
     $canonical = Seo::canonical('/edremit-web-tasarim');
-    assertContains('https://', $canonical, 'Canonical mutlak adres olmali');
+    assertContains('https://', $canonical, 'Canonical mutlak adres olmalı');
     assertContains('/edremit-web-tasarim', $canonical);
 
     $override = Seo::canonical('/a', 'https://arcates.com/b');
-    assertSame('https://arcates.com/b', $override, 'Elle verilen canonical korunmali');
+    assertSame('https://arcates.com/b', $override, 'Elle verilen canonical korunmalı');
 });

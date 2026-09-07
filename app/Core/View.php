@@ -79,7 +79,7 @@ final class View
     {
         $file = self::resolve($template);
         if (!is_file($file)) {
-            throw new RuntimeException('Sablon bulunamadi: ' . $template);
+            throw new RuntimeException('Şablon bulunamadı: ' . $template);
         }
         return $file;
     }

@@ -28,7 +28,7 @@ final class UserController extends Controller
         }
 
         return $this->view('users/index', [
-            'title' => 'Kullanicilar',
+            'title' => 'Kullanıcılar',
             'users' => $this->db()->all(
                 'SELECT id, name, email, role, status, last_login_at, created_at FROM users ORDER BY created_at'
             ),
@@ -42,7 +42,7 @@ final class UserController extends Controller
         }
 
         return $this->view('users/form', [
-            'title' => 'Yeni kullanici',
+            'title' => 'Yeni kullanıcı',
             'user'  => null,
         ]);
     }
@@ -59,11 +59,11 @@ final class UserController extends Controller
         );
 
         if ($user === null) {
-            return $this->back(admin_url('kullanicilar'), 'error', 'Kullanici bulunamadi.');
+            return $this->back(admin_url('kullanicilar'), 'error', 'Kullanıcı bulunamadı.');
         }
 
         return $this->view('users/form', [
-            'title' => 'Kullaniciyi duzenle',
+            'title' => 'Kullanıcıyı düzenle',
             'user'  => $user,
         ]);
     }
@@ -94,7 +94,7 @@ final class UserController extends Controller
         // Yeni kayitta sifre zorunlu; duzenlemede bos birakilirsa degismez.
         if ($id === 0 || $password !== '') {
             $validator->required('password')->password('password')
-                ->matches('password_confirm', 'password', 'Sifreler birbiriyle ayni degil.');
+                ->matches('password_confirm', 'password', 'Şifreler birbiriyle aynı değil.');
         }
 
         $email = mb_strtolower($request->str('email'));
@@ -104,7 +104,7 @@ final class UserController extends Controller
             [':email' => $email, ':id' => $id]
         );
         if ($taken !== null) {
-            $validator->addError('email', 'Bu e-posta adresi baska bir kullaniciya ait.');
+            $validator->addError('email', 'Bu e-posta adresi başka bir kullanıcıya ait.');
         }
 
         if ($validator->fails()) {
@@ -129,18 +129,18 @@ final class UserController extends Controller
         if ($id > 0) {
             // Son yoneticinin rolu dusurulemez veya hesabi kapatilamaz.
             if ($this->wouldRemoveLastAdmin($id, $data['role'], (int) $data['status'])) {
-                return $this->back($url, 'error', 'Sistemde en az bir etkin yonetici kalmalidir.');
+                return $this->back($url, 'error', 'Sistemde en az bir etkin yönetici kalmalıdır.');
             }
 
             $this->db()->update('users', $data, ['id' => $id]);
             Logger::activity('user.update', 'user', $id, $data['email']);
-            return $this->back(admin_url('kullanicilar'), 'success', 'Kullanici guncellendi.');
+            return $this->back(admin_url('kullanicilar'), 'success', 'Kullanıcı güncellendi.');
         }
 
         $newId = $this->db()->insert('users', $data);
         Logger::activity('user.create', 'user', $newId, $data['email']);
 
-        return $this->back(admin_url('kullanicilar'), 'success', 'Kullanici olusturuldu.');
+        return $this->back(admin_url('kullanicilar'), 'success', 'Kullanıcı oluşturuldu.');
     }
 
     public function destroy(Request $request, array $params): Response
@@ -155,17 +155,17 @@ final class UserController extends Controller
         $id = (int) ($params['id'] ?? 0);
 
         if ($id === Auth::id()) {
-            return $this->back(admin_url('kullanicilar'), 'error', 'Kendi hesabinizi silemezsiniz.');
+            return $this->back(admin_url('kullanicilar'), 'error', 'Kendi hesabınızı silemezsiniz.');
         }
 
         if ($this->wouldRemoveLastAdmin($id, 'editor', 0)) {
-            return $this->back(admin_url('kullanicilar'), 'error', 'Sistemde en az bir etkin yonetici kalmalidir.');
+            return $this->back(admin_url('kullanicilar'), 'error', 'Sistemde en az bir etkin yönetici kalmalıdır.');
         }
 
         $this->db()->delete('users', ['id' => $id]);
         Logger::activity('user.delete', 'user', $id);
 
-        return $this->back(admin_url('kullanicilar'), 'success', 'Kullanici silindi.');
+        return $this->back(admin_url('kullanicilar'), 'success', 'Kullanıcı silindi.');
     }
 
     /** Kendi sifresini degistirme ekrani. DOCS.md 9.11 */
@@ -176,7 +176,7 @@ final class UserController extends Controller
         }
 
         return $this->view('users/profile', [
-            'title' => 'Hesabim',
+            'title' => 'Hesabım',
             'user'  => Auth::user(),
         ]);
     }
@@ -203,7 +203,7 @@ final class UserController extends Controller
 
         if ($new !== '') {
             $validator->password('password')
-                ->matches('password_confirm', 'password', 'Sifreler birbiriyle ayni degil.');
+                ->matches('password_confirm', 'password', 'Şifreler birbiriyle aynı değil.');
 
             $hash = (string) $this->db()->value(
                 'SELECT password_hash FROM users WHERE id = :id',
@@ -211,7 +211,7 @@ final class UserController extends Controller
             );
 
             if (!password_verify($current, $hash)) {
-                $validator->addError('current_password', 'Mevcut sifre hatali.');
+                $validator->addError('current_password', 'Mevcut şifre hatalı.');
             }
         }
 
@@ -230,7 +230,7 @@ final class UserController extends Controller
         Logger::activity('user.profile', 'user', (int) $user['id']);
         Auth::forget();
 
-        return $this->back(admin_url('hesabim'), 'success', 'Hesap bilgileri guncellendi.');
+        return $this->back(admin_url('hesabim'), 'success', 'Hesap bilgileri güncellendi.');
     }
 
     /** Bu degisiklik son etkin yoneticiyi ortadan kaldirir mi? */

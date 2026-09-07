@@ -39,7 +39,7 @@ final class Backup
 
         $tables = $pdo->query('SHOW TABLES')->fetchAll(\PDO::FETCH_COLUMN);
         if (!$tables) {
-            throw new RuntimeException('Yedeklenecek tablo bulunamadi.');
+            throw new RuntimeException('Yedeklenecek tablo bulunamadı.');
         }
 
         $filename = 'arcates-' . date('Y-m-d-His') . '.sql.gz';
@@ -47,14 +47,14 @@ final class Backup
 
         $handle = @gzopen($path, 'wb9');
         if ($handle === false) {
-            throw new RuntimeException('Yedek dosyasi acilamadi: ' . $path);
+            throw new RuntimeException('Yedek dosyası açılamadı: ' . $path);
         }
 
         $write = static function (string $text) use ($handle): void {
             gzwrite($handle, $text);
         };
 
-        $write("-- Arcates Web Site yedegi\n");
+        $write("-- Arcates Web Site yedeği\n");
         $write('-- Tarih: ' . date('c') . "\n");
         $write("SET NAMES utf8mb4;\nSET FOREIGN_KEY_CHECKS = 0;\n\n");
 
@@ -158,12 +158,12 @@ final class Backup
     {
         $path = self::path($filename);
         if ($path === null) {
-            throw new RuntimeException('Yedek dosyasi bulunamadi.');
+            throw new RuntimeException('Yedek dosyası bulunamadı.');
         }
 
         $sql = @gzfile($path);
         if ($sql === false) {
-            throw new RuntimeException('Yedek dosyasi okunamadi.');
+            throw new RuntimeException('Yedek dosyası okunamadı.');
         }
 
         $migrator = new Migrator(Database::instance());
@@ -172,7 +172,7 @@ final class Backup
             return $migrator->runSqlScript(implode('', $sql));
         } catch (Throwable $e) {
             Logger::exception($e);
-            throw new RuntimeException('Geri yukleme basarisiz: ' . $e->getMessage(), 0, $e);
+            throw new RuntimeException('Geri yükleme başarısız: ' . $e->getMessage(), 0, $e);
         }
     }
 

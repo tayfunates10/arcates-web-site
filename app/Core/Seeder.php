@@ -34,7 +34,7 @@ final class Seeder
     public function languages(): void
     {
         $rows = [
-            ['code' => 'tr', 'name' => 'Turkce',  'direction' => 'ltr', 'is_default' => 1, 'is_active' => 1, 'sort' => 1],
+            ['code' => 'tr', 'name' => 'Türkçe',  'direction' => 'ltr', 'is_default' => 1, 'is_active' => 1, 'sort' => 1],
             ['code' => 'en', 'name' => 'English', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 1, 'sort' => 2],
             ['code' => 'de', 'name' => 'Deutsch', 'direction' => 'ltr', 'is_default' => 0, 'is_active' => 1, 'sort' => 3],
             // Arapca sagdan sola yazilir. DOCS.md 11.3
@@ -145,156 +145,156 @@ final class Seeder
             ],
 
             'hero' => [
-                'badge'       => 'Edremit Korfezi · Web Tasarim ve Yazilim',
-                'line1'       => 'Korfezdeki isletmeler icin',
-                'line2'       => 'hizli, bulunur ve',
-                'line3'       => 'is getiren web siteleri',
-                'description' => 'Edremit, Akcay, Altinoluk, Burhaniye ve Ayvalik\'ta '
-                    . 'musterilerinizin sizi Google aramalarinda bulmasini saglayan siteler kuruyoruz. '
-                    . 'Yonetimi kolay, hizli ve cok dilli.',
-                'cta1'        => ['label' => 'Ucretsiz teklif alin', 'url' => '/iletisim'],
-                'cta2'        => ['label' => 'Calismalarimiz', 'url' => '/referanslar'],
+                'badge'       => 'Edremit Körfezi · Web Tasarım ve Yazılım',
+                'line1'       => 'Körfezdeki işletmeler için',
+                'line2'       => 'hızlı, bulunur ve',
+                'line3'       => 'iş getiren web siteleri',
+                'description' => 'Edremit, Akçay, Altınoluk, Burhaniye ve Ayvalık\'ta '
+                    . 'müşterilerinizin sizi Google aramalarında bulmasını sağlayan siteler kuruyoruz. '
+                    . 'Yönetimi kolay, hızlı ve çok dilli.',
+                'cta1'        => ['label' => 'Ücretsiz teklif alın', 'url' => '/iletisim'],
+                'cta2'        => ['label' => 'Çalışmalarımız', 'url' => '/referanslar'],
             ],
 
             'strip' => [
                 'tags' => [
-                    'Otel ve pansiyon', 'Zeytinyagi ureticisi', 'Restoran ve kafe',
+                    'Otel ve pansiyon', 'Zeytinyağı üreticisi', 'Restoran ve kafe',
                     'Emlak ofisi', 'Nakliyat', 'Tabela ve matbaa',
-                    'Butik otel', 'Kamp alani', 'Zeytin kooperatifi', 'Diş kliniği',
+                    'Butik otel', 'Kamp alanı', 'Zeytin kooperatifi', 'Diş kliniği',
                 ],
             ],
 
             'services' => [
-                'title'       => 'Ne yapiyoruz',
-                'description' => 'Isletmenizin buyuklugu ne olursa olsun, isinizi buyuten '
-                    . 'dijital altyapiyi kuruyoruz.',
+                'title'       => 'Ne yapıyoruz',
+                'description' => 'İşletmenizin büyüklüğü ne olursa olsun, işinizi büyüten '
+                    . 'dijital altyapıyı kuruyoruz.',
                 'cards'       => [
                     [
                         'icon'  => 'layout',
                         'color' => 'blue',
-                        'title' => 'Kurumsal web tasarim',
-                        'text'  => 'Mobilde hizli acilan, aramalarda gorunur, yonetimi kolay kurumsal siteler.',
+                        'title' => 'Kurumsal web tasarım',
+                        'text'  => 'Mobilde hızlı açılan, aramalarda görünür, yönetimi kolay kurumsal siteler.',
                         'url'   => '/web-tasarim',
                     ],
                     [
                         'icon'  => 'cart',
                         'color' => 'coral',
                         'title' => 'E-ticaret sitesi',
-                        'text'  => 'Zeytinyagi, zeytin ve yerel urunler icin satisa hazir magaza altyapisi.',
+                        'text'  => 'Zeytinyağı, zeytin ve yerel ürünler için satışa hazır mağaza altyapısı.',
                         'url'   => '/e-ticaret-sitesi',
                     ],
                     [
                         'icon'  => 'calendar',
                         'color' => 'cyan',
                         'title' => 'Rezervasyon sistemi',
-                        'text'  => 'Otel, pansiyon ve kamp alanlari icin komisyonsuz dogrudan rezervasyon.',
+                        'text'  => 'Otel, pansiyon ve kamp alanları için komisyonsuz doğrudan rezervasyon.',
                         'url'   => '/rezervasyon-sistemi',
                     ],
                     [
                         'icon'  => 'search',
                         'color' => 'mint',
                         'title' => 'SEO hizmeti',
-                        'text'  => 'Yerel aramalarda ust siralara cikmak icin teknik ve icerik calismasi.',
+                        'text'  => 'Yerel aramalarda üst sıralara çıkmak için teknik ve içerik çalışması.',
                         'url'   => '/seo-hizmeti',
                     ],
                     [
                         'icon'  => 'globe',
                         'color' => 'violet',
-                        'title' => 'Coklu dil web sitesi',
-                        'text'  => 'Turkce, Ingilizce, Almanca ve Arapca yayin; dogru hreflang kurulumu.',
+                        'title' => 'Çoklu dil web sitesi',
+                        'text'  => 'Türkçe, İngilizce, Almanca ve Arapça yayın; doğru hreflang kurulumu.',
                         'url'   => '/coklu-dil-web-sitesi',
                     ],
                     [
                         'icon'  => 'shield',
                         'color' => 'sun',
-                        'title' => 'Web sitesi bakim',
-                        'text'  => 'Guncelleme, yedekleme, guvenlik ve icerik destegi; aylik sabit ucret.',
+                        'title' => 'Web sitesi bakım',
+                        'text'  => 'Güncelleme, yedekleme, güvenlik ve içerik desteği; aylık sabit ücret.',
                         'url'   => '/web-sitesi-bakim',
                     ],
                 ],
             ],
 
             'coast' => [
-                'title'       => 'Korfezin her ilcesinde calisiyoruz',
-                'description' => 'Yerinde gorusme, yerel arama bilgisi ve bolgeyi taniyan bir ekip. '
-                    . 'Ilcenizi secin, o bolgeye ozel calismalarimizi gorun.',
+                'title'       => 'Körfezin her ilçesinde çalışıyoruz',
+                'description' => 'Yerinde görüşme, yerel arama bilgisi ve bölgeyi tanıyan bir ekip. '
+                    . 'İlçenizi seçin, o bölgeye özel çalışmalarımızı görün.',
             ],
 
             'steps' => [
-                'title' => 'Nasil calisiyoruz',
+                'title' => 'Nasıl çalışıyoruz',
                 'items' => [
                     [
-                        'title' => 'Konusuyoruz',
-                        'text'  => 'Isinizi, musterilerinizi ve rakiplerinizi dinliyoruz. '
-                            . 'Hangi aramalarda gorunmeniz gerektigini birlikte belirliyoruz.',
+                        'title' => 'Konuşuyoruz',
+                        'text'  => 'İşinizi, müşterilerinizi ve rakiplerinizi dinliyoruz. '
+                            . 'Hangi aramalarda görünmeniz gerektiğini birlikte belirliyoruz.',
                     ],
                     [
                         'title' => 'Kuruyoruz',
-                        'text'  => 'Tasarim, icerik ve teknik kurulumu yapiyoruz. '
-                            . 'Her sayfayi hiz ve arama gorunurlugu icin olcuyoruz.',
+                        'text'  => 'Tasarım, içerik ve teknik kurulumu yapıyoruz. '
+                            . 'Her sayfayı hız ve arama görünürlüğü için ölçüyoruz.',
                     ],
                     [
-                        'title' => 'Buyutuyoruz',
-                        'text'  => 'Yayindan sonra hangi sayfanin is getirdigini olcuyor, '
-                            . 'icerigi ve reklami buna gore duzenliyoruz.',
+                        'title' => 'Büyütüyoruz',
+                        'text'  => 'Yayından sonra hangi sayfanın iş getirdiğini ölçüyor, '
+                            . 'içeriği ve reklamı buna göre düzenliyoruz.',
                     ],
                 ],
             ],
 
             'works' => [
-                'title'       => 'Son calismalar',
-                'description' => 'Korfezde yayina aldigimiz projelerden bir bolumu.',
-                'cta'         => ['label' => 'Tum referanslar', 'url' => '/referanslar'],
+                'title'       => 'Son çalışmalar',
+                'description' => 'Körfezde yayına aldığımız projelerden bir bölümü.',
+                'cta'         => ['label' => 'Tüm referanslar', 'url' => '/referanslar'],
             ],
 
             'faq' => [
-                'title'       => 'Sik sorulan sorular',
-                'description' => 'Aklinizdaki sorunun cevabi burada yoksa bize yazin.',
+                'title'       => 'Sık sorulan sorular',
+                'description' => 'Aklınızdaki sorunun cevabı burada yoksa bize yazın.',
             ],
 
             'cta' => [
-                'title' => 'Projenizi konusalim',
-                'text'  => 'Kisa bir gorusmeyle ihtiyacinizi netlestirelim, ayni hafta '
-                    . 'fiyat ve takvim gonderelim.',
+                'title' => 'Projenizi konuşalım',
+                'text'  => 'Kısa bir görüşmeyle ihtiyacınızı netleştirelim, aynı hafta '
+                    . 'fiyat ve takvim gönderelim.',
                 'cta1'  => ['label' => 'Teklif isteyin', 'url' => '/iletisim'],
-                'cta2'  => ['label' => 'Fiyatlari gorun', 'url' => '/fiyatlar'],
+                'cta2'  => ['label' => 'Fiyatları görün', 'url' => '/fiyatlar'],
             ],
 
             'footer' => [
-                'about' => 'Arcates Yazilim, Edremit Korfezi bolgesindeki isletmelere '
-                    . 'web tasarim, e-ticaret ve yazilim hizmeti verir.',
+                'about' => 'Arcates Yazılım, Edremit Körfezi bölgesindeki işletmelere '
+                    . 'web tasarım, e-ticaret ve yazılım hizmeti verir.',
                 'columns' => [
                     [
                         'title' => 'Hizmetler',
                         'links' => [
-                            ['label' => 'Web tasarim', 'url' => '/web-tasarim'],
+                            ['label' => 'Web tasarım', 'url' => '/web-tasarim'],
                             ['label' => 'E-ticaret sitesi', 'url' => '/e-ticaret-sitesi'],
                             ['label' => 'Rezervasyon sistemi', 'url' => '/rezervasyon-sistemi'],
                             ['label' => 'SEO hizmeti', 'url' => '/seo-hizmeti'],
                         ],
                     ],
                     [
-                        'title' => 'Bolgeler',
+                        'title' => 'Bölgeler',
                         'links' => [
                             ['label' => 'Edremit', 'url' => '/edremit-web-tasarim'],
-                            ['label' => 'Akcay', 'url' => '/akcay-web-tasarim'],
-                            ['label' => 'Altinoluk', 'url' => '/altinoluk-web-tasarim'],
+                            ['label' => 'Akçay', 'url' => '/akcay-web-tasarim'],
+                            ['label' => 'Altınoluk', 'url' => '/altinoluk-web-tasarim'],
                             ['label' => 'Burhaniye', 'url' => '/burhaniye-web-tasarim'],
                         ],
                     ],
                     [
                         'title' => 'Kurumsal',
                         'links' => [
-                            ['label' => 'Hakkimizda', 'url' => '/hakkimizda'],
+                            ['label' => 'Hakkımızda', 'url' => '/hakkimizda'],
                             ['label' => 'Referanslar', 'url' => '/referanslar'],
                             ['label' => 'Blog', 'url' => '/blog'],
-                            ['label' => 'Iletisim', 'url' => '/iletisim'],
+                            ['label' => 'İletişim', 'url' => '/iletisim'],
                         ],
                     ],
                 ],
                 'legal' => [
-                    ['label' => 'KVKK Aydinlatma Metni', 'url' => '/kvkk'],
-                    ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik-politikasi'],
+                    ['label' => 'KVKK Aydınlatma Metni', 'url' => '/kvkk'],
+                    ['label' => 'Gizlilik Politikası', 'url' => '/gizlilik-politikasi'],
                 ],
             ],
 
@@ -311,14 +311,14 @@ final class Seeder
     public static function districtSeed(): array
     {
         return [
-            ['name' => 'Ayvalik',    'map_x' => 90,  'map_y' => 118, 'label_above' => 1, 'slug' => 'ayvalik-web-tasarim'],
-            ['name' => 'Gomec',      'map_x' => 205, 'map_y' => 96,  'label_above' => 0, 'slug' => 'gomec-web-tasarim'],
+            ['name' => 'Ayvalık',    'map_x' => 90,  'map_y' => 118, 'label_above' => 1, 'slug' => 'ayvalik-web-tasarim'],
+            ['name' => 'Gömeç',      'map_x' => 205, 'map_y' => 96,  'label_above' => 0, 'slug' => 'gomec-web-tasarim'],
             ['name' => 'Burhaniye',  'map_x' => 330, 'map_y' => 108, 'label_above' => 1, 'slug' => 'burhaniye-web-tasarim'],
             ['name' => 'Edremit',    'map_x' => 470, 'map_y' => 86,  'label_above' => 0, 'slug' => 'edremit-web-tasarim'],
-            ['name' => 'Akcay',      'map_x' => 600, 'map_y' => 104, 'label_above' => 1, 'slug' => 'akcay-web-tasarim'],
-            ['name' => 'Altinoluk',  'map_x' => 725, 'map_y' => 92,  'label_above' => 0, 'slug' => 'altinoluk-web-tasarim'],
+            ['name' => 'Akçay',      'map_x' => 600, 'map_y' => 104, 'label_above' => 1, 'slug' => 'akcay-web-tasarim'],
+            ['name' => 'Altınoluk',  'map_x' => 725, 'map_y' => 92,  'label_above' => 0, 'slug' => 'altinoluk-web-tasarim'],
             ['name' => 'Havran',     'map_x' => 845, 'map_y' => 112, 'label_above' => 1, 'slug' => 'havran-web-tasarim'],
-            ['name' => 'Balikesir',  'map_x' => 940, 'map_y' => 84,  'label_above' => 0, 'slug' => 'balikesir-web-tasarim'],
+            ['name' => 'Balıkesir',  'map_x' => 940, 'map_y' => 84,  'label_above' => 0, 'slug' => 'balikesir-web-tasarim'],
         ];
     }
 
@@ -354,11 +354,11 @@ final class Seeder
 
         $main = [
             ['label' => 'Hizmetler',   'url' => '/web-tasarim'],
-            ['label' => 'Bolgeler',    'url' => '/edremit-web-tasarim'],
+            ['label' => 'Bölgeler',    'url' => '/edremit-web-tasarim'],
             ['label' => 'Referanslar', 'url' => '/referanslar'],
             ['label' => 'Fiyatlar',    'url' => '/fiyatlar'],
             ['label' => 'Blog',        'url' => '/blog'],
-            ['label' => 'Iletisim',    'url' => '/iletisim'],
+            ['label' => 'İletişim',    'url' => '/iletisim'],
         ];
 
         $sort = 0;

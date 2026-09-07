@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit("Bu arac yalnizca komut satirindan calisir.\n");
+    exit("Bu araç yalnızca komut satırından çalışır.\n");
 }
 
 define('ARC_ROOT', dirname(__DIR__));
@@ -30,7 +30,7 @@ date_default_timezone_set((string) Config::get('app.timezone', 'Europe/Istanbul'
 try {
     Database::instance()->connect();
 } catch (Throwable $e) {
-    fwrite(STDERR, 'Veritabanina baglanilamadi: ' . $e->getMessage() . "\n");
+    fwrite(STDERR, 'Veritabanına bağlanılamadı: ' . $e->getMessage() . "\n");
     exit(1);
 }
 
@@ -39,12 +39,12 @@ $days = (int) Config::get('privacy.visit_retention_days', 90);
 try {
     $result = Visits::rollup($days);
 
-    Logger::info('Ziyaret kayitlari toplandi', $result);
-    echo "Toplanan satir : {$result['rolled']}\n";
-    echo "Silinen kayit  : {$result['deleted']}\n";
+    Logger::info('Ziyaret kayıtları toplandı', $result);
+    echo "Toplanan satır : {$result['rolled']}\n";
+    echo "Silinen kayıt  : {$result['deleted']}\n";
 } catch (Throwable $e) {
-    Logger::error('Toplama basarisiz: ' . $e->getMessage());
-    fwrite(STDERR, 'Toplama basarisiz: ' . $e->getMessage() . "\n");
+    Logger::error('Toplama başarısız: ' . $e->getMessage());
+    fwrite(STDERR, 'Toplama başarısız: ' . $e->getMessage() . "\n");
     exit(1);
 }
 

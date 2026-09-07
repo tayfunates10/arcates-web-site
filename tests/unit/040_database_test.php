@@ -7,75 +7,75 @@ declare(strict_types=1);
 
 use Arcates\Core\Database;
 
-test('U-07', 'Database::insert ile yazilan veri aynen geri okunur', function (): void {
+test('U-07', 'Database::insert ile yazılan veri aynen geri okunur', function (): void {
     $db = arc_need_db();
 
     $id = $db->insert('projects', [
         'client_name' => 'Zeytin Kooperatifi Ç.Ğ.İ.Ö.Ş.Ü.',
-        'sector'      => 'Zeytinyagi',
+        'sector'      => 'Zeytinyağı',
         'district'    => 'Edremit',
         'live_url'    => 'https://ornek.test',
         'status'      => 'draft',
         'sort'        => 3,
     ]);
 
-    assertGreaterThan(0, $id, 'Yeni kimlik donmeli');
+    assertGreaterThan(0, $id, 'Yeni kimlik dönmeli');
 
     $row = $db->first('SELECT * FROM projects WHERE id = :id', [':id' => $id]);
-    assertSame('Zeytin Kooperatifi Ç.Ğ.İ.Ö.Ş.Ü.', $row['client_name'], 'Turkce karakter bozulmamali');
+    assertSame('Zeytin Kooperatifi Ç.Ğ.İ.Ö.Ş.Ü.', $row['client_name'], 'Türkçe karakter bozulmamalı');
     assertSame('Edremit', $row['district']);
     assertSame(3, (int) $row['sort']);
 
     $db->delete('projects', ['id' => $id]);
-    assertSame(0, $db->count('projects', ['id' => $id]), 'Silinen kayit kalmamali');
+    assertSame(0, $db->count('projects', ['id' => $id]), 'Silinen kayıt kalmamalı');
 });
 
-test('U-07b', 'Gecersiz tablo veya sutun adi SQL\'e giremez', function (): void {
+test('U-07b', 'Geçersiz tablo veya sütun adı SQL\'e giremez', function (): void {
     assertThrows(RuntimeException::class, static function (): void {
         Database::identifier('users; DROP TABLE users');
-    }, 'Noktali virgullu ad reddedilmeli');
+    }, 'Noktalı virgüllü ad reddedilmeli');
 
     assertThrows(RuntimeException::class, static function (): void {
         Database::identifier('users`');
-    }, 'Ters tirnakli ad reddedilmeli');
+    }, 'Ters tırnaklı ad reddedilmeli');
 
     assertThrows(RuntimeException::class, static function (): void {
         Database::identifier('');
-    }, 'Bos ad reddedilmeli');
+    }, 'Boş ad reddedilmeli');
 
-    assertSame('page_translations', Database::identifier('page_translations'), 'Gecerli ad gecmeli');
+    assertSame('page_translations', Database::identifier('page_translations'), 'Geçerli ad geçmeli');
 });
 
-test('U-07c', 'Kosulsuz silme veya guncelleme reddedilir', function (): void {
+test('U-07c', 'Koşulsuz silme veya güncelleme reddedilir', function (): void {
     $db = arc_need_db();
 
     assertThrows(RuntimeException::class, static function () use ($db): void {
         $db->delete('projects', []);
-    }, 'Kosulsuz DELETE reddedilmeli');
+    }, 'Koşulsuz DELETE reddedilmeli');
 
     assertThrows(RuntimeException::class, static function () use ($db): void {
         $db->update('projects', ['sort' => 1], []);
-    }, 'Kosulsuz UPDATE reddedilmeli');
+    }, 'Koşulsuz UPDATE reddedilmeli');
 });
 
-test('U-07d', 'PDO ayarlari sartnamedeki gibi', function (): void {
+test('U-07d', 'PDO ayarları şartnamedeki gibi', function (): void {
     $db  = arc_need_db();
     $pdo = $db->pdo();
 
-    assertSame(PDO::ERRMODE_EXCEPTION, $pdo->getAttribute(PDO::ATTR_ERRMODE), 'ERRMODE_EXCEPTION olmali');
-    assertSame(PDO::FETCH_ASSOC, $pdo->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE), 'FETCH_ASSOC olmali');
-    assertFalse((bool) $pdo->getAttribute(PDO::ATTR_EMULATE_PREPARES), 'EMULATE_PREPARES kapali olmali');
+    assertSame(PDO::ERRMODE_EXCEPTION, $pdo->getAttribute(PDO::ATTR_ERRMODE), 'ERRMODE_EXCEPTION olmalı');
+    assertSame(PDO::FETCH_ASSOC, $pdo->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE), 'FETCH_ASSOC olmalı');
+    assertFalse((bool) $pdo->getAttribute(PDO::ATTR_EMULATE_PREPARES), 'EMULATE_PREPARES kapalı olmalı');
 });
 
-test('U-07e', 'Goc betigi ifadelere dogru ayrilir', function (): void {
-    $sql = "-- yorum satiri; noktali virgul iceriyor\n"
+test('U-07e', 'Göç betiği ifadelere doğru ayrılır', function (): void {
+    $sql = "-- yorum satırı; noktalı virgül içeriyor\n"
         . "CREATE TABLE a (x VARCHAR(10) DEFAULT 'bir;iki');\n"
         . "/* blok yorum; */\n"
-        . "INSERT INTO a (x) VALUES ('uc;dort');";
+        . "INSERT INTO a (x) VALUES ('üç;dört');";
 
     $statements = Arcates\Core\Migrator::splitStatements($sql);
 
-    assertCount(2, $statements, 'Iki ifade cikmali');
+    assertCount(2, $statements, 'İki ifade çıkmalı');
     assertContains('CREATE TABLE a', $statements[0]);
-    assertContains("'uc;dort'", $statements[1], 'Dize icindeki noktali virgul ayirici sayilmamali');
+    assertContains("'üç;dört'", $statements[1], 'Dize içindeki noktalı virgül ayırıcı sayılmamalı');
 });

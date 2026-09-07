@@ -31,7 +31,7 @@ final class Config
 
         $loaded = require $file;
         if (!is_array($loaded)) {
-            throw new \RuntimeException('Yapilandirma dosyasi dizi dondurmeli.');
+            throw new \RuntimeException('Yapılandırma dosyası dizi döndürmeli.');
         }
 
         self::$data   = $loaded;

@@ -317,52 +317,52 @@ final class Seo
             $add(
                 'strong',
                 'words',
-                "Ilce sayfasi {$words} kelime. En az " . self::WORDS_MIN_LOCATION
-                . ' kelime ozgun metin gerekir; aksi halde sayfa doorway page sayilabilir.'
+                "İlçe sayfası {$words} kelime. En az " . self::WORDS_MIN_LOCATION
+                . ' kelime özgün metin gerekir; aksi halde sayfa doorway page sayılabilir.'
             );
         } elseif ($words < self::WORDS_MIN) {
-            $add('warn', 'words', "Icerik {$words} kelime. En az " . self::WORDS_MIN . ' kelime onerilir.');
+            $add('warn', 'words', "İçerik {$words} kelime. En az " . self::WORDS_MIN . ' kelime önerilir.');
         }
 
         // H1 sayisi
         $h1Count = preg_match_all('#<h1\b#i', $content);
         // Sablon basligi H1 uretir; icerikte ek H1 olmamalidir.
         if ($h1Count > 0) {
-            $add('warn', 'h1', 'Icerikte ' . $h1Count . ' adet H1 var. Sayfa basligi zaten H1 uretir; icerikte H2 kullanin.');
+            $add('warn', 'h1', 'İçerikte ' . $h1Count . ' adet H1 var. Sayfa başlığı zaten H1 üretir; içerikte H2 kullanın.');
         }
 
         // Meta baslik
         $metaTitle = trim((string) ($translation['meta_title'] ?? ''));
         if ($metaTitle === '') {
-            $add('warn', 'meta_title', 'Meta baslik bos. Bos birakilirsa sayfa basligi kullanilir.');
+            $add('warn', 'meta_title', 'Meta başlık boş. Boş bırakılırsa sayfa başlığı kullanılır.');
         } elseif (mb_strlen($metaTitle) > self::TITLE_MAX) {
-            $add('warn', 'meta_title', 'Meta baslik ' . mb_strlen($metaTitle) . ' karakter; ' . self::TITLE_MAX . ' karakteri asiyor.');
+            $add('warn', 'meta_title', 'Meta başlık ' . mb_strlen($metaTitle) . ' karakter; ' . self::TITLE_MAX . ' karakteri aşıyor.');
         }
 
         // Meta aciklama
         $metaDescription = trim((string) ($translation['meta_description'] ?? ''));
         if ($metaDescription === '') {
-            $add('warn', 'meta_description', 'Meta aciklama bos.');
+            $add('warn', 'meta_description', 'Meta açıklama boş.');
         } elseif (mb_strlen($metaDescription) > self::DESCRIPTION_MAX) {
-            $add('warn', 'meta_description', 'Meta aciklama ' . mb_strlen($metaDescription) . ' karakter; ' . self::DESCRIPTION_MAX . ' karakteri asiyor.');
+            $add('warn', 'meta_description', 'Meta açıklama ' . mb_strlen($metaDescription) . ' karakter; ' . self::DESCRIPTION_MAX . ' karakteri aşıyor.');
         }
 
         // Slug
         $slug = (string) ($translation['slug'] ?? '');
         if ($slug !== '' && !Security::isCleanSlug($slug)) {
-            $add('warn', 'slug', 'Adres Turkce karakter veya bosluk iceriyor.');
+            $add('warn', 'slug', 'Adres Türkçe karakter veya boşluk içeriyor.');
         }
 
         // Alt metni eksik gorsel
         $missingAlt = self::countImagesWithoutAlt($content);
         if ($missingAlt > 0) {
-            $add('warn', 'alt', $missingAlt . ' gorselde alt metni eksik.');
+            $add('warn', 'alt', $missingAlt . ' görselde alt metni eksik.');
         }
 
         // Ic link
         $internalLinks = self::countInternalLinks($content);
         if ($internalLinks < 2) {
-            $add('warn', 'links', 'Icerikte ' . $internalLinks . ' ic link var; en az 2 onerilir.');
+            $add('warn', 'links', 'İçerikte ' . $internalLinks . ' iç link var; en az 2 önerilir.');
         }
 
         $pageId = (int) ($page['id'] ?? 0);
@@ -372,7 +372,7 @@ final class Seo
             if (in_array($type, ['location', 'service'], true)) {
                 $faqCount = self::countPageFaqs($pageId);
                 if ($faqCount === 0) {
-                    $add('warn', 'faq', 'Sayfaya atanmis SSS kaydi yok.');
+                    $add('warn', 'faq', 'Sayfaya atanmış SSS kaydı yok.');
                 }
             }
 
@@ -380,7 +380,7 @@ final class Seo
             if ($type === 'location') {
                 $district = (string) ($page['district'] ?? '');
                 if ($district === '' || self::countDistrictProjects($district) === 0) {
-                    $add('warn', 'reference', 'Bu ilceye ait yayinlanmis referans yok.');
+                    $add('warn', 'reference', 'Bu ilçeye ait yayınlanmış referans yok.');
                 }
 
                 // Benzerlik — ilce sayfalarinin birbirine benzemesi kritiktir.
@@ -390,7 +390,7 @@ final class Seo
                         'strong',
                         'similarity',
                         sprintf(
-                            '"%s" ilce sayfasiyla %%%d ortusuyor. %%%d ustu ortusme doorway page riski tasir.',
+                            '"%s" ilçe sayfasıyla %%%d örtüşüyor. %%%d üstü örtüşme doorway page riski taşır.',
                             $similar['title'],
                             (int) round($similar['ratio'] * 100),
                             (int) round(self::SIMILARITY_LIMIT * 100)

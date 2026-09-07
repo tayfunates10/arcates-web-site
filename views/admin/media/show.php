@@ -24,7 +24,7 @@ $isImage = str_starts_with((string) $media['mime'], 'image/');
 <div class="grid grid--2">
 
   <section class="panel">
-    <h2 class="panel__title">Onizleme</h2>
+    <h2 class="panel__title">Önizleme</h2>
 
     <?php if ($isImage): ?>
       <img class="media-preview"
@@ -39,11 +39,11 @@ $isImage = str_starts_with((string) $media['mime'], 'image/');
     <?php endif; ?>
 
     <ul class="system__list">
-      <li><span>Dosya adi</span><span class="system__state"><?= Security::e($media['filename']) ?></span></li>
-      <li><span>Tur</span><span class="system__state"><?= Security::e($media['mime']) ?></span></li>
+      <li><span>Dosya adı</span><span class="system__state"><?= Security::e($media['filename']) ?></span></li>
+      <li><span>Tür</span><span class="system__state"><?= Security::e($media['mime']) ?></span></li>
       <li><span>Boyut</span><span class="system__state"><?= Security::e(format_bytes((int) $media['size'])) ?></span></li>
       <?php if (!empty($media['width'])): ?>
-        <li><span>Olcu</span><span class="system__state"><?= (int) $media['width'] ?>×<?= (int) $media['height'] ?></span></li>
+        <li><span>Ölçü</span><span class="system__state"><?= (int) $media['width'] ?>×<?= (int) $media['height'] ?></span></li>
       <?php endif; ?>
       <li><span>Adres</span><span class="system__state"><code><?= Security::e(Media::url((string) $media['path'])) ?></code></span></li>
     </ul>
@@ -51,7 +51,7 @@ $isImage = str_starts_with((string) $media['mime'], 'image/');
     <?php if ($media['variants']): ?>
       <h3 class="panel__title">Varyantlar</h3>
       <table class="table">
-        <thead><tr><th scope="col">Ad</th><th scope="col">Olcu</th><th scope="col">Adres</th></tr></thead>
+        <thead><tr><th scope="col">Ad</th><th scope="col">Ölçü</th><th scope="col">Adres</th></tr></thead>
         <tbody>
           <?php foreach ($media['variants'] as $name => $variant): ?>
             <tr>
@@ -69,8 +69,8 @@ $isImage = str_starts_with((string) $media['mime'], 'image/');
     <section class="panel panel--form">
       <h2 class="panel__title">Alt metni</h2>
       <p class="muted">
-        Alt metni ekran okuyucular ve arama motorlari icin gereklidir.
-        Dekoratif gorsellerde bos birakin.
+        Alt metni ekran okuyucular ve arama motorları için gereklidir.
+        Dekoratif görsellerde boş bırakın.
       </p>
 
       <form method="post" action="<?= Security::e(admin_url('medya/' . (int) $media['id'])) ?>">
@@ -88,20 +88,20 @@ $isImage = str_starts_with((string) $media['mime'], 'image/');
 
         <div class="form__actions">
           <button class="btn btn--primary" type="submit">Kaydet</button>
-          <a class="btn btn--ghost" href="<?= Security::e(admin_url('medya')) ?>">Listeye don</a>
+          <a class="btn btn--ghost" href="<?= Security::e(admin_url('medya')) ?>">Listeye dön</a>
         </div>
       </form>
     </section>
 
     <section class="panel">
-      <h2 class="panel__title">Kullanim yeri</h2>
+      <h2 class="panel__title">Kullanım yeri</h2>
 
       <?php if (!$usage): ?>
-        <p class="muted">Bu dosya hicbir yerde kullanilmiyor.</p>
+        <p class="muted">Bu dosya hiçbir yerde kullanılmıyor.</p>
       <?php else: ?>
         <div class="notice notice--warning">
-          Bu dosya <?= Security::e((string) count($usage)) ?> yerde kullaniliyor.
-          Silerseniz ilgili sayfalarda gorsel kaybolur.
+          Bu dosya <?= Security::e((string) count($usage)) ?> yerde kullanılıyor.
+          Silerseniz ilgili sayfalarda görsel kaybolur.
         </div>
         <ul class="system__list">
           <?php foreach ($usage as $item): ?>
@@ -121,13 +121,13 @@ $isImage = str_starts_with((string) $media['mime'], 'image/');
           <div class="field field--check">
             <label>
               <input type="checkbox" name="force" value="1">
-              Kullanimda oldugunu biliyorum, yine de sil
+              Kullanımda olduğunu biliyorum, yine de sil
             </label>
           </div>
         <?php endif; ?>
 
         <div class="form__actions">
-          <button class="btn btn--danger" type="submit">Dosyayi sil</button>
+          <button class="btn btn--danger" type="submit">Dosyayı sil</button>
         </div>
       </form>
     </section>

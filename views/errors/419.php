@@ -13,7 +13,7 @@ use Arcates\Core\Security;
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Oturum dogrulanamadi</title>
+<title>Oturum doğrulanamadı</title>
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 </head>
@@ -21,13 +21,13 @@ use Arcates\Core\Security;
 <main class="system">
   <div class="system__card">
     <p class="system__code">419</p>
-    <h1>Oturum dogrulanamadi</h1>
+    <h1>Oturum doğrulanamadı</h1>
     <p class="system__lead">
-      Form dogrulama belirteci gecersiz veya suresi dolmus. Sayfayi yenileyip
-      formu yeniden gonderin.
+      Form doğrulama belirteci geçersiz veya süresi dolmuş. Sayfayı yenileyip
+      formu yeniden gönderin.
     </p>
     <div class="system__actions">
-      <a class="btn btn--primary" href="/">Anasayfaya don</a>
+      <a class="btn btn--primary" href="/">Anasayfaya dön</a>
     </div>
   </div>
 </main>

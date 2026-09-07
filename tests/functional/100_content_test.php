@@ -21,80 +21,80 @@ function arc_project(Database $db, array $project = [], array $translation = [])
 {
     return Project::save(
         array_merge([
-            'client_name' => 'Korfez Otel',
+            'client_name' => 'Körfez Otel',
             'sector'      => 'Turizm',
-            'district'    => 'Akcay',
+            'district'    => 'Akçay',
             'live_url'    => 'https://korfezotel.example',
             'status'      => 'published',
             'sort'        => 0,
         ], $project),
         ['tr' => array_merge([
-            'title'   => 'Korfez Otel rezervasyon sitesi',
+            'title'   => 'Körfez Otel rezervasyon sitesi',
             'slug'    => 'korfez-otel',
-            'excerpt' => 'Komisyonsuz dogrudan rezervasyon.',
-            'content' => '<h2>Yapilan isler</h2><p>Rezervasyon motoru kuruldu.</p>',
+            'excerpt' => 'Komisyonsuz doğrudan rezervasyon.',
+            'content' => '<h2>Yapılan işler</h2><p>Rezervasyon motoru kuruldu.</p>',
             'robots'  => 'index,follow',
         ], $translation)]
     );
 }
 
-test('F-P10-a', 'Referans listesi ve detayi yayindakileri gosterir', function (): void {
+test('F-P10-a', 'Referans listesi ve detayı yayındakileri gösterir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM projects');
     $db->run('DELETE FROM pages');
     Lang::use('tr');
 
     arc_project($db);
-    arc_project($db, ['status' => 'draft', 'client_name' => 'Taslak Musteri'], ['title' => 'Taslak is', 'slug' => 'taslak-is']);
+    arc_project($db, ['status' => 'draft', 'client_name' => 'Taslak Müşteri'], ['title' => 'Taslak iş', 'slug' => 'taslak-is']);
 
     $list = (new ProjectController())->index(Request::make('GET', '/referanslar'), []);
-    assertSame(200, $list->status(), 'Liste acilmali');
-    assertContains('Korfez Otel rezervasyon sitesi', $list->body(), 'Yayindaki referans gorunmeli');
-    assertNotContains('Taslak is', $list->body(), 'Taslak referans gorunmemeli');
+    assertSame(200, $list->status(), 'Liste açılmalı');
+    assertContains('Körfez Otel rezervasyon sitesi', $list->body(), 'Yayındaki referans görünmeli');
+    assertNotContains('Taslak iş', $list->body(), 'Taslak referans görünmemeli');
 
     $detail = (new ProjectController())->show(Request::make('GET', '/referanslar/korfez-otel'), ['slug' => 'korfez-otel']);
-    assertSame(200, $detail->status(), 'Detay acilmali');
+    assertSame(200, $detail->status(), 'Detay açılmalı');
 
     $body = $detail->body();
-    assertContains('Rezervasyon motoru kuruldu', $body, 'Yapilan isler gorunmeli');
-    assertContains('Korfez Otel', $body, 'Musteri adi gorunmeli');
-    assertContains('korfezotel.example', $body, 'Canli site linki gorunmeli');
-    assertContains('rel="noopener nofollow"', $body, 'Dis baglanti nofollow olmali');
-    assertContains('"CreativeWork"', $body, 'CreativeWork semasi bulunmali');
-    assertSame(1, substr_count($body, '<h1'), 'Tek H1 bulunmali');
+    assertContains('Rezervasyon motoru kuruldu', $body, 'Yapılan işler görünmeli');
+    assertContains('Körfez Otel', $body, 'Müşteri adı görünmeli');
+    assertContains('korfezotel.example', $body, 'Canlı site linki görünmeli');
+    assertContains('rel="noopener nofollow"', $body, 'Dış bağlantı nofollow olmalı');
+    assertContains('"CreativeWork"', $body, 'CreativeWork şeması bulunmalı');
+    assertSame(1, substr_count($body, '<h1'), 'Tek H1 bulunmalı');
 
     // Taslak referans 404 doner.
     $draft = (new ProjectController())->show(Request::make('GET', '/referanslar/taslak-is'), ['slug' => 'taslak-is']);
-    assertSame(404, $draft->status(), 'Taslak referans 404 dondurmeli');
+    assertSame(404, $draft->status(), 'Taslak referans 404 döndürmeli');
 
     $db->run('DELETE FROM projects');
     $db->run('DELETE FROM not_found');
 });
 
-test('F-P10-b', 'Ilce sayfasi o ilceye ait referansi gosterir', function (): void {
+test('F-P10-b', 'İlçe sayfası o ilçeye ait referansı gösterir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM projects');
     $db->run('DELETE FROM pages');
     Lang::use('tr');
 
-    arc_project($db, ['district' => 'Edremit'], ['title' => 'Edremit zeytinyagi magazasi', 'slug' => 'edremit-zeytinyagi']);
+    arc_project($db, ['district' => 'Edremit'], ['title' => 'Edremit zeytinyağı mağazası', 'slug' => 'edremit-zeytinyagi']);
 
     arc_page($db, ['type' => 'location', 'template' => 'location', 'district' => 'Edremit'], [
-        'title'   => 'Edremit Web Tasarim',
+        'title'   => 'Edremit Web Tasarım',
         'slug'    => 'edremit-web-tasarim',
-        'content' => '<h2>Edremit</h2><p>Yerel isletmeler icin.</p>',
+        'content' => '<h2>Edremit</h2><p>Yerel işletmeler için.</p>',
     ]);
 
     $body = arc_visit('edremit-web-tasarim')->body();
 
-    assertContains('Edremit zeytinyagi magazasi', $body, 'Ilceye ait referans gorunmeli');
-    assertContains('/referanslar/edremit-zeytinyagi', $body, 'Referansa baglanti verilmeli');
+    assertContains('Edremit zeytinyağı mağazası', $body, 'İlçeye ait referans görünmeli');
+    assertContains('/referanslar/edremit-zeytinyagi', $body, 'Referansa bağlantı verilmeli');
 
     $db->run('DELETE FROM projects');
     $db->run('DELETE FROM pages');
 });
 
-test('F-P10-c', 'Ileri tarihli blog yazisi tarihi gelene kadar gorunmez', function (): void {
+test('F-P10-c', 'İleri tarihli blog yazısı tarihi gelene kadar görünmez', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM posts');
     $db->run('DELETE FROM pages');
@@ -103,82 +103,82 @@ test('F-P10-c', 'Ileri tarihli blog yazisi tarihi gelene kadar gorunmez', functi
     // Yayindaki yazi
     Post::save(
         ['category' => 'SEO', 'status' => 'published', 'published_at' => date('Y-m-d H:i:s', strtotime('-1 day'))],
-        ['tr' => ['title' => 'Yerel SEO rehberi', 'slug' => 'yerel-seo-rehberi', 'content' => '<p>Icerik.</p>', 'robots' => 'index,follow']]
+        ['tr' => ['title' => 'Yerel SEO rehberi', 'slug' => 'yerel-seo-rehberi', 'content' => '<p>İçerik.</p>', 'robots' => 'index,follow']]
     );
 
     // Ileri tarihli yazi
     Post::save(
         ['category' => 'SEO', 'status' => 'published', 'published_at' => date('Y-m-d H:i:s', strtotime('+7 days'))],
-        ['tr' => ['title' => 'Gelecek yazi', 'slug' => 'gelecek-yazi', 'content' => '<p>Henuz yok.</p>', 'robots' => 'index,follow']]
+        ['tr' => ['title' => 'Gelecek yazı', 'slug' => 'gelecek-yazi', 'content' => '<p>Henüz yok.</p>', 'robots' => 'index,follow']]
     );
 
     $list = (new PostController())->index(Request::make('GET', '/blog'), []);
-    assertSame(200, $list->status(), 'Blog listesi acilmali');
-    assertContains('Yerel SEO rehberi', $list->body(), 'Yayindaki yazi gorunmeli');
-    assertNotContains('Gelecek yazi', $list->body(), 'Ileri tarihli yazi gorunmemeli');
+    assertSame(200, $list->status(), 'Blog listesi açılmalı');
+    assertContains('Yerel SEO rehberi', $list->body(), 'Yayındaki yazı görünmeli');
+    assertNotContains('Gelecek yazı', $list->body(), 'İleri tarihli yazı görünmemeli');
 
     $future = (new PostController())->show(Request::make('GET', '/blog/gelecek-yazi'), ['slug' => 'gelecek-yazi']);
-    assertSame(404, $future->status(), 'Ileri tarihli yazi 404 dondurmeli');
+    assertSame(404, $future->status(), 'İleri tarihli yazı 404 döndürmeli');
 
     $post = (new PostController())->show(Request::make('GET', '/blog/yerel-seo-rehberi'), ['slug' => 'yerel-seo-rehberi']);
-    assertSame(200, $post->status(), 'Yayindaki yazi acilmali');
-    assertContains('"Article"', $post->body(), 'Article semasi bulunmali');
-    assertContains('datePublished', $post->body(), 'Yayin tarihi semada olmali');
+    assertSame(200, $post->status(), 'Yayındaki yazı açılmalı');
+    assertContains('"Article"', $post->body(), 'Article şeması bulunmalı');
+    assertContains('datePublished', $post->body(), 'Yayın tarihi şemada olmalı');
 
     // Sitemap'e de girmemeli.
     $xml = arc_sitemap();
-    assertContains('/blog/yerel-seo-rehberi', $xml, 'Yayindaki yazi haritada olmali');
-    assertNotContains('/blog/gelecek-yazi', $xml, 'Ileri tarihli yazi haritada olmamali');
+    assertContains('/blog/yerel-seo-rehberi', $xml, 'Yayındaki yazı haritada olmalı');
+    assertNotContains('/blog/gelecek-yazi', $xml, 'İleri tarihli yazı haritada olmamalı');
 
     $db->run('DELETE FROM posts');
     $db->run('DELETE FROM not_found');
 });
 
-test('F-P10-d', 'SSS kaydi sayfaya atanir ve FAQPage semasina girer', function (): void {
+test('F-P10-d', 'SSS kaydı sayfaya atanır ve FAQPage şemasına girer', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM faqs');
     $db->run('DELETE FROM pages');
     Lang::use('tr');
 
     $pageId = arc_page($db, ['type' => 'service', 'template' => 'service'], [
-        'title'   => 'Web Tasarim',
+        'title'   => 'Web Tasarım',
         'slug'    => 'web-tasarim',
-        'content' => '<h2>Hizmet</h2><p>Aciklama.</p>',
+        'content' => '<h2>Hizmet</h2><p>Açıklama.</p>',
     ]);
 
     $faqId = Faq::save(
         ['sort' => 1, 'status' => 1],
-        ['tr' => ['question' => 'Site ne kadar surede biter?', 'answer' => '<p>Ortalama uc hafta.</p>']],
+        ['tr' => ['question' => 'Site ne kadar sürede biter?', 'answer' => '<p>Ortalama üç hafta.</p>']],
         [$pageId],
         true
     );
 
-    assertGreaterThan(0, $faqId, 'SSS kaydi olusmali');
+    assertGreaterThan(0, $faqId, 'SSS kaydı oluşmalı');
 
     // Hizmet sayfasinda gorunmeli
     $body = arc_visit('web-tasarim')->body();
-    assertContains('Site ne kadar surede biter?', $body, 'Soru sayfada gorunmeli');
-    assertContains('Ortalama uc hafta', $body, 'Cevap sayfada gorunmeli');
-    assertContains('"FAQPage"', $body, 'FAQPage semasi bulunmali');
+    assertContains('Site ne kadar sürede biter?', $body, 'Soru sayfada görünmeli');
+    assertContains('Ortalama üç hafta', $body, 'Cevap sayfada görünmeli');
+    assertContains('"FAQPage"', $body, 'FAQPage şeması bulunmalı');
 
     // Anasayfada da gorunmeli
     Arcates\Models\HomeSection::ensureDefaults();
-    assertContains('Site ne kadar surede biter?', arc_home()->body(), 'Anasayfada gorunmeli');
+    assertContains('Site ne kadar sürede biter?', arc_home()->body(), 'Anasayfada görünmeli');
 
     // /sss sayfasinda gorunmeli
     $faqPage = (new FaqController())->index(Request::make('GET', '/sss'), []);
-    assertSame(200, $faqPage->status(), 'SSS sayfasi acilmali');
-    assertContains('Site ne kadar surede biter?', $faqPage->body(), 'SSS listesinde gorunmeli');
+    assertSame(200, $faqPage->status(), 'SSS sayfası açılmalı');
+    assertContains('Site ne kadar sürede biter?', $faqPage->body(), 'SSS listesinde görünmeli');
 
     // Kapatilinca gorunmemeli
     $db->update('faqs', ['status' => 0], ['id' => $faqId]);
-    assertNotContains('Site ne kadar surede biter?', arc_visit('web-tasarim')->body(), 'Kapali SSS gorunmemeli');
+    assertNotContains('Site ne kadar sürede biter?', arc_visit('web-tasarim')->body(), 'Kapalı SSS görünmemeli');
 
     $db->run('DELETE FROM faqs');
     $db->run('DELETE FROM pages');
 });
 
-test('F-P10-e', 'Panel referans ve blog ekranlari kayit olusturur', function (): void {
+test('F-P10-e', 'Panel referans ve blog ekranları kayıt oluşturur', function (): void {
     $db = arc_need_db();
     arc_login_as($db, 'admin');
     $db->run('DELETE FROM projects');
@@ -188,11 +188,11 @@ test('F-P10-e', 'Panel referans ve blog ekranlari kayit olusturur', function ():
         Request::make('POST', admin_url('referanslar/yeni'), [
             '_token'      => Security::csrfToken(),
             'client_name' => 'Zeytin Kooperatifi',
-            'sector'      => 'Zeytinyagi',
+            'sector'      => 'Zeytinyağı',
             'district'    => 'Burhaniye',
             'live_url'    => 'https://kooperatif.example',
             'status'      => 'published',
-            't'           => ['tr' => ['title' => 'Kooperatif e-ticaret sitesi', 'content' => '<p>Magaza kuruldu.</p>']],
+            't'           => ['tr' => ['title' => 'Kooperatif e-ticaret sitesi', 'content' => '<p>Mağaza kuruldu.</p>']],
         ]),
         []
     );
@@ -203,7 +203,7 @@ test('F-P10-e', 'Panel referans ve blog ekranlari kayit olusturur', function ():
     assertSame('Burhaniye', $project['district']);
 
     $slug = (string) $db->value('SELECT slug FROM project_translations WHERE project_id = :id', [':id' => (int) $project['id']]);
-    assertSame('kooperatif-e-ticaret-sitesi', $slug, 'Slug baslikten uretilmeli');
+    assertSame('kooperatif-e-ticaret-sitesi', $slug, 'Slug başlıktan üretilmeli');
 
     $postResponse = (new Arcates\Controllers\Admin\PostController())->store(
         Request::make('POST', admin_url('blog/yeni'), [
@@ -211,11 +211,11 @@ test('F-P10-e', 'Panel referans ve blog ekranlari kayit olusturur', function ():
             'category'     => 'Rehber',
             'status'       => 'published',
             'published_at' => date('Y-m-d\TH:i'),
-            't'            => ['tr' => ['title' => 'Zeytinyagi satisi rehberi', 'content' => '<p>Rehber icerigi.</p>']],
+            't'            => ['tr' => ['title' => 'Zeytinyağı satışı rehberi', 'content' => '<p>Rehber içeriği.</p>']],
         ]),
         []
     );
-    assertSame(302, $postResponse->status(), 'Yazi kaydedilmeli');
+    assertSame(302, $postResponse->status(), 'Yazı kaydedilmeli');
 
     $post = $db->first('SELECT * FROM posts ORDER BY id DESC LIMIT 1');
     assertSame('Rehber', $post['category']);
@@ -226,7 +226,7 @@ test('F-P10-e', 'Panel referans ve blog ekranlari kayit olusturur', function ():
     arc_logout_test();
 });
 
-test('F-P10-f', 'Blog slug degisiminde 301 olusur', function (): void {
+test('F-P10-f', 'Blog slug değişiminde 301 oluşur', function (): void {
     $db = arc_need_db();
     arc_login_as($db, 'admin');
     $db->run('DELETE FROM posts');
@@ -234,7 +234,7 @@ test('F-P10-f', 'Blog slug degisiminde 301 olusur', function (): void {
 
     $id = Post::save(
         ['category' => 'Rehber', 'status' => 'published', 'published_at' => date('Y-m-d H:i:s')],
-        ['tr' => ['title' => 'Eski baslik', 'slug' => 'eski-baslik', 'content' => '<p>Icerik.</p>', 'robots' => 'index,follow']]
+        ['tr' => ['title' => 'Eski başlık', 'slug' => 'eski-baslik', 'content' => '<p>İçerik.</p>', 'robots' => 'index,follow']]
     );
 
     (new Arcates\Controllers\Admin\PostController())->store(
@@ -243,13 +243,13 @@ test('F-P10-f', 'Blog slug degisiminde 301 olusur', function (): void {
             'category'     => 'Rehber',
             'status'       => 'published',
             'published_at' => date('Y-m-d\TH:i'),
-            't'            => ['tr' => ['title' => 'Yeni baslik', 'slug' => 'yeni-baslik', 'content' => '<p>Icerik.</p>']],
+            't'            => ['tr' => ['title' => 'Yeni başlık', 'slug' => 'yeni-baslik', 'content' => '<p>İçerik.</p>']],
         ]),
         ['id' => $id]
     );
 
     $redirect = Arcates\Models\Redirect::byFrom('/blog/eski-baslik');
-    assertTrue($redirect !== null, 'Yonlendirme olusmali');
+    assertTrue($redirect !== null, 'Yönlendirme oluşmalı');
     assertSame('/blog/yeni-baslik', $redirect['to_path'], 'Yeni adrese gitmeli');
 
     $db->run('DELETE FROM posts');

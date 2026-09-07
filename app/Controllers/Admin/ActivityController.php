@@ -65,7 +65,7 @@ final class ActivityController extends Controller
         unset($row);
 
         return $this->view('activity', [
-            'title'   => 'Islem gunlugu',
+            'title'   => 'İşlem günlüğü',
             'rows'    => $rows,
             'total'   => $total,
             'page'    => $page,

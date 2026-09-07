@@ -17,7 +17,7 @@ final class MenuItem extends Model
     protected static string $translations = 'menu_item_translations';
     protected static string $foreignKey = 'menu_item_id';
 
-    public const KEYS = ['main' => 'Ust menu', 'footer' => 'Alt menu'];
+    public const KEYS = ['main' => 'Üst menü', 'footer' => 'Alt menü'];
 
     /**
      * Menuyu agac olarak dondurur.

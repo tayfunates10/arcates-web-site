@@ -126,7 +126,7 @@ final class App
         $match = $this->router->match($request->method(), $routePath);
 
         if ($match === null) {
-            return Response::html('Sayfa bulunamadi.', 404);
+            return Response::html('Sayfa bulunamadı.', 404);
         }
 
         $result = $this->invoke($match['handler'], $match['params'], $request);
@@ -160,18 +160,18 @@ final class App
             $class            = 'Arcates\\Controllers\\' . $class;
 
             if (!class_exists($class)) {
-                throw new \RuntimeException('Denetleyici bulunamadi: ' . $class);
+                throw new \RuntimeException('Denetleyici bulunamadı: ' . $class);
             }
 
             $controller = new $class();
             if (!method_exists($controller, $method)) {
-                throw new \RuntimeException('Yontem bulunamadi: ' . $class . '::' . $method);
+                throw new \RuntimeException('Yöntem bulunamadı: ' . $class . '::' . $method);
             }
 
             return $controller->{$method}($request, $params);
         }
 
-        throw new \RuntimeException('Gecersiz yonlendirme isleyicisi.');
+        throw new \RuntimeException('Geçersiz yönlendirme işleyicisi.');
     }
 
     /** Kurulum tamamlandi mi? DOCS.md 10.7, 13 */
@@ -191,7 +191,7 @@ final class App
         }
 
         if ((bool) Config::get('app.debug', false)) {
-            echo '<h1>Uygulama hatasi</h1><pre>'
+            echo '<h1>Uygulama hatası</h1><pre>'
                 . Security::e(get_class($e) . ': ' . $e->getMessage() . "\n" . $e->getTraceAsString())
                 . '</pre>';
             return;
@@ -200,9 +200,9 @@ final class App
         try {
             echo View::render('errors/500');
         } catch (Throwable) {
-            echo '<!doctype html><meta charset="utf-8"><title>Sunucu hatasi</title>'
-                . '<h1>Beklenmeyen bir hata olustu</h1>'
-                . '<p>Kisa sure sonra tekrar deneyin.</p>';
+            echo '<!doctype html><meta charset="utf-8"><title>Sunucu hatası</title>'
+                . '<h1>Beklenmeyen bir hata oluştu</h1>'
+                . '<p>Kısa süre sonra tekrar deneyin.</p>';
         }
     }
 }

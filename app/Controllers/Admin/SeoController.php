@@ -57,8 +57,8 @@ final class SeoController extends Controller
         }
 
         $validator = new Validator($request->allPost(), [
-            'meta_title_pattern' => 'Baslik sablonu',
-            'meta_description'   => 'Varsayilan aciklama',
+            'meta_title_pattern' => 'Başlık şablonu',
+            'meta_description'   => 'Varsayılan açıklama',
         ]);
 
         $validator->max('meta_title_pattern', 120)
@@ -81,9 +81,9 @@ final class SeoController extends Controller
             'robots_txt'         => mb_substr(trim((string) $request->post('robots_txt', '')), 0, 4000),
         ]);
 
-        Logger::activity('seo.update', 'settings', null, 'SEO ayarlari');
+        Logger::activity('seo.update', 'settings', null, 'SEO ayarları');
 
-        return $this->back(admin_url('seo'), 'success', 'SEO ayarlari kaydedildi.');
+        return $this->back(admin_url('seo'), 'success', 'SEO ayarları kaydedildi.');
     }
 
     /** Sitemap onizlemesi; uretim dinamiktir, onbellek tutulmaz. */

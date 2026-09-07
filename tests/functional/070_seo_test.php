@@ -34,46 +34,46 @@ function arc_page(Database $db, array $page, array $translation): int
     return $id;
 }
 
-test('U-14', 'Sitemap uretiminde taslak icerik yer almaz', function (): void {
+test('U-14', 'Sitemap üretiminde taslak içerik yer almaz', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
-    arc_page($db, ['status' => 'published'], ['title' => 'Yayindaki', 'slug' => 'yayindaki-sayfa']);
+    arc_page($db, ['status' => 'published'], ['title' => 'Yayındaki', 'slug' => 'yayindaki-sayfa']);
     arc_page($db, ['status' => 'draft'], ['title' => 'Taslak', 'slug' => 'taslak-sayfa']);
 
     $xml = arc_sitemap();
 
-    assertContains('/yayindaki-sayfa', $xml, 'Yayindaki sayfa haritada olmali');
-    assertNotContains('/taslak-sayfa', $xml, 'Taslak sayfa haritada olmamali');
+    assertContains('/yayindaki-sayfa', $xml, 'Yayındaki sayfa haritada olmalı');
+    assertNotContains('/taslak-sayfa', $xml, 'Taslak sayfa haritada olmamalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('F-13', 'sitemap.xml gecerli XML uretir ve anasayfayi icerir', function (): void {
+test('F-13', 'sitemap.xml geçerli XML üretir ve anasayfayı içerir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
-    arc_page($db, [], ['title' => 'Hakkimizda', 'slug' => 'hakkimizda']);
+    arc_page($db, [], ['title' => 'Hakkımızda', 'slug' => 'hakkimizda']);
 
     $xml = arc_sitemap();
 
-    assertContains('<?xml version="1.0" encoding="UTF-8"?>', $xml, 'XML bildirimi bulunmali');
-    assertContains('<urlset', $xml, 'urlset koku bulunmali');
-    assertContains('http://www.sitemaps.org/schemas/sitemap/0.9', $xml, 'Ad alani dogru olmali');
-    assertContains('<lastmod>', $xml, 'lastmod bulunmali');
+    assertContains('<?xml version="1.0" encoding="UTF-8"?>', $xml, 'XML bildirimi bulunmalı');
+    assertContains('<urlset', $xml, 'urlset kökü bulunmalı');
+    assertContains('http://www.sitemaps.org/schemas/sitemap/0.9', $xml, 'Ad alanı doğru olmalı');
+    assertContains('<lastmod>', $xml, 'lastmod bulunmalı');
 
     // Gecerli XML olarak ayristirilabilmeli.
     $previous = libxml_use_internal_errors(true);
     $doc      = simplexml_load_string($xml);
     libxml_use_internal_errors($previous);
 
-    assertTrue($doc !== false, 'XML ayristirilabilmeli');
-    assertGreaterThan(0, $doc === false ? 0 : count($doc->url), 'En az bir adres olmali');
+    assertTrue($doc !== false, 'XML ayrıştırılabilmeli');
+    assertGreaterThan(0, $doc === false ? 0 : count($doc->url), 'En az bir adres olmalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('O-02', 'noindex isaretli ceviri haritaya girmez', function (): void {
+test('O-02', 'noindex işaretli çeviri haritaya girmez', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
@@ -82,30 +82,30 @@ test('O-02', 'noindex isaretli ceviri haritaya girmez', function (): void {
 
     $xml = arc_sitemap();
 
-    assertNotContains('/kvkk', $xml, 'noindex sayfa haritada olmamali');
-    assertContains('/fiyatlar', $xml, 'Normal sayfa haritada olmali');
+    assertNotContains('/kvkk', $xml, 'noindex sayfa haritada olmamalı');
+    assertContains('/fiyatlar', $xml, 'Normal sayfa haritada olmalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('O-03', 'Canonical her sayfada dogru ve mutlak adrestir', function (): void {
+test('O-03', 'Canonical her sayfada doğru ve mutlak adrestir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
-    arc_page($db, [], ['title' => 'Iletisim', 'slug' => 'iletisim']);
+    arc_page($db, [], ['title' => 'İletişim', 'slug' => 'iletisim']);
 
     $body = arc_visit('iletisim')->body();
 
     assertTrue(
         preg_match('#<link rel="canonical" href="(https?://[^"]+)">#', $body, $m) === 1,
-        'Canonical bulunmali ve mutlak olmali'
+        'Canonical bulunmalı ve mutlak olmalı'
     );
-    assertContains('/iletisim', $m[1], 'Canonical sayfanin kendi adresi olmali');
-    assertNotContains('?', $m[1], 'Canonical sorgu dizesi tasimamali');
+    assertContains('/iletisim', $m[1], 'Canonical sayfanın kendi adresi olmalı');
+    assertNotContains('?', $m[1], 'Canonical sorgu dizesi taşımamalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('O-04', 'Yapisal veri gecerli JSON uretir ve uydurma derecelendirme icermez', function (): void {
+test('O-04', 'Yapısal veri geçerli JSON üretir ve uydurma derecelendirme içermez', function (): void {
     $db = arc_need_db();
     Arcates\Models\HomeSection::ensureDefaults();
 
@@ -113,65 +113,65 @@ test('O-04', 'Yapisal veri gecerli JSON uretir ve uydurma derecelendirme icermez
 
     assertTrue(
         preg_match_all('#<script type="application/ld\+json">(.*?)</script>#s', $body, $matches) > 0,
-        'En az bir yapisal veri blogu bulunmali'
+        'En az bir yapısal veri blogu bulunmalı'
     );
 
     foreach ($matches[1] as $json) {
         $decoded = json_decode($json, true);
-        assertTrue(is_array($decoded), 'Yapisal veri gecerli JSON olmali');
-        assertTrue(isset($decoded['@context']), '@context bulunmali');
-        assertTrue(isset($decoded['@type']), '@type bulunmali');
+        assertTrue(is_array($decoded), 'Yapısal veri geçerli JSON olmalı');
+        assertTrue(isset($decoded['@context']), '@context bulunmalı');
+        assertTrue(isset($decoded['@type']), '@type bulunmalı');
 
         // Uydurma yorum veya AggregateRating yazilmaz. DOCS.md 11.2
-        assertFalse(isset($decoded['aggregateRating']), 'AggregateRating yazilmamali');
-        assertFalse(isset($decoded['review']), 'Uydurma yorum yazilmamali');
+        assertFalse(isset($decoded['aggregateRating']), 'AggregateRating yazılmamalı');
+        assertFalse(isset($decoded['review']), 'Uydurma yorum yazılmamalı');
     }
 
     // Anasayfada ProfessionalService bulunmali.
-    assertContains('"ProfessionalService"', $body, 'Anasayfada ProfessionalService semasi olmali');
+    assertContains('"ProfessionalService"', $body, 'Anasayfada ProfessionalService şeması olmalı');
 });
 
-test('O-04b', 'Ilce sayfasi Service + areaServed semasi tasir', function (): void {
+test('O-04b', 'İlçe sayfası Service + areaServed şeması taşır', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
     arc_page(
         $db,
         ['type' => 'location', 'template' => 'location', 'district' => 'Edremit'],
-        ['title' => 'Edremit Web Tasarim', 'slug' => 'edremit-web-tasarim', 'excerpt' => 'Edremit icin web tasarim.']
+        ['title' => 'Edremit Web Tasarım', 'slug' => 'edremit-web-tasarim', 'excerpt' => 'Edremit için web tasarım.']
     );
 
     $body = arc_visit('edremit-web-tasarim')->body();
 
-    assertContains('"@type":"Service"', $body, 'Service semasi bulunmali');
-    assertContains('"areaServed"', $body, 'areaServed bulunmali');
-    assertContains('Edremit', $body, 'Ilce adi semada gecmeli');
-    assertContains('"BreadcrumbList"', $body, 'Kirinti yolu semasi bulunmali');
+    assertContains('"@type":"Service"', $body, 'Service şeması bulunmalı');
+    assertContains('"areaServed"', $body, 'areaServed bulunmalı');
+    assertContains('Edremit', $body, 'İlçe adı şemada geçmeli');
+    assertContains('"BreadcrumbList"', $body, 'Kırıntı yolu şeması bulunmalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('O-05', 'robots.txt sitemap satiri icerir ve panel yolunu engeller', function (): void {
+test('O-05', 'robots.txt sitemap satırı içerir ve panel yolunu engeller', function (): void {
     arc_need_db();
 
     $robots = new RobotsController();
     $body   = $robots->body();
 
-    assertContains('Sitemap:', $body, 'Sitemap satiri bulunmali');
-    assertContains('/sitemap.xml', $body, 'Sitemap adresi bulunmali');
+    assertContains('Sitemap:', $body, 'Sitemap satırı bulunmalı');
+    assertContains('/sitemap.xml', $body, 'Sitemap adresi bulunmalı');
     assertContains('Disallow: /panel/', $body, 'Panel yolu engellenmeli');
     assertContains('Disallow: /install', $body, 'Kurulum yolu engellenmeli');
 
     // Panelden ozel icerik girilirse de sitemap satiri korunur.
     Settings::set('robots_txt', "User-agent: *\nDisallow: /gizli/");
     $custom = $robots->body();
-    assertContains('Disallow: /gizli/', $custom, 'Ozel icerik korunmali');
-    assertContains('Sitemap:', $custom, 'Sitemap satiri yine eklenmeli');
+    assertContains('Disallow: /gizli/', $custom, 'Özel içerik korunmalı');
+    assertContains('Sitemap:', $custom, 'Sitemap satırı yine eklenmeli');
 
     Settings::set('robots_txt', '');
 });
 
-test('O-06', 'Ilce sayfalari arasi benzerlik yayindan once yakalanir', function (): void {
+test('O-06', 'İlçe sayfaları arası benzerlik yayından önce yakalanır', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
@@ -184,15 +184,15 @@ test('O-06', 'Ilce sayfalari arasi benzerlik yayindan once yakalanir', function 
     );
 
     // Ayni metnin ilce adi degistirilerek cogaltilmis hali — doorway page.
-    $copy = str_replace('ortak1 ', 'akcay ', $shared);
+    $copy = str_replace('ortak1 ', 'akçay ', $shared);
     $second = arc_page(
         $db,
-        ['type' => 'location', 'district' => 'Akcay'],
-        ['title' => 'Akcay', 'slug' => 'akcay-tasarim', 'content' => '<p>' . $copy . '</p>', 'word_count' => 300]
+        ['type' => 'location', 'district' => 'Akçay'],
+        ['title' => 'Akçay', 'slug' => 'akcay-tasarim', 'content' => '<p>' . $copy . '</p>', 'word_count' => 300]
     );
 
     $score = Seo::score(
-        ['id' => $second, 'type' => 'location', 'district' => 'Akcay'],
+        ['id' => $second, 'type' => 'location', 'district' => 'Akçay'],
         ['lang' => 'tr', 'content' => '<p>' . $copy . '</p>', 'word_count' => 300, 'slug' => 'akcay-tasarim']
     );
 
@@ -203,39 +203,39 @@ test('O-06', 'Ilce sayfalari arasi benzerlik yayindan once yakalanir', function 
         }
     }
 
-    assertTrue($found !== null, 'Benzerlik uyarisi bulunmali');
-    assertSame('strong', $found['level'], 'Benzerlik guclu uyari olmali');
-    assertContains('Edremit', $found['message'], 'Benzeyen sayfanin adi bildirilmeli');
+    assertTrue($found !== null, 'Benzerlik uyarısı bulunmalı');
+    assertSame('strong', $found['level'], 'Benzerlik güçlü uyarı olmalı');
+    assertContains('Edremit', $found['message'], 'Benzeyen sayfanın adı bildirilmeli');
 
     $db->run('DELETE FROM pages');
 });
 
-test('O-07', 'Sayfa icerigindeki ic linkler sayilir ve kirik olanlar bildirilir', function (): void {
+test('O-07', 'Sayfa içeriğindeki iç linkler sayılır ve kırık olanlar bildirilir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
     arc_page($db, [], ['title' => 'Hedef', 'slug' => 'hedef-sayfa']);
 
-    $content = '<p><a href="/hedef-sayfa">calisan</a> ve <a href="/olmayan-sayfa">kirik</a></p>';
-    assertSame(2, Seo::countInternalLinks($content), 'Iki ic link sayilmali');
+    $content = '<p><a href="/hedef-sayfa">çalışan</a> ve <a href="/olmayan-sayfa">kırık</a></p>';
+    assertSame(2, Seo::countInternalLinks($content), 'İki iç link sayılmalı');
 
     // Kirik linki dogrula: hedef sayfa cozulemiyorsa 404 doner.
-    assertSame(200, arc_visit('hedef-sayfa')->status(), 'Calisan link 200 dondurmeli');
-    assertSame(404, arc_visit('olmayan-sayfa')->status(), 'Kirik link 404 dondurmeli');
+    assertSame(200, arc_visit('hedef-sayfa')->status(), 'Çalışan link 200 döndürmeli');
+    assertSame(404, arc_visit('olmayan-sayfa')->status(), 'Kırık link 404 döndürmeli');
 
     $db->run('DELETE FROM pages');
     $db->run('DELETE FROM not_found');
 });
 
-test('O-08', 'Sunucu yapilandirmasi http ve www varyantlarini tek hedefe yonlendirir', function (): void {
+test('O-08', 'Sunucu yapılandırması http ve www varyantlarını tek hedefe yönlendirir', function (): void {
     $htaccess = (string) file_get_contents(ARC_ROOT . '/public/.htaccess');
 
     // http -> https
-    assertContains('RewriteCond %{HTTPS} off', $htaccess, 'http yonlendirmesi bulunmali');
-    assertContains('https://%{HTTP_HOST}', $htaccess, 'Ayni alan adina yonlendirilmeli');
+    assertContains('RewriteCond %{HTTPS} off', $htaccess, 'http yönlendirmesi bulunmalı');
+    assertContains('https://%{HTTP_HOST}', $htaccess, 'Aynı alan adına yönlendirilmeli');
 
     // www -> www'suz; tercih tek yonde sabit
-    assertContains('RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]', $htaccess, 'www varyanti yakalanmali');
+    assertContains('RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]', $htaccess, 'www varyantı yakalanmalı');
     assertContains('RewriteRule ^(.*)$ https://%1/$1 [R=301,L]', $htaccess, 'www tek hedefe 301 ile gitmeli');
 
     // Etkin (yorum olmayan) kalici yonlendirme tam olarak iki tanedir:
@@ -248,46 +248,46 @@ test('O-08', 'Sunucu yapilandirmasi http ve www varyantlarini tek hedefe yonlend
             $activeRules++;
         }
     }
-    assertSame(2, $activeRules, 'Etkin kalici yonlendirme sayisi iki olmali');
+    assertSame(2, $activeRules, 'Etkin kalıcı yönlendirme sayısı iki olmalı');
 
     // Ters tercih hazir ama kapali durmali; ikisi ayni anda acik olamaz.
-    assertContains('# Ters tercih', $htaccess, 'Ters tercih aciklamali olarak bulunmali');
-    assertContains('# RewriteCond %{HTTP_HOST} !^www\\. [NC]', $htaccess, 'Ters tercih kapali olmali');
+    assertContains('# Ters tercih', $htaccess, 'Ters tercih açıklamalı olarak bulunmalı');
+    assertContains('# RewriteCond %{HTTP_HOST} !^www\\. [NC]', $htaccess, 'Ters tercih kapalı olmalı');
 });
 
-test('O-P7-a', 'Sitemap coklu dil karsiliklarini bildirir', function (): void {
+test('O-P7-a', 'Sitemap çoklu dil karşılıklarını bildirir', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM pages');
 
     $id = $db->insert('pages', ['type' => 'page', 'template' => 'page', 'status' => 'published']);
-    $db->insert('page_translations', ['page_id' => $id, 'lang' => 'tr', 'title' => 'Hakkimizda', 'slug' => 'hakkimizda']);
+    $db->insert('page_translations', ['page_id' => $id, 'lang' => 'tr', 'title' => 'Hakkımızda', 'slug' => 'hakkimizda']);
     $db->insert('page_translations', ['page_id' => $id, 'lang' => 'en', 'title' => 'About', 'slug' => 'about-us']);
 
     $xml = arc_sitemap();
 
-    assertContains('xmlns:xhtml="http://www.w3.org/1999/xhtml"', $xml, 'xhtml ad alani bildirilmeli');
-    assertContains('<xhtml:link rel="alternate" hreflang="tr"', $xml, 'Turkce karsilik bildirilmeli');
-    assertContains('<xhtml:link rel="alternate" hreflang="en"', $xml, 'Ingilizce karsilik bildirilmeli');
-    assertContains('/en/about-us', $xml, 'Ingilizce adres onekli olmali');
+    assertContains('xmlns:xhtml="http://www.w3.org/1999/xhtml"', $xml, 'xhtml ad alanı bildirilmeli');
+    assertContains('<xhtml:link rel="alternate" hreflang="tr"', $xml, 'Türkçe karşılık bildirilmeli');
+    assertContains('<xhtml:link rel="alternate" hreflang="en"', $xml, 'İngilizce karşılık bildirilmeli');
+    assertContains('/en/about-us', $xml, 'İngilizce adres önekli olmalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('O-P7-b', 'Panel SEO ekrani meta durumunu listeler', function (): void {
+test('O-P7-b', 'Panel SEO ekranı meta durumunu listeler', function (): void {
     $db = arc_need_db();
     arc_login_as($db, 'admin');
     $db->run('DELETE FROM pages');
 
-    arc_page($db, [], ['title' => 'Kisa sayfa', 'slug' => 'kisa-sayfa', 'content' => '<p>Az kelime.</p>', 'word_count' => 2]);
+    arc_page($db, [], ['title' => 'Kısa sayfa', 'slug' => 'kisa-sayfa', 'content' => '<p>Az kelime.</p>', 'word_count' => 2]);
 
     $response = (new Arcates\Controllers\Admin\SeoController())->index(Request::make('GET', admin_url('seo')), []);
-    assertSame(200, $response->status(), 'SEO ekrani acilmali');
+    assertSame(200, $response->status(), 'SEO ekranı açılmalı');
 
     $body = $response->body();
-    assertContains('Kisa sayfa', $body, 'Sayfa listede olmali');
-    assertContains('Sayfalarin meta durumu', $body, 'Meta tablosu bulunmali');
-    assertContains('robots.txt', $body, 'robots.txt duzenleyicisi bulunmali');
-    assertContains('Site haritasindaki adres', $body, 'Sitemap durumu gorunmeli');
+    assertContains('Kısa sayfa', $body, 'Sayfa listede olmalı');
+    assertContains('Sayfaların meta durumu', $body, 'Meta tablosu bulunmalı');
+    assertContains('robots.txt', $body, 'robots.txt düzenleyicisi bulunmalı');
+    assertContains('Site haritasındaki adres', $body, 'Sitemap durumu görünmeli');
 
     $db->run('DELETE FROM pages');
     arc_logout_test();

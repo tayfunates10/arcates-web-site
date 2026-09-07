@@ -17,7 +17,7 @@ $publishedAt = (string) ($post['published_at'] ?? date('Y-m-d H:i:s'));
   <?= csrf_field() ?>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Yazi ayarlari</h2>
+    <h2 class="panel__title">Yazı ayarları</h2>
 
     <div class="grid grid--3">
       <div class="field">
@@ -36,20 +36,20 @@ $publishedAt = (string) ($post['published_at'] ?? date('Y-m-d H:i:s'));
         <select id="status" name="status">
           <?php $status = (string) old('status', $post['status'] ?? 'draft'); ?>
           <option value="draft" <?= $status === 'draft' ? 'selected' : '' ?>>Taslak</option>
-          <option value="published" <?= $status === 'published' ? 'selected' : '' ?>>Yayinda</option>
+          <option value="published" <?= $status === 'published' ? 'selected' : '' ?>>Yayında</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="published_at">Yayin tarihi</label>
+        <label for="published_at">Yayın tarihi</label>
         <input type="datetime-local" id="published_at" name="published_at"
                value="<?= Security::e(date('Y-m-d\TH:i', strtotime($publishedAt))) ?>">
-        <span class="field__hint">Ileri tarih girerseniz yazi o tarihte gorunur olur.</span>
+        <span class="field__hint">İleri tarih girerseniz yazı o tarihte görünür olur.</span>
       </div>
     </div>
 
     <div class="field">
-      <label for="cover_id">Kapak gorseli</label>
+      <label for="cover_id">Kapak görseli</label>
       <select id="cover_id" name="cover_id">
         <option value="0">— yok —</option>
         <?php $cover = (int) old('cover_id', $post['cover_id'] ?? 0); ?>
@@ -76,7 +76,7 @@ $publishedAt = (string) ($post['published_at'] ?? date('Y-m-d H:i:s'));
       <h2 class="panel__title"><?= Security::e($lang['name']) ?></h2>
 
       <div class="field">
-        <label for="title_<?= Security::e($code) ?>">Baslik</label>
+        <label for="title_<?= Security::e($code) ?>">Başlık</label>
         <input type="text" id="title_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][title]"
                maxlength="200" data-slug-source="slug_<?= Security::e($code) ?>"
                value="<?= Security::e($t['title'] ?? '') ?>">
@@ -89,17 +89,17 @@ $publishedAt = (string) ($post['published_at'] ?? date('Y-m-d H:i:s'));
         <label for="slug_<?= Security::e($code) ?>">Adres</label>
         <input type="text" id="slug_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][slug]"
                maxlength="200" value="<?= Security::e($t['slug'] ?? '') ?>">
-        <span class="field__hint">Adres degisirse eski adresten yenisine 301 otomatik olusur.</span>
+        <span class="field__hint">Adres değişirse eski adresten yenisine 301 otomatik oluşur.</span>
       </div>
 
       <div class="field">
-        <label for="excerpt_<?= Security::e($code) ?>">Ozet</label>
+        <label for="excerpt_<?= Security::e($code) ?>">Özet</label>
         <textarea id="excerpt_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][excerpt]"
                   rows="3" maxlength="400"><?= Security::e($t['excerpt'] ?? '') ?></textarea>
       </div>
 
       <div class="field">
-        <label for="content_<?= Security::e($code) ?>">Icerik</label>
+        <label for="content_<?= Security::e($code) ?>">İçerik</label>
         <textarea id="content_<?= Security::e($code) ?>" name="t[<?= Security::e($code) ?>][content]"
                   rows="18"><?= Security::e($t['content'] ?? '') ?></textarea>
       </div>
@@ -107,13 +107,13 @@ $publishedAt = (string) ($post['published_at'] ?? date('Y-m-d H:i:s'));
       <details class="details">
         <summary>SEO</summary>
         <div class="field">
-          <label for="meta_title_<?= Security::e($code) ?>">Meta baslik</label>
+          <label for="meta_title_<?= Security::e($code) ?>">Meta başlık</label>
           <input type="text" id="meta_title_<?= Security::e($code) ?>"
                  name="t[<?= Security::e($code) ?>][meta_title]" maxlength="180" data-counter="60"
                  value="<?= Security::e($t['meta_title'] ?? '') ?>">
         </div>
         <div class="field">
-          <label for="meta_description_<?= Security::e($code) ?>">Meta aciklama</label>
+          <label for="meta_description_<?= Security::e($code) ?>">Meta açıklama</label>
           <textarea id="meta_description_<?= Security::e($code) ?>"
                     name="t[<?= Security::e($code) ?>][meta_description]" rows="3" maxlength="320"
                     data-counter="160"><?= Security::e($t['meta_description'] ?? '') ?></textarea>
@@ -123,7 +123,7 @@ $publishedAt = (string) ($post['published_at'] ?? date('Y-m-d H:i:s'));
   <?php endforeach; ?>
 
   <div class="form__actions form__actions--sticky">
-    <button class="btn btn--primary" type="submit"><?= $isNew ? 'Olustur' : 'Kaydet' ?></button>
-    <a class="btn btn--ghost" href="<?= Security::e(admin_url('blog')) ?>">Listeye don</a>
+    <button class="btn btn--primary" type="submit"><?= $isNew ? 'Oluştur' : 'Kaydet' ?></button>
+    <a class="btn btn--ghost" href="<?= Security::e(admin_url('blog')) ?>">Listeye dön</a>
   </div>
 </form>

@@ -42,7 +42,7 @@ final class AuthController extends Controller
 
         $validator = new Validator($request->allPost(), [
             'email'    => 'E-posta',
-            'password' => 'Sifre',
+            'password' => 'Şifre',
         ]);
         $validator->required('email')->email('email')->required('password');
 
@@ -59,8 +59,8 @@ final class AuthController extends Controller
             // Kilit ve gecersiz bilgi ayni ekranda, ayni gecikmeyle bildirilir;
             // hesabin var olup olmadigi sizdirilmaz. DOCS.md 10.4
             $message = $result['reason'] === 'locked'
-                ? 'Cok fazla basarisiz deneme yapildi. ' . ceil($result['wait'] / 60) . ' dakika sonra tekrar deneyin.'
-                : 'E-posta veya sifre hatali.';
+                ? 'Çok fazla başarısız deneme yapıldı. ' . ceil($result['wait'] / 60) . ' dakika sonra tekrar deneyin.'
+                : 'E-posta veya şifre hatalı.';
 
             return $this->withErrors(admin_url('giris'), ['email' => $message], ['email' => $email]);
         }
@@ -74,7 +74,7 @@ final class AuthController extends Controller
             ? $intended
             : admin_url();
 
-        Session::flash('success', 'Hos geldiniz.');
+        Session::flash('success', 'Hoş geldiniz.');
         return Response::redirect($target);
     }
 
@@ -87,7 +87,7 @@ final class AuthController extends Controller
 
         Auth::logout();
         Session::start();
-        Session::flash('info', 'Oturumunuz kapatildi.');
+        Session::flash('info', 'Oturumunuz kapatıldı.');
 
         return Response::redirect(admin_url('giris'));
     }

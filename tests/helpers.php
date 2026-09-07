@@ -125,7 +125,7 @@ function arc_need_db(): Database
 {
     $db = arc_test_db();
     if ($db === null) {
-        skip('Test veritabani yapilandirilmadi (ARC_TEST_DB_NAME).');
+        skip('Test veritabanı yapılandırılmadı (ARC_TEST_DB_NAME).');
     }
     return $db;
 }

@@ -19,7 +19,7 @@ $text  = (string) ($cta['text'] ?? '');
 // Ic sayfalarda bolum icerigi gecilmezse ayarlardaki isletme adiyla
 // olusturulmus kisa bir bant gosterilir.
 if ($title === '') {
-    $title = (string) Settings::get('cta_title', 'Projenizi konusalim');
+    $title = (string) Settings::get('cta_title', 'Projenizi konuşalım');
 }
 if ($text === '') {
     $text = (string) Settings::get('cta_text', '');

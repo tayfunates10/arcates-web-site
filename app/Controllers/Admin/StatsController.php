@@ -30,7 +30,7 @@ final class StatsController extends Controller
         $days = max(7, min(365, $request->int('gun', 30)));
 
         return $this->view('stats/index', [
-            'title'      => 'Istatistik',
+            'title'      => 'İstatistik',
             'days'       => $days,
             'series'     => Visits::series($days),
             'topPaths'   => Visits::topPaths($days),

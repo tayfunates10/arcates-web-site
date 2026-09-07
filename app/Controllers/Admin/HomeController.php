@@ -54,7 +54,7 @@ final class HomeController extends Controller
 
         $key = (string) ($params['key'] ?? '');
         if (!isset(HomeSection::LABELS[$key])) {
-            return $this->back(admin_url('anasayfa'), 'error', 'Bolum bulunamadi.');
+            return $this->back(admin_url('anasayfa'), 'error', 'Bölüm bulunamadı.');
         }
 
         $active = HomeSection::toggle($key);
@@ -63,7 +63,7 @@ final class HomeController extends Controller
         return $this->back(
             admin_url('anasayfa'),
             'success',
-            HomeSection::LABELS[$key] . ' bolumu ' . ($active ? 'acildi' : 'kapatildi') . '.'
+            HomeSection::LABELS[$key] . ' bölümü ' . ($active ? 'acildi' : 'kapatildi') . '.'
         );
     }
 
@@ -76,7 +76,7 @@ final class HomeController extends Controller
 
         $key = (string) ($params['key'] ?? '');
         if (!isset(HomeSection::LABELS[$key])) {
-            return $this->back(admin_url('anasayfa'), 'error', 'Bolum bulunamadi.');
+            return $this->back(admin_url('anasayfa'), 'error', 'Bölüm bulunamadı.');
         }
 
         $section = HomeSection::get($key, Lang::defaultCode());
@@ -95,7 +95,7 @@ final class HomeController extends Controller
         }
 
         return $this->view('home/edit', [
-            'title'     => HomeSection::LABELS[$key] . ' bolumu',
+            'title'     => HomeSection::LABELS[$key] . ' bölümü',
             'key'       => $key,
             'label'     => HomeSection::LABELS[$key],
             'section'   => $section,
@@ -118,7 +118,7 @@ final class HomeController extends Controller
 
         $key = (string) ($params['key'] ?? '');
         if (!isset(HomeSection::LABELS[$key])) {
-            return $this->back(admin_url('anasayfa'), 'error', 'Bolum bulunamadi.');
+            return $this->back(admin_url('anasayfa'), 'error', 'Bölüm bulunamadı.');
         }
 
         $url = admin_url('anasayfa/' . $key);
@@ -138,7 +138,7 @@ final class HomeController extends Controller
 
         Logger::activity('home.update', 'home_section', null, $key);
 
-        return $this->back($url, 'success', HomeSection::LABELS[$key] . ' bolumu kaydedildi.');
+        return $this->back($url, 'success', HomeSection::LABELS[$key] . ' bölümü kaydedildi.');
     }
 
     // --- Ilce haritasi ------------------------------------------------------
@@ -168,7 +168,7 @@ final class HomeController extends Controller
                 continue;
             }
 
-            $validator = new Validator($row, ['name' => 'Ilce adi']);
+            $validator = new Validator($row, ['name' => 'İlçe adı']);
             $validator->max('name', 60)
                 ->between('map_x', 0, 1000)
                 ->between('map_y', 0, 190);
@@ -206,7 +206,7 @@ final class HomeController extends Controller
 
         Logger::activity('home.districts', 'district', null, count($kept) . ' nokta');
 
-        return $this->back(admin_url('anasayfa/coast'), 'success', 'Ilce noktalari kaydedildi.');
+        return $this->back(admin_url('anasayfa/coast'), 'success', 'İlçe noktaları kaydedildi.');
     }
 
     // --- Yardimcilar --------------------------------------------------------

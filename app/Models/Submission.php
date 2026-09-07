@@ -20,9 +20,9 @@ final class Submission extends Model
     /** Durum etiketleri; donusum hunisinin sirasi budur. DOCS.md 9.1 */
     public const STATUSES = [
         'new'       => 'Yeni',
-        'contacted' => 'Arandi',
+        'contacted' => 'Arandı',
         'quoted'    => 'Teklif',
-        'won'       => 'Kazanildi',
+        'won'       => 'Kazanıldı',
         'lost'      => 'Kaybedildi',
     ];
 
@@ -174,9 +174,9 @@ final class Submission extends Model
         }
 
         fputcsv($handle, [
-            'Kayit', 'Tarih', 'Durum', 'Ad', 'E-posta', 'Telefon', 'Hizmet',
-            'Mesaj', 'Kaynak sayfa', 'Geldigi yer', 'UTM kaynak', 'UTM ortam',
-            'UTM kampanya', 'Dil', 'KVKK onayi', 'Not',
+            'Kayıt', 'Tarih', 'Durum', 'Ad', 'E-posta', 'Telefon', 'Hizmet',
+            'Mesaj', 'Kaynak sayfa', 'Geldiği yer', 'UTM kaynak', 'UTM ortam',
+            'UTM kampanya', 'Dil', 'KVKK onayı', 'Not',
         ]);
 
         foreach ($rows as $row) {

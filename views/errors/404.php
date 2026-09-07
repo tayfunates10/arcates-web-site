@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 use Arcates\Core\Security;
 
-$title   = $title   ?? 'Sayfa bulunamadi';
-$message = $message ?? 'Aradiginiz sayfa tasinmis veya kaldirilmis olabilir.';
+$title   = $title   ?? 'Sayfa bulunamadı';
+$message = $message ?? 'Aradığınız sayfa taşınmış veya kaldırılmış olabilir.';
 ?><!doctype html>
 <html lang="tr">
 <head>
@@ -29,8 +29,8 @@ $message = $message ?? 'Aradiginiz sayfa tasinmis veya kaldirilmis olabilir.';
     <h1><?= Security::e($title) ?></h1>
     <p class="system__lead"><?= Security::e($message) ?></p>
     <div class="system__actions">
-      <a class="btn btn--primary" href="/">Anasayfaya don</a>
-      <a class="btn btn--ghost" href="/iletisim">Bize yazin</a>
+      <a class="btn btn--primary" href="/">Anasayfaya dön</a>
+      <a class="btn btn--ghost" href="/iletisim">Bize yazın</a>
     </div>
   </div>
 </main>

@@ -30,12 +30,12 @@ use Arcates\Core\Security;
   <div class="system__card">
 
     <p class="system__code">Kurulum</p>
-    <p class="system__lead">Arcates Web Site kurulum sihirbazi. Adimlari sirayla tamamlayin.</p>
+    <p class="system__lead">Arcates Web Site kurulum sihirbazı. Adımları sırayla tamamlayın.</p>
 
     <ol class="system__steps">
       <li<?= $step === 1 ? ' aria-current="step"' : '' ?>>1. Gereksinimler</li>
-      <li<?= $step === 2 ? ' aria-current="step"' : '' ?>>2. Veritabani</li>
-      <li<?= $step === 3 ? ' aria-current="step"' : '' ?>>3. Yonetici</li>
+      <li<?= $step === 2 ? ' aria-current="step"' : '' ?>>2. Veritabanı</li>
+      <li<?= $step === 3 ? ' aria-current="step"' : '' ?>>3. Yönetici</li>
     </ol>
 
     <?php foreach ($flash as $item): ?>
@@ -56,9 +56,9 @@ use Arcates\Core\Security;
       </ul>
       <?php if (!$ready): ?>
         <div class="notice notice--warning">
-          Eksikleri giderdikten sonra sayfayi yenileyin.
-          <code>config/config.example.php</code> dosyasini <code>config/config.php</code>
-          olarak kopyalamayi ve veritabani bilgilerini girmeyi unutmayin.
+          Eksikleri giderdikten sonra sayfayı yenileyin.
+          <code>config/config.example.php</code> dosyasını <code>config/config.php</code>
+          olarak kopyalamayı ve veritabanı bilgilerini girmeyi unutmayın.
         </div>
       <?php endif; ?>
       <div class="system__actions">
@@ -66,16 +66,16 @@ use Arcates\Core\Security;
       </div>
 
     <?php elseif ($step === 2): ?>
-      <h2>Veritabani</h2>
+      <h2>Veritabanı</h2>
       <ul class="system__list">
         <li>
-          <span>Baglanti</span>
+          <span>Bağlantı</span>
           <span class="system__state system__state--<?= $dbState['connected'] ? 'ok' : 'bad' ?>">
             <?= $dbState['connected'] ? 'kuruldu' : 'kurulamadi' ?>
           </span>
         </li>
         <li>
-          <span>Sema</span>
+          <span>Şema</span>
           <span class="system__state system__state--<?= $dbState['schema'] ? 'ok' : 'bad' ?>">
             <?= $dbState['schema'] ? 'hazir' : 'uygulanmadi' ?>
           </span>
@@ -84,8 +84,8 @@ use Arcates\Core\Security;
 
       <?php if (!$dbState['connected']): ?>
         <div class="notice notice--error">
-          Veritabanina baglanilamadi. <code>config/config.php</code> icindeki
-          <code>db</code> degerlerini kontrol edin.
+          Veritabanına bağlanılamadı. <code>config/config.php</code> içindeki
+          <code>db</code> değerlerini kontrol edin.
           <?php if ($dbState['message'] !== ''): ?>
             <br><small><?= Security::e($dbState['message']) ?></small>
           <?php endif; ?>
@@ -94,23 +94,23 @@ use Arcates\Core\Security;
           <a class="btn btn--primary" href="/install">Yeniden dene</a>
         </div>
       <?php else: ?>
-        <p>Semayi uygulamak <code>db/schema.sql</code> dosyasindaki tablolari olusturur
-           ve varsayilan dilleri, ayarlari, anasayfa bolumlerini yazar.</p>
+        <p>Şemayı uygulamak <code>db/schema.sql</code> dosyasındaki tabloları oluşturur
+           ve varsayılan dilleri, ayarları, anasayfa bölümlerini yazar.</p>
         <form method="post" action="/install">
           <?= csrf_field() ?>
           <input type="hidden" name="action" value="schema">
           <div class="system__actions">
-            <button class="btn btn--primary" type="submit">Semayi uygula</button>
+            <button class="btn btn--primary" type="submit">Şemayı uygula</button>
           </div>
         </form>
       <?php endif; ?>
 
     <?php else: ?>
-      <h2>Ilk yonetici hesabi</h2>
+      <h2>İlk yönetici hesabı</h2>
       <?php if ($dbState['users'] > 0): ?>
         <div class="notice notice--warning">
-          Bu veritabaninda zaten kullanici var. Kurulumu tamamlamak icin
-          <code>storage/installed.lock</code> dosyasini elle olusturun.
+          Bu veritabanında zaten kullanıcı var. Kurulumu tamamlamak için
+          <code>storage/installed.lock</code> dosyasını elle oluşturun.
         </div>
       <?php else: ?>
         <form method="post" action="/install">
@@ -136,7 +136,7 @@ use Arcates\Core\Security;
           </div>
 
           <div class="field">
-            <label for="password">Sifre</label>
+            <label for="password">Şifre</label>
             <input type="password" id="password" name="password" required autocomplete="new-password">
             <span class="field__hint">En az 10 karakter.</span>
             <?php if (isset($errors['password'])): ?>
@@ -145,7 +145,7 @@ use Arcates\Core\Security;
           </div>
 
           <div class="field">
-            <label for="password_confirm">Sifre tekrar</label>
+            <label for="password_confirm">Şifre tekrar</label>
             <input type="password" id="password_confirm" name="password_confirm" required autocomplete="new-password">
             <?php if (isset($errors['password_confirm'])): ?>
               <span class="field__error"><?= Security::e($errors['password_confirm']) ?></span>

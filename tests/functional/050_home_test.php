@@ -45,39 +45,39 @@ function arc_link_districts(Database $db): void
         $db->insert('page_translations', [
             'page_id' => $pageId,
             'lang'    => 'tr',
-            'title'   => $district['name'] . ' Web Tasarim',
+            'title'   => $district['name'] . ' Web Tasarım',
             'slug'    => $district['slug'],
         ]);
         $db->update('districts', ['page_id' => $pageId], ['name' => $district['name']]);
     }
 }
 
-test('F-P5-a', 'Anasayfa tum bolumleriyle islenir', function (): void {
+test('F-P5-a', 'Anasayfa tüm bölümleriyle işlenir', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_link_districts($db);
 
     $response = arc_home();
-    assertSame(200, $response->status(), 'Anasayfa 200 dondurmeli');
+    assertSame(200, $response->status(), 'Anasayfa 200 döndürmeli');
 
     $body = $response->body();
 
-    assertContains('class="hero"', $body, 'Kahraman bolumu bulunmali');
-    assertContains('class="strip"', $body, 'Sektor seridi bulunmali');
-    assertContains('class="cards"', $body, 'Hizmet kartlari bulunmali');
-    assertContains('coast__svg', $body, 'Bolge haritasi bulunmali');
-    assertContains('class="steps"', $body, 'Surec adimlari bulunmali');
-    assertContains('section--cta', $body, 'Cagri bandi bulunmali');
-    assertContains('site-foot', $body, 'Alt bilgi bulunmali');
+    assertContains('class="hero"', $body, 'Kahraman bölümü bulunmalı');
+    assertContains('class="strip"', $body, 'Sektör şeridi bulunmalı');
+    assertContains('class="cards"', $body, 'Hizmet kartları bulunmalı');
+    assertContains('coast__svg', $body, 'Bölge haritası bulunmalı');
+    assertContains('class="steps"', $body, 'Süreç adımları bulunmalı');
+    assertContains('section--cta', $body, 'Çağrı bandı bulunmalı');
+    assertContains('site-foot', $body, 'Alt bilgi bulunmalı');
 });
 
-test('O-01', 'Anasayfada tek H1 bulunur ve baslik hiyerarsisi atlamaz', function (): void {
+test('O-01', 'Anasayfada tek H1 bulunur ve başlık hiyerarşisi atlamaz', function (): void {
     arc_need_db();
     HomeSection::ensureDefaults();
 
     $body = arc_home()->body();
 
-    assertSame(1, substr_count($body, '<h1'), 'Sayfada tek H1 olmali');
+    assertSame(1, substr_count($body, '<h1'), 'Sayfada tek H1 olmalı');
 
     // H1'den sonra H3 gelmeden once H2 gelmeli. Test E-05
     preg_match_all('/<h([1-6])\b/', $body, $matches);
@@ -86,51 +86,51 @@ test('O-01', 'Anasayfada tek H1 bulunur ve baslik hiyerarsisi atlamaz', function
     $previous = 0;
     foreach ($levels as $level) {
         if ($previous > 0) {
-            assertTrue($level <= $previous + 1, "Baslik seviyesi atlanmis: h{$previous} sonrasi h{$level}");
+            assertTrue($level <= $previous + 1, "Başlık seviyesi atlanmış: h{$previous} sonrası h{$level}");
         }
         $previous = $level;
     }
 });
 
-test('E-03', 'Dekoratif sekiller aria-hidden tasir, anlamli gorseller alt metni', function (): void {
+test('E-03', 'Dekoratif şekiller aria-hidden taşır, anlamlı görseller alt metni', function (): void {
     arc_need_db();
     HomeSection::ensureDefaults();
 
     $body = arc_home()->body();
 
-    assertContains('<div class="shapes" aria-hidden="true">', $body, 'Sekil kumesi aria-hidden olmali');
+    assertContains('<div class="shapes" aria-hidden="true">', $body, 'Şekil kümesi aria-hidden olmalı');
 
     // Sekil kumesi icinde metin icerigi bulunmamali (ekran okuyucuya bilgi eklemez).
     if (preg_match('#<div class="shapes" aria-hidden="true">(.*?)</div>\s*</div>\s*</section>#s', $body, $m) === 1) {
-        assertNotContains('<h', $m[1], 'Dekoratif kumede baslik olmamali');
+        assertNotContains('<h', $m[1], 'Dekoratif kümede başlık olmamalı');
     }
 
     // Ic sayfalardaki icerik gorselleri alt metni tasimali.
     $missing = Arcates\Core\Seo::countImagesWithoutAlt($body);
-    assertSame(0, $missing, 'Alt metni eksik gorsel olmamali');
+    assertSame(0, $missing, 'Alt metni eksik görsel olmamalı');
 });
 
-test('E-07', 'SVG harita role ve aciklayici aria-label tasir', function (): void {
+test('E-07', 'SVG harita role ve açıklayıcı aria-label taşır', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_link_districts($db);
 
     $body = arc_home()->body();
 
-    assertContains('role="img"', $body, 'SVG role="img" tasimali');
-    assertContains('aria-label="', $body, 'SVG aria-label tasimali');
+    assertContains('role="img"', $body, 'SVG role="img" taşımalı');
+    assertContains('aria-label="', $body, 'SVG aria-label taşımalı');
 
     // Tum ilce adlari aria-label icinde gecmeli. DOCS.md 5.2
     if (preg_match('/<svg class="coast__svg"[^>]*aria-label="([^"]*)"/', $body, $m) === 1) {
-        foreach (['Edremit', 'Akcay', 'Altinoluk', 'Burhaniye', 'Ayvalik', 'Gomec', 'Havran', 'Balikesir'] as $name) {
-            assertContains($name, $m[1], "Ilce adi aria-label icinde olmali: {$name}");
+        foreach (['Edremit', 'Akçay', 'Altınoluk', 'Burhaniye', 'Ayvalık', 'Gömeç', 'Havran', 'Balıkesir'] as $name) {
+            assertContains($name, $m[1], "İlçe adı aria-label içinde olmalı: {$name}");
         }
     } else {
-        assertTrue(false, 'coast__svg aria-label bulunamadi');
+        assertTrue(false, 'coast__svg aria-label bulunamadı');
     }
 });
 
-test('F-16', 'Bolge haritasindaki ilce noktalari ilgili sayfaya baglanir', function (): void {
+test('F-16', 'Bölge haritasındaki ilçe noktaları ilgili sayfaya bağlanır', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_link_districts($db);
@@ -138,12 +138,12 @@ test('F-16', 'Bolge haritasindaki ilce noktalari ilgili sayfaya baglanir', funct
     $figure = arc_extract_coast(arc_home()->body());
 
     // Her nokta ic link degeri tasir. DOCS.md 5.2
-    assertContains('/edremit-web-tasarim', $figure, 'Edremit noktasi sayfaya baglanmali');
-    assertContains('/akcay-web-tasarim', $figure, 'Akcay noktasi sayfaya baglanmali');
+    assertContains('/edremit-web-tasarim', $figure, 'Edremit noktası sayfaya bağlanmalı');
+    assertContains('/akcay-web-tasarim', $figure, 'Akçay noktası sayfaya bağlanmalı');
 
     // Noktalar map_x degerine gore yerlesir.
-    assertContains('<circle cx="470"', $figure, 'Edremit noktasi map_x konumunda olmali');
-    assertContains('viewBox="0 0 1000 190"', $figure, 'SVG viewBox sartnamedeki gibi olmali');
+    assertContains('<circle cx="470"', $figure, 'Edremit noktası map_x konumunda olmalı');
+    assertContains('viewBox="0 0 1000 190"', $figure, 'SVG viewBox şartnamedeki gibi olmalı');
 
     // Taslak sayfaya bagli nokta baglanti tasimaz.
     // Denetim yalnizca harita bolumunde yapilir; alt bilgideki baglantilar
@@ -151,44 +151,44 @@ test('F-16', 'Bolge haritasindaki ilce noktalari ilgili sayfaya baglanir', funct
     $db->run('UPDATE pages SET status = :status WHERE district = :district', [':status' => 'draft', ':district' => 'Edremit']);
 
     $draftFigure = arc_extract_coast(arc_home()->body());
-    assertNotContains('/edremit-web-tasarim', $draftFigure, 'Taslak sayfaya harita uzerinden baglanti verilmemeli');
-    assertContains('/akcay-web-tasarim', $draftFigure, 'Yayindaki diger noktalar baglantili kalmali');
-    assertContains('<circle cx="470"', $draftFigure, 'Nokta yerinde kalmali, yalnizca baglantisi kalkmali');
+    assertNotContains('/edremit-web-tasarim', $draftFigure, 'Taslak sayfaya harita üzerinden bağlantı verilmemeli');
+    assertContains('/akcay-web-tasarim', $draftFigure, 'Yayındaki diğer noktalar bağlantılı kalmalı');
+    assertContains('<circle cx="470"', $draftFigure, 'Nokta yerinde kalmalı, yalnızca bağlantısı kalkmalı');
 
     $db->run('DELETE FROM pages');
 });
 
-test('F-14', 'Anasayfa bolumu kapatilinca on yuzde gorunmez', function (): void {
+test('F-14', 'Anasayfa bölümü kapatılınca on yüzde görünmez', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
 
-    assertContains('class="strip"', arc_home()->body(), 'Serit once gorunmeli');
+    assertContains('class="strip"', arc_home()->body(), 'Şerit önce görünmeli');
 
     HomeSection::toggle('strip');
-    assertNotContains('class="strip"', arc_home()->body(), 'Kapali bolum gorunmemeli');
+    assertNotContains('class="strip"', arc_home()->body(), 'Kapalı bölüm görünmemeli');
 
     HomeSection::toggle('strip');
-    assertContains('class="strip"', arc_home()->body(), 'Yeniden acilinca gorunmeli');
+    assertContains('class="strip"', arc_home()->body(), 'Yeniden açılınca görünmeli');
 });
 
-test('F-15', 'Kahraman basligi degisince anasayfada aninda yansir', function (): void {
+test('F-15', 'Kahraman başlığı değişince anasayfada anında yansır', function (): void {
     arc_need_db();
     HomeSection::ensureDefaults();
 
     $content = HomeSection::content('hero', 'tr');
-    $content['line3'] = 'yepyeni bir baslik satiri';
+    $content['line3'] = 'yepyeni bir başlık satırı';
 
     HomeSection::saveContent('hero', 'tr', $content);
 
     $body = arc_home()->body();
-    assertContains('yepyeni bir baslik satiri', $body, 'Yeni baslik gorunmeli');
-    assertContains('hero__line--accent', $body, 'Ucuncu satir degrade sinifini tasimali');
+    assertContains('yepyeni bir başlık satırı', $body, 'Yeni başlık görünmeli');
+    assertContains('hero__line--accent', $body, 'Üçüncü satır degrade sınıfını taşımalı');
 
     // Degrade metin gorsel degil, gercek metin olmali. DOCS.md 5.1
-    assertNotContains('<img', substr($body, (int) strpos($body, 'hero__title'), 900), 'Degrade metin gorsel olmamali');
+    assertNotContains('<img', substr($body, (int) strpos($body, 'hero__title'), 900), 'Degrade metin görsel olmamalı');
 });
 
-test('F-P5-b', 'Bolum sirasi sabittir', function (): void {
+test('F-P5-b', 'Bölüm sırası sabittir', function (): void {
     arc_need_db();
     HomeSection::ensureDefaults();
 
@@ -204,24 +204,24 @@ test('F-P5-b', 'Bolum sirasi sabittir', function (): void {
         'cta'   => 'section--cta',
     ] as $key => $needle) {
         $position = strpos($body, $needle);
-        assertTrue($position !== false, "Bolum bulunmali: {$key}");
+        assertTrue($position !== false, "Bölüm bulunmalı: {$key}");
         $order[$key] = (int) $position;
     }
 
     $values = array_values($order);
     $sorted = $values;
     sort($sorted);
-    assertSame($sorted, $values, 'Bolumler sartnamedeki sirada olmali');
+    assertSame($sorted, $values, 'Bölümler şartnamedeki sırada olmalı');
 });
 
-test('A-08', 'Dar ekranda yatay kaydirma olusmaz', function (): void {
+test('A-08', 'Dar ekranda yatay kaydırma oluşmaz', function (): void {
     $css = arc_site_css();
 
-    assertContains('overflow-x: hidden', $css, 'Govde yatay tasmayi kesmeli');
-    assertContains('width: min(100% - 40px', $css, 'Sarmalayici genisligi ekrandan kucuk olmali');
-    assertContains('max-width: 100%', $css, 'Gorseller tasmamali');
+    assertContains('overflow-x: hidden', $css, 'Gövde yatay taşmayı kesmeli');
+    assertContains('width: min(100% - 40px', $css, 'Sarmalayıcı genişliği ekrandan küçük olmalı');
+    assertContains('max-width: 100%', $css, 'Görseller taşmamalı');
 
     // 720 px altinda sekil olculeri kucultulur. DOCS.md 5.3
-    assertContains('@media (max-width: 720px)', $css, 'Mobil kirilim bulunmali');
-    assertContains('.shapes { height: 288px; }', $css, 'Sekil kumesi yuksekligi %60\'a inmeli');
+    assertContains('@media (max-width: 720px)', $css, 'Mobil kırılım bulunmalı');
+    assertContains('.shapes { height: 288px; }', $css, 'Şekil kümesi yüksekliği %60\'a inmeli');
 });

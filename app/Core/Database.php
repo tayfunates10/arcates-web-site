@@ -87,7 +87,7 @@ final class Database
                 ]
             );
         } catch (PDOException $e) {
-            throw new RuntimeException('Veritabani baglantisi kurulamadi: ' . $e->getMessage(), 0, $e);
+            throw new RuntimeException('Veritabanı bağlantısı kurulamadı: ' . $e->getMessage(), 0, $e);
         }
 
         return $this->pdo;
@@ -304,7 +304,7 @@ final class Database
     public static function identifier(string $name): string
     {
         if (preg_match('/^[A-Za-z_][A-Za-z0-9_]{0,63}$/', $name) !== 1) {
-            throw new RuntimeException('Gecersiz tablo veya sutun adi: ' . $name);
+            throw new RuntimeException('Geçersiz tablo veya sütun adı: ' . $name);
         }
         return $name;
     }
@@ -315,7 +315,7 @@ final class Database
     private static function whereClause(array $where): array
     {
         if (!$where) {
-            throw new RuntimeException('Kosulsuz guncelleme veya silme yasaktir.');
+            throw new RuntimeException('Koşulsuz güncelleme veya silme yasaktır.');
         }
 
         $parts  = [];
