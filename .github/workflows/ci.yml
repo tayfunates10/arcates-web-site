@@ -51,11 +51,32 @@ jobs:
         run: find . -type f -name "*.php" -not -path "./public/uploads/*" -print0 | xargs -0 -n1 php -l
 
       - name: Testler — atlanan test yasak
+        id: php-tests
         shell: bash
         run: |
-          set -o pipefail
+          set +e
           php tests/run.php | tee /tmp/arcates-tests.log
+          test_status=${PIPESTATUS[0]}
+
           if grep -q "ATLANDI" /tmp/arcates-tests.log; then
-            echo "CI ortamında atlanan test bulundu. Test veritabanı veya bağımlılık eksik."
-            exit 1
+            echo "CI ortamında atlanan test bulundu. Test veritabanı veya bağımlılık eksik." | tee -a /tmp/arcates-tests.log
+            test_status=1
           fi
+
+          {
+            echo '## Arcates test çıktısı'
+            echo '```text'
+            cat /tmp/arcates-tests.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$test_status"
+
+      - name: Test çıktısını artefakt olarak sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arcates-test-output
+          path: /tmp/arcates-tests.log
+          if-no-files-found: warn
+          retention-days: 7
