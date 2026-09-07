@@ -153,7 +153,7 @@ final class Seeder
                     . 'müşterilerinizin sizi Google aramalarında bulmasını sağlayan siteler kuruyoruz. '
                     . 'Yönetimi kolay, hızlı ve çok dilli.',
                 'cta1'        => ['label' => 'Ücretsiz teklif alın', 'url' => '/iletisim'],
-                'cta2'        => ['label' => 'Çalışmalarımız', 'url' => '/referanslar'],
+                'cta2'        => ['label' => 'Örnek siteler', 'url' => '/referanslar'],
             ],
 
             'strip' => [
@@ -242,9 +242,9 @@ final class Seeder
             ],
 
             'works' => [
-                'title'       => 'Son çalışmalar',
-                'description' => 'Körfezde yayına aldığımız projelerden bir bölümü.',
-                'cta'         => ['label' => 'Tüm referanslar', 'url' => '/referanslar'],
+                'title'       => 'Örnek siteler',
+                'description' => 'Körfezdeki farklı işletme türleri için hazırladığımız örnek kurgular.',
+                'cta'         => ['label' => 'Tüm örnekler', 'url' => '/referanslar'],
             ],
 
             'faq' => [
@@ -286,7 +286,7 @@ final class Seeder
                         'title' => 'Kurumsal',
                         'links' => [
                             ['label' => 'Hakkımızda', 'url' => '/hakkimizda'],
-                            ['label' => 'Referanslar', 'url' => '/referanslar'],
+                            ['label' => 'Örnek siteler', 'url' => '/referanslar'],
                             ['label' => 'Blog', 'url' => '/blog'],
                             ['label' => 'İletişim', 'url' => '/iletisim'],
                         ],
@@ -355,7 +355,7 @@ final class Seeder
         $main = [
             ['label' => 'Hizmetler',   'url' => '/web-tasarim'],
             ['label' => 'Bölgeler',    'url' => '/edremit-web-tasarim'],
-            ['label' => 'Referanslar', 'url' => '/referanslar'],
+            ['label' => 'Örnek siteler', 'url' => '/referanslar'],
             ['label' => 'Fiyatlar',    'url' => '/fiyatlar'],
             ['label' => 'Blog',        'url' => '/blog'],
             ['label' => 'İletişim',    'url' => '/iletisim'],

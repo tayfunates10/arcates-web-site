@@ -216,7 +216,7 @@ test('F-P12-g', 'Yayın öncesi denetim aracı çalışır ve maddeleri raporlar
         'Rich Results',
         '404 sayfası mevcut',
         'Favicon mevcut',
-        'Demo içerik temizlendi',
+        'Örnek kayıtlar',
         'NAP',
         'Otomatik yedek',
     ] as $madde) {

@@ -16,7 +16,7 @@ $default = Lang::defaultCode();
   <?= csrf_field() ?>
 
   <section class="panel panel--form">
-    <h2 class="panel__title">Referans bilgileri</h2>
+    <h2 class="panel__title">Örnek site bilgileri</h2>
 
     <div class="grid grid--2">
       <div class="field">
@@ -43,7 +43,7 @@ $default = Lang::defaultCode();
             <option value="<?= Security::e($name) ?>"></option>
           <?php endforeach; ?>
         </datalist>
-        <span class="field__hint">İlçe sayfalarındaki referans listesi bu ada göre eşleşir.</span>
+        <span class="field__hint">İlçe sayfalarındaki örnek site listesi bu ada göre eşleşir.</span>
       </div>
 
       <div class="field">

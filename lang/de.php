@@ -23,7 +23,7 @@ return [
     'services'          => 'Leistungen',
     'locations'         => 'Regionen',
     'sectors'           => 'Branchen',
-    'projects'          => 'Referenzen',
+    'projects'          => 'Beispielseiten',
     'blog'              => 'Blog',
     'faq'               => 'Häufige Fragen',
     'contact'           => 'Kontakt',
@@ -36,7 +36,7 @@ return [
     'district'          => 'Bezirk',
     'client'            => 'Kunde',
     'visit_site'        => 'Website besuchen',
-    'related_projects'  => 'Ähnliche Projekte',
+    'related_projects'  => 'Ähnliche Beispiele',
     'latest_posts'      => 'Neueste Beiträge',
     'no_results'        => 'Keine Einträge gefunden.',
 

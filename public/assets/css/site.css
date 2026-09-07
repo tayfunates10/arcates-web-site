@@ -1168,3 +1168,18 @@ html.js .coast__dot.is-lit text { opacity: 1; }
 .pager__item.is-current { background: var(--blue); color: var(--white); border-color: var(--blue); }
 
 .muted { color: var(--ink-soft); }
+
+/* --- Bilgilendirme notu ---------------------------------------------------
+   Ornek site listesinin ustunde cikan aciklama. Yalnizca renk ve kenarlik;
+   animasyona girmez. DOCS.md 9.4 */
+.notice {
+  margin: 0 0 26px;
+  padding: 13px 18px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sun);
+  border-radius: var(--radius-sm);
+  background: var(--mist-2);
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.55;
+}

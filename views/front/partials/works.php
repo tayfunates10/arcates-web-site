@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 use Arcates\Core\Media;
 use Arcates\Core\Security;
+use Arcates\Core\Settings;
 
 $content  = $content ?? [];
 $projects = $projects ?? [];
@@ -31,6 +32,8 @@ $cta = $content['cta'] ?? null;
         <p class="section__lead" data-reveal><?= Security::e($content['description']) ?></p>
       <?php endif; ?>
     </header>
+
+    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
 
     <ul class="works">
       <?php foreach ($projects as $project): ?>

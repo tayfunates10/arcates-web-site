@@ -9,7 +9,7 @@ use Arcates\Core\Security;
     <input type="search" id="ara" name="ara" value="<?= Security::e($search) ?>" placeholder="Müşteri, başlık, ilçe">
   </div>
   <button class="btn btn--ghost btn--sm" type="submit">Filtrele</button>
-  <a class="btn btn--primary btn--sm" href="<?= Security::e(admin_url('referanslar/yeni')) ?>">Yeni referans</a>
+  <a class="btn btn--primary btn--sm" href="<?= Security::e(admin_url('referanslar/yeni')) ?>">Yeni örnek site</a>
 </form>
 
 <section class="panel">
@@ -27,7 +27,7 @@ use Arcates\Core\Security;
       </thead>
       <tbody>
         <?php if (!$projects): ?>
-          <tr><td colspan="6" class="muted">Referans yok.</td></tr>
+          <tr><td colspan="6" class="muted">Örnek site kaydı yok.</td></tr>
         <?php endif; ?>
         <?php foreach ($projects as $row): ?>
           <tr>
@@ -48,7 +48,7 @@ use Arcates\Core\Security;
             <td class="row-actions">
               <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('referanslar/' . (int) $row['id'])) ?>">Düzenle</a>
               <form method="post" action="<?= Security::e(admin_url('referanslar/' . (int) $row['id'] . '/sil')) ?>"
-                    data-confirm="Bu referansi silmek istiyor musunuz?">
+                    data-confirm="Bu örnek site kaydını silmek istiyor musunuz?">
                 <?= csrf_field() ?>
                 <button class="btn btn--danger btn--sm" type="submit">Sil</button>
               </form>

@@ -159,3 +159,22 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
   çok baytlı harflerde tablo kayıyordu, `mb_strlen` ile düzeltildi.
 - Kaynaktaki yazım hataları giderildi: `orne` → `örnek`, `taniten` → `tanıtan`,
   `suredan` → `süreden`, `baslikten` → `başlıktan`, `genisligde` → `genişlikte`.
+
+### Değiştirildi (örnek site sunumu)
+- `project` kayıtları ön yüzde "Örnek Siteler" olarak sunuluyor. Gerçek müşteri
+  işleri yayına girene kadar teslim edilmiş iş izlenimi vermemesi için hem
+  etiketler hem tohum içeriği yeniden yazıldı.
+- Adres bölüm 4'teki gibi `/referanslar` ve `/referanslar/{slug}` kaldı; gerçek
+  işler eklendiğinde yönlendirme gerekmiyor, yalnızca etiket geri çevriliyor.
+- Yeni ayar **Örnek site notu** (`projects_notice`): liste, detay, anasayfa
+  bloğu ve ilçe sayfasındaki blokta görünen açıklama. Panelden boşaltılınca
+  not kendiliğinden kayboluyor — gerçek işler eklenince kapatma yolu bu.
+- `views/front/partials/notice.php` ve `.notice` stili eklendi; metin
+  şablona gömülmüyor, ayardan geliyor (CLAUDE.md kural 8).
+- Yeni testler F-P14-a…d: notun görünmesi, ayar boşken kaybolması, etiket ve
+  adresin doğru kalması, tohum kayıtlarının teslim edilmiş iş iddiası
+  taşımaması.
+
+### Düzeltildi
+- Türkçe yazım turunda diş hekimliği bağlamındaki üç yer "dış" olmuştu:
+  "Örnek Diş Polikliniği", "Edremit diş kliniği", "diş hekimi".

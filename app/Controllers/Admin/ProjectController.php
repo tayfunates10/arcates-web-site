@@ -30,7 +30,7 @@ final class ProjectController extends Controller
         }
 
         return $this->view('projects/index', [
-            'title'    => 'Referanslar',
+            'title'    => 'Örnek siteler',
             'projects' => Project::listing(Lang::defaultCode(), $request->str('ara')),
             'search'   => $request->str('ara'),
         ]);
@@ -53,7 +53,7 @@ final class ProjectController extends Controller
 
         $project = Project::find((int) ($params['id'] ?? 0));
         if ($project === null) {
-            return $this->back(admin_url('referanslar'), 'error', 'Referans bulunamadı.');
+            return $this->back(admin_url('referanslar'), 'error', 'Örnek site kaydı bulunamadı.');
         }
 
         return $this->view('projects/form', $this->formData($project));
@@ -134,7 +134,7 @@ final class ProjectController extends Controller
 
         Logger::activity($id > 0 ? 'project.update' : 'project.create', 'project', $projectId, $project['client_name']);
 
-        return $this->back(admin_url('referanslar/' . $projectId), 'success', 'Referans kaydedildi.');
+        return $this->back(admin_url('referanslar/' . $projectId), 'success', 'Örnek site kaydedildi.');
     }
 
     public function destroy(Request $request, array $params): Response
@@ -150,7 +150,7 @@ final class ProjectController extends Controller
         $this->db()->delete('projects', ['id' => $id]);
         Logger::activity('project.delete', 'project', $id);
 
-        return $this->back(admin_url('referanslar'), 'success', 'Referans silindi.');
+        return $this->back(admin_url('referanslar'), 'success', 'Örnek site silindi.');
     }
 
     private function formData(?array $project): array
@@ -173,7 +173,7 @@ final class ProjectController extends Controller
         }
 
         return [
-            'title'        => $project === null ? 'Yeni referans' : 'Referansı düzenle',
+            'title'        => $project === null ? 'Yeni örnek site' : 'Örnek siteyi düzenle',
             'project'      => $project,
             'translations' => $translations,
             'gallery'      => array_map('intval', $gallery),

@@ -604,6 +604,14 @@ Referans: müşteri adı, sektör, ilçe, canlı site linki, görseller, yapıla
 Blog: kategori, kapak, yayın tarihi, ileri tarihli yayın.
 SSS: soru, cevap, hangi sayfalara atanacağı.
 
+**Uygulama notu — örnek site sunumu.** Gerçek müşteri işleri yayına girene
+kadar `project` kayıtları ön yüzde "Örnek Siteler" olarak sunulur. Adres
+bölüm 4'teki gibi `/referanslar` ve `/referanslar/{slug}` olarak kalır; böylece
+gerçek işler eklendiğinde yönlendirme gerekmez. Ayarlardaki **Örnek site notu**
+(`projects_notice`) liste, detay, anasayfa bloğu ve ilçe sayfasındaki blokta
+görünür ve bu kayıtların teslim edilmiş müşteri işi olmadığını açıkça söyler.
+Gerçek işler yayına alındığında bu ayar boşaltılır, not kendiliğinden kaybolur.
+
 ### 9.5 Medya
 Çoklu yükleme, ızgara görünüm, alt metin alanı (boşsa uyarı rozeti), varyant bilgisi, kullanım yeri gösterimi, kullanımdaki dosya için silme uyarısı.
 

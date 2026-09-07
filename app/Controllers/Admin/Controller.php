@@ -137,7 +137,7 @@ abstract class Controller
             ['key' => 'dashboard',   'label' => 'Pano',            'url' => admin_url(),                  'ability' => null,               'icon' => 'grid'],
             ['key' => 'home',        'label' => 'Anasayfa',        'url' => admin_url('anasayfa'),        'ability' => 'home.edit',        'icon' => 'home'],
             ['key' => 'pages',       'label' => 'Sayfalar',        'url' => admin_url('sayfalar'),        'ability' => 'pages.edit',       'icon' => 'file'],
-            ['key' => 'projects',    'label' => 'Referanslar',     'url' => admin_url('referanslar'),     'ability' => 'projects.edit',    'icon' => 'star'],
+            ['key' => 'projects',    'label' => 'Örnek siteler',     'url' => admin_url('referanslar'),     'ability' => 'projects.edit',    'icon' => 'star'],
             ['key' => 'posts',       'label' => 'Blog',            'url' => admin_url('blog'),            'ability' => 'posts.edit',       'icon' => 'pen'],
             ['key' => 'faqs',        'label' => 'SSS',             'url' => admin_url('sss'),             'ability' => 'faqs.edit',        'icon' => 'help'],
             ['key' => 'media',       'label' => 'Medya',           'url' => admin_url('medya'),           'ability' => 'media.edit',       'icon' => 'image'],

@@ -23,7 +23,7 @@ return [
     'services'          => 'Services',
     'locations'         => 'Areas',
     'sectors'           => 'Sectors',
-    'projects'          => 'Work',
+    'projects'          => 'Sample sites',
     'blog'              => 'Blog',
     'faq'               => 'Frequently asked questions',
     'contact'           => 'Contact',
@@ -36,7 +36,7 @@ return [
     'district'          => 'District',
     'client'            => 'Client',
     'visit_site'        => 'Visit the site',
-    'related_projects'  => 'Related work',
+    'related_projects'  => 'Similar samples',
     'latest_posts'      => 'Latest posts',
     'no_results'        => 'No records found.',
 

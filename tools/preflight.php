@@ -170,12 +170,26 @@ if (!$db->canConnect()) {
     }
 
     check('İlçe sayfaları 500+ kelime', $thin === [], $thin ? implode(', ', $thin) : count($locations) . ' ilçe');
-    check('Her ilçenin referansı var', $noRef === [], $noRef ? implode(', ', $noRef) : '');
+    check('Her ilçenin örnek sitesi var', $noRef === [], $noRef ? implode(', ', $noRef) : '');
     check('Her ilçenin SSS kaydı var', $noFaq === [], $noFaq ? implode(', ', $noFaq) : '');
 
-    // Demo icerik
-    $demo = (int) $db->value('SELECT COUNT(*) FROM projects WHERE client_name LIKE :q', [':q' => 'Örnek %']);
-    check('Demo içerik temizlendi', $demo === 0, $demo > 0 ? $demo . ' örnek referans kayıtlı' : '', 'uyari');
+    // Ornek site kayitlari. Bunlar teslim edilmis is degildir; ziyaretciye
+    // `projects_notice` notuyla acikca soylenmeleri sarttir. DOCS.md 9.4
+    $demo   = (int) $db->value('SELECT COUNT(*) FROM projects WHERE client_name LIKE :q', [':q' => 'Örnek %']);
+    $notice = trim((string) Settings::get('projects_notice', ''));
+
+    if ($demo === 0) {
+        check('Örnek kayıtlar gerçek işlerle değiştirildi', true, '');
+    } else {
+        check(
+            'Örnek kayıtlar not ile işaretli',
+            $notice !== '',
+            $notice !== ''
+                ? $demo . ' örnek site, not görünüyor'
+                : $demo . ' örnek site var ama "Örnek site notu" boş',
+            'engel'
+        );
+    }
 
     // Form
     check('Form test edildi, e-posta ulaşıyor', null, 'elle doğrulanır', 'elle');

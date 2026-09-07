@@ -69,7 +69,7 @@ $robotsOptions = [
         <label for="district">İlçe adı</label>
         <input type="text" id="district" name="district" maxlength="60"
                value="<?= Security::e((string) old('district', $page['district'] ?? '')) ?>">
-        <span class="field__hint">Yalnızca ilçe sayfalarında kullanılır; referansları bu ada göre eşleşir.</span>
+        <span class="field__hint">Yalnızca ilçe sayfalarında kullanılır; örnek siteler bu ada göre eşleşir.</span>
       </div>
 
       <div class="field">

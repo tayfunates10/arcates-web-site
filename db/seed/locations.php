@@ -9,7 +9,7 @@
  *   - en az 500 kelime OZGUN metin icerir,
  *   - o ilcenin kendi ekonomisinden ve gunluk hayatindan yazilmistir,
  *   - farkli baslik yapisi ve farkli kelime dagarcigi kullanir,
- *   - o ilceye ait en az bir referans ornegi ile eslesir,
+ *   - o ilceye ait en az bir ornek site kaydiyla eslesir,
  *   - ilceye ozel SSS kayitlariyla baglanir.
  *
  * Panel, kaydedilen her ilce sayfasini digerleriyle karsilastirir ve %70
@@ -41,7 +41,7 @@ Akçay ya da Altınoluk sezona bağlı yaşarken Edremit on iki ay aynı tempoda
 
 <p>Bunun web tarafındaki karşılığı şu: Edremitli bir işletmenin müşterisi
 çoğunlukla yazlıkçı değil, bölgede yaşayan biri. Arama alışkanlıkları da farklı.
-"Edremit oto servis", "Edremit dış kliniği", "Edremit mobilyacı" gibi aramalar
+"Edremit oto servis", "Edremit diş kliniği", "Edremit mobilyacı" gibi aramalar
 akşam saatlerinde ve hafta içi yoğunlaşır. Yazlık bölgelerde ise trafik cuma
 günü başlar, pazar akşamı biter.</p>
 
@@ -81,7 +81,7 @@ verilemez. Bu görüşme ücretsizdir ve bir saati geçmez.</p>
 <p>Sonrasında yazılı fiyat ve takvim gönderiyoruz. Kurumsal bir site üçüncü
 haftanın sonunda yayında oluyor. Detaylar için
 <a href="/fiyatlar">fiyatlar sayfamıza</a>,
-yaptığımız işlere <a href="/referanslar">referanslar sayfasından</a>
+hazırladığımız <a href="/referanslar">örnek sitelere</a>
 bakabilirsiniz.</p>
 
 <h2>Rakip analizinden çıkan tablo</h2>
@@ -308,7 +308,7 @@ bu aylarda verir. Sitenin bu dönemde hazır olması, ocak ayından önce içeri
 yayınlanmış olmasını gerektirir. Nisanda yayına alınan bir emlak sitesi o yılın
 sezonunu büyük ölçüde kaçırır.</p>
 
-<p>Bölgedeki çalışmalarımızı <a href="/referanslar">referanslar sayfasında</a>
+<p>Hazırladığımız <a href="/referanslar">örnek siteleri</a>
 görebilir, emlak sektörüne özel yaklaşımımızı
 <a href="/emlak-web-sitesi">emlak web sitesi sayfasında</a> okuyabilirsiniz.
 Komşu ilçe için <a href="/akcay-web-tasarim">Akçay sayfamıza</a> da
@@ -597,7 +597,7 @@ görünmesi gerekir; ikisini aynı şablonla anlatmak ikisine de zarar verir.</p
 
 <p>Konaklama işletmelerine özel kurduğumuz sistemi
 <a href="/rezervasyon-sistemi">rezervasyon sistemi sayfasında</a>,
-bölgedeki işleri <a href="/referanslar">referanslar sayfasında</a>
+örnek kurguları <a href="/referanslar">örnek siteler sayfasında</a>
 görebilirsiniz.</p>
 HTML,
     ],
@@ -746,7 +746,7 @@ sosyal medyadan gelen kişiyi telefona ya da adrese hızlıca ulaştırmak.</p>
 büyük dokunmatik butonlar daha iyi çalışır.</p>
 
 <h2>Hizmet sağlayıcılar ve serbest meslek</h2>
-<p>Avukat, mali müşavir, dış hekimi ve benzeri meslek gruplarında karar güvene
+<p>Avukat, mali müşavir, diş hekimi ve benzeri meslek gruplarında karar güvene
 dayanır ve arayan kişi genellikle karşılaştırma yapar. Burada belirleyici olan
 şey, mesleki içeriğin varlığıdır: sık sorulan soruların gerçekten cevaplandığı,
 süreci anlatan yazılar.</p>

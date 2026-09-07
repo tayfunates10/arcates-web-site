@@ -77,8 +77,8 @@ tanımadığımız bir yerde "yerel SEO" vaadinde bulunmuyoruz. Teknik kurulum,
 tasarım ve e-ticaret işleri her yerde aynı kalitede yapılabilir; bölge bilgisi
 gerektiren işler ise ancak yerinde öğrenilerek yapılır.</p>
 
-<p>Bölgedeki çalışmalarımızı <a href="/referanslar">referanslar sayfasında</a>
-görebilir, aklınızdaki proje için <a href="/iletisim">bize yazabilirsiniz</a>.</p>
+<p>Hazırladığımız <a href="/referanslar">örnek siteleri</a> inceleyebilir,
+aklınızdaki proje için <a href="/iletisim">bize yazabilirsiniz</a>.</p>
 HTML,
     ],
 
@@ -212,43 +212,45 @@ HTML,
 
     [
         'type' => 'page', 'slug' => 'referanslar', 'sort' => 4,
-        'title' => 'Referanslar',
-        'meta_title' => 'Referanslar — Arcates Yazılım',
-        'meta_description' => 'Edremit Körfezi bölgesinde yayına aldığımız web siteleri, e-ticaret mağazaları ve rezervasyon sistemleri.',
-        'excerpt' => 'Körfezde yayına aldığımız projelerden bir bölümü.',
+        'title' => 'Örnek Siteler',
+        'meta_title' => 'Örnek siteler — Arcates Yazılım',
+        'meta_description' => 'Körfez bölgesindeki işletme türleri için hazırladığımız örnek web sitesi, e-ticaret ve rezervasyon kurguları.',
+        'excerpt' => 'Farklı sektörler için hazırladığımız örnek site kurguları.',
         'content' => <<<'HTML'
-<h2>Neye göre seçilmiş çalışmalar</h2>
-<p>Aşağıdaki listede farklı sektörlerden ve farklı ölçeklerden örnekler var.
-Amaç vitrin oluşturmak değil; benzer bir işin nasıl kurgulandığını göstermek.
-Her çalışmanın sayfasında işletmenin ihtiyacı, yapılan işler ve varsa yayın
-sonrası ölçülen sonuç yazıyor.</p>
+<h2>Bu sayfadaki siteler nedir</h2>
+<p>Aşağıdaki liste, Körfez'deki farklı işletme türleri için hazırladığımız örnek
+site kurgularından oluşuyor. Her biri gerçek bir ihtiyaçtan yola çıkıyor: bir
+pansiyonun komisyon yükü, bir kooperatifin hasat takvimi, bir polikliniğin
+randevu akışı. Amaç vitrin değil; benzer bir işin nasıl kurgulanacağını
+somut olarak göstermek.</p>
 
-<h2>Sektörünüzden örnek</h2>
-<p>Kendi sektörünüzden bir çalışma görmek isterseniz
-<a href="/iletisim">bize yazın</a>. Bazı müşterilerimiz çalışmalarının
-yayınlanmasını istemediği için listede görünmeyen işler de var; bunları
-görüşmede paylaşabiliyoruz.</p>
+<p>Bunlar yayına alınmış müşteri işleri değil. Yeni kurulan bir ekibiz ve
+yaptığımız işleri, işletmelerin izniyle, yayına girdikçe bu sayfaya
+ekleyeceğiz. O zamana kadar burada ne yapabildiğimizi örnekler üzerinden
+anlatıyoruz.</p>
 
-<h2>Çalışmanın sonrası</h2>
-<p>Listedeki işlerin büyük bölümünde yayın sonrası da birlikte çalışmaya devam
-ettik. Bir sitenin gerçek değeri, yayına alındığı gün değil altıncı ayında
-belli olur: hangi sayfa telefon getiriyor, hangi içerik boşa yazılmış, nerede
-düzeltme gerekiyor.</p>
+<h2>Her örnekte ne var</h2>
+<p>Her örneğin sayfasında üç bölüm bulunur: işletmenin karşılaştığı ihtiyaç,
+sitenin hangi bölümlerden kurulduğu ve bu kurgunun neyi çözdüğü. Böylece kendi
+işinize benzeyen bir örneği açıp, teklif görüşmesine gelmeden önce nasıl bir
+yapı konuşacağımızı görebilirsiniz.</p>
+
+<h2>Kendi sektörünüzden örnek</h2>
+<p>Listede kendi sektörünüzü bulamadıysanız <a href="/iletisim">bize yazın</a>.
+Görüşmede, işinize özel bir kurguyu birlikte çıkarıyoruz; hangi sayfaların
+gerektiğini, hangilerinin gereksiz olduğunu konuşuyoruz. Bu görüşme ücretsiz ve
+bir taahhüt gerektirmiyor.</p>
+
+<h2>Fiyat ve süre</h2>
+<p>Örneklerdeki kurguların hangi bütçe aralığına denk geldiğini
+<a href="/fiyatlar">fiyatlar sayfasında</a> anlatıyoruz. Bir sitenin gerçek
+değeri yayına alındığı gün değil altıncı ayında belli olur: hangi sayfa telefon
+getiriyor, hangi içerik boşa yazılmış, nerede düzeltme gerekiyor. Bu yüzden
+yayın sonrası ölçümü de işin parçası sayıyoruz.</p>
 
 <h2>Bölgeye göre</h2>
-<h2>Referans vermek</h2>
-<p>Çalıştığımız işletmelerin bir bölümü, kendilerine ulaşan yeni müşterilerle
-konuşmayı kabul ediyor. Karar vermeden önce benzer bir işletmeyle görüşmek
-isterseniz bunu ayarlayabiliyoruz; bizim anlattığımızdan çok daha değerli bir
-bilgi kaynağı.</p>
-
-<h2>Sayılar</h2>
-<p>Bazı çalışmaların sayfasında yayın sonrası ölçülen değişim de yazıyor: gelen
-form sayısı, arama görünürlüğü ya da doğrudan rezervasyon oranı. Bu rakamlar
-işletmenin izniyle paylaşılıyor ve abartılmıyor; ölçülen ne ise o yazılıyor.</p>
-
-<p>Çalışmaların büyük bölümü Körfez ilçelerinde. Bölgeye özel yaklaşımımızı
-<a href="/edremit-web-tasarim">Edremit</a>,
+<p>Örneklerin tamamı Körfez ilçelerindeki işletme türlerinden çıkarıldı.
+Bölgeye özel yaklaşımımızı <a href="/edremit-web-tasarim">Edremit</a>,
 <a href="/ayvalik-web-tasarim">Ayvalık</a> ve
 <a href="/burhaniye-web-tasarim">Burhaniye</a> sayfalarında anlatıyoruz.
 Sektörel yaklaşım için <a href="/otel-pansiyon-web-sitesi">konaklama</a> ve
@@ -530,8 +532,8 @@ kaynak dosyaları, veritabanı yedeği, panel yönetici hesabı ve alan adı
 yönlendirme bilgileri. Teknik bir devir gerektiğinde bu paket başka bir ekibe
 olduğu gibi verilebilir.</p>
 
-<p>Bölgedeki çalışmalarımızı <a href="/referanslar">referanslar sayfasında</a>
-görebilir, <a href="/fiyatlar">fiyat aralıklarını</a> inceleyebilirsiniz.</p>
+<p>Hazırladığımız <a href="/referanslar">örnek siteleri</a> görebilir,
+<a href="/fiyatlar">fiyat aralıklarını</a> inceleyebilirsiniz.</p>
 HTML,
     ],
 

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 use Arcates\Core\Media;
 use Arcates\Core\Security;
+use Arcates\Core\Settings;
 ?>
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
@@ -24,6 +25,8 @@ use Arcates\Core\Security;
         <p class="page__lead"><?= Security::e($project['excerpt']) ?></p>
       <?php endif; ?>
     </header>
+
+    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
 
     <dl class="project-meta">
       <div>

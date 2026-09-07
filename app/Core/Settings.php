@@ -153,6 +153,7 @@ final class Settings
             'maintenance_mode'   => '0',
             'maintenance_text'   => 'Sitemiz kısa süreliğine bakımda. Kısa süre sonra tekrar deneyin.',
             'default_lang'       => 'tr',
+            'projects_notice'    => 'Buradaki siteler, yapabildiklerimizi göstermek için hazırlanmış örnek kurgulardır; henüz yayına alınmış müşteri işleri değildir.',
             'works_limit'        => '6',
             'submission_days'    => '730',
         ];

@@ -39,6 +39,7 @@ final class SettingController extends Controller
         'nap_lng'            => ['Boylam', 20],
         'meta_title_pattern' => ['Başlık şablonu', 120],
         'meta_description'   => ['Varsayılan açıklama', 320],
+        'projects_notice'    => ['Örnek site notu', 320],
         'maintenance_text'   => ['Bakım mesajı', 320],
     ];
 

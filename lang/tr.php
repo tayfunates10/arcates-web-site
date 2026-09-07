@@ -30,7 +30,7 @@ return [
     'services'          => 'Hizmetler',
     'locations'         => 'Bölgeler',
     'sectors'           => 'Sektörler',
-    'projects'          => 'Referanslar',
+    'projects'          => 'Örnek Siteler',
     'blog'              => 'Blog',
     'faq'               => 'Sık sorulan sorular',
     'contact'           => 'İletişim',
@@ -43,7 +43,7 @@ return [
     'district'          => 'İlçe',
     'client'            => 'Müşteri',
     'visit_site'        => 'Siteyi ziyaret et',
-    'related_projects'  => 'İlgili çalışmalar',
+    'related_projects'  => 'Benzer örnekler',
     'latest_posts'      => 'Son yazılar',
     'no_results'        => 'Kayıt bulunamadı.',
 

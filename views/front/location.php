@@ -14,6 +14,7 @@
 declare(strict_types=1);
 
 use Arcates\Core\Security;
+use Arcates\Core\Settings;
 ?>
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
@@ -42,6 +43,8 @@ use Arcates\Core\Security;
           <?= Security::e($page['district'] ?? '') ?> <?= Security::e(__('related_projects')) ?>
         </h2>
       </header>
+
+      <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
 
       <ul class="works">
         <?php foreach ($projects as $project): ?>

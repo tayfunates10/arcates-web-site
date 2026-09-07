@@ -10,6 +10,7 @@
 declare(strict_types=1);
 
 use Arcates\Core\Security;
+use Arcates\Core\Settings;
 ?>
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
@@ -22,6 +23,8 @@ use Arcates\Core\Security;
         <p class="page__lead"><?= Security::e($page['excerpt']) ?></p>
       <?php endif; ?>
     </header>
+
+    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
 
     <?php if (!empty($page['content'])): ?>
       <div class="prose wrap--text"><?= Security::sanitizeHtml((string) $page['content']) ?></div>

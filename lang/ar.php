@@ -26,7 +26,7 @@ return [
     'services'          => 'الخدمات',
     'locations'         => 'المناطق',
     'sectors'           => 'القطاعات',
-    'projects'          => 'أعمالنا',
+    'projects'          => 'مواقع نموذجية',
     'blog'              => 'المدونة',
     'faq'               => 'الأسئلة الشائعة',
     'contact'           => 'اتصل بنا',
@@ -39,7 +39,7 @@ return [
     'district'          => 'المنطقة',
     'client'            => 'العميل',
     'visit_site'        => 'زيارة الموقع',
-    'related_projects'  => 'أعمال ذات صلة',
+    'related_projects'  => 'نماذج مشابهة',
     'latest_posts'      => 'أحدث المقالات',
     'no_results'        => 'لا توجد نتائج.',
 
