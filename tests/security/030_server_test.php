@@ -64,51 +64,69 @@ test('S-12', 'Sürüm kontrolü klasörü web kökünün dışında', function (
     assertTrue(is_dir(ARC_ROOT . '/.git') || getenv('CI') !== false, 'Depo kökünde .git beklenir');
 });
 
-test('S-13', 'Kurulum tamamlandıktan sonra /install kapanır', function (): void {
-    arc_test_config();
+/**
+ * Kurulum durum testleri icin config.php ve installed.lock dosyalarini gecici
+ * olarak istenen duruma getirir; test sonunda calisma alanini aynen geri kurar.
+ */
+function arc_with_install_state(bool $installed, callable $fn): void
+{
+    $config      = ARC_ROOT . '/config/config.php';
+    $configSeed  = ARC_ROOT . '/config/config.example.php';
+    $lock        = ARC_ROOT . '/storage/installed.lock';
+    $hadConfig   = is_file($config);
+    $configBody  = $hadConfig ? (string) file_get_contents($config) : null;
+    $hadLock     = is_file($lock);
+    $lockBody    = $hadLock ? (string) file_get_contents($lock) : null;
 
-    $lock    = ARC_ROOT . '/storage/installed.lock';
-    $hadLock = is_file($lock);
-    $oldBody = $hadLock ? (string) file_get_contents($lock) : null;
-
-    if (!is_dir(dirname($lock))) {
-        mkdir(dirname($lock), 0775, true);
+    if (!$hadConfig) {
+        copy($configSeed, $config);
     }
-    file_put_contents($lock, "test-installed\n");
+
+    if ($installed) {
+        file_put_contents($lock, "test-installed\n");
+    } else {
+        @unlink($lock);
+    }
 
     try {
-        $controller = new Arcates\Controllers\Front\InstallController();
-        $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
-        assertSame(404, $response->status(), 'Kurulum kapalı olmalı');
+        $fn();
     } finally {
         if ($hadLock) {
-            file_put_contents($lock, (string) $oldBody);
+            file_put_contents($lock, (string) $lockBody);
         } else {
             @unlink($lock);
         }
+
+        if ($hadConfig) {
+            file_put_contents($config, (string) $configBody);
+        } else {
+            @unlink($config);
+        }
     }
+}
+
+test('S-13', 'Kurulum tamamlandıktan sonra /install kapanır', function (): void {
+    arc_test_config();
+
+    arc_with_install_state(true, function (): void {
+        assertTrue(Arcates\Core\App::isInstalled(), 'Config ve kilit varken uygulama kurulmuş sayılmalı');
+
+        $controller = new Arcates\Controllers\Front\InstallController();
+        $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
+        assertSame(404, $response->status(), 'Kurulum kapalı olmalı');
+    });
 });
 
 test('S-13b', 'Kurulum kilidi olmadan panel kurulum sihirbazına yönlenir', function (): void {
     arc_test_config();
 
-    $lock    = ARC_ROOT . '/storage/installed.lock';
-    $hadLock = is_file($lock);
-    $oldBody = $hadLock ? (string) file_get_contents($lock) : null;
+    arc_with_install_state(false, function (): void {
+        assertFalse(Arcates\Core\App::isInstalled(), 'Kilit yokken uygulama kurulmuş sayılmamalı');
 
-    if ($hadLock) {
-        @unlink($lock);
-    }
-
-    try {
         $controller = new Arcates\Controllers\Front\InstallController();
         $response   = $controller->index(Arcates\Core\Request::make('GET', '/install'), []);
 
         assertSame(200, $response->status(), 'Kurulum ekranı açık olmalı');
         assertContains('Kurulum', $response->body(), 'Kurulum başlığı görünmeli');
-    } finally {
-        if ($hadLock) {
-            file_put_contents($lock, (string) $oldBody);
-        }
-    }
+    });
 });
