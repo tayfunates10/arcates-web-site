@@ -1,15 +1,61 @@
 name: CI
+
 on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: arcates_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      ARC_TEST_DB_HOST: 127.0.0.1
+      ARC_TEST_DB_PORT: 3306
+      ARC_TEST_DB_NAME: arcates_test
+      ARC_TEST_DB_USER: root
+      ARC_TEST_DB_PASS: root
+      NO_COLOR: 1
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: pdo_mysql, mbstring, gd, fileinfo
-      - name: Sozdizimi kontrolu
-        run: find app views config tests -name "*.php" -print0 | xargs -0 -n1 php -l
-      - name: Testler
-        run: php tests/run.php
+
+      - name: MySQL hazır olana kadar bekle
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "MySQL zamanında hazır olmadı."
+          exit 1
+
+      - name: Tüm PHP dosyalarında sözdizimi kontrolü
+        run: find . -type f -name "*.php" -not -path "./public/uploads/*" -print0 | xargs -0 -n1 php -l
+
+      - name: Testler — atlanan test yasak
+        shell: bash
+        run: |
+          set -o pipefail
+          php tests/run.php | tee /tmp/arcates-tests.log
+          if grep -q "ATLANDI" /tmp/arcates-tests.log; then
+            echo "CI ortamında atlanan test bulundu. Test veritabanı veya bağımlılık eksik."
+            exit 1
+          fi

@@ -20,7 +20,7 @@ use Arcates\Models\Submission;
 final class SubmissionController extends Controller
 {
     protected string $section = 'submissions';
-    protected ?string $ability = 'submissions.view';
+    protected ?string $ability = 'submissions.manage';
 
     private const PER_PAGE = 50;
 
@@ -33,8 +33,7 @@ final class SubmissionController extends Controller
         $status = $request->str('durum');
         $search = $request->str('ara');
         $page   = max(1, $request->int('sayfa', 1));
-
-        $total = Submission::countBy($status, $search);
+        $total  = Submission::countBy($status, $search);
 
         return $this->view('submissions/index', [
             'title'      => 'Formlar',
@@ -56,12 +55,10 @@ final class SubmissionController extends Controller
         if ($guard = $this->guard()) {
             return $guard;
         }
-
         $row = Submission::get((int) ($params['id'] ?? 0));
         if ($row === null) {
             return $this->back(admin_url('formlar'), 'error', 'Kayıt bulunamadı.');
         }
-
         return $this->view('submissions/show', [
             'title'    => 'Form kaydı #' . $row['id'],
             'row'      => $row,
@@ -69,7 +66,6 @@ final class SubmissionController extends Controller
         ]);
     }
 
-    /** Durum ve not gunceller. DOCS.md 9.9, test F-09 */
     public function update(Request $request, array $params): Response
     {
         if ($guard = $this->guard()) {
@@ -81,7 +77,6 @@ final class SubmissionController extends Controller
 
         $id  = (int) ($params['id'] ?? 0);
         $row = Submission::get($id);
-
         if ($row === null) {
             return $this->back(admin_url('formlar'), 'error', 'Kayıt bulunamadı.');
         }
@@ -97,7 +92,6 @@ final class SubmissionController extends Controller
         ], ['id' => $id]);
 
         Logger::activity('submission.update', 'submission', $id, $status);
-
         return $this->back(admin_url('formlar/' . $id), 'success', 'Kayıt güncellendi.');
     }
 
@@ -109,34 +103,22 @@ final class SubmissionController extends Controller
         if ($csrf = $this->verifyCsrf($request)) {
             return $csrf;
         }
-
         $id = (int) ($params['id'] ?? 0);
         $this->db()->delete('submissions', ['id' => $id]);
         Logger::activity('submission.delete', 'submission', $id);
-
         return $this->back(admin_url('formlar'), 'success', 'Kayıt silindi.');
     }
 
-    /** CSV disa aktarma. DOCS.md 9.9 */
     public function export(Request $request, array $params): Response
     {
         if ($guard = $this->guard()) {
             return $guard;
         }
-
         $rows = Submission::listing($request->str('durum'), $request->str('ara'), 500);
-
         Logger::activity('submission.export', 'submission', null, count($rows) . ' kayıt');
-
-        return Response::csv(
-            Submission::toCsv($rows),
-            'arcates-formlar-' . date('Y-m-d') . '.csv'
-        );
+        return Response::csv(Submission::toCsv($rows), 'arcates-formlar-' . date('Y-m-d') . '.csv');
     }
 
-    /**
-     * Saklama suresi dolan kayitlari toplu siler.  DOCS.md 9.9, 10.9
-     */
     public function purge(Request $request, array $params): Response
     {
         if ($guard = $this->guardAdmin()) {
@@ -145,17 +127,10 @@ final class SubmissionController extends Controller
         if ($csrf = $this->verifyCsrf($request)) {
             return $csrf;
         }
-
         $days = max(30, min(3650, $request->int('days', 730)));
         Settings::set('submission_days', (string) $days);
-
         $deleted = Submission::purgeExpired($days);
         Logger::activity('submission.purge', 'submission', null, $deleted . ' kayıt, ' . $days . ' gün');
-
-        return $this->back(
-            admin_url('formlar'),
-            'success',
-            $deleted . ' kayıt silindi. Saklama süresi ' . $days . ' gün olarak kaydedildi.'
-        );
+        return $this->back(admin_url('formlar'), 'success', $deleted . ' kayıt silindi. Saklama süresi ' . $days . ' gün olarak kaydedildi.');
     }
 }

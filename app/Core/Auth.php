@@ -16,7 +16,6 @@ final class Auth
     private static ?array $user = null;
     private static bool $resolved = false;
 
-    /** Oturumdaki kullaniciyi dondurur. */
     public static function user(): ?array
     {
         if (self::$resolved) {
@@ -78,7 +77,9 @@ final class Auth
             return true;
         }
 
-        // Editor icin acikca izin verilen yetenekler.
+        // Editor yalnizca icerik yonetimi yetkilerini tasir. Kisisel form
+        // kayitlari, yonlendirmeler, ayarlar, kullanicilar ve yedekler admin'e
+        // ozeldir. DOCS.md 9.11, 10.9.
         return in_array($ability, [
             'content.view', 'content.edit',
             'pages.view', 'pages.edit',
@@ -87,17 +88,12 @@ final class Auth
             'faqs.view', 'faqs.edit',
             'media.view', 'media.edit',
             'home.view', 'home.edit',
-            'submissions.view', 'submissions.edit',
             'seo.view',
             'stats.view',
         ], true);
     }
 
-    /**
-     * Giris denemesi.
-     *
-     * @return array{ok:bool, reason:string, wait:int}
-     */
+    /** @return array{ok:bool, reason:string, wait:int} */
     public static function attempt(string $email, string $password, string $ip): array
     {
         $email = mb_strtolower(trim($email));
@@ -115,8 +111,6 @@ final class Auth
             [':email' => $email]
         );
 
-        // Kullanici yoksa da dogrulama maliyeti odenir; var/yok ayrimi
-        // zamanlamadan sizdirilmaz. DOCS.md 10.4
         $hash   = $row['password_hash'] ?? '$2y$12$usudopqedGWtIrjXlBbQ7uZ/eO9zRQKzTuvi3B/gnFYPzKTPBevAy';
         $verify = password_verify($password, (string) $hash);
 
@@ -126,7 +120,6 @@ final class Auth
             return ['ok' => false, 'reason' => 'invalid', 'wait' => 0];
         }
 
-        // Karma parametreleri eskimisse tazele.
         if (password_needs_rehash((string) $row['password_hash'], PASSWORD_DEFAULT)) {
             $db->update('users', ['password_hash' => password_hash($password, PASSWORD_DEFAULT)], ['id' => (int) $row['id']]);
         }
@@ -140,7 +133,6 @@ final class Auth
         return ['ok' => true, 'reason' => 'ok', 'wait' => 0];
     }
 
-    /** Kullaniciyi oturuma yazar ve oturum kimligini yeniler. DOCS.md 10.3 */
     public static function login(int $userId): void
     {
         Session::regenerate();
@@ -161,20 +153,13 @@ final class Auth
         self::$resolved = false;
     }
 
-    /** Test ve kurulum icin onbellegi bosaltir. */
     public static function forget(): void
     {
         self::$user     = null;
         self::$resolved = false;
     }
 
-    // --- Kilit -------------------------------------------------------------
-
-    /**
-     * IP ve e-posta icin ayri sayaclar. DOCS.md 10.4, test S-08
-     *
-     * @return array{locked:bool, wait:int}
-     */
+    /** @return array{locked:bool, wait:int} */
     public static function lockState(string $ip, string $email): array
     {
         $max    = (int) Config::get('security.login_max_tries', 5);
@@ -209,7 +194,6 @@ final class Auth
         return ['locked' => true, 'wait' => $wait];
     }
 
-    /** Denemeyi kaydeder. */
     private static function record(string $ip, string $email, bool $success): void
     {
         try {
@@ -223,7 +207,6 @@ final class Auth
         }
     }
 
-    /** Basarili giristen sonra o e-posta ve IP icin sayaclari temizler. */
     public static function clearAttempts(string $ip, string $email): void
     {
         try {
@@ -236,7 +219,6 @@ final class Auth
         }
     }
 
-    /** Sifre karmasi uretir. DOCS.md 10.4 */
     public static function hash(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);

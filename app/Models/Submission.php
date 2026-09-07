@@ -3,7 +3,7 @@
  * Form kayitlari ve donusum takibi.
  *
  * Hangi ilce veya hizmet sayfasinin gercekten is getirdigini gostermek icin
- * `source_url`, `referrer`, `utm` ve dil saklanir.  DOCS.md 12, 9.9
+ * `source_url`, `referrer`, `utm` ve dil saklanir. DOCS.md 12, 9.9
  */
 
 declare(strict_types=1);
@@ -17,7 +17,6 @@ final class Submission extends Model
 {
     protected static string $table = 'submissions';
 
-    /** Durum etiketleri; donusum hunisinin sirasi budur. DOCS.md 9.1 */
     public const STATUSES = [
         'new'       => 'Yeni',
         'contacted' => 'Arandı',
@@ -32,24 +31,21 @@ final class Submission extends Model
         $args = [];
 
         if ($status !== '' && isset(self::STATUSES[$status])) {
-            $sql            .= ' AND status = :status';
+            $sql .= ' AND status = :status';
             $args[':status'] = $status;
         }
-
         if ($search !== '') {
-            $sql        .= ' AND (name LIKE :q OR email LIKE :q OR phone LIKE :q OR message LIKE :q OR source_url LIKE :q)';
-            $args[':q']  = '%' . $search . '%';
+            $sql .= ' AND (name LIKE :q OR email LIKE :q OR phone LIKE :q OR message LIKE :q OR source_url LIKE :q)';
+            $args[':q'] = '%' . $search . '%';
         }
 
         $sql .= ' ORDER BY created_at DESC LIMIT ' . max(1, min(500, $limit)) . ' OFFSET ' . max(0, $offset);
-
         $rows = self::db()->all($sql, $args);
 
         foreach ($rows as &$row) {
             $row['ip']  = Security::unpackIp($row['ip']);
             $row['utm'] = self::decodeUtm($row['utm'] ?? null);
         }
-
         return $rows;
     }
 
@@ -57,16 +53,14 @@ final class Submission extends Model
     {
         $sql  = 'SELECT COUNT(*) FROM submissions WHERE 1 = 1';
         $args = [];
-
         if ($status !== '' && isset(self::STATUSES[$status])) {
-            $sql            .= ' AND status = :status';
+            $sql .= ' AND status = :status';
             $args[':status'] = $status;
         }
         if ($search !== '') {
-            $sql        .= ' AND (name LIKE :q OR email LIKE :q OR phone LIKE :q OR message LIKE :q OR source_url LIKE :q)';
-            $args[':q']  = '%' . $search . '%';
+            $sql .= ' AND (name LIKE :q OR email LIKE :q OR phone LIKE :q OR message LIKE :q OR source_url LIKE :q)';
+            $args[':q'] = '%' . $search . '%';
         }
-
         return (int) self::db()->value($sql, $args);
     }
 
@@ -76,17 +70,11 @@ final class Submission extends Model
         if ($row === null) {
             return null;
         }
-
         $row['ip']  = Security::unpackIp($row['ip']);
         $row['utm'] = self::decodeUtm($row['utm'] ?? null);
-
         return $row;
     }
 
-    /**
-     * Donusum raporu: hangi sayfa kac kayit ve kac kazanim getirdi.
-     * DOCS.md 12 — test F-09
-     */
     public static function conversionReport(int $days = 90): array
     {
         return self::db()->all(
@@ -111,7 +99,6 @@ final class Submission extends Model
         );
     }
 
-    /** Kaynak dagilimi (utm_source). */
     public static function sourceReport(int $days = 90): array
     {
         $rows = self::db()->all(
@@ -123,7 +110,6 @@ final class Submission extends Model
         foreach ($rows as $row) {
             $utm    = self::decodeUtm($row['utm'] ?? null);
             $source = $utm['utm_source'] ?? null;
-
             if ($source === null) {
                 $referrer = (string) ($row['referrer'] ?? '');
                 if ($referrer === '') {
@@ -133,39 +119,33 @@ final class Submission extends Model
                     $source = is_string($host) && $host !== '' ? $host : 'diger';
                 }
             }
-
             $counts[$source] = ($counts[$source] ?? 0) + 1;
         }
 
         arsort($counts);
-
         $out = [];
         foreach ($counts as $source => $count) {
             $out[] = ['source' => (string) $source, 'count' => $count];
         }
-
         return $out;
     }
 
-    /**
-     * Saklama suresi dolan kayitlari siler.  DOCS.md 10.9
-     *
-     * @return int Silinen kayit sayisi.
-     */
     public static function purgeExpired(?int $days = null): int
     {
         $days = $days ?? (int) Config::get('privacy.submission_retention_days', 730);
         if ($days <= 0) {
             return 0;
         }
-
         return self::db()->run(
             'DELETE FROM submissions WHERE created_at < :cutoff',
             [':cutoff' => date('Y-m-d H:i:s', strtotime("-{$days} days"))]
         )->rowCount();
     }
 
-    /** CSV disa aktarma. DOCS.md 9.9 */
+    /**
+     * CSV disa aktarma. Kullanici kontrollu hucreler spreadsheet formula
+     * enjeksiyonuna karsi guvenli hale getirilir. DOCS.md 9.9, 10.2.
+     */
     public static function toCsv(array $rows): string
     {
         $handle = fopen('php://temp', 'r+');
@@ -180,9 +160,8 @@ final class Submission extends Model
         ]);
 
         foreach ($rows as $row) {
-            $utm = is_array($row['utm'] ?? null) ? $row['utm'] : [];
-
-            fputcsv($handle, [
+            $utm = is_array($row['utm'] ?? null) ? $row['utm'] : self::decodeUtm($row['utm'] ?? null);
+            $cells = [
                 $row['id'] ?? '',
                 $row['created_at'] ?? '',
                 self::STATUSES[$row['status'] ?? 'new'] ?? '',
@@ -199,14 +178,31 @@ final class Submission extends Model
                 $row['lang'] ?? '',
                 (int) ($row['kvkk_consent'] ?? 0) === 1 ? 'evet' : 'hayir',
                 preg_replace('/\s+/u', ' ', (string) ($row['note'] ?? '')),
-            ]);
+            ];
+
+            fputcsv($handle, array_map([self::class, 'csvSafe'], $cells));
         }
 
         rewind($handle);
         $csv = (string) stream_get_contents($handle);
         fclose($handle);
-
         return $csv;
+    }
+
+    /** Spreadsheetlerin hucreyi formül olarak calistirmasini engeller. */
+    private static function csvSafe(mixed $value): string
+    {
+        $text = (string) $value;
+        if ($text === '') {
+            return '';
+        }
+
+        $probe = ltrim($text, " \t\r\n");
+        if ($probe !== '' && in_array($probe[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+            return "'" . $text;
+        }
+
+        return $text;
     }
 
     private static function decodeUtm(mixed $raw): array
