@@ -107,6 +107,16 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) bicimini izler
 - SSS: `/sss` sayfasi, sayfa ve anasayfa atamalari, `FAQPage` semasi.
 - Faz 10 testleri: referans, blog ve SSS davranis testleri.
 
+### Eklendi (faz 11)
+- `Visits`: ziyaret kaydi, bot isaretleme, gunluk seri, en cok girilen
+  sayfalar, referans kaynaklari, cihaz ve dil dagilimi, aylik CSV rapor,
+  90 gunden eski kayitlarin `visits_daily`'ye toplanmasi.
+- `Backup`: harici arac gerektirmeyen gzip'li SQL yedegi, son 10 yedek,
+  indirme, geri yukleme (oncesinde otomatik guvenlik yedegi).
+- Panel istatistik ve yedekleme ekranlari.
+- `tools/backup.php` ve `tools/rollup_visits.php` gunluk gorevleri.
+- Faz 11 testleri: U-15 bot ayrimi, F-19 yedek/geri yukleme, toplama.
+
 ### Duzeltildi
 - `Router` yer tutucu deseni: `preg_quote` suslu parantezleri kacirdigi icin
   `{slug}` eslesmiyordu.

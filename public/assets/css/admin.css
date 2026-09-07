@@ -545,3 +545,11 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 26px 0; }
 }
 .checkbox-grid label:hover { background: var(--mist-2); }
 .checkbox-grid input { width: auto; flex: 0 0 auto; }
+
+.restore-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.restore-row:last-child { border-bottom: 0; }
+.restore-row label { display: flex; align-items: center; gap: 7px; margin-inline-start: auto; }
+.restore-row input { width: auto; }

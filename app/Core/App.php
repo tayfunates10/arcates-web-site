@@ -131,11 +131,17 @@ final class App
 
         $result = $this->invoke($match['handler'], $match['params'], $request);
 
-        if ($result instanceof Response) {
-            return $result;
+        $response = $result instanceof Response ? $result : Response::html((string) $result);
+
+        // Ziyaret kaydi. Yalnizca on yuzdeki basarili sayfa goruntulemeleri
+        // sayilir; panel, kurulum ve varlik istekleri disaridadir. Bot imzasi
+        // tasiyan istekler kaydedilir ama grafiklere girmez.
+        // DOCS.md 8.4, 9.10
+        if (!$isAdmin && $request->method() === 'GET' && $response->status() === 200) {
+            Visits::record($request, Lang::current());
         }
 
-        return Response::html((string) $result);
+        return $response;
     }
 
     /**

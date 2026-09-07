@@ -134,6 +134,17 @@ $router->get($panel . '/seo', 'Admin\SeoController@index');
 $router->post($panel . '/seo', 'Admin\SeoController@update');
 $router->get($panel . '/seo/sitemap', 'Admin\SeoController@sitemap');
 
+// Istatistik
+$router->get($panel . '/istatistik', 'Admin\StatsController@index');
+$router->get($panel . '/istatistik/csv', 'Admin\StatsController@export');
+
+// Yedekleme (yalnizca yonetici)
+$router->get($panel . '/yedekleme', 'Admin\BackupController@index');
+$router->post($panel . '/yedekleme/al', 'Admin\BackupController@create');
+$router->get($panel . '/yedekleme/indir/{file:[A-Za-z0-9._-]+}', 'Admin\BackupController@download');
+$router->post($panel . '/yedekleme/geri-yukle/{file:[A-Za-z0-9._-]+}', 'Admin\BackupController@restore');
+$router->post($panel . '/yedekleme/sil/{file:[A-Za-z0-9._-]+}', 'Admin\BackupController@destroy');
+
 // Islem gunlugu (yalnizca yonetici)
 $router->get($panel . '/islem-gunlugu', 'Admin\ActivityController@index');
 
