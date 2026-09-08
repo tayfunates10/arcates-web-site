@@ -1,11 +1,11 @@
 <?php
-/** Ornek siteler — R5 bir buyuk + iki destekleyici vitrin. */
+/** Ornek siteler — R5 bir buyuk + destekleyici vitrin kartlari. */
 declare(strict_types=1);
 use Arcates\Core\Media;
 use Arcates\Core\Security;
 use Arcates\Core\Settings;
 $content = $content ?? [];
-$projects = array_slice($projects ?? [], 0, 3);
+$projects = $projects ?? [];
 if (!$projects) return;
 $cta = $content['cta'] ?? null;
 ?>
