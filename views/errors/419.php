@@ -16,8 +16,9 @@ use Arcates\Core\Security;
 <title>Oturum doğrulanamadı</title>
 <link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/system-r7.css')) ?>">
 </head>
-<body>
+<body class="system-r7 system-r7--error">
 <main class="system">
   <div class="system__card">
     <p class="system__code">419</p>
