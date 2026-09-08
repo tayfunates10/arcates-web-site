@@ -21,9 +21,6 @@ $minutes = max(1, (int) ceil(((int) ($post['word_count'] ?? 0)) / 200));
 
 <header class="page-hero section section--tight">
   <div class="wrap">
-    <?php if (!empty($post['category'])): ?>
-      <span class="page__eyebrow"><?= Security::e($post['category']) ?></span>
-    <?php endif; ?>
     <h1 class="page__title u-measure"><?= Security::e($post['title']) ?></h1>
     <p class="post__meta">
       <time datetime="<?= Security::e(date('Y-m-d', strtotime((string) ($post['published_at'] ?: 'now')))) ?>">

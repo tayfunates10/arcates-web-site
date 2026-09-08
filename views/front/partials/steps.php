@@ -14,7 +14,7 @@ if (!$items) return;
     <ol class="steps">
       <?php foreach ($items as $index => $step): ?>
         <li class="step" data-reveal>
-          <span class="step__number" aria-hidden="true"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span>
+          <span class="step__number" aria-hidden="true"><?= (int) ($index + 1) ?></span>
           <h3 class="step__title"><?= Security::e($step['title'] ?? '') ?></h3>
           <?php if (($step['text'] ?? '') !== ''): ?><p class="step__text"><?= Security::e($step['text']) ?></p><?php endif; ?>
         </li>

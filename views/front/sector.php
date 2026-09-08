@@ -20,7 +20,6 @@ $outline = ContentOutline::prepare((string) ($page['content'] ?? ''));
 
 <header class="page-hero section section--tight">
   <div class="wrap">
-    <span class="page__eyebrow"><?= Security::e(__('sectors')) ?></span>
     <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
     <?php if (!empty($page['excerpt'])): ?>
       <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>

@@ -18,7 +18,6 @@ use Arcates\Core\Settings;
 
 <header class="page-hero section section--tight">
   <div class="wrap">
-    <span class="page__eyebrow"><?= Security::e(__('projects')) ?></span>
     <h1 class="page__title u-measure"><?= Security::e($project['title']) ?></h1>
     <?php if (!empty($project['excerpt'])): ?>
       <p class="page__lead u-measure-lead"><?= Security::e($project['excerpt']) ?></p>
