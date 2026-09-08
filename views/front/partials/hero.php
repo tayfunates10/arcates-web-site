@@ -74,7 +74,7 @@ $cta2 = $content['cta2'] ?? null;
       </div>
 
       <div class="hero-scene__mark">
-        <img src="/assets/img/logo-mark-light.png" alt="" width="64" height="64" decoding="async">
+        <img src="/assets/img/logo-mark-light.png" alt="" aria-hidden="true" width="64" height="64" decoding="async">
       </div>
     </div>
   </div>
