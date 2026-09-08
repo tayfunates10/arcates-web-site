@@ -11,7 +11,16 @@ declare(strict_types=1);
 use Arcates\Core\Security;
 ?>
 
-<section class="section section--thanks">
+<header class="page-hero page-hero--simple section section--tight">
+  <div class="wrap wrap--text">
+    <h1 class="page__title"><?= Security::e(__('form_success')) ?></h1>
+    <p class="page__lead u-measure-lead">
+      <?= Security::e($_site['name'] ?? '') ?> ekibi en kısa sürede size dönüş yapacak.
+    </p>
+  </div>
+</header>
+
+<section class="section section--page section--thanks">
   <div class="wrap wrap--text">
     <div class="thanks">
       <span class="thanks__mark" aria-hidden="true">
@@ -20,12 +29,6 @@ use Arcates\Core\Security;
           <path d="m4 12.5 5.2 5.2L20 6.9"></path>
         </svg>
       </span>
-
-      <h1 class="page__title"><?= Security::e(__('form_success')) ?></h1>
-
-      <p class="page__lead">
-        <?= Security::e($_site['name'] ?? '') ?> ekibi en kısa sürede size dönüş yapacak.
-      </p>
 
       <div class="system__actions">
         <a class="btn btn--primary" href="<?= Security::e(url('/')) ?>"><?= Security::e(__('back_to_home')) ?></a>
