@@ -30,7 +30,6 @@ if (strlen($digits) === 11 && str_starts_with($digits, '0')) {
 <section class="section section--page section--contact">
   <div class="wrap">
     <header class="page__head contact-head">
-      <span class="page__eyebrow"><?= Security::e(__('contact')) ?></span>
       <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
       <?php if (!empty($page['excerpt'])): ?>
         <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
