@@ -1,6 +1,6 @@
 <?php
 /**
- * Blog listesi.  DOCS.md 4.1, 9.4
+ * Blog listesi. DOCS.md 4.1, 9.4
  *
  * @var array|null $page
  * @var array      $posts
@@ -19,14 +19,13 @@ use Arcates\Core\Security;
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
 
-<section class="section section--tight">
+<header class="page-hero section section--tight">
   <div class="wrap">
-    <header class="page__head">
-      <h1 class="page__title"><?= Security::e($page['title'] ?? __('blog')) ?></h1>
-      <?php if (!empty($page['excerpt'])): ?>
-        <p class="page__lead"><?= Security::e($page['excerpt']) ?></p>
-      <?php endif; ?>
-    </header>
+    <span class="page__eyebrow"><?= Security::e(__('blog')) ?></span>
+    <h1 class="page__title"><?= Security::e($page['title'] ?? __('blog')) ?></h1>
+    <?php if (!empty($page['excerpt'])): ?>
+      <p class="page__lead u-measure"><?= Security::e($page['excerpt']) ?></p>
+    <?php endif; ?>
 
     <?php if ($categories): ?>
       <nav class="chips" aria-label="<?= Security::e(__('category')) ?>">
@@ -42,51 +41,53 @@ use Arcates\Core\Security;
       </nav>
     <?php endif; ?>
   </div>
-</section>
+</header>
 
-<section class="section section--tight" data-reveal-group>
+<section class="section section--content" data-reveal-group>
   <div class="wrap">
     <?php if (!$posts): ?>
       <p class="muted"><?= Security::e(__('no_results')) ?></p>
     <?php else: ?>
-      <ul class="works">
+      <ul class="post-grid">
         <?php foreach ($posts as $post): ?>
-          <li class="work" data-reveal>
+          <?php $minutes = max(1, (int) ceil(((int) ($post['word_count'] ?? 0)) / 200)); ?>
+          <li class="post-card" data-reveal>
             <?php if (!empty($post['cover'])): ?>
-              <div class="work__media">
+              <a class="post-card__media" href="<?= Security::e(url('/blog/' . $post['slug'])) ?>" tabindex="-1" aria-hidden="true">
                 <img src="<?= Security::e(Media::url((string) $post['cover']['path'])) ?>"
-                     alt="<?= Security::e($post['cover']['alt'] ?: $post['title']) ?>"
-                     width="<?= (int) $post['cover']['width'] ?>"
-                     height="<?= (int) $post['cover']['height'] ?>"
+                     alt="" width="<?= (int) $post['cover']['width'] ?>" height="<?= (int) $post['cover']['height'] ?>"
                      loading="lazy" decoding="async">
+              </a>
+            <?php endif; ?>
+
+            <div class="post-card__body">
+              <div class="post-card__meta">
+                <?php if (!empty($post['category'])): ?>
+                  <span class="badge"><?= Security::e($post['category']) ?></span>
+                <?php endif; ?>
+                <time datetime="<?= Security::e(date('Y-m-d', strtotime((string) ($post['published_at'] ?: 'now')))) ?>">
+                  <?= Security::e(format_date($post['published_at'])) ?>
+                </time>
+                <span><?= Security::e(__('reading_time', ['minutes' => $minutes])) ?></span>
               </div>
-            <?php endif; ?>
 
-            <h2 class="work__title">
-              <a href="<?= Security::e(url('/blog/' . $post['slug'])) ?>"><?= Security::e($post['title']) ?></a>
-            </h2>
+              <h2 class="post-card__title">
+                <a href="<?= Security::e(url('/blog/' . $post['slug'])) ?>"><?= Security::e($post['title']) ?></a>
+              </h2>
 
-            <p class="work__meta">
-              <?php if (!empty($post['category'])): ?><?= Security::e($post['category']) ?> · <?php endif; ?>
-              <time datetime="<?= Security::e(date('Y-m-d', strtotime((string) ($post['published_at'] ?: 'now')))) ?>">
-                <?= Security::e(format_date($post['published_at'])) ?>
-              </time>
-            </p>
-
-            <?php if (!empty($post['excerpt'])): ?>
-              <p class="work__text"><?= Security::e($post['excerpt']) ?></p>
-            <?php endif; ?>
+              <?php if (!empty($post['excerpt'])): ?>
+                <p class="post-card__text"><?= Security::e($post['excerpt']) ?></p>
+              <?php endif; ?>
+            </div>
           </li>
         <?php endforeach; ?>
       </ul>
     <?php endif; ?>
 
     <?php if ($pages > 1): ?>
-      <nav class="pager" aria-label="Sayfalar">
+      <nav class="pager" aria-label="<?= Security::e(__('pagination')) ?>">
         <?php for ($i = 1; $i <= $pages; $i++): ?>
-          <?php
-          $query = ($category !== '' ? 'kategori=' . rawurlencode($category) . '&' : '') . 'sayfa=' . $i;
-          ?>
+          <?php $query = ($category !== '' ? 'kategori=' . rawurlencode($category) . '&' : '') . 'sayfa=' . $i; ?>
           <?php if ($i === $number): ?>
             <span class="pager__item is-current" aria-current="page"><?= (int) $i ?></span>
           <?php else: ?>
