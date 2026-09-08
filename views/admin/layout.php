@@ -2,8 +2,8 @@
 /**
  * Panel duzeni.
  *
- * Panelde satir ici script bulunmaz; tum davranis `admin.js` icindedir.
- * DOCS.md 10.7
+ * Panelde satir ici script bulunmaz; tum davranis `admin.js` ve yeniden
+ * tasarim yardimcisi `admin-redesign.js` icindedir. DOCS.md 10.7
  *
  * @var string $content
  * @var string $title
@@ -30,6 +30,7 @@ $_user   = $_user ?? null;
 <title><?= Security::e($title !== '' ? $title . ' — Arcates Panel' : 'Arcates Panel') ?></title>
 <link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/admin-redesign.css')) ?>">
 </head>
 <body class="admin">
 
@@ -37,7 +38,7 @@ $_user   = $_user ?? null;
 
 <div class="admin__shell">
 
-  <aside class="admin__side">
+  <aside class="admin__side" id="admin-side" data-admin-side>
     <a class="admin__brand" href="<?= Security::e(admin_url()) ?>">
       <img class="admin__logo" src="/assets/img/logo-wordmark.png" alt="Arcates Yazılım"
            width="158" height="53" decoding="async">
@@ -62,9 +63,17 @@ $_user   = $_user ?? null;
     </div>
   </aside>
 
+  <div class="admin__nav-backdrop" data-admin-nav-backdrop aria-hidden="true"></div>
+
   <div class="admin__main">
 
     <header class="admin__top">
+      <button class="admin__nav-toggle" type="button" data-admin-nav-toggle
+              aria-expanded="false" aria-controls="admin-side">
+        <span class="visually-hidden">Panel menüsünü aç veya kapat</span>
+        <span class="admin__nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+
       <h1 class="admin__title"><?= Security::e($title ?: 'Panel') ?></h1>
 
       <div class="admin__account">
@@ -95,5 +104,6 @@ $_user   = $_user ?? null;
 </div>
 
 <script src="<?= Security::e(asset('js/admin.js')) ?>" defer></script>
+<script src="<?= Security::e(asset('js/admin-redesign.js')) ?>" defer></script>
 </body>
 </html>
