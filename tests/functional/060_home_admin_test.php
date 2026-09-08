@@ -16,7 +16,7 @@ test('F-14b', 'Panelden bölüm kapatılınca on yüzde görünmez', function ()
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
 
-    assertContains('class="strip"', arc_home()->body(), 'Şerit önce görünmeli');
+    assertContains('sector-links', arc_home()->body(), 'Sektör grubu önce görünmeli');
 
     $response = (new AdminHomeController())->toggle(
         Request::make('POST', admin_url('anasayfa/strip/durum'), ['_token' => Security::csrfToken()]),
@@ -24,14 +24,14 @@ test('F-14b', 'Panelden bölüm kapatılınca on yüzde görünmez', function ()
     );
     assertSame(302, $response->status(), 'Yönlendirme dönmeli');
 
-    assertNotContains('class="strip"', arc_home()->body(), 'Kapalı bölüm on yüzde basılmamalı');
+    assertNotContains('sector-links', arc_home()->body(), 'Kapalı bölüm on yüzde basılmamalı');
 
     // Geri ac.
     (new AdminHomeController())->toggle(
         Request::make('POST', admin_url('anasayfa/strip/durum'), ['_token' => Security::csrfToken()]),
         ['key' => 'strip']
     );
-    assertContains('class="strip"', arc_home()->body(), 'Yeniden açılınca görünmeli');
+    assertContains('sector-links', arc_home()->body(), 'Yeniden açılınca görünmeli');
 
     arc_logout_test();
 });
