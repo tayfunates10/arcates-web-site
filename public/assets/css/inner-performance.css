@@ -1,0 +1,11 @@
+/* R6 scroll-performance guard for sticky inner-page conversion cards. */
+
+.content-aside [data-sticky-cta],
+.article-aside [data-sticky-cta] {
+  background: var(--rd-dark);
+  box-shadow: none;
+  contain: paint;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
