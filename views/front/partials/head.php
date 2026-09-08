@@ -37,11 +37,6 @@ $head = $head ?? [];
 <meta property="og:url" content="<?= Security::e($head['canonical'] ?? url('/')) ?>">
 <meta property="og:locale" content="<?= Security::e($_lang ?? 'tr') ?>">
 <?php
-/*
- * Paylasim gorseli: sayfaya ozel gorsel yoksa varsayilan marka gorseli
- * kullanilir. Boylece her sayfa paylasimda gorselli cikar.
- * DOCS.md 17 (yayin oncesi teslim listesi)
- */
 $ogImage = (string) ($head['og_image'] ?? '');
 if ($ogImage === '') {
     $ogImage = path_url('/assets/img/og-default.png');
@@ -60,25 +55,18 @@ if ($ogImage === '') {
 <link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 
-<?php /* Google Fonts — preconnect + display=swap. DOCS.md 2, 6 */ ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
 
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/redesign.css')) ?>">
+<?php foreach ((array) ($head['styles'] ?? []) as $style): ?>
+<link rel="stylesheet" href="<?= Security::e(asset((string) $style)) ?>">
+<?php endforeach; ?>
 
-<?php /* Yapisal veri. Uydurma yorum veya AggregateRating yazilmaz. DOCS.md 11.2 */ ?>
 <?php foreach ($head['schemas'] ?? [] as $schema): ?>
 <script type="application/ld+json"><?= Security::json($schema) ?></script>
 <?php endforeach; ?>
 
-<?php
-/*
- * Tum gizli baslangic durumlari `html.js` sinifi altinda tanimlidir.
- * Bu satir ici script calismazsa hicbir icerik gizli kalmaz.
- * DOCS.md 7.1 kural 2 — icerik guvenlik politikasindaki karma bu govdeden
- * uretilir, bu yuzden metin Security::JS_FLAG_SCRIPT ile birebir aynidir.
- */
-?>
 <script><?= Security::JS_FLAG_SCRIPT ?></script>
