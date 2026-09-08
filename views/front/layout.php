@@ -51,5 +51,6 @@ use Arcates\Core\Security;
 ]) ?>
 
 <script src="<?= Security::e(asset('js/site.js')) ?>" defer></script>
+<script src="<?= Security::e(asset('js/redesign.js')) ?>" defer></script>
 </body>
 </html>

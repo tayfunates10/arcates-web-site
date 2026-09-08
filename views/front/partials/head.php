@@ -66,6 +66,7 @@ if ($ogImage === '') {
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
 
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/redesign.css')) ?>">
 
 <?php /* Yapisal veri. Uydurma yorum veya AggregateRating yazilmaz. DOCS.md 11.2 */ ?>
 <?php foreach ($head['schemas'] ?? [] as $schema): ?>
