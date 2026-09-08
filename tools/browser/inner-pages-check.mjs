@@ -22,6 +22,8 @@ const representativeRoutes = [
   '/referanslar',
   '/hakkimizda',
   '/iletisim',
+  '/sss',
+  '/tesekkurler',
   '/referanslar/akcay-pansiyon-rezervasyon-sitesi',
   '/blog/yerel-aramada-gorunurluk-isletme-profili',
 ];
@@ -145,7 +147,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
 {
   const ctx = await browser.newContext({ viewport: { width: 360, height: 780 } });
   const page = await ctx.newPage();
-  for (const route of ['/web-tasarim', '/edremit-web-tasarim', '/blog', '/referanslar', '/hakkimizda']) {
+  for (const route of ['/web-tasarim', '/edremit-web-tasarim', '/blog', '/referanslar', '/hakkimizda', '/sss', '/tesekkurler']) {
     await page.goto(BASE + route, { waitUntil: 'networkidle' });
     const state = await page.evaluate(() => {
       const title = document.querySelector('.page-hero .page__title');
