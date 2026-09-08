@@ -1,7 +1,7 @@
 <?php
 /**
  * Anasayfa isleme ve erisilebilirlik.
- * DOCS.md 5, 14.7 — testler F-14, F-15, F-16, E-03, E-05, E-07, O-01
+ * R5: hero → sector links → services → steps → works → coast → faq → cta.
  */
 declare(strict_types=1);
 
@@ -39,11 +39,39 @@ function arc_link_districts(Database $db): void
     }
 }
 
-test('F-P5-a', 'Anasayfa tüm bölümleriyle işlenir', function (): void {
+function arc_seed_sector_links(Database $db): void
+{
+    $db->run('DELETE FROM pages WHERE type = :type', [':type' => 'sector']);
+
+    $publishedId = $db->insert('pages', [
+        'type' => 'sector', 'template' => 'sector', 'status' => 'published', 'sort' => 1,
+    ]);
+    $db->insert('page_translations', [
+        'page_id' => $publishedId, 'lang' => 'tr', 'title' => 'Otel ve Pansiyon Web Sitesi', 'slug' => 'otel-pansiyon-web-sitesi',
+    ]);
+
+    $draftId = $db->insert('pages', [
+        'type' => 'sector', 'template' => 'sector', 'status' => 'draft', 'sort' => 2,
+    ]);
+    $db->insert('page_translations', [
+        'page_id' => $draftId, 'lang' => 'tr', 'title' => 'Taslak Sektör', 'slug' => 'taslak-sektor',
+    ]);
+}
+
+test('F-P5-a', 'R5 anasayfa temel bölümleriyle işlenir', function (): void {
     $db = arc_need_db(); HomeSection::ensureDefaults(); arc_link_districts($db);
     $response = arc_home(); assertSame(200, $response->status());
     $body = $response->body();
-    foreach (['class="hero"','class="strip"','class="cards"','coast__svg','class="steps"','section--cta','site-foot'] as $needle) assertContains($needle, $body);
+    foreach ([
+        'hero hero--redesign',
+        'sector-links__grid',
+        'cards cards--services',
+        'steps steps--connected',
+        'home-coast',
+        'home-cta',
+        'site-foot',
+    ] as $needle) assertContains($needle, $body);
+    assertContains('css/home-redesign.css', $body, 'R5 stili yalniz anasayfaya eklenmeli');
 });
 
 test('O-01', 'Anasayfada tek H1 bulunur ve başlık hiyerarşisi atlamaz', function (): void {
@@ -57,22 +85,27 @@ test('O-01', 'Anasayfada tek H1 bulunur ve başlık hiyerarşisi atlamaz', funct
     }
 });
 
-test('E-03', 'Dekoratif şekiller aria-hidden taşır, anlamlı görseller alt metni', function (): void {
+test('E-03', 'Hero sahnesi dekoratif, anlamlı görseller alt metinlidir', function (): void {
     arc_need_db(); HomeSection::ensureDefaults(); $body = arc_home()->body();
-    assertContains('<div class="shapes" aria-hidden="true">', $body);
-    if (preg_match('#<div class="shapes" aria-hidden="true">(.*?)</div>\s*</div>\s*</section>#s', $body, $m) === 1) assertNotContains('<h', $m[1]);
+    assertContains('<div class="hero-scene" aria-hidden="true">', $body);
+    assertContains('alt="" aria-hidden="true"', $body, 'Dekoratif hero logo gorseli acikca gizlenmeli');
+    if (preg_match('#<div class="hero-scene" aria-hidden="true">(.*?)</div>\s*</div>\s*</section>#s', $body, $m) === 1) {
+        assertNotContains('<h', $m[1]);
+    }
     assertSame(0, Arcates\Core\Seo::countImagesWithoutAlt($body));
 });
 
-test('E-07', 'SVG harita role ve açıklayıcı aria-label taşır', function (): void {
+test('E-07', 'SVG bölge grafiği role ve açıklayıcı aria-label taşır', function (): void {
     $db = arc_need_db(); HomeSection::ensureDefaults(); arc_link_districts($db); $body = arc_home()->body();
     assertContains('role="img"', $body); assertContains('aria-label="', $body);
+    assertContains('coast__note', $body);
+    assertContains('coğrafi sınır değildir', $body);
     if (preg_match('/<svg class="coast__svg"[^>]*aria-label="([^"]*)"/', $body, $m) === 1) {
         foreach (['Edremit','Akçay','Altınoluk','Burhaniye','Ayvalık','Gömeç','Havran','Balıkesir'] as $name) assertContains($name, $m[1]);
     } else assertTrue(false, 'coast__svg aria-label bulunamadi');
 });
 
-test('F-16', 'Bölge haritasındaki ilçe noktaları ilgili sayfaya bağlanır', function (): void {
+test('F-16', 'Bölge grafiğindeki ilçeler ilgili sayfalara bağlanır', function (): void {
     $db = arc_need_db(); HomeSection::ensureDefaults(); arc_link_districts($db);
     $figure = arc_extract_coast(arc_home()->body());
     assertContains('/edremit-web-tasarim', $figure); assertContains('/akcay-web-tasarim', $figure);
@@ -83,36 +116,101 @@ test('F-16', 'Bölge haritasındaki ilçe noktaları ilgili sayfaya bağlanır',
     $db->run('DELETE FROM pages');
 });
 
-test('F-14', 'Anasayfa bölümü kapatılınca on yüzde görünmez', function (): void {
+test('F-14', 'Anasayfa bölümü kapatılınca R5 bileşeni görünmez', function (): void {
     $db = arc_need_db(); HomeSection::ensureDefaults();
-    assertContains('class="strip"', arc_home()->body());
-    HomeSection::toggle('strip'); assertNotContains('class="strip"', arc_home()->body());
-    HomeSection::toggle('strip'); assertContains('class="strip"', arc_home()->body());
+    assertContains('sector-links', arc_home()->body());
+    HomeSection::toggle('strip'); assertNotContains('sector-links', arc_home()->body());
+    HomeSection::toggle('strip'); assertContains('sector-links', arc_home()->body());
 });
 
-test('F-15', 'Kahraman başlığı değişince anasayfada anında yansır', function (): void {
+test('F-15', 'Kahraman başlığı değişince R5 hero üzerinde anında yansır', function (): void {
     arc_need_db(); HomeSection::ensureDefaults();
     $content = HomeSection::content('hero', 'tr'); $content['line3'] = 'yepyeni bir başlık satırı'; HomeSection::saveContent('hero', 'tr', $content);
     $body = arc_home()->body();
-    assertContains('yepyeni bir başlık satırı', $body); assertContains('hero__line--accent', $body);
-    assertNotContains('<img', substr($body, (int) strpos($body, 'hero__title'), 900));
+    assertContains('yepyeni bir başlık satırı', $body);
+    assertContains('hero__line--accent', $body);
+    assertContains('hero-scene', $body);
 });
 
-test('F-P5-b', 'Bölüm sırası sabittir', function (): void {
-    arc_need_db(); HomeSection::ensureDefaults(); $body = arc_home()->body();
+test('F-P5-b', 'R5 bölüm sırası sabittir', function (): void {
+    $home = (string) file_get_contents(ARC_ROOT . '/views/front/home.php');
     $order = [];
-    foreach (['hero'=>'class="hero"','strip'=>'class="strip"','cards'=>'class="cards"','coast'=>'coast__svg','steps'=>'class="steps"','cta'=>'section--cta'] as $key=>$needle) {
-        $position = strpos($body, $needle); assertTrue($position !== false, 'Bolum bulunmali: ' . $key); $order[$key] = (int) $position;
+    foreach ([
+        'hero' => "partial('front/partials/hero'",
+        'strip' => "partial('front/partials/strip'",
+        'services' => "partial('front/partials/cards'",
+        'steps' => "partial('front/partials/steps'",
+        'works' => "partial('front/partials/works'",
+        'coast' => "partial('front/partials/coast'",
+        'faq' => "partial('front/partials/faq'",
+        'cta' => "partial('front/partials/cta'",
+    ] as $key => $needle) {
+        $position = strpos($home, $needle);
+        assertTrue($position !== false, 'Bolum bulunmali: ' . $key);
+        $order[$key] = (int) $position;
     }
     $values = array_values($order); $sorted = $values; sort($sorted); assertSame($sorted, $values);
 });
 
-test('A-08', 'Dar ekranda yatay kaydırma oluşmaz', function (): void {
-    $css = arc_site_css();
-    assertContains('overflow-x: hidden', $css, 'Govde yatay tasmayi kesmeli');
-    assertContains('width: min(calc(100% - (var(--sp-5) * 2)), var(--wrap))', $css, 'Sarmalayici spacing tokeni kullanmali');
-    assertContains('max-width: 100%', $css, 'Gorseller tasmamali');
-    // v1.1 breakpoint sozlesmesi: 720px = 45rem, sekil alani 288px = 18rem.
-    assertContains('@media (max-width: 45rem)', $css, '720px mobil kirilimi rem olarak bulunmali');
-    assertContains('.shapes { block-size: 18rem;', $css, 'Sekil kumesi 720 altinda 18rem olmali');
+test('F-R5-01', 'Sektör grubu yalnız yayınlanmış gerçek sayfalara bağlantı verir', function (): void {
+    $db = arc_need_db(); HomeSection::ensureDefaults(); arc_seed_sector_links($db);
+    $body = arc_home()->body();
+    assertContains('/otel-pansiyon-web-sitesi', $body);
+    assertContains('Otel ve Pansiyon Web Sitesi', $body);
+    assertNotContains('/taslak-sektor', $body);
+    assertNotContains('Taslak Sektör', $body);
+    assertNotContains('data-strip', $body);
+});
+
+test('F-R5-02', 'CTA WhatsApp hedefini yalnız NAP telefonundan üretir', function (): void {
+    $cta = (string) file_get_contents(ARC_ROOT . '/views/front/partials/cta.php');
+    assertContains("Settings::get('nap_phone'", $cta);
+    assertContains('https://wa.me/', $cta);
+    assertContains("preg_replace('/\\D+/'", $cta);
+    assertNotContains('905359120691', $cta, 'Telefon sabitlenmemeli; NAP tek kaynak olmali');
+});
+
+test('F-R5-03', 'Örnek site vitrini paneldeki gösterim limitine uyar', function (): void {
+    $db = arc_need_db(); HomeSection::ensureDefaults();
+    HomeSection::saveConfig('works', ['limit' => 4], true);
+
+    $ids = [];
+    for ($i = 1; $i <= 4; $i++) {
+        $id = $db->insert('projects', [
+            'client_name' => 'R5 Limit ' . $i,
+            'sector' => 'Test',
+            'status' => 'published',
+            'sort' => $i,
+        ]);
+        $ids[] = $id;
+        $db->insert('project_translations', [
+            'project_id' => $id,
+            'lang' => 'tr',
+            'title' => 'R5 Limit Proje ' . $i,
+            'slug' => 'r5-limit-proje-' . $i,
+            'excerpt' => 'Limit regresyon denetimi.',
+        ]);
+    }
+
+    $body = arc_home()->body();
+    assertSame(4, substr_count($body, '<li class="work'), 'Controller tarafinda getirilen 4 kayit vitrinde korunmali');
+    assertContains('R5 Limit Proje 4', $body, 'Dorduncu kayit sessizce kirpilmamali');
+
+    foreach ($ids as $id) {
+        $db->run('DELETE FROM project_translations WHERE project_id = :id', [':id' => $id]);
+        $db->run('DELETE FROM projects WHERE id = :id', [':id' => $id]);
+    }
+    HomeSection::saveConfig('works', ['limit' => 6], true);
+});
+
+test('A-08', 'Dar ekranda R5 bileşenleri responsive kurallara sahiptir', function (): void {
+    $site = arc_site_css();
+    $home = arc_home_css();
+    assertContains('overflow-x: hidden', $site, 'Govde yatay tasmayi kesmeli');
+    assertContains('width: min(calc(100% - (var(--sp-5) * 2)), var(--wrap))', $site);
+    assertContains('@media (max-width: 45rem)', $home);
+    assertContains('.hero-scene { min-height: 300px;', $home);
+    assertContains('.sector-links__grid { grid-template-columns: repeat(2, 1fr); }', $home);
+    assertContains('.cards--services { grid-template-columns: 1fr; }', $home);
+    assertContains('.works--showcase { grid-template-columns: 1fr; }', $home);
 });

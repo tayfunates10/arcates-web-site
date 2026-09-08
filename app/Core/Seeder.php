@@ -3,10 +3,10 @@
  * Kurulum tohum verisi.
  *
  * `/install` sirasinda varsayilan diller, ayarlar, anasayfa bolumleri, ilce
- * noktalari ve menu kayitlari yazilir.  DOCS.md 5, 8.3, 13
+ * noktalari ve menu kayitlari yazilir. DOCS.md 5, 8.3, 13
  *
  * Buradaki metinler yalnizca baslangic degerleridir; hepsi panelden
- * duzenlenebilir. Sablonlara sabit metin gomulmez.  DOCS.md 1 (ilke 4)
+ * duzenlenebilir. Sablonlara sabit metin gomulmez. DOCS.md 1 (ilke 4)
  */
 
 declare(strict_types=1);
@@ -67,13 +67,10 @@ final class Seeder
 
     // --- Anasayfa bolumleri -------------------------------------------------
 
-    /**
-     * Bolum sirasi sabittir (surum 1) ve DOCS.md 5'teki tabloyla birebir
-     * aynidir.
-     */
+    /** R5 bolum sirasi DOCS.md 5 ile birebir aynidir. */
     public static function sectionOrder(): array
     {
-        return ['header', 'hero', 'strip', 'services', 'coast', 'steps', 'works', 'faq', 'cta', 'footer'];
+        return ['header', 'hero', 'strip', 'services', 'steps', 'works', 'coast', 'faq', 'cta', 'footer'];
     }
 
     public function homeSections(): void
@@ -119,10 +116,10 @@ final class Seeder
     public static function sectionConfig(string $key): array
     {
         return match ($key) {
-            // Serit tam turu 34 saniye. DOCS.md 7.2
-            'strip'    => ['speed' => 34, 'mobile_speed_percent' => 70],
+            // R5 sektor grubu statiktir; hareket hizi ayari yoktur.
+            'strip'    => [],
             'services' => ['columns' => 3],
-            // SVG viewBox="0 0 1000 190". DOCS.md 5.2
+            // Temsili bolge grafiginin SVG viewBox degerleri. DOCS.md 5.2
             'coast'    => ['view_width' => 1000, 'view_height' => 190],
             'works'    => ['limit' => 6],
             'faq'      => ['limit' => 6],
@@ -161,6 +158,8 @@ final class Seeder
             ],
 
             'strip' => [
+                // Yayindaki sektor sayfalari varsa R5 bunlari gercek baglanti
+                // olarak kullanir; bu liste yalnizca statik yedektir.
                 'tags' => [
                     'Otel ve pansiyon', 'Zeytinyağı üreticisi', 'Restoran ve kafe',
                     'Emlak ofisi', 'Nakliyat', 'Tabela ve matbaa',
@@ -218,12 +217,6 @@ final class Seeder
                 ],
             ],
 
-            'coast' => [
-                'title'       => 'Körfezin her ilçesinde çalışıyoruz',
-                'description' => 'Yerinde görüşme, yerel arama bilgisi ve bölgeyi tanıyan bir ekip. '
-                    . 'İlçenizi seçin, o bölgeye özel çalışmalarımızı görün.',
-            ],
-
             'steps' => [
                 'title' => 'Nasıl çalışıyoruz',
                 'items' => [
@@ -249,6 +242,12 @@ final class Seeder
                 'title'       => 'Örnek siteler',
                 'description' => 'Körfezdeki farklı işletme türleri için hazırladığımız örnek kurgular.',
                 'cta'         => ['label' => 'Tüm örnekler', 'url' => '/referanslar'],
+            ],
+
+            'coast' => [
+                'title'       => 'Körfezin her ilçesinde çalışıyoruz',
+                'description' => 'Yerinde görüşme, yerel arama bilgisi ve bölgeyi tanıyan bir ekip. '
+                    . 'İlçenizi seçin, o bölgeye özel çalışmalarımızı görün.',
             ],
 
             'faq' => [
@@ -310,7 +309,7 @@ final class Seeder
 
     /**
      * Bolge haritasi noktalari. `map_x` degeri 0-1000 arasindadir
-     * (SVG viewBox genisligi).  DOCS.md 5.2
+     * (SVG viewBox genisligi). DOCS.md 5.2
      */
     public static function districtSeed(): array
     {

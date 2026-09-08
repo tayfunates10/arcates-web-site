@@ -3,8 +3,8 @@
  * Anasayfa.
  *
  * Sabit sirali bolumlerden olusur; her bolum panelden acilip kapatilabilir
- * ve icerigi duzenlenebilir. Sira degistirilemez (surum 1).
- * DOCS.md 5, 8.3, 11.2 — testler F-14, F-15, F-16
+ * ve icerigi duzenlenebilir. Sira, tam arayuz yeniden tasarim sozlesmesinde
+ * hero → strip → services → steps → works → coast → faq → cta'dir.
  */
 
 declare(strict_types=1);
@@ -19,6 +19,7 @@ use Arcates\Core\Settings;
 use Arcates\Models\District;
 use Arcates\Models\Faq;
 use Arcates\Models\HomeSection;
+use Arcates\Models\Page;
 use Arcates\Models\Project;
 
 final class HomeController extends Controller
@@ -42,6 +43,21 @@ final class HomeController extends Controller
         $faqs      = ($sections['faq']['is_active'] ?? false) ? Faq::forHome($lang, $faqLimit) : [];
         $districts = ($sections['coast']['is_active'] ?? false) ? District::forMap($lang) : [];
 
+        // Sektor seridi artik dekoratif metin dongusu degil, gercek ve
+        // yayinlanmis sektor sayfalarina giden sakin bir baglanti grubudur.
+        $sectors = [];
+        if ($sections['strip']['is_active'] ?? false) {
+            foreach (Page::listing('sector', $lang) as $sector) {
+                if (($sector['status'] ?? '') !== 'published' || ($sector['slug'] ?? '') === '' || ($sector['title'] ?? '') === '') {
+                    continue;
+                }
+                $sectors[] = [
+                    'title' => (string) $sector['title'],
+                    'slug'  => (string) $sector['slug'],
+                ];
+            }
+        }
+
         $heroContent = $sections['hero']['content'] ?? [];
         $title       = trim(implode(' ', array_filter([
             (string) ($heroContent['line1'] ?? ''),
@@ -62,9 +78,10 @@ final class HomeController extends Controller
             'projects'      => $projects,
             'faqs'          => $faqs,
             'districts'     => $districts,
+            'sectors'       => $sectors,
             'headerCta'     => $sections['header']['content']['cta'] ?? null,
             'footerContent' => $sections['footer']['content'] ?? [],
-            'body_class'    => 'is-home',
+            'body_class'    => 'is-home is-redesign-home',
             'head'          => [
                 'title'       => Seo::title($title !== '' ? $title : $siteName, (string) Settings::get('home_meta_title', '')),
                 'description' => Seo::description(
@@ -76,6 +93,7 @@ final class HomeController extends Controller
                 'robots'      => 'index,follow',
                 'hreflang'    => $this->homeHreflang(),
                 'schemas'     => $schemas,
+                'styles'      => ['css/home-redesign.css'],
             ],
         ]);
     }

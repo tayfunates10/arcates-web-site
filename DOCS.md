@@ -1,11 +1,11 @@
 # Arcates Web Site — Proje Dokümantasyonu
 
-**Depo:** `arcates-web-site`
-**Sürüm:** 1.0.0-draft
-**Ürün:** Arcates Yazılım kurumsal sitesi + yönetim paneli
+**Depo:** `arcates-web-site`  
+**Sürüm:** 1.0.0-rc1  
+**Ürün:** Arcates Yazılım kurumsal sitesi + yönetim paneli  
 **Hedef:** Edremit ve Balıkesir Körfez bölgesinde yerel aramalardan müşteri adayı toplamak
 
-Bu dosya deponun kökünde `DOCS.md` olarak durur. Claude Code her oturuma bu dosyayı okuyarak başlar ve sıradaki fazdan devam eder.
+Bu dosya deponun kökünde `DOCS.md` olarak durur ve uygulamanın kanonik teknik dokümantasyonudur. Ayrıntılı yeniden tasarımın uygulama envanteri `REDESIGN-R0-INVENTORY.md`, R5 ana sayfa davranışı ise bu belgenin 5–7. bölümleriyle birlikte okunur.
 
 > Bu depo `arcates-core` CMS ürününden ayrıdır. Burada üretilen ve genelleştirilebilir olan her modül, kararlı hale geldikten sonra core'a taşınır. Ters yönde kopyalama yapılmaz.
 
@@ -17,9 +17,9 @@ Bu dosya deponun kökünde `DOCS.md` olarak durur. Claude Code her oturuma bu do
 2. Teknoloji ve ortam
 3. Klasör yapısı
 4. Sayfa envanteri ve URL haritası
-5. Anasayfa şartnamesi (bölüm bölüm)
-6. Tasarım belirteçleri
-7. Animasyon şartnamesi
+5. Anasayfa şartnamesi
+6. Tasarım sistemi
+7. Hareket ve etkileşim şartnamesi
 8. Veritabanı şeması
 9. Yönetim paneli
 10. Güvenlik şartnamesi
@@ -36,17 +36,18 @@ Bu dosya deponun kökünde `DOCS.md` olarak durur. Claude Code her oturuma bu do
 ## 1. KAPSAM VE İLKELER
 
 ### Kapsam içinde
-Çok dilli (TR birincil, EN/DE/AR ikincil) kurumsal site, yönetilebilir anasayfa bölümleri, hizmet sayfaları, ilçe sayfaları, sektör sayfaları, referans/portföy, blog, SSS, teklif formu ve müşteri adayı takibi, gelişmiş SEO araçları, yönlendirme ve 404 yönetimi, ziyaretçi istatistiği, medya yönetimi, yönetim paneli.
+Çok dilli (TR birincil, EN/DE/AR ikincil) kurumsal site, yönetilebilir anasayfa bölümleri, hizmet sayfaları, ilçe sayfaları, sektör sayfaları, örnek site/referans alanı, blog, SSS, teklif formu ve müşteri adayı takibi, gelişmiş SEO araçları, yönlendirme ve 404 yönetimi, ziyaretçi istatistiği, medya yönetimi ve yönetim paneli.
 
 ### Kapsam dışında (sürüm 1)
-E-ticaret, ödeme, rezervasyon, üyelik, yorum sistemi.
+E-ticaret işlemi, ödeme, rezervasyon işlemi, üyelik ve yorum sistemi. Bunlar hizmet olarak anlatılabilir ancak Arcates kurumsal sitesinin kendi işlem modülü değildir.
 
 ### İlkeler
-1. **Bağımlılık yok.** Composer, framework, npm, derleme adımı yok.
+1. **Üretim bağımlılığı yok.** PHP uygulaması Composer/framework veya frontend build adımı gerektirmez. Playwright yalnız CI tarayıcı denetiminde geçici geliştirme bağımlılığıdır.
 2. **İlerlemeli iyileştirme.** JavaScript kapalıyken tüm içerik görünür ve site kullanılabilir olmalı.
 3. **Her veri doğrulanır, her çıktı kaçırılır.** İstisnasız.
-4. **Anasayfa dahil her metin panelden düzenlenebilir.** Şablona gömülü metin bırakılmaz.
+4. **İş içeriği yönetilebilir.** Şablona müşteri, metrik veya gerçekmiş gibi görünen veri gömülmez. Arayüz etiketleri `lang/*.php` içinde tutulabilir.
 5. **Hız, animasyondan önce gelir.** Bir efekt Core Web Vitals hedefini bozuyorsa efekt gider.
+6. **Görsel sistem rol tabanlıdır.** Aynı renk ailesi tüm kartları rastgele renklendirmek için değil, arka plan/eylem/durum rollerini ayırmak için kullanılır.
 
 ---
 
@@ -55,42 +56,48 @@ E-ticaret, ödeme, rezervasyon, üyelik, yorum sistemi.
 | Bileşen | Gereksinim |
 |---------|-----------|
 | PHP | 8.1 minimum, 8.2 önerilen |
-| Eklentiler | `pdo_mysql`, `mbstring`, `gd` veya `imagick`, `json`, `fileinfo` |
-| MySQL | 5.7+ / MariaDB 10.4+ |
+| Eklentiler | `pdo_mysql`, `mbstring`, `gd`, `json`, `fileinfo` |
+| MySQL | 5.7+ / MariaDB 10.4+; CI MySQL 8.0 |
 | Karakter seti | `utf8mb4` / `utf8mb4_unicode_ci` |
 | Sunucu | Apache + `mod_rewrite`, cPanel paylaşımlı hosting |
-| JS | Vanilla ES6, tek dosya |
-| CSS | Tek dosya, CSS değişkenleri |
+| JS | Vanilla ES6; ortak `site.js` + küçük davranış katmanları |
+| CSS | Derlemesiz katmanlı CSS: temel + ortak redesign + sayfaya özel katman |
 | Zaman dilimi | `Europe/Istanbul` |
 
-Harici kaynak yalnızca Google Fonts. Font yükleme `preconnect` + `display=swap` ile yapılır. Üçüncü taraf başka script eklenmez.
+Medya varyant üretimi gerçek uygulamada GD kullandığı için **GD zorunludur**; yalnız Imagick bulunması yeterli kabul edilmez.
+
+Harici kaynak yalnızca Google Fonts. Font yükleme `preconnect` + `display=swap` ile yapılır. Üçüncü taraf izleme scripti otomatik enjekte edilmez; dahili ziyaret ölçümü `visits`/`visits_daily` tablolarıyla yürür.
 
 ---
 
 ## 3. KLASÖR YAPISI
 
-```
+```text
 arcates-web-site/
 ├── public/
-│   ├── index.php                 # tek giriş noktası
+│   ├── index.php
 │   ├── .htaccess
-│   ├── robots.php                # /robots.txt yönlendirilir
+│   ├── robots.php
 │   ├── assets/
-│   │   ├── css/site.css
-│   │   ├── css/admin.css
-│   │   ├── js/site.js            # animasyon motoru
-│   │   ├── js/admin.js
+│   │   ├── css/
+│   │   │   ├── site.css              # temel ön yüz sistemi
+│   │   │   ├── redesign.css          # ortak yeniden tasarım katmanı
+│   │   │   ├── home-redesign.css     # yalnız R5 anasayfa
+│   │   │   ├── admin.css
+│   │   │   └── admin-redesign.css
+│   │   ├── js/
+│   │   │   ├── site.js               # reveal/header/coast/TOC/form
+│   │   │   ├── redesign.js           # ortak nav/form iyileştirmeleri
+│   │   │   ├── admin.js
+│   │   │   └── admin-redesign.js
 │   │   └── img/
-│   └── uploads/                  # git'te yok
+│   └── uploads/                       # git'te yok
 │       └── .htaccess
 ├── app/
-│   ├── Core/                     # App, Database, Router, Request, Response,
-│   │                             # Session, Auth, Security, Validator, View,
-│   │                             # Lang, Settings, Media, Seo, Mailer, Logger
+│   ├── Core/
 │   ├── Models/
-│   ├── Controllers/
-│   │   ├── Front/
-│   │   └── Admin/
+│   ├── Controllers/Front/
+│   ├── Controllers/Admin/
 │   └── helpers.php
 ├── views/
 │   ├── front/
@@ -102,27 +109,16 @@ arcates-web-site/
 │   │   ├── sector.php
 │   │   ├── project.php
 │   │   ├── post.php
-│   │   ├── 404.php
 │   │   └── partials/
-│   │       ├── head.php
-│   │       ├── header.php
-│   │       ├── footer.php
-│   │       ├── hero.php
-│   │       ├── strip.php
-│   │       ├── cards.php
-│   │       ├── coast.php
-│   │       ├── steps.php
-│   │       ├── works.php
-│   │       ├── faq.php
-│   │       └── cta.php
 │   └── admin/
 ├── config/
 │   ├── config.example.php
-│   ├── config.php                # git'te yok
+│   ├── config.php                    # git'te yok
 │   └── routes.php
 ├── db/
 │   ├── schema.sql
-│   └── migrations/
+│   ├── migrations/
+│   └── seed/
 ├── lang/  (tr.php, en.php, de.php, ar.php)
 ├── storage/  (logs, cache, backups)   # git'te yok
 ├── tests/
@@ -130,20 +126,27 @@ arcates-web-site/
 │   ├── unit/
 │   ├── security/
 │   └── functional/
-├── tools/  (backup.php, rollup_visits.php, deploy.sh)
+├── tools/
+│   ├── backup.php
+│   ├── purge_submissions.php
+│   ├── rollup_visits.php
+│   ├── preflight.php
+│   └── browser/
 ├── .github/workflows/ci.yml
 ├── CLAUDE.md
 ├── DOCS.md
+├── REDESIGN-R0-INVENTORY.md
+├── PRODUCTION.md
 ├── CHANGELOG.md
 ├── VERSION
 ├── README.md
 └── .gitignore
 ```
 
-`app/`, `config/`, `storage/`, `views/` web kökü dışındadır. Hosting buna izin vermiyorsa her birine `Require all denied` içeren `.htaccess` konur.
+`app/`, `config/`, `storage/`, `views/` web kökü dışındadır. `public/uploads/` içinde PHP çalıştırılması ayrıca `.htaccess` ile kapatılır.
 
 ### .gitignore
-```
+```text
 /config/config.php
 /public/uploads/*
 !/public/uploads/.htaccess
@@ -172,9 +175,9 @@ arcates-web-site/
 | `/fiyatlar` | `page` | web sitesi fiyatları |
 | `/referanslar` | `page` | — |
 | `/referanslar/{slug}` | `project` | — |
-| `/blog` , `/blog/{slug}` | `post` | uzun kuyruk |
+| `/blog`, `/blog/{slug}` | `post` | uzun kuyruk |
 | `/sss` | `page` | — |
-| `/kvkk` , `/gizlilik-politikasi` | `page` | `noindex` |
+| `/kvkk`, `/gizlilik-politikasi` | `page` | yasal bilgilendirme; mevcut yayın kararı `index,follow` |
 
 ### 4.2 Hizmet sayfaları — `service`
 `/web-tasarim`, `/e-ticaret-sitesi`, `/rezervasyon-sistemi`, `/seo-hizmeti`, `/coklu-dil-web-sitesi`, `/web-sitesi-bakim`
@@ -189,133 +192,147 @@ arcates-web-site/
 `/sitemap.xml`, `/robots.txt`, `/panel/*`
 
 ### 4.6 Dil önekleri
-Varsayılan dil (TR) öneksizdir. Diğer diller `/en/...`, `/de/...`, `/ar/...` önekiyle çalışır. İlçe sayfaları yalnızca TR'de yayınlanır; diğer dillerde `hreflang` verilmez.
+Varsayılan dil (TR) öneksizdir. Diğer diller `/en/...`, `/de/...`, `/ar/...` önekiyle çalışır. Yalnız gerçekten etkin ve çevirisi bulunan dil bağlantıları üst menü/hreflang setine girer. Arapça `dir="rtl"` kullanır.
 
 ### 4.7 Kritik kural — ilçe sayfaları
-Aynı metnin ilçe adı değiştirilerek çoğaltılması Google tarafından **doorway page** olarak değerlendirilir ve tüm sayfaları birden değersizleştirir. Her ilçe sayfası en az **500 kelime özgün metin**, o ilçeye ait en az bir referans veya örnek, ve o ilçeye özel SSS içermelidir. Panel bu şartı sağlamayan sayfayı yayınlarken uyarı gösterir (bkz. 9.6).
+Aynı metnin ilçe adı değiştirilerek çoğaltılması doorway page riski taşır. Her ilçe sayfası en az **500 kelime özgün metin**, o ilçeye ait en az bir gerçek/örnek çalışma ve o ilçeye özel SSS içermelidir. Panel benzerlik ve içerik eksiklerini yayın öncesinde uyarır.
 
 ---
 
-## 5. ANASAYFA ŞARTNAMESİ
+## 5. ANASAYFA ŞARTNAMESİ — R5
 
-Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp kapatılabilir ve içeriği düzenlenebilir. Sıra değiştirilemez (sürüm 1).
+Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp kapatılabilir; içerik bölümleri yönetilebilir. Ziyaretçi DOM sırası ile paneldeki sabit bölüm sırası aynıdır.
 
-| # | Bölüm | Anahtar | Yönetilebilir alanlar |
-|---|-------|---------|----------------------|
-| 1 | Üst menü | `header` | Menü öğeleri, buton metni ve hedefi |
-| 2 | Kahraman | `hero` | Rozet metni, 3 satır başlık, vurgulu satır, açıklama, 2 buton |
-| 3 | Sektör şeridi | `strip` | Etiket listesi, kayma hızı |
-| 4 | Hizmet kartları | `services` | 6 kart: ikon, renk, başlık, metin, bağlantı |
-| 5 | Bölge haritası | `coast` | Başlık, açıklama, ilçe listesi (ad + x konumu + hedef URL) |
-| 6 | Süreç | `steps` | 3 adım: başlık, metin |
-| 7 | Referanslar | `works` | Portföy kayıtlarından son N tanesi |
-| 8 | SSS | `faq` | Anasayfaya atanmış SSS kayıtları |
-| 9 | Çağrı bandı | `cta` | Başlık, metin, 2 buton |
-| 10 | Alt bilgi | `footer` | NAP bilgileri, çalışma saatleri, bağlantılar |
+| # | Bölüm | Anahtar | Davranış / kaynak |
+|---|-------|---------|-------------------|
+| 1 | Üst menü | `header` | Menü ağacı + teklif CTA |
+| 2 | Kahraman | `hero` | 3 satır H1, açıklama, 2 CTA, web+mobil yazılım sahnesi |
+| 3 | Sektör grubu | `strip` | Yayındaki gerçek `sector` sayfalarına statik bağlantılar; DB etiketi yalnız fallback |
+| 4 | Hizmet kartları | `services` | 6 kart; tek mavi görsel aile, ikon/başlık/metin/URL |
+| 5 | Süreç | `steps` | 1–2–3 bağlı tek yüzey |
+| 6 | Örnek siteler | `works` | 1 büyük öne çıkan + destek kartları, mevcut proje verisi |
+| 7 | Hizmet bölgeleri | `coast` | Temsili bağlantı grafiği + gerçek ilçe URL'leri + HTML link listesi |
+| 8 | SSS | `faq` | Masaüstünde iki kolonlu `details/summary` |
+| 9 | Çağrı bandı | `cta` | Koyu CTA; teklif + NAP telefondan üretilen WhatsApp |
+| 10 | Alt bilgi | `footer` | NAP, çalışma saatleri, bağlantılar |
 
-### 5.1 Kahraman bölümü teknik notları
-- `H1` üç satırdan oluşur, üçüncü satır degrade renklidir. Degrade metin **arama motorunda okunabilir olmalıdır**: `background-clip:text` kullanılır, görsel kullanılmaz.
-- Sağdaki şekil kümesi tamamen dekoratiftir, `aria-hidden="true"` taşır ve içeriğe bilgi eklemez.
-- `H1` LCP ögesidir. Görünürlüğü JavaScript'e bağlı olamaz; animasyon CSS ile sayfa yüklenirken başlar.
+### 5.1 Kahraman bölümü
+- Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
+- `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.
+- Sağ sahne **temsili yazılım arayüzü**dür: masaüstü web ekranı, mobil ekran ve Arcates işareti/bağlantı yayı. Sahte müşteri, sahte puan, sahte trafik veya performans metriği gösterilmez.
+- Sahne bilgi taşımadığı için `aria-hidden="true"`; içindeki dekoratif logo `<img alt="" aria-hidden="true">` kullanır.
+- H1 görünürlüğü JS'ye bağlı değildir. `html.js` sadece kısa giriş animasyonunu iyileştirir.
 
-### 5.2 Bölge haritası teknik notları
-- SVG `viewBox="0 0 1000 190"`, ilçe noktaları `data-x` değerine göre yerleşir.
-- Her ilçe noktası ilgili ilçe sayfasına bağlantı olmalıdır (iç link değeri taşır).
-- SVG `role="img"` ve tüm ilçe adlarını içeren `aria-label` taşır.
+### 5.2 Sektör ve hizmet bölgeleri
+- `strip` adı veri tabanında geriye uyumluluk için korunur; ön yüzde artık kayan şerit değildir.
+- `HomeController`, `Page::listing('sector')` sonucundan yalnız `status=published`, başlık ve slug'ı bulunan sektörleri alır. Bunlar gerçek URL taşıyan statik kartlardır.
+- Yayında sektör sayfası yoksa paneldeki `tags` listesi statik etiket olarak basılır; sahte URL üretilmez.
+- Bölge SVG'si **coğrafi sınır haritası değildir**. Görünür açıklama ve figcaption bunu açıkça belirtir.
+- SVG `viewBox="0 0 1000 190"`, `role="img"`, açıklayıcı `aria-label` taşır. İlçe noktaları ilgili yayınlanmış ilçe sayfasına bağlanır. Aynı bağlantılar HTML listesinde de bulunur.
 
-### 5.3 Mobil davranış
-- 940px altında ızgara tek sütuna düşer, şekil kümesi başlığın altına geçer.
-- 720px altında şekil kümesi yüksekliği %60'a iner, süzülme animasyonları kapanır (pil ve akıcılık için).
-- Sektör şeridi mobilde de akar ancak hızı %70'e düşer.
+### 5.3 Hizmetler, süreç, örnek siteler ve SSS
+- Hizmet kartları masaüstünde 3×2; renk varyantı içerikten gelse bile R5 sunumu tek mavi aileyle tutarlıdır.
+- Süreç üç ayrı kart hissi yerine aynı büyük yüzey üzerinde 1–2–3 akışı oluşturur.
+- Örnek sitelerde ilk kayıt öne çıkar; sonraki kayıtlar destek kartıdır. Gerçek görsel yoksa sahte ekran görüntüsü üretilmez, nötr boş durum kullanılır.
+- `projects_notice` gerçek müşteri işi olmayan örneklerin durumunu açıklamaya devam eder.
+- SSS native `details/summary` kullanır; JS olmadan da açılır/kapanır.
 
----
+### 5.4 CTA ve WhatsApp
+- Birincil CTA panel içeriğinden gelir.
+- WhatsApp hedefi yalnız `Settings::get('nap_phone')` değerinden üretilir; şablonda telefon sabitlenmez.
+- TR numarası `0XXXXXXXXXX` veya `5XXXXXXXXX` biçimindeyse `wa.me` için ülke koduna normalize edilir.
+- Telefon boşsa paneldeki ikinci CTA fallback olarak kullanılabilir.
 
-## 6. TASARIM BELİRTEÇLERİ
-
-`public/assets/css/site.css` başında CSS değişkeni olarak tanımlanır. Şablonda sabit renk kodu yazılmaz.
-
-| Değişken | Değer | Kullanım |
-|----------|-------|----------|
-| `--navy` | `#062244` | Ana metin, koyu bant |
-| `--blue` | `#0B4FA8` | Birincil marka rengi |
-| `--blue-bright` | `#1C7BF2` | Vurgu, bağlantı, degrade |
-| `--blue-soft` | `#7FB6FF` | Degrade ucu |
-| `--cyan` | `#1FC4E0` | İkincil vurgu |
-| `--mist` | `#EDF4FF` | Açık zemin |
-| `--mist-2` | `#F7FAFF` | Kahraman zemini |
-| `--white` | `#FFFFFF` | Zemin |
-| `--sun` | `#FFC13D` | Şekil, kart aksanı |
-| `--coral` | `#FF6B57` | Şekil, kart aksanı |
-| `--violet` | `#7C5CFF` | Şekil, kart aksanı |
-| `--mint` | `#25C989` | Durum, kart aksanı |
-| `--ink-soft` | `#4A6588` | İkincil metin |
-| `--line` | `rgba(11,79,168,.14)` | Kenarlık |
-
-**Tipografi:** Başlık `Sora` (600/700/800), gövde `Plus Jakarta Sans` (400/500/600). İkisi de tam Türkçe karakter desteği sunar. Üçüncü bir yazı tipi eklenmez.
-
-**Kontrast kuralı:** `--ink-soft` beyaz üzerinde AA seviyesini geçer. Renkli zemin üzerinde beyaz metin kullanılacaksa kontrast oranı 4.5:1 altına düşmemelidir. Yeni renk eklenirse test E-04 ile doğrulanır.
+### 5.5 Responsive davranış
+- 940px altında hero ve büyük iki kolonlu alanlar tek kolona geçer.
+- 720px altında hero sahnesi yaklaşık 300px yüksekliğe sıkışır; sektörler 2 kolon, hizmetler ve örnek-site vitrini tek kolon olur.
+- 480px altında sektör grubu da tek kolona düşebilir.
+- Bölge grafiği kendi kutusunda yatay kayabilir; belge seviyesinde yatay taşma oluşamaz.
+- RTL'de hero sahnesi ve sıra bağları mantıksal olarak terslenir; içerik okunabilirliği korunur.
 
 ---
 
-## 7. ANİMASYON ŞARTNAMESİ
+## 6. TASARIM SİSTEMİ
+
+Tasarım üç katmandır:
+
+1. `site.css`: temel tokenlar, layout, tipografi ve geriye uyumlu bileşenler.
+2. `redesign.css`: tüm ziyaretçi sitesi için ortak R1/R4 yüzey, kontrol, header/footer/form rolleri.
+3. `home-redesign.css`: yalnız `is-redesign-home` altında R5 anasayfa kompozisyonu.
+
+Panel kendi `admin.css` + `admin-redesign.css` katmanını kullanır. CSS'te build adımı yoktur.
+
+### 6.1 Ana roller
+| Rol | Değer / aile | Kullanım |
+|-----|---------------|----------|
+| Ana koyu | `#081426` | hero, güçlü CTA, navigasyon bağlamı |
+| Koyu yüzey | `#10233D` | koyu yüzey içi kart/derinlik |
+| Marka mavi | `#0B4FA8` | birincil eylem |
+| Parlak mavi | `#1C7BF2` | vurgu/focus/bağlantı |
+| Açık mavi | `#7FB6FF` | düşük yoğunluklu vurgu |
+| Açık zemin | `#EDF4FF`, `#F7FAFF`, beyaz | içerik yüzeyleri |
+| Durum renkleri | yeşil/sarı/kırmızı | yalnız başarı/uyarı/hata |
+
+Eski çok renkli kart paleti yeni ana sayfada dekor amacıyla kullanılmaz.
+
+### 6.2 Kontrol ve yüzey geometrisi
+- Buton/input benzeri kontroller: yaklaşık **14px** radius ailesi.
+- Büyük kart/panel/CTA yüzeyleri: yaklaşık **22px** radius ailesi.
+- Minimum mobil dokunma alanı 44px; ana kontroller 48px hedeflenir.
+- Birincil eylem dolu mavi, ikincil eylem çerçeveli/ghost; her bölümde bir baskın CTA olur.
+
+### 6.3 Tipografi
+Başlık `Sora` (600/700/800), gövde `Plus Jakarta Sans` (400/500/600). Üçüncü font eklenmez. H1/H2 ölçekleri responsive `clamp()` ile küçülür; mobilde satır kırılması güvenlidir.
+
+### 6.4 Kontrast ve odak
+Metin/zemin normal metinde WCAG AA 4.5:1 hedefler. `:focus-visible` halkası tüm bağlantı, buton ve form kontrollerinde görünür olmalıdır. Renk tek başına durum anlatmaz.
+
+---
+
+## 7. HAREKET VE ETKİLEŞİM ŞARTNAMESİ
 
 ### 7.1 Değişmez kurallar
-1. Yalnızca `transform` ve `opacity` animasyonu yapılır. `width`, `height`, `top`, `left`, `margin` animasyonu yasaktır.
-2. Tüm gizli başlangıç durumları `html.js` sınıfı altında tanımlanır. Bu sınıf `<head>` içindeki satır içi script ile eklenir. **JavaScript çalışmazsa hiçbir içerik gizli kalmaz.**
-3. `prefers-reduced-motion: reduce` tanımlıysa tüm animasyonlar kapanır, son durum gösterilir.
-4. Scroll dinleyicileri `{passive:true}` ile bağlanır ve `requestAnimationFrame` ile sınırlandırılır.
-5. Görünürlük tespiti `IntersectionObserver` ile yapılır; desteklenmiyorsa tüm ögeler görünür duruma alınır.
-6. Bir öge bir kez göründükten sonra `unobserve` edilir; geri kaydırmada tekrar oynatılmaz.
-7. Sonsuz döngü animasyonu yalnızca dekoratif şekillerde ve sektör şeridinde bulunur; metin üzerinde döngü animasyonu yoktur.
+1. Animasyon hedefi yalnız `transform`, `opacity`; bölge çizgisi için ayrıca `stroke-dashoffset` olabilir. Layout özelliği (`width`, `height`, `top`, `left`, `margin`, `padding`) animasyonu yasaktır.
+2. Gizli başlangıç durumu yalnız `html.js` altında tanımlanır. JS çalışmazsa hiçbir içerik gizli kalmaz.
+3. `prefers-reduced-motion: reduce` tüm giriş/reveal hareketini kapatır ve son durumu gösterir.
+4. Scroll dinleyicileri `{passive:true}` + `requestAnimationFrame` ile sınırlandırılır.
+5. Reveal `IntersectionObserver` kullanır; destek yoksa `revealAll()` çalışır.
+6. Görünmüş öğe `unobserve` edilir; geri kaydırmada yeniden oynatılmaz.
+7. **R5 anasayfada sonsuz animasyon yoktur.** Eski soyut şekil süzülmesi, hero parallax ve kayan sektör şeridi kaldırılmıştır.
+8. Hareket içerik hiyerarşisini destekler; dekoratif hareket kullanıcıyı bekletmez.
 
-### 7.2 Hareket belirteçleri
-| Belirteç | Değer |
-|----------|-------|
-| Yumuşatma | `cubic-bezier(.16,1,.3,1)` |
-| Başlık maskesi süresi | 1000 ms |
-| Kartlar için giriş süresi | 800 ms |
-| Kademe aralığı | 80 ms (kartlar), 140 ms (adımlar) |
-| Şekil giriş süresi | 950 ms |
-| Süzülme döngüsü | 7 s / 9 s |
-| Şerit tam tur | 34 s |
-| Görünürlük eşiği | `threshold: 0.15`, `rootMargin: 0px 0px -8% 0px` |
+### 7.2 R5 hareket süreleri
+| Öge | Süre / gecikme |
+|-----|----------------|
+| H1 satırı | 600ms, satır gecikmeleri 0 / 70 / 140ms |
+| Hero açıklaması | 440ms, yaklaşık 160ms gecikme |
+| Hero eylemleri | 440ms, yaklaşık 210ms gecikme |
+| Web/mobil/mark sahnesi | 700ms, yaklaşık 100 / 180 / 240ms gecikme |
+| Genel reveal | yaklaşık 460ms |
+| Görünürlük | `threshold: 0.15`, `rootMargin: 0px 0px -8% 0px` |
+| Header küçülme eşiği | 24px |
 
-### 7.3 Açılış sırası (anasayfa)
-| Sıra | Öge | Gecikme |
-|------|-----|---------|
-| 1 | Logo işareti döner | 0 ms |
-| 2 | Başlık satırı 1 | 80 ms |
-| 3 | Başlık satırı 2 | 180 ms |
-| 4 | Başlık satırı 3 (degrade) | 280 ms |
-| 5 | Kart şekli | 240 ms |
-| 6 | Daire, halka | 420–520 ms |
-| 7 | Açıklama metni | 560 ms |
-| 8 | Butonlar | 660 ms |
-| 9 | Kare, üçgen, hap | 640–860 ms |
-| 10 | Grafik çizgisi çizilir | 1150 ms |
+Hero içerik ve sahnesi **1.05 saniye içinde** yerleşmiş olmalıdır. Eski 1.4 saniyelik `HERO_SETTLE`, dekoratif şekil kuyruğu ve `PARALLAX_LIMIT` yoktur.
 
-Toplam açılış 1.4 saniyede tamamlanır. Bu süre uzatılmaz; kullanıcı içeriği beklemiş hissetmemelidir.
-
-**Uygulama notu.** 1.4 saniye *içerik* için geçerlidir: rozet, üç başlık satırı, açıklama ve
-butonlar bölüm 7.2'deki sürelerle en geç 1460 ms'te yerine oturur. Dekoratif şekiller ve
-grafik çizgisi, yine 7.2'deki 950 ms giriş süresi ve yukarıdaki gecikmelerle bir miktar
-sonra tamamlanır; bunlar `aria-hidden` taşıyan süslemelerdir ve kullanıcı onları beklemez.
-Bu iki tablo (7.2 süreleri ve 7.3 gecikmeleri) değiştirilmeden korunur.
-
-### 7.4 Scroll'a bağlı hareketler
+### 7.3 Scroll'a bağlı hareketler
 - **İlerleme çubuğu:** sayfa ilerlemesine göre `scaleX`.
-- **Sabit üst menü:** 24px sonrası küçülür ve alt çizgi kazanır.
-- **Bölge haritası:** figürün konumuna göre 0–1 arası ilerleme hesaplanır, `stroke-dashoffset` buna göre ayarlanır, ilçe noktaları çizgi geçtikçe yanar.
-- **Şekil sürüklenmesi:** `data-depth` değerine göre farklı hızda kayar, yalnızca ilk ekran yüksekliğinin 1.3 katı içinde çalışır.
+- **Sabit üst menü:** 24px sonrası küçük/stuck duruma geçer.
+- **Reveal:** içerik viewport'a girdikçe tek seferlik görünür olur.
+- **Hizmet bölgeleri:** figür konumuna göre 0–1 ilerleme; `stroke-dashoffset` güncellenir ve ilçe noktaları çizgi geçtikçe `is-lit` olur.
+- **TOC:** iç sayfa başlıkları görünürlüğe göre `aria-current="location"` alır.
+- **Sticky CTA:** son CTA görünürken tekrarlayan yan kart baskılanır.
+
+### 7.4 Mobil ve görünürlük
+Mobilde içerik sırf animasyon için aşağı itilmez. Hero sahnesi CSS ile küçülür. Sektör grubu statiktir; sekmenin arka plana alınmasıyla yönetilecek animasyon durumu yoktur.
 
 ### 7.5 Performans sınırı
-Animasyonlar açıkken masaüstünde 60 fps korunmalıdır. Test P-04 ile ölçülür. Düşen kare varsa önce süzülme döngüleri, sonra şekil sürüklenmesi kapatılır.
+Scroll sırasında pahalı layout animasyonu yoktur. Ana sayfa görsel katmanı CSS/DOM tabanlıdır; sahte büyük raster hero eklenmez. R8 kabul turunda LCP/CLS/INP ve ilk yük bütçesi ayrıca ölçülür.
 
 ---
 
 ## 8. VERİTABANI ŞEMASI
 
-Tüm tablolar `InnoDB`, `utf8mb4_unicode_ci`. Çeviri deseni: ana tablo dilden bağımsız alanları, `_translations` tablosu dile bağlı alanları tutar.
+Tüm tablolar `InnoDB`, `utf8mb4_unicode_ci`. Çeviri deseni: ana tablo dilden bağımsız alanları, `_translations` tablosu dile bağlı alanları tutar. Tam ve güncel kurulum kaynağı `db/schema.sql` dosyasıdır; aşağıdaki şema dokümanı temel sözleşmeyi özetler.
 
 ### 8.1 Sistem
 ```sql
@@ -355,8 +372,7 @@ CREATE TABLE activity_log (
   detail TEXT NULL,
   ip VARBINARY(16) NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_user_time (user_id, created_at),
-  CONSTRAINT fk_log_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+  INDEX idx_user_time (user_id, created_at)
 ) ENGINE=InnoDB;
 
 CREATE TABLE languages (
@@ -383,12 +399,11 @@ CREATE TABLE pages (
   template VARCHAR(60) NOT NULL DEFAULT 'page',
   status ENUM('draft','published') NOT NULL DEFAULT 'draft',
   cover_id INT UNSIGNED NULL,
-  district VARCHAR(60) NULL,          -- location sayfaları için
+  district VARCHAR(60) NULL,
   sort SMALLINT NOT NULL DEFAULT 0,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  INDEX idx_type_status (type, status),
-  CONSTRAINT fk_page_parent FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE SET NULL
+  INDEX idx_type_status (type, status)
 ) ENGINE=InnoDB;
 
 CREATE TABLE page_translations (
@@ -407,60 +422,30 @@ CREATE TABLE page_translations (
   schema_type VARCHAR(40) NULL,
   word_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
   UNIQUE KEY uq_lang_slug (lang, slug),
-  INDEX idx_page_lang (page_id, lang),
-  CONSTRAINT fk_pt_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
+  INDEX idx_page_lang (page_id, lang)
 ) ENGINE=InnoDB;
 ```
 
-`services`, `projects`, `posts`, `faqs` aynı deseni izler:
-
-```sql
-CREATE TABLE projects (              -- referanslar
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  client_name VARCHAR(150) NOT NULL,
-  sector VARCHAR(80) NULL,
-  district VARCHAR(60) NULL,
-  live_url VARCHAR(255) NULL,
-  cover_id INT UNSIGNED NULL,
-  status ENUM('draft','published') NOT NULL DEFAULT 'draft',
-  sort SMALLINT NOT NULL DEFAULT 0,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
-CREATE TABLE faqs (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  sort SMALLINT NOT NULL DEFAULT 0,
-  status TINYINT(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB;
-
-CREATE TABLE faq_page (              -- SSS'yi sayfaya bağlar
-  faq_id INT UNSIGNED NOT NULL,
-  page_id INT UNSIGNED NOT NULL,
-  PRIMARY KEY (faq_id, page_id),
-  CONSTRAINT fk_fp_faq FOREIGN KEY (faq_id) REFERENCES faqs(id) ON DELETE CASCADE,
-  CONSTRAINT fk_fp_page FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
-```
+`projects`, `posts`, `faqs` aynı ana kayıt + çeviri desenini izler. İlişkilerin tam foreign-key tanımı için `db/schema.sql` kaynak kabul edilir.
 
 ### 8.3 Anasayfa bölümleri
 ```sql
 CREATE TABLE home_sections (
-  `key` VARCHAR(40) PRIMARY KEY,     -- hero, strip, services, coast, steps, works, faq, cta
+  `key` VARCHAR(40) PRIMARY KEY,
   is_active TINYINT(1) NOT NULL DEFAULT 1,
   sort SMALLINT NOT NULL DEFAULT 0,
-  config JSON NULL,                  -- dilden bağımsız ayarlar (renk, hız, adet)
+  config JSON NULL,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 CREATE TABLE home_section_translations (
   section_key VARCHAR(40) NOT NULL,
   lang CHAR(2) NOT NULL,
-  content JSON NOT NULL,             -- {"badge":"...","line1":"...","cta1":{"label":"","url":""}}
-  PRIMARY KEY (section_key, lang),
-  CONSTRAINT fk_hst_section FOREIGN KEY (section_key) REFERENCES home_sections(`key`) ON DELETE CASCADE
+  content JSON NOT NULL,
+  PRIMARY KEY (section_key, lang)
 ) ENGINE=InnoDB;
 
-CREATE TABLE districts (             -- bölge haritası noktaları
+CREATE TABLE districts (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(60) NOT NULL,
   map_x SMALLINT NOT NULL,
@@ -472,122 +457,18 @@ CREATE TABLE districts (             -- bölge haritası noktaları
 ) ENGINE=InnoDB;
 ```
 
+R5 sabit anahtar sırası: `header, hero, strip, services, steps, works, coast, faq, cta, footer`. Eski kurulumdaki `sort` değerleri farklı olsa bile `HomeSection::all()` bu kanonik sırayı üretir. Yeni seed de aynı sırayı yazar. `strip` için hız konfigürasyonu artık üretilmez; sektör grubu statiktir.
+
 ### 8.4 Medya, form, SEO, istatistik
-```sql
-CREATE TABLE media (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  filename VARCHAR(190) NOT NULL,
-  path VARCHAR(255) NOT NULL,
-  mime VARCHAR(80) NOT NULL,
-  size INT UNSIGNED NOT NULL,
-  width SMALLINT UNSIGNED NULL,
-  height SMALLINT UNSIGNED NULL,
-  variants JSON NULL,
-  user_id INT UNSIGNED NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
-CREATE TABLE media_translations (
-  media_id INT UNSIGNED NOT NULL,
-  lang CHAR(2) NOT NULL,
-  alt VARCHAR(255) NULL,
-  title VARCHAR(255) NULL,
-  PRIMARY KEY (media_id, lang),
-  CONSTRAINT fk_mt_media FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE submissions (
-  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  form_key VARCHAR(60) NOT NULL DEFAULT 'contact',
-  name VARCHAR(150) NULL,
-  email VARCHAR(190) NULL,
-  phone VARCHAR(40) NULL,
-  service VARCHAR(80) NULL,
-  message TEXT NULL,
-  source_url VARCHAR(255) NULL,
-  referrer VARCHAR(255) NULL,
-  utm JSON NULL,
-  lang CHAR(2) NULL,
-  kvkk_consent TINYINT(1) NOT NULL DEFAULT 0,
-  status ENUM('new','contacted','quoted','won','lost') NOT NULL DEFAULT 'new',
-  note TEXT NULL,
-  ip VARBINARY(16) NULL,
-  user_agent VARCHAR(255) NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_status_time (status, created_at)
-) ENGINE=InnoDB;
-
-CREATE TABLE redirects (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  from_path VARCHAR(255) NOT NULL UNIQUE,
-  to_path VARCHAR(255) NOT NULL,
-  code SMALLINT NOT NULL DEFAULT 301,
-  hits INT UNSIGNED NOT NULL DEFAULT 0,
-  last_hit_at DATETIME NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
-CREATE TABLE not_found (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  path VARCHAR(255) NOT NULL UNIQUE,
-  hits INT UNSIGNED NOT NULL DEFAULT 1,
-  referrer VARCHAR(255) NULL,
-  last_seen DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
-CREATE TABLE visits (
-  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  path VARCHAR(255) NOT NULL,
-  session_hash CHAR(64) NOT NULL,
-  referrer VARCHAR(255) NULL,
-  device ENUM('desktop','mobile','tablet','bot') NOT NULL DEFAULT 'desktop',
-  lang CHAR(2) NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_time (created_at),
-  INDEX idx_path_time (path, created_at)
-) ENGINE=InnoDB;
-
-CREATE TABLE visits_daily (
-  day DATE NOT NULL,
-  path VARCHAR(255) NOT NULL,
-  views INT UNSIGNED NOT NULL DEFAULT 0,
-  sessions INT UNSIGNED NOT NULL DEFAULT 0,
-  PRIMARY KEY (day, path)
-) ENGINE=InnoDB;
-```
-
-`visits` tablosu hızla büyür. Günlük cron 90 günden eski kayıtları `visits_daily`'ye toplar ve siler.
+Ana tablolar: `media`, `media_translations`, `submissions`, `redirects`, `not_found`, `visits`, `visits_daily`. `visits` ham kayıtları saklama süresi sonunda günlük tabloya toplanır.
 
 ### 8.5 Menü
-```sql
-CREATE TABLE menu_items (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  menu_key VARCHAR(40) NOT NULL,     -- main, footer
-  parent_id INT UNSIGNED NULL,
-  page_id INT UNSIGNED NULL,
-  url VARCHAR(255) NULL,
-  target ENUM('_self','_blank') NOT NULL DEFAULT '_self',
-  sort SMALLINT NOT NULL DEFAULT 0,
-  INDEX idx_menu (menu_key, sort)
-) ENGINE=InnoDB;
-
-CREATE TABLE menu_item_translations (
-  menu_item_id INT UNSIGNED NOT NULL,
-  lang CHAR(2) NOT NULL,
-  label VARCHAR(120) NOT NULL,
-  PRIMARY KEY (menu_item_id, lang),
-  CONSTRAINT fk_mit_item FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
-```
+`menu_items` + `menu_item_translations` kullanılır; `main` ve `footer` ağaçları dil bazlı etiket taşır.
 
 ### 8.6 Göç kuralı
-`schema.sql` yalnızca sıfırdan kurulum içindir, elle düzenlenmez. Her şema değişikliği `db/migrations/YYYY_MM_DD_NNNN_aciklama.sql` olarak eklenir ve `migrations` tablosuna yazılır.
+`schema.sql` sıfırdan kurulum içindir. Sonraki şema veya kurulu-site varsayılan değişiklikleri `db/migrations/YYYY_MM_DD_NNNN_aciklama.sql` ile yapılır.
 
-**Varsayılan değer değişikliği de göç ister.** `Seeder::settings()` ve `Seeder::languages()` yalnızca eksik satırı ekler; var olan satıra dokunmaz. `Settings::get()` de veritabanı satırını okur, `Settings::defaults()` değerine düşmez. Bu yüzden `defaults()` içindeki bir değeri değiştirmek yalnızca yeni kurulumları etkiler, kurulmuş bir siteyi hiç etkilemez. Değişen değerin canlı siteye ulaşması gerekiyorsa aynı türde bir göç dosyası yazılır.
-
-Göç, yalnızca **eski varsayılanın aynen durduğu** ya da hiç doldurulmamış satırı günceller; koşulsuz `UPDATE` işletmenin elle girdiği değeri ezer ve yasaktır. Eksik satır `INSERT IGNORE` ile eklenir. Göç iki kez çalıştırıldığında sonucu değiştirmemelidir.
-
-Örnek: `2026_09_08_0001_ayar_ve_dil_uyumlastirma.sql` — kısaltılan adresi, boş bırakılmış telefonu, ilk fazın e-posta yer tutucusunu ve eksik `projects_notice` satırını uyumlaştırır; çevirisi girilmemiş dili yayından kaldırır. Testleri F-P17-a…e.
+Varsayılan değer göçü yalnız eski varsayılanın aynen durduğu veya alanın boş/eksik olduğu satıra dokunur; elle girilen işletme verisi koşulsuz `UPDATE` ile ezilemez. Göçler idempotent olmalıdır.
 
 ---
 
@@ -596,408 +477,267 @@ Göç, yalnızca **eski varsayılanın aynen durduğu** ya da hiç doldurulmamı
 Panel yolu `config.php` ile değiştirilebilir, varsayılan `/panel`.
 
 ### 9.1 Pano
-Son 30 gün ziyaretçi grafiği, yeni form sayısı, dönüşüm hunisi (yeni → arandı → teklif → kazanıldı), en çok ziyaret edilen 10 sayfa, son 404 kayıtları, taslak içerik sayısı, sistem durumu (PHP sürümü, disk, son yedek tarihi).
+Son 30 gün ziyaretçi grafiği, yeni form sayısı, dönüşüm hunisi, en çok ziyaret edilen sayfalar, son 404'ler, taslak içerik ve sistem durumu.
 
 ### 9.2 Anasayfa yöneticisi
-Bölüm listesi; her bölüm için aç/kapat anahtarı ve düzenleme ekranı. Kahraman bölümünde canlı önizleme. Bölge haritasında ilçe noktaları sürükle-bırak ile konumlandırılır, `map_x`/`map_y` otomatik hesaplanır.
+Bölüm listesi R5 sabit sırasını kullanır; her bölüm açılıp kapatılabilir. Kahraman metni/CTA'ları, sektör fallback etiketleri, hizmet içerikleri, süreç, örnek-site bölümü, bölge başlığı/açıklaması, SSS başlığı/açıklaması, CTA ve footer içerikleri yönetilebilir. Bölge noktaları `map_x`/`map_y` ile konumlandırılır.
+
+> `strip` anahtarı geriye uyumluluk için korunur. R5 ön yüzde kayma hızı kullanılmaz. R7 panel yeniden tasarımında eski hız kontrolleri arayüzden tamamen kaldırılacaktır; kayıtlı eski `speed` değerleri ön yüzde etkisizdir.
 
 ### 9.3 Sayfalar
-Tür filtresi (sayfa / hizmet / ilçe / sektör), dil sekmeleri, ağaç sıralama, tam SEO paneli, içerik skoru, Google sonuç önizlemesi.
-**Slug değişince otomatik 301 kaydı oluşturulur; bu davranış kapatılamaz.**
+Tür filtresi (sayfa / hizmet / ilçe / sektör), dil sekmeleri, tam SEO paneli, içerik skoru ve sonuç önizlemesi. **Slug değişince otomatik 301** oluşturulur.
 
-### 9.4 Referanslar, blog, SSS
-Referans: müşteri adı, sektör, ilçe, canlı site linki, görseller, yapılan işler.
-Blog: kategori, kapak, yayın tarihi, ileri tarihli yayın.
-SSS: soru, cevap, hangi sayfalara atanacağı.
-
-**Uygulama notu — örnek site sunumu.** Gerçek müşteri işleri yayına girene
-kadar `project` kayıtları ön yüzde "Örnek Siteler" olarak sunulur. Adres
-bölüm 4'teki gibi `/referanslar` ve `/referanslar/{slug}` olarak kalır; böylece
-gerçek işler eklendiğinde yönlendirme gerekmez. Ayarlardaki **Örnek site notu**
-(`projects_notice`) liste, detay, anasayfa bloğu ve ilçe sayfasındaki blokta
-görünür ve bu kayıtların teslim edilmiş müşteri işi olmadığını açıkça söyler.
-Gerçek işler yayına alındığında bu ayar boşaltılır, not kendiliğinden kaybolur.
+### 9.4 Örnek siteler, blog, SSS
+Örnek site: müşteri/örnek adı, sektör, ilçe, canlı site alanı, kapak/galeri ve içerik. Gerçek müşteri işleri girilene kadar `projects_notice` bunun örnek çalışma olduğunu açıklar. Blog ileri tarihli yayın destekler. SSS kayıtları sayfalara atanabilir.
 
 ### 9.5 Medya
-Çoklu yükleme, ızgara görünüm, alt metin alanı (boşsa uyarı rozeti), varyant bilgisi, kullanım yeri gösterimi, kullanımdaki dosya için silme uyarısı.
+Çoklu yükleme, alt metin, varyant bilgisi, kullanım yeri ve güvenli silme. Görsel işleme GD ile yapılır.
 
 ### 9.6 İçerik skoru
-Kaydı engellemez, eksikleri listeler.
-
-| Kontrol | Eşik | Sayfa türü |
-|---------|------|-----------|
-| Kelime sayısı | < 300 uyarı | tümü |
-| Kelime sayısı | < 500 **güçlü uyarı** | `location` |
-| İlçeye özel referans | yoksa uyarı | `location` |
-| Sayfaya atanmış SSS | yoksa uyarı | `location`, `service` |
-| H1 sayısı | 1 değilse uyarı | tümü |
-| Meta başlık | boş veya > 60 karakter | tümü |
-| Meta açıklama | boş veya > 160 karakter | tümü |
-| Alt metni eksik görsel | > 0 | tümü |
-| İç link | < 2 | tümü |
-| Slug | Türkçe karakter veya boşluk | tümü |
-| Benzerlik | Başka bir `location` sayfasıyla %70+ örtüşme | `location` |
-
-Son satır kritiktir: ilçe sayfalarının birbirine benzemesini yayın öncesinde yakalar.
+Kaydı engellemez; kelime sayısı, H1, meta, alt, iç link, slug, sayfaya bağlı SSS/referans ve ilçe benzerliği gibi eksikleri listeler. İlçe için 500 kelime, diğer içerik için 300 kelime eşiği kullanılır; ilçe benzerliği %70 ve üzeri güçlü uyarıdır.
 
 ### 9.7 SEO
-`robots.txt` düzenleyici, sitemap durumu ve yeniden üretme, varsayılan meta şablonu (`%title% | %site%`), Search Console ve Analytics kod alanı, tüm sayfaların meta durumu tablosu.
+`robots.txt`, sitemap, meta şablonu, Search Console doğrulama alanı ve sayfa meta durumları. `analytics_code` alanının dolu olması kendi başına üçüncü taraf analytics'in enjekte edildiği anlamına gelmez; mevcut üretim kararı dahili `visits` ölçümüdür.
 
 ### 9.8 Yönlendirmeler ve 404
-Yönlendirme listesi ve elle ekleme, döngü kontrolü, 404 listesi ve tek tıkla yönlendirmeye dönüştürme.
+Yönlendirme listesi, elle ekleme, döngü kontrolü, 404 listesi ve 404'ü yönlendirmeye dönüştürme. Bu alanlar admin yetkisindedir.
 
 ### 9.9 Formlar
-Kayıt listesi, durum etiketleri, not alanı, kaynak sayfa ve referrer, CSV dışa aktarma, saklama süresi dolan kayıtları toplu silme.
+Kayıt listesi, durum, not, kaynak/referrer/UTM, CSV dışa aktarma ve saklama süresi temizliği. Kişisel form kayıtları admin-only'dir.
 
 ### 9.10 İstatistik
-Günlük ziyaretçi ve görüntüleme, en çok girilen sayfalar, referans kaynakları, cihaz ve dil dağılımı, aylık CSV rapor. `user_agent` bot imzası taşıyorsa `device='bot'` işaretlenir ve grafiklere girmez.
+Günlük ziyaret/görüntüleme, sayfalar, kaynaklar, cihaz/dil dağılımı ve aylık CSV. Bot kayıtları grafiğe girmez.
 
 ### 9.11 Kullanıcılar, ayarlar, yedekleme
-Rol yönetimi (admin tam yetkili, editör yalnızca içerik), şifre değiştirme, işlem günlüğü.
-Ayarlar: site adı, NAP, sosyal hesaplar, çalışma saatleri, varsayılan dil, bakım modu, e-posta.
-Yedekleme: elle yedek alma, son 10 yedek, indirme, günlük otomatik yedek.
+Admin tam yetkili; editor içerik alanlarıyla sınırlıdır. Ayarlar NAP, sosyal, saatler, dil, bakım ve e-posta içerir. Yedekleme admin-only'dir; son 10 yedek ve geri yükleme desteklenir.
 
 ---
 
 ## 10. GÜVENLİK ŞARTNAMESİ
 
 ### 10.1 Veritabanı
-Tüm sorgular hazırlanmış ifade. PDO `ERRMODE_EXCEPTION`, `FETCH_ASSOC`, `EMULATE_PREPARES=false`. SQL içine değişken birleştirilmez. Tablo/sütun adı değişkenden gelecekse beyaz listeden geçer.
+Tüm sorgular hazırlanmış ifade. PDO `ERRMODE_EXCEPTION`, `FETCH_ASSOC`, `EMULATE_PREPARES=false`. Değişken tablo/sütun adı yalnız beyaz listeden gelebilir.
 
 ### 10.2 Çıktı
-Ekrana basılan her değer `Security::e()` ile kaçırılır. Zengin metin yalnızca admin girer ve izin verilen etiket listesiyle temizlenir. JSON çıktısı `JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT` ile üretilir.
+Ekrana basılan kullanıcı/veri içeriği `Security::e()` ile kaçırılır. Zengin metin izin listesiyle temizlenir. JSON güvenli HEX bayraklarıyla üretilir.
 
 ### 10.3 Oturum
-```php
-session_set_cookie_params([
-  'lifetime' => 0, 'path' => '/',
-  'secure' => true, 'httponly' => true, 'samesite' => 'Lax'
-]);
-session_name('arcsid');
-```
-Girişte `session_regenerate_id(true)`. 2 saat işlemsizlikte düşer. Çıkışta veri silinir, çerez geçmişe alınır.
+Çerez `HttpOnly`, `SameSite=Lax`; canlı HTTPS'te `secure=true`. Girişte session ID yenilenir, işlemsizlik süresi uygulanır, çıkışta oturum temizlenir.
 
 ### 10.4 Şifre ve giriş
-`password_hash` / `password_verify`, minimum 10 karakter. Aynı IP'den 5 başarısız denemede 15 dakika kilit, e-posta bazlı ayrı sayaç. Kullanıcı var/yok ayrımı sızdırılmaz.
+`password_hash` / `password_verify`, minimum 10 karakter. IP ve e-posta bazlı başarısız giriş kilidi; kullanıcı var/yok ayrımı sızdırılmaz.
 
 ### 10.5 CSRF
-Her POST formunda `_token`, kontrol `hash_equals` ile. Başarısızsa 419 ve `activity_log` kaydı.
+Her POST formunda `_token`; doğrulama `hash_equals` tabanlıdır. Başarısız istek 419 döner.
 
 ### 10.6 Dosya yükleme
-| Kontrol | Kural |
-|---------|-------|
-| Uzantı | `jpg, jpeg, png, webp, gif, svg, pdf` |
-| MIME | `finfo_file` ile doğrulanır, uzantıyla eşleşmeli |
-| Boyut | 5 MB |
-| Ad | `bin2hex(random_bytes(8))`, kullanıcı adı kullanılmaz |
-| SVG | `<script>`, `on*` nitelikleri, `xlink:href` temizlenir |
-| Klasör | `uploads/YYYY/MM/`, PHP çalıştırma kapalı |
+Uzantı + MIME beyaz listesi, 5MB sınırı, rastgele dosya adı, SVG script/event temizliği, yükleme klasöründe PHP çalıştırma yasağı.
 
 ### 10.7 Yapılandırma ve başlıklar
-Canlıda `display_errors=0`, `log_errors=1`. `config.php` web kökü dışında. `/install` kurulumdan sonra `storage/installed.lock` ile kapanır. `.git` web'den erişilemez.
-Başlıklar: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, `Content-Security-Policy` (panelde satır içi script yok).
+Canlıda hata gösterimi kapalı, log açık. `config.php` ve kaynak klasörler web kökü dışında. `/install` kurulum kilidiyle kapanır. Güvenlik başlıkları CSP dahil uygulanır.
 
 ### 10.8 Form ve spam
-Honeypot alanı, form açılış zaman damgası (3 saniyeden hızlı gönderim reddedilir), IP başına saatte 5 gönderim sınırı, sunucu tarafı doğrulama.
+Honeypot, en az 3 saniye form süresi, IP başına saatlik sınır ve sunucu tarafı validasyon. CSRF/rate-limit/honeypot tasarımla kaldırılmaz.
 
 ### 10.9 KVKK
-Aydınlatma metni ve gizlilik politikası sayfaları (`noindex` değil, indekslenir), formda önceden işaretli olmayan onay kutusu, `submissions` saklama süresi ayarı ve otomatik temizlik.
+Aydınlatma ve gizlilik sayfaları mevcut içerik/seed kararında `index,follow` olabilir; form onayı önceden işaretli değildir. `submissions` saklama süresi ve `purge_submissions.php` ile otomatik temizlik vardır.
 
-### 10.10 .htaccess
-```apache
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
-Options -Indexes
-<FilesMatch "\.(env|ini|log|sql|md)$">
-  Require all denied
-</FilesMatch>
-```
-`public/uploads/.htaccess`:
-```apache
-php_flag engine off
-<FilesMatch "\.(php|phtml|php[0-9]|phar|cgi|pl)$">
-  Require all denied
-</FilesMatch>
-```
+### 10.10 Sunucu kuralları
+HTTPS ve canonical host tek yöne 301; directory listing kapalı; hassas uzantılar ve upload içi PHP engelli.
 
 ---
 
 ## 11. SEO VE YAPISAL VERİ
 
 ### 11.1 Her sayfada
-Tek `H1`, `H2` ile bölümlenmiş yapı, 60 karakterlik title, 155 karakterlik description, canonical, breadcrumb (görsel + şema), en az 3 iç link, sayfaya özel SSS, net eylem çağrısı.
+Tek H1, anlamlı H2/H3 sırası, title/description, canonical, gerektiğinde breadcrumb, doğal iç linkler, görünür CTA. Arama motoru için içerik gizlenmez.
 
 ### 11.2 Şema tipleri
 | Sayfa | Şema |
 |-------|------|
 | Anasayfa, iletişim | `ProfessionalService` |
-| Hizmet sayfaları | `Service` |
-| İlçe sayfaları | `Service` + `areaServed` |
-| SSS bölümü olan her sayfa | `FAQPage` |
-| Referans detay | `CreativeWork` |
+| Hizmet | `Service` |
+| İlçe | `Service` + `areaServed` |
+| SSS olan sayfa | `FAQPage` |
+| Örnek site/referans detay | `CreativeWork` |
 | Blog yazısı | `Article` |
-| Tüm iç sayfalar | `BreadcrumbList` |
+| İç sayfalar | `BreadcrumbList` |
 
-`ProfessionalService` içindeki isim, adres, telefon **Google İşletme Profili ile birebir aynı** yazılmalıdır. Uydurma yorum veya `AggregateRating` işaretlemesi yapılmaz.
+Uydurma yorum/puan veya `AggregateRating` eklenmez. NAP şeması gerçek işletme verisini kullanır.
 
 ### 11.3 Çok dil
-`hreflang` seti her sayfada tüm dil karşılıklarını ve `x-default`'u içerir. Karşılığı olmayan dil için `hreflang` verilmez. Arapça sayfalarda `<html dir="rtl">` ve mantıksal CSS özellikleri (`margin-inline-start`) kullanılır.
-
-**Uygulama notu — dil yayın anahtarı.** Kurulum yalnızca varsayılan dili açık
-bırakır. Çevirisi girilmemiş bir dil açık olsaydı üst menüde görünür, ziyaretçi
-tıklayınca Türkçe içeriğe düşerdi. Diller Ayarlar ekranındaki **Yayındaki
-diller** anahtarından açılır; varsayılan dil kapatılamaz. Kapalı bir dil üst
-menüde görünmez, `hreflang` setine girmez ve `/en/...` gibi önekli adresleri
-404 döner.
+Yalnız etkin ve gerçek karşılığı olan diller `hreflang` setine girer; `x-default` varsayılan dile gider. Arapça `dir="rtl"` ve mantıksal yön davranışı kullanır.
 
 ### 11.4 Teknik
-`sitemap.xml` dinamik üretilir, yalnızca yayınlanmış içerik girer, `lastmod` `updated_at`'ten gelir. Görseller WebP, `loading="lazy"`, `width`/`height` yazılı. Slug üretiminde Türkçe karakter dönüşümü: `ç→c, ğ→g, ı→i, İ→i, ö→o, ş→s, ü→u`.
+`sitemap.xml` dinamik, taslak/noindex içerik dışarıda. Görsellerde width/height ve uygun lazy stratejisi. Hero/LCP içeriği lazy ile geciktirilmez. Türkçe slug dönüşümü güvenli ASCII üretir.
 
 ---
 
 ## 12. FORM VE DÖNÜŞÜM TAKİBİ
 
-Teklif formu alanları: ad, telefon, e-posta, ilgilenilen hizmet (seçim), mesaj, KVKK onayı, honeypot, zaman damgası, CSRF token.
+Teklif formu: ad, telefon, e-posta, hizmet, mesaj, KVKK, honeypot, açılış zamanı ve CSRF.
 
-Kayıt sırasında otomatik saklananlar: `source_url` (formun gönderildiği sayfa), `referrer`, `utm` parametreleri, dil, IP, tarayıcı.
+Sunucu hataları alanlarla `aria-invalid` + `aria-describedby` üzerinden bağlıdır; hata özeti odaklanabilir. Başarılı gönderimde çift gönderim kilidi ve yerelleştirilmiş gönderiliyor etiketi vardır.
 
-Bu alanlar hangi ilçe veya hizmet sayfasının gerçekten iş getirdiğini gösterir. Panelde dönüşüm raporu bu veriden üretilir.
-
-Gönderim sonrası: veritabanına kayıt, yöneticiye e-posta, kullanıcıya teşekkür sayfası (`/tesekkurler`, `noindex`). Teşekkür sayfası ayrı URL olmalıdır ki dönüşüm ölçülebilsin.
+Kayıt sırasında `source_url`, referrer, UTM, dil, IP ve user-agent saklanır. Teşekkür sayfası `/tesekkurler` ve `noindex`tir.
 
 ---
 
 ## 13. KURULUM VE DAĞITIM
 
 ### İlk kurulum
-1. Depo klonlanır
-2. `config/config.example.php` → `config/config.php`, veritabanı bilgileri girilir
-3. `/install` açılır: bağlantı testi, `schema.sql` uygulanır, ilk admin oluşturulur, varsayılan diller ve anasayfa bölümleri eklenir
-4. `storage/installed.lock` yazılır
-5. `storage/` ve `public/uploads/` yazılabilir yapılır
+1. Repo alınır.
+2. `config/config.example.php` → `config/config.php`; DB ve ortam ayarları girilir.
+3. `/install`: gereksinimler, şema, ilk admin, varsayılan içerik.
+4. `storage/installed.lock` oluşturulur.
+5. `storage/` ve `public/uploads/` izinleri doğrulanır.
+6. Üretimde `php tools/preflight.php` çalıştırılır.
 
-### cPanel
-Alan adı document root'u `public/` klasörüne yönlendirilir. PHP 8.1+ seçilir.
-```
+### cPanel / cron
+Document root `public/` olmalıdır. PHP 8.1+ ve GD etkin olmalıdır.
+
+```cron
 0 3 * * * php /home/kullanici/arcates-web-site/tools/backup.php
+15 3 * * * php /home/kullanici/arcates-web-site/tools/purge_submissions.php
 30 3 * * * php /home/kullanici/arcates-web-site/tools/rollup_visits.php
 ```
+
+Canlı yayın için ayrıca `PRODUCTION.md` kontrol listesi geçerlidir.
 
 ---
 
 ## 14. TEST PLANI
 
-### 14.1 Çalıştırıcı
-Composer yok. `tests/run.php` basit bir çalıştırıcıdır; `test()`, `assertTrue()`, `assertSame()` yardımcılarını sunar. Başarısızlıkta çıkış kodu 1 döner, böylece CI kırılır.
-Çalıştırma: `php tests/run.php`
+### 14.1 Çalıştırıcı ve CI
+Yerel: `php tests/run.php`. CI MySQL 8.0 servisinde tüm PHP dosyalarını `php -l` ile tarar. CI ortamında **ATLANDI** kabul edilmez. PHP/MySQL job başarıya ulaşmadan browser job başlamaz.
+
+Browser job CI veritabanını kurar, seed eder, PHP built-in server açar ve Playwright/Chromium ile `animation-check.mjs` + `design-check.mjs` çalıştırır.
 
 ### 14.2 Birim testleri (U)
-| ID | Kapsam | Beklenen |
-|----|--------|----------|
-| U-01 | `Security::slug('Çanakkale Yolu')` | `canakkale-yolu` |
-| U-02 | `Security::slug('İzmir ŞŞ Ğ')` | `izmir-ss-g` |
-| U-03 | `Security::e('<b>')` | `&lt;b&gt;` |
-| U-04 | `Validator` `email` geçersiz değerle | başarısız |
-| U-05 | `Validator` `required` boş dize | başarısız |
-| U-06 | Slug çakışması | ikinci kayıt `-2` eki alır |
-| U-07 | `Database::insert` + okuma | veri aynen döner |
-| U-08 | `Media` uzantı beyaz listesi | `.php` reddedilir |
-| U-09 | `Seo::score` 200 kelimeyle | kelime uyarısı döner |
-| U-10 | `Seo::score` `location` türü 400 kelimeyle | güçlü uyarı döner |
-| U-11 | İlçe benzerlik ölçümü | %70 üzeri örtüşme yakalanır |
-| U-12 | `Router` `{slug}` eşleşmesi | doğru handler çağrılır |
-| U-13 | `hreflang` üretimi eksik çeviriyle | eksik dil listeye girmez |
-| U-14 | Sitemap üretimi | taslak içerik yer almaz |
-| U-15 | Bot tespiti | `Googlebot` `device='bot'` işaretlenir |
+Slug/kaçış/validator/router/database/SEO/hreflang/sitemap/bot gibi çekirdek işlevler `tests/unit` ve ilgili functional testlerde doğrulanır.
 
 ### 14.3 Güvenlik testleri (S)
-| ID | Senaryo | Beklenen |
-|----|---------|----------|
-| S-01 | Giriş alanına `' OR '1'='1` | başarısız, log kaydı |
-| S-02 | Sayfa başlığına `<script>alert(1)</script>` | metin olarak görünür, çalışmaz |
-| S-03 | CSRF token'sız POST | 419 |
-| S-04 | Geçersiz CSRF token | 419 |
-| S-05 | `test.php` yükleme | reddedilir |
-| S-06 | `resim.php.jpg` yükleme | MIME kontrolünde reddedilir |
-| S-07 | `uploads/` içindeki PHP dosyasına erişim | 403 |
-| S-08 | 6 hatalı giriş | 15 dakika kilit |
-| S-09 | Oturumsuz `/panel/sayfalar` | girişe yönlendirir |
-| S-10 | Editör rolüyle `/panel/kullanicilar` | 403 |
-| S-11 | `config/config.php` tarayıcıdan | 403 veya 404 |
-| S-12 | `/.git/config` | 403 veya 404 |
-| S-13 | Kurulum sonrası `/install` | kapalı |
-| S-14 | Formu 1 saniyede gönderme | reddedilir |
-| S-15 | Honeypot dolu gönderim | sessizce reddedilir |
-| S-16 | Aynı IP'den saatte 6. gönderim | reddedilir |
-| S-17 | Zararlı SVG yükleme | script ve `on*` temizlenir |
-| S-18 | Yönlendirme döngüsü ekleme (`/a → /b`, `/b → /a`) | panel engeller |
+CSRF, XSS/output escaping, upload MIME/uzantı, SVG temizliği, install lock, login rate limit, rol erişimi, editor privacy, redirect admin-only ve CSV formula injection test edilir.
 
 ### 14.4 İşlevsel testler (F)
+Sayfa yayın/taslak/slug-301, dil/RTL, medya, menü, anasayfa bölüm aç-kapat, hero içerik güncelleme, ilçe linkleri, form, sitemap, redirect/404, örnek site/blog/SSS, istatistik/yedekleme ve seed/göç sözleşmeleri kapsam dahilindedir.
+
+R5 ek sözleşmeleri:
+- `F-P5-a`: R5 temel bölümleri işlenir.
+- `F-P5-b`: sabit sıra `hero → strip → services → steps → works → coast → faq → cta`.
+- `F-R5-01`: sektör grubu yalnız yayınlanmış gerçek sektör sayfalarına bağlantı verir.
+- `F-R5-02`: WhatsApp hedefi yalnız NAP telefonundan üretilir.
+
+### 14.5 Hareket testleri (A)
 | ID | Senaryo | Beklenen |
 |----|---------|----------|
-| F-01 | Sayfa oluştur ve yayınla | ön yüzde görünür |
-| F-02 | Taslağa al | ön yüzde 404 |
-| F-03 | Slug değiştir | eski adres 301 ile yeniye gider |
-| F-04 | İngilizce çeviri ekle | `/en/slug` çalışır, hreflang doğru |
-| F-05 | Arapça sayfa | `dir="rtl"`, düzen bozulmaz |
-| F-06 | Görsel yükle | thumb, medium, large, webp üretilir |
-| F-07 | Kullanımdaki görseli sil | uyarı verir |
-| F-08 | Form gönder | kayıt oluşur, e-posta gider, `source_url` doğru |
-| F-09 | Form durumunu "kazanıldı" yap | dönüşüm raporuna yansır |
-| F-10 | Menü sıralaması değiştir | ön yüze yansır |
-| F-11 | Olmayan adres | 404 sayfası, `not_found` kaydı artar |
-| F-12 | 404 kaydını yönlendirmeye çevir | adres yeni hedefe gider |
-| F-13 | `sitemap.xml` | yayınlanmışlar var, taslaklar yok |
-| F-14 | Anasayfa bölümünü kapat | bölüm ön yüzde görünmez |
-| F-15 | Kahraman başlığını değiştir | anasayfada anında yansır |
-| F-16 | Bölge haritasına ilçe ekle | nokta doğru konumda çıkar ve sayfaya bağlanır |
-| F-17 | Bakım modu | ziyaretçi bakım sayfası, admin site görür |
-| F-18 | Türkçe karakterli uzun içerik | kayıt ve okuma bozulmaz |
-| F-19 | Yedek al ve geri yükle | veri kaybı yok |
-| F-20 | İlçe sayfası 400 kelimeyle yayınlanmak istenir | güçlü uyarı gösterilir |
+| A-01 | JavaScript kapalı | tüm içerik görünür |
+| A-02 | `prefers-reduced-motion: reduce` | reveal/hero hareketi kapalı, son durum görünür |
+| A-03 | R5 hero açılışı | web+mobil sahne ve içerik 1.05s içinde yerleşir; eski shape/parallax yok |
+| A-04 | Bölge grafiği scroll | çizgi ilerler, noktalar yanar |
+| A-05 | Geri kaydırma | reveal yeniden kapanmaz/oynamaz |
+| A-06 | Sektör alanı | tab/visibility animasyonu yok; statik grup |
+| A-07 | Resize | bölge çizgi uzunluğu tekrar ölçülür |
+| A-08 | 360px | belge yatay taşmaz, hero sahnesi viewport içinde, hizmetler tek kolon |
+| A-09 | IntersectionObserver yok | tüm reveal öğeleri görünür |
+| A-10 | Sektörler | statik, gerçek URL'li, sonsuz marquee yok |
 
-### 14.5 Animasyon testleri (A)
-| ID | Senaryo | Beklenen |
-|----|---------|----------|
-| A-01 | JavaScript kapalı | tüm içerik görünür, hiçbir bölüm gizli değil |
-| A-02 | `prefers-reduced-motion: reduce` | animasyon yok, son durum görünür |
-| A-03 | Anasayfa açılışı | 1.4 saniyede tamamlanır |
-| A-04 | Bölge haritası scroll | çizgi ilerler, ilçeler sırayla yanar |
-| A-05 | Geri kaydırma | görünmüş ögeler tekrar oynatılmaz |
-| A-06 | Sekmeyi arka plana al ve dön | animasyon takılmaz, düzen bozulmaz |
-| A-07 | Tarayıcı penceresini yeniden boyutlandır | harita çizgi uzunluğu yeniden hesaplanır |
-| A-08 | 360px genişlik | şekiller taşmaz, yatay kaydırma oluşmaz |
-| A-09 | `IntersectionObserver` desteklenmeyen tarayıcı | tüm ögeler görünür duruma alınır |
-| A-10 | Sektör şeridi | kesintisiz döner, sıçrama yok |
-
-### 14.6 Performans testleri (P)
+### 14.6 Performans hedefleri (P)
 | ID | Ölçüm | Hedef |
 |----|-------|-------|
-| P-01 | Anasayfa yükleme (masaüstü) | < 2 sn |
-| P-02 | PageSpeed mobil / masaüstü | ≥ 70 / ≥ 90 |
-| P-03 | CLS | < 0.1 |
-| P-04 | Scroll sırasında kare hızı | 60 fps korunur |
-| P-05 | Sayfa başına SQL sorgusu | < 25, N+1 yok |
-| P-06 | Toplam ilk yük | < 800 KB |
-| P-07 | LCP | < 2.5 sn |
+| P-01 | Anasayfa yükleme masaüstü | < 2 sn hedef |
+| P-02 | Lighthouse/PageSpeed | mobil ≥90 hedef, masaüstü daha yüksek |
+| P-03 | CLS | ≤0.1 |
+| P-04 | Scroll | akıcı; tasarım browser testi ≥50 fps alt sınırını gözler |
+| P-05 | SQL | N+1 yok; gereksiz sorgu yok |
+| P-06 | İlk yük | mümkün olduğunca küçük; R8 bütçesiyle ölçülür |
+| P-07 | LCP | ≤2.5 sn |
+| P-08 | INP | ≤200 ms hedef |
 
-### 14.7 Erişilebilirlik testleri (E)
-| ID | Senaryo | Beklenen |
-|----|---------|----------|
-| E-01 | Klavye ile tam gezinme | tüm bağlantı ve butonlara erişilir |
-| E-02 | Odak halkası | her odaklanabilir ögede görünür |
-| E-03 | Görseller | anlamlı `alt`, dekoratifler `aria-hidden` |
-| E-04 | Renk kontrastı | metin/zemin ≥ 4.5:1 |
-| E-05 | Başlık hiyerarşisi | tek H1, seviye atlanmıyor |
-| E-06 | Form etiketleri | her alan `label` ile bağlı |
-| E-07 | SVG harita | `role="img"` ve açıklayıcı `aria-label` |
+### 14.7 Erişilebilirlik (E)
+Klavye tam gezinme, görünür focus, anlamlı alt/dekoratif aria-hidden, AA kontrast, tek H1 ve sıra, form label/hata bağı, SVG bölge açıklaması, mobile touch hedefleri, RTL ve %200 zoom R8'de birlikte doğrulanır.
 
-### 14.8 SEO testleri (O)
-| ID | Senaryo | Beklenen |
-|----|---------|----------|
-| O-01 | Her sayfada tek H1 | sağlanır |
-| O-02 | Title ve description | boş yok, uzunluk sınırında |
-| O-03 | Canonical | her sayfada doğru ve mutlak URL |
-| O-04 | Yapısal veri | Rich Results testinde hatasız |
-| O-05 | `robots.txt` | sitemap satırı içerir, panel yolunu engeller |
-| O-06 | Yinelenen içerik | ilçe sayfaları arası benzerlik %70 altında |
-| O-07 | Kırık iç link | yok |
-| O-08 | `http` ve `www` varyantları | tek hedefe 301 |
+### 14.8 SEO (O)
+Tek H1, meta, canonical, yapılandırılmış veri, robots/sitemap, benzerlik, kırık iç link ve canonical host yönlendirmeleri test edilir.
 
 ### 14.9 Kabul kapısı
-Bir modül şu şartlar sağlanmadan `main` dalına giremez:
-- İlgili U testleri geçiyor
-- S testlerinin tamamı geçiyor
-- Değişiklik ön yüzü etkiliyorsa A ve E testleri geçiyor
-- `php -l` tüm dosyalarda temiz
-- `CHANGELOG.md` güncellendi
-- `DOCS.md`'de eksik varsa güncellendi
+Bir modül şu şartlar sağlanmadan `main`e girmez:
+- Tüm ilgili PHP/MySQL testleri geçer, atlanan test yoktur.
+- Ön yüz değiştiyse gerçek Chromium browser job geçer.
+- `php -l` tüm PHP dosyalarında temizdir.
+- JS kapalı ve reduced-motion durumları korunur.
+- Güvenlik/SEO/veri sözleşmesinde regresyon yoktur.
+- `CHANGELOG.md` ve `DOCS.md` günceldir.
+- PR merge edilebilir durumdadır; merge sonrası `main` CI tekrar doğrulanır.
 
 ---
 
 ## 15. GİT AKIŞI VE CI
 
 ### Dallar
-`main` (korumalı, her an yayına çıkabilir), `dev`, `feature/<modul>`, `fix/<konu>`
+`main` her an yayın adayıdır. Büyük redesign işleri modül branch/PR'larında yürütülür (`redesign/r0-r4-foundation`, `redesign/r5-home`, devamında R3/R6/R7/R8).
 
 ### Commit biçimi
-```
-feat(home): bolge haritasi scroll animasyonu eklendi
-fix(seo): hreflang eksik dilde uretiliyordu
-test(security): svg temizleme testleri eklendi
-docs(db): home_sections tablosu belgelendi
+```text
+feat(redesign): rebuild home hero
+fix(redesign): align section order
+test(browser): validate R5 home behavior
+docs(redesign): align R5 contract
 ```
 
 ### PR kontrol listesi
-- [ ] Tek modüle dokunuyor
-- [ ] Testler eklendi ve geçiyor
-- [ ] Güvenlik listesi ilgili maddeleri kontrol edildi
-- [ ] `DOCS.md` güncel
-- [ ] Yeni bağımlılık eklenmedi
-- [ ] JS kapalıyken sayfa çalışıyor
+- [ ] Kapsam tek modül/fazda tutuldu
+- [ ] Testler eklendi ve geçti
+- [ ] Güvenlik/SEO sözleşmesi korunuyor
+- [ ] `DOCS.md` + `CHANGELOG.md` güncel
+- [ ] Üretim bağımlılığı eklenmedi
+- [ ] JS kapalı/reduced-motion çalışıyor
+- [ ] Browser CI yeşil
 
-### .github/workflows/ci.yml
-```yaml
-name: CI
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: pdo_mysql, mbstring, gd, fileinfo
-      - name: Sozdizimi kontrolu
-        run: find app views config tests -name "*.php" -print0 | xargs -0 -n1 php -l
-      - name: Testler
-        run: php tests/run.php
-```
+### `.github/workflows/ci.yml`
+Gerçek workflow kanoniktir. Özet:
+1. MySQL 8.0 service.
+2. PHP 8.2 + `pdo_mysql, mbstring, gd, fileinfo`.
+3. Tüm PHP dosyalarında syntax kontrolü.
+4. `tests/run.php`; skip/ATLANDI varsa fail.
+5. Test artifact.
+6. Test başarılıysa ikinci MySQL ile browser ortamı.
+7. Seed + installed lock.
+8. Playwright Chromium.
+9. `animation-check.mjs` ve `design-check.mjs`.
+10. Browser log artifact.
 
 ---
 
 ## 16. YAPAY ZEKA ÇALIŞMA KURALLARI
 
-`CLAUDE.md` içeriği:
-
-1. Bu dosyayı ve `DOCS.md`'yi oku, sonra çalış.
-2. Tek seferde tek modül, tek dal.
-3. Dosyayı değiştirmeden önce oku. Var olan dosyanın üstüne kör yazma.
-4. Composer, framework, npm paketi ekleme. Harici script ekleme.
-5. Şema değişikliği `db/migrations/` altına yeni dosya olarak yazılır; `schema.sql` elle düzenlenmez.
-6. Her SQL hazırlanmış ifade. Her çıktı `Security::e()`. Her POST formunda CSRF.
-7. Animasyon eklerken bölüm 7'deki kuralları uygula: sadece `transform`/`opacity`, `html.js` koruması, `prefers-reduced-motion`.
-8. Şablona sabit metin gömme. Her metin panelden gelmeli.
-9. Modül bitince: testleri yaz, `CHANGELOG.md`'ye satır ekle, `DOCS.md`'yi güncelle.
-10. Her turun sonunda söyle: hangi dosyalar değişti, ne kırılmış olabilir, elle hangi test numaraları çalıştırılmalı.
-11. "Test ettim, çalışıyor" deme. Test dosyasını yaz; çalıştırma insana aittir.
-
-**Dur ve sor:** şema değişikliği gerekiyorsa, çekirdek sınıf imzası değişecekse, bir güvenlik kuralı işi zorlaştırıyorsa, bir animasyon performans hedefini aşıyorsa.
+1. `DOCS.md`, ilgili tasarım planı ve mevcut dosyayı okumadan değiştirme.
+2. Büyük işi modül/branch/PR olarak böl.
+3. Var olan güvenlik, route ve veri sözleşmesini sırf tasarım için bozma.
+4. Üretim bağımlılığı/framework ekleme; CI geliştirme aracı ayrı tutulabilir.
+5. Şema değişikliği migration ister; canlı varsayılan değişikliği de gerektiğinde göç ister.
+6. Her SQL hazırlıklı; çıktı escape; POST CSRF.
+7. Hareket bölüm 7 sözleşmesine uyar; reduced-motion zorunludur.
+8. Sahte müşteri, puan, performans veya canlı veri üretme.
+9. Modül bitince test, dokümantasyon ve changelog birlikte güncellenir.
+10. CI kırılırsa artifact/log okunmadan tahminle merge edilmez.
+11. PR ancak iki job da yeşilken merge edilir; sonra `main` tekrar doğrulanır.
 
 ---
 
 ## 17. FAZ PLANI VE TESLİM LİSTESİ
 
+### Mevcut yeniden tasarım uygulama sırası
 | Faz | İçerik | Bitiş şartı |
 |-----|--------|-------------|
-| 0 | Repo iskeleti, CLAUDE.md, DOCS.md, .gitignore, CI | CI yeşil |
-| 1 | Database, Router, Security, Session, Auth, Logger, kurulum | S-01…S-13 geçiyor |
-| 2 | Panel iskeleti, kullanıcılar, ayarlar, işlem günlüğü | giriş ve rol kontrolü çalışıyor |
-| 3 | Diller, sayfalar, çeviriler, menü, şablon motoru | F-01…F-05 geçiyor |
-| 4 | Medya, WebP, varyantlar, alt metin | F-06, F-07 geçiyor |
-| 5 | Ön yüz şablonları ve animasyon motoru | A-01…A-10, P-01…P-07 geçiyor |
-| 6 | Anasayfa bölüm yöneticisi, ilçe haritası | F-14…F-16 geçiyor |
-| 7 | SEO modülü, sitemap, hreflang, içerik skoru | O-01…O-08 geçiyor |
-| 8 | Yönlendirme ve 404 yönetimi | F-03, F-11, F-12 geçiyor |
-| 9 | Form, dönüşüm takibi, KVKK | F-08, F-09, S-14…S-16 geçiyor |
-| 10 | Referans, blog, SSS | tüm F testleri geçiyor |
-| 11 | İstatistik, yedekleme, cron | F-19 geçiyor |
-| 12 | İçerik girişi ve yayın | canlı |
+| R0 | Envanter ve bağımlılık/URL/veri haritası | kayıt tamam |
+| R1 | Görsel sistem ve semantik roller | foundation testleri |
+| R4 | Ortak header/footer/buton/form/panel kabuğu | foundation browser + PHP CI |
+| R5 | Ana sayfa kompozisyonu | R5 PHP + gerçek Chromium + docs |
+| R3 | Özgün G-01…G-10 görsel varlık ailesi | kayıt, boyut/alt/yerleşim kabulü |
+| R6 | Hizmet/ilçe/sektör/blog/proje/iletişim/genel iç sayfalar | aile bazlı browser kabulü |
+| R7 | Tüm panel/sistem ekranları | rol + CRUD + responsive/a11y kabulü |
+| R8 | 320–1920px, RTL, %200 zoom, keyboard, reduced-motion, performance | tam yayın kapısı |
 
 ### Yayın öncesi teslim listesi
 - [ ] SSL ve `https` yönlendirmesi çalışıyor
@@ -1005,13 +745,17 @@ jobs:
 - [ ] `display_errors` kapalı
 - [ ] `/install` erişilemez
 - [ ] Panel şifresi güçlü
-- [ ] Form test edildi, e-posta ulaşıyor, spam klasörü kontrol edildi
+- [ ] Gerçek form gönderimi ve e-posta teslimi kontrol edildi
+- [ ] Spam klasörü kontrol edildi
 - [ ] `sitemap.xml` Search Console'a gönderildi
-- [ ] Analytics bağlandı
-- [ ] Yapısal veri Rich Results testinden hatasız geçti
-- [ ] 404 sayfası düzgün
+- [ ] Dahili ziyaret ölçümü çalışıyor; üçüncü taraf analytics ancak ayrıca gerçekten entegre edildiyse “bağlandı” sayılır
+- [ ] Yapısal veri Rich Results testinden geçti
+- [ ] 404 düzgün
 - [ ] Favicon ve OG görseli var
-- [ ] Demo içerik temizlendi
-- [ ] NAP bilgileri Google İşletme Profili ile birebir aynı
-- [ ] Otomatik yedek cron'u kuruldu ve bir kez geri yüklendi
-- [ ] Tüm test grupları (U, S, F, A, P, E, O) çalıştırıldı ve geçti
+- [ ] Sahte/demo iddia yok; örnek çalışma notu doğru
+- [ ] NAP Google İşletme Profili ile birebir
+- [ ] Backup, submission purge ve visit rollup cron'ları kuruldu
+- [ ] Bir gerçek backup geri yükleme denemesi yapıldı
+- [ ] `php tools/preflight.php` üretimde geçti
+- [ ] Tüm PHP/MySQL ve gerçek Chromium CI yeşil
+- [ ] R8 viewport/RTL/%200 zoom/keyboard/reduced-motion/performance matrisi geçti

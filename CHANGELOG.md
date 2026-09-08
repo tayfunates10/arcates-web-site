@@ -4,6 +4,28 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Eklendi (tam arayüz yeniden tasarımı — R0/R1/R4)
+- `REDESIGN-R0-INVENTORY.md` ile route, şablon, CSS/JS, statik varlık ve canlı medya sınırları kaydedildi.
+- Ziyaretçi sitesi için ortak semantik renk/yüzey rolleri ve 14px kontrol / 22px büyük yüzey sistemi eklendi.
+- Koyu header/footer, gerçek açık logo işareti, erişilebilir mobil navigasyon ve ortak buton/form foundation görünümü eklendi.
+- Teklif formuna sunucu hata özeti, `aria-invalid`, `aria-describedby`, alan hata kimlikleri, telefon `inputmode` ve yerelleştirilmiş gönderiliyor durumu eklendi.
+- Panel için koyu navigasyon + açık çalışma zemini ve 940px altında Escape/backdrop/focus-return destekli off-canvas navigasyon eklendi.
+- Foundation sözleşmesini koruyan `F-RD-01…F-RD-10` regresyon testleri eklendi.
+
+### Değiştirildi (R5 tam ana sayfa yeniden tasarımı)
+- Ana sayfa sabit akışı `hero → sektör grubu → hizmetler → süreç → örnek siteler → hizmet bölgeleri → SSS → CTA` olarak yeniden kuruldu; header/footer kabukta kalıyor.
+- Hero'daki eski daire/kare/üçgen/şekil parallax kümesi kaldırıldı; yerine sahte metrik veya müşteri verisi taşımayan masaüstü web ekranı + mobil ekran + Arcates bağlantı yayı sahnesi geldi.
+- Sonsuz kayan sektör şeridi kaldırıldı. Yayındaki gerçek `sector` sayfaları statik ve gerçek URL'li kartlara dönüştürüldü; panel etiketi yalnız bağlantısız fallback olarak kaldı.
+- Hizmetler tek mavi görsel aileye, süreç 1–2–3 bağlı yüzeye, örnek siteler bir büyük + destekleyici kart vitrinine geçirildi.
+- Bölge SVG'si görünür biçimde temsili bağlantı grafiği olarak tanımlandı; gerçek ilçe iç linkleri ve HTML eşdeğeri korundu.
+- SSS iki kolonlu sakin düzene, son CTA koyu dönüşüm yüzeyine geçirildi. WhatsApp hedefi sabit numara yerine yalnız NAP telefonundan üretiliyor.
+- `home-redesign.css` yalnız anasayfada yüklenen responsive/RTL/reduced-motion katmanı olarak eklendi.
+- `site.js` içinden R5'te artık kullanılmayan `HERO_SETTLE`, hero shape motoru, parallax ve moving-strip davranışları kaldırıldı; reveal/header/coast/TOC/sticky CTA/form davranışları korundu.
+- Hero hareketi 600–700ms girişler ve en fazla 240ms gecikmeyle 1.05 saniye içinde yerleşecek şekilde sadeleştirildi; R5 anasayfada sonsuz animasyon kalmadı.
+- `HomeSection` ve yeni seed sırası R5 ziyaretçi sırasıyla eşitlendi; eski kurulum sort değerleri PHP tarafında kanonik sıraya normalize ediliyor.
+- TR/EN/DE/AR arayüzlerine proje görüntüleme ve temsili bölge grafiği açıklamaları eklendi.
+- `A-*`, `F-P5-*`, `F-R5-*` testleri ve gerçek Chromium `animation-check.mjs` yeni DOM/hareket sözleşmesine geçirildi.
+
 ### Eklendi
 - Faz 0: Depo iskeleti, `CLAUDE.md`, `DOCS.md`, `.gitignore`, CI iş akışı.
 - Faz 1: Çekirdek sınıflar — `Config`, `Database`, `Router`, `Request`,
@@ -49,7 +71,7 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
   `HomeController`.
 - Faz 5: Favicon, apple-touch-icon ve varsayılan OG görseli.
 - Faz 5: `tools/browser/animation-check.mjs` — A testlerinin tarayıcıdaki
-  karşılığı (istege bağlı, CI'da zorunlu değil).
+  karşılığı.
 - Faz 5 testleri: A-01…A-10, E-03, E-07, O-01, F-14, F-15, F-16.
 
 ### Düzeltildi (faz 5)
@@ -125,8 +147,8 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
   örtüşme 0.28 (eşik 0.70).
 - `tools/seed_content.php`: içeriği yazar, var olan kayıtların üzerine
   yazmaz; `--dry` ve `--force` seçenekleri.
-- `tools/preflight.php`: bölüm 17'deki yayın öncesi teslim listesinin
-  makine tarafından denetlenebilir maddelerini kontrol eder.
+- `tools/preflight.php`: yayın öncesi teslim listesinin makine tarafından
+  denetlenebilir maddelerini kontrol eder.
 - `tools/browser/animation-check.mjs` taşınabilir hale getirildi
   (`PLAYWRIGHT_PATH`, `CHROMIUM_PATH`).
 - Faz 12 testleri: URL haritası bütünlüğü, ilçe kelime ve benzerlik
@@ -141,15 +163,12 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 ### Değiştirildi (Türkçe yazım)
 - Görünür metnin tamamı Türkçe aksanlı harflerle yazıldı: `lang/tr.php`,
   ön yüz ve panel şablonları, `app/` içindeki doğrulama ve akış mesajları,
-  `db/seed/` altındaki başlangıç içeriği ve test adları. Böylece bölüm 4'teki
-  anahtar kelime tablosu ("edremit web tasarım", "balıkesir web tasarım",
-  "web sitesi fiyatları") sayfa başlıklarıyla birebir örtüşüyor.
+  `db/seed/` altındaki başlangıç içeriği ve test adları.
 - Slug'lar ASCII kaldı; `/edremit-web-tasarim`, `/gizlilik-politikasi` gibi
-  adresler bölüm 4'teki hâliyle değişmedi.
+  adresler değişmedi.
 - `lang/de.php` Almanca metinleri `ae/oe/ue/ss` yerine `ä/ö/ü/ß` kullanıyor.
-- `README.md`, `CHANGELOG.md` ve `CLAUDE.md` de aynı yazıma çevrildi;
-  kod blokları ve komutlar dokunulmadan bırakıldı.
-
+- `README.md`, `CHANGELOG.md` ve `CLAUDE.md` aynı yazıma çevrildi; kod
+  blokları ve komutlar dokunulmadan bırakıldı.
 - Yeni testler (F-P13-a…e): arayüz dizelerinin aksanlı olması, Almanca
   umlautlar, tohum başlıklarının anahtar kelimelerle örtüşmesi, slug'ların
   ASCII kalması ve SQL anahtar kelimeleriyle regex bayraklarının bozulmaması.
@@ -157,84 +176,45 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 ### Düzeltildi (Türkçe yazım turu)
 - `tools/preflight.php` sütun hizalaması bayt sayısına göre yapılıyordu;
   çok baytlı harflerde tablo kayıyordu, `mb_strlen` ile düzeltildi.
-- Kaynaktaki yazım hataları giderildi: `orne` → `örnek`, `taniten` → `tanıtan`,
-  `suredan` → `süreden`, `baslikten` → `başlıktan`, `genisligde` → `genişlikte`.
+- Kaynaktaki yazım hataları giderildi.
 
 ### Değiştirildi (örnek site sunumu)
 - `project` kayıtları ön yüzde "Örnek Siteler" olarak sunuluyor. Gerçek müşteri
   işleri yayına girene kadar teslim edilmiş iş izlenimi vermemesi için hem
   etiketler hem tohum içeriği yeniden yazıldı.
-- Adres bölüm 4'teki gibi `/referanslar` ve `/referanslar/{slug}` kaldı; gerçek
-  işler eklendiğinde yönlendirme gerekmiyor, yalnızca etiket geri çevriliyor.
-- Yeni ayar **Örnek site notu** (`projects_notice`): liste, detay, anasayfa
-  bloğu ve ilçe sayfasındaki blokta görünen açıklama. Panelden boşaltılınca
-  not kendiliğinden kayboluyor — gerçek işler eklenince kapatma yolu bu.
-- `views/front/partials/notice.php` ve `.notice` stili eklendi; metin
-  şablona gömülmüyor, ayardan geliyor (CLAUDE.md kural 8).
-- Yeni testler F-P14-a…d: notun görünmesi, ayar boşken kaybolması, etiket ve
-  adresin doğru kalması, tohum kayıtlarının teslim edilmiş iş iddiası
-  taşımaması.
+- Adres `/referanslar` ve `/referanslar/{slug}` kaldı.
+- Yeni ayar **Örnek site notu** (`projects_notice`) liste, detay, anasayfa ve
+  ilçe bloklarında gösteriliyor; panelden boşaltılınca kayboluyor.
+- `views/front/partials/notice.php` ve `.notice` stili eklendi.
+- Yeni testler F-P14-a…d eklendi.
 
 ### Düzeltildi
-- Türkçe yazım turunda diş hekimliği bağlamındaki üç yer "dış" olmuştu:
+- Türkçe yazım turunda diş hekimliği bağlamındaki üç yer düzeltildi:
   "Örnek Diş Polikliniği", "Edremit diş kliniği", "diş hekimi".
 
 ### Eklendi (blog içeriği ve marka görselleri)
-- `db/seed/posts.php`: altı başlangıç blog yazısı — yerel SEO ve İşletme
-  Profili, site hızı ve mobil kullanım, form dönüşümü, çoklu dilde yayın,
-  yedekleme ve bakım, sezonluk içerik takvimi. Her biri 300+ kelime, kendi
-  kategorisi, özeti, meta alanları ve iç linkleriyle.
-- `tools/seed_content.php` blog yazılarını da yazıyor; var olan kaydın
-  üzerine yazmıyor. Kapak görseli bilerek boş bırakıldı — işletme kendi
-  fotoğrafını Medya ekranından yükleyip yazıya bağlar.
-- Marka görselleri: `logo-mark.png` (üst menü işareti), `logo-wordmark.png`
-  (alt bilgi ve panel, saydam zeminli), `favicon-32.png`,
-  `apple-touch-icon.png` ve yazılı logoyla üretilmiş `og-default.png`.
-  Yer tutucu `favicon.svg` kaldırıldı, tüm şablonlar PNG faviconu gösteriyor.
-- Yeni testler F-P15-a…e: blog tohumunun kelime sayısı, meta alanları, iç
-  link ve güvenli işaretleme denetimi; marka görsellerinin varlığı ve
-  şablonlarda bağlanmış olması.
+- `db/seed/posts.php`: altı başlangıç blog yazısı; her biri 300+ kelime,
+  kategori, özet, meta ve iç linklerle.
+- `tools/seed_content.php` blog yazılarını da yazar; var olan kaydın üzerine yazmaz.
+- Marka görselleri: `logo-mark.png`, `logo-wordmark.png`, `favicon-32.png`,
+  `apple-touch-icon.png` ve `og-default.png`.
+- Yeni testler F-P15-a…e eklendi.
 
 ### Değiştirildi (dil yayın anahtarı)
-- Kurulum artık yalnızca varsayılan dili açık bırakıyor. Önceden EN/DE/AR
-  açıktı ama çevirileri yoktu; üst menüde görünüyor, tıklayan ziyaretçi Türkçe
-  içeriğe düşüyordu. Kapalı dil üst menüde görünmüyor, `hreflang` setine
-  girmiyor, önekli adresleri 404 dönüyor.
-- Ayarlar ekranına **Yayındaki diller** anahtarı eklendi; varsayılan dil her
-  zaman açık kalıyor ve kapatılamıyor. `Lang::allLanguages()` kapalılar dahil
-  tüm dilleri veriyor.
-- Yeni testler F-P16-a…d. Çok dilli davranışı sınayan mevcut testler (F-04,
-  F-05, F-P8-c) ihtiyaç duydukları dili `arc_activate_langs()` ile açıyor.
+- Kurulum yalnızca varsayılan dili açık bırakıyor. EN/DE/AR çeviri girildikten
+  sonra Ayarlar ekranındaki **Yayındaki diller** anahtarından açılıyor.
+- Varsayılan dil kapatılamaz; kapalı dil üst menü/hreflang içinde görünmez.
+- Yeni testler F-P16-a…d eklendi.
 
 ### Eklendi (işletme bilgileri)
-- Gerçek NAP bilgileri varsayılanlara yazıldı: adres (Tuzcumurat Mah. 27016 Sk.
-  No: 5, Edremit / Balıkesir), telefon
-  (+90 545 946 50 73) ve e-posta (info@arcatesyazilim.com). Telefon uluslararası
-  biçimde saklanıyor; `tel:` bağlantısı ve yapısal veri bu biçimi bekliyor.
-- `config/config.example.php` içindeki örnek alan adı ve e-posta adresleri
-  `arcatesyazilim.com` olarak güncellendi.
-- Posta kodu hâlâ boş; işletme girecek.
+- Gerçek NAP varsayılanları: Tuzcumurat Mah. 27016 Sk. No: 5, Edremit / Balıkesir;
+  +90 545 946 50 73; info@arcatesyazilim.com.
+- `config/config.example.php` alan adı ve e-posta `arcatesyazilim.com` olarak güncellendi.
+- Posta kodu işletme tarafından girilecek şekilde boş bırakıldı.
 
 ### Düzeltildi (kurulmuş siteler için ayar göçü)
-- `Settings::defaults()` içindeki bir değeri değiştirmek, kurulmuş bir siteyi
-  hiç etkilemiyordu. `Seeder::settings()` yalnızca eksik satırı ekliyor,
-  `Settings::get()` de veritabanı satırını okuyor; `defaults()` değerine
-  düşmüyor. Bu yüzden kısaltılan adres alt bilgide, iletişim sayfasında ve
-  `LocalBusiness` yapısal verisinde eski uzun haliyle kalıyordu.
-- Yeni göç `db/migrations/2026_09_08_0001_ayar_ve_dil_uyumlastirma.sql` bu farkı
-  kapatıyor. Beş koşullu ifade var; hepsi yalnızca eski varsayılanın aynen
-  durduğu ya da hiç doldurulmamış satıra dokunuyor, elle girilmiş değeri
-  korunuyor:
-  - `nap_street` uzun adresten kısa adrese geçiyor,
-  - boş `nap_phone` gerçek numarayla doluyor,
-  - ilk fazın `info@arcates.com` yer tutucusu gerçek adresle değişiyor,
-  - satırı olmayan kuruluma `projects_notice` ekleniyor (satır yokken
-    `Settings::get('projects_notice', '')` boş dönüyor ve örnek site uyarısı
-    hiç basılmıyordu),
-  - sayfa, yazı ya da örnek site çevirisi girilmemiş dil yayından kalkıyor;
-    varsayılan dil ve çevirisi olan dil dokunulmadan kalıyor.
-- Göç `php tools/migrate.php` ile uygulanıyor ve iki kez çalıştırıldığında
-  değeri değiştirmiyor.
-- Yeni testler F-P17-a…e: göçün beş koşullu ifadeye ayrılması, eski
-  kurulumdaki değerlerin geçmesi, elle girilmiş değerlerin korunması, dil
-  kapatma kuralı ve tekrar çalıştırmaya dayanıklılık.
+- Varsayılan değer değişikliklerinin kurulu siteye ulaşması için
+  `db/migrations/2026_09_08_0001_ayar_ve_dil_uyumlastirma.sql` eklendi.
+- Göç yalnız eski varsayılan/boş değere dokunur; elle girilmiş veriyi korur.
+- Eksik `projects_notice` eklenir ve çevirisi olmayan dil yayından düşer.
+- Yeni testler F-P17-a…e eklendi.

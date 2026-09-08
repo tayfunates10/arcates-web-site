@@ -10,8 +10,6 @@
   var THRESHOLD = 0.15;
   var ROOT_MARGIN = '0px 0px -8% 0px';
   var HEAD_STUCK_AT = 24;
-  var PARALLAX_LIMIT = 1.3;
-  var HERO_SETTLE = 1400;
 
   var reduceQuery = window.matchMedia
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -119,34 +117,6 @@
     });
   }
 
-  function initHero() {
-    var line = doc.querySelector('.shape--line path');
-    if (line && typeof line.getTotalLength === 'function') {
-      line.style.setProperty('--draw-length', Math.ceil(line.getTotalLength()));
-    }
-    if (prefersReducedMotion()) return;
-
-    window.setTimeout(function () {
-      var shapes = doc.querySelectorAll('.shapes .shape');
-      for (var i = 0; i < shapes.length; i++) shapes[i].classList.add('is-floating');
-    }, HERO_SETTLE);
-  }
-
-  function initParallax() {
-    if (prefersReducedMotion()) return;
-    var nodes = doc.querySelectorAll('[data-depth]');
-    if (!nodes.length || window.innerWidth <= 720) return;
-
-    addScrollTask(function (y) {
-      var limit = window.innerHeight * PARALLAX_LIMIT;
-      if (y > limit) return;
-      for (var i = 0; i < nodes.length; i++) {
-        var depth = parseFloat(nodes[i].getAttribute('data-depth')) || 0;
-        nodes[i].style.setProperty('--drift', (y * depth * -0.06).toFixed(2) + 'px');
-      }
-    });
-  }
-
   function initCoast() {
     var figure = doc.querySelector('[data-coast]');
     if (!figure) return;
@@ -192,23 +162,6 @@
         var at = parseFloat(dots[i].getAttribute('data-at')) || 0;
         dots[i].classList.toggle('is-lit', progress >= at);
       }
-    });
-  }
-
-  function initStrip() {
-    var track = doc.querySelector('[data-strip]');
-    if (!track) return;
-    var group = track.querySelector('.strip__group');
-    if (!group) return;
-
-    if (track.querySelectorAll('.strip__group').length < 2) {
-      var clone = group.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      track.appendChild(clone);
-    }
-
-    doc.addEventListener('visibilitychange', function () {
-      track.style.animationPlayState = doc.hidden ? 'paused' : 'running';
     });
   }
 
@@ -340,10 +293,7 @@
     initReveal();
     initHead();
     initNav();
-    initHero();
-    initParallax();
     initCoast();
-    initStrip();
     initToc();
     initStickyCta();
     initFormState();
