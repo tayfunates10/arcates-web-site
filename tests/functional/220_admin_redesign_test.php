@@ -117,3 +117,26 @@ test('F-R7-06', 'Gercek Chromium panel kabul testi CI icinde calisir', function 
         assertContains($route, $browser, 'Eksik R7 browser rotasi: ' . $route);
     }
 });
+
+test('F-R7-07', 'Mobil genis tablolar belgeyi buyutmeden kendi yuzeyinde kayar', function (): void {
+    $layout = arc_r7_file('views/admin/layout.php');
+    $r7 = strpos($layout, "asset('css/admin-r7.css')");
+    $responsive = strpos($layout, "asset('css/admin-r7-responsive.css')");
+    assertTrue($r7 !== false && $responsive !== false && $responsive > $r7, 'responsive R7 katmani admin-r7.css sonrasinda yuklenmeli');
+
+    $css = arc_r7_file('public/assets/css/admin-r7-responsive.css');
+    foreach ([
+        '.admin--r7 .admin__content > *',
+        '.admin--r7 .panel',
+        '.admin--r7 .table-scroll',
+        'min-inline-size: 0',
+        'max-inline-size: 100%',
+        'overflow-x: auto',
+        '@media (max-width: 58.75rem)',
+    ] as $needle) {
+        assertContains($needle, $css, 'Eksik mobil containment kurali: ' . $needle);
+    }
+    assertNotContains('!important', $css, 'Responsive R7 katmani !important kullanmamali');
+    $size = filesize(ARC_ROOT . '/public/assets/css/admin-r7-responsive.css');
+    assertTrue($size !== false && $size <= 5000, 'Responsive R7 katmani 5 KB butceyi asmamali');
+});
