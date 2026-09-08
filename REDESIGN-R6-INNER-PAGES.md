@@ -2,7 +2,7 @@
 
 **Tarih:** 8 Eylül 2026  
 **Branch:** `redesign/r6-inner-pages`  
-**Kapsam:** Hizmet, ilçe, sektör, genel sayfa, blog, proje/referans ve iletişim sayfa aileleri.
+**Kapsam:** Hizmet, ilçe, sektör, genel sayfa, blog, proje/referans, iletişim, SSS ve teşekkür sayfası aileleri.
 
 ## Amaç
 
@@ -17,6 +17,8 @@ R5 ana sayfa düzenine dokunmadan, bütün ziyaretçi iç sayfalarını aynı Ar
 - Blog ve proje liste kartları ortak 22px büyük yüzey sistemine geçirildi.
 - Proje detayında meta bilgileri, kapak, hikâye ve galeri tek tasarım ailesinde birleştirildi.
 - İletişim sayfasında kompakt koyu hero kullanıldı; teklif formunun DOM ve ilk viewport önceliği korundu.
+- `/sss` sayfası ortak R6 hero + içerik yüzeyine geçirildi; SSS `details/summary` yapısı korundu.
+- `/tesekkurler` dönüşüm sayfası ortak R6 hero + sonuç yüzeyine geçirildi; ayrı URL ve `noindex` iş kuralı korunuyor.
 - Mobilde 360px dahil yatay taşma engellendi; 940px altında içerik/yan sütun sırası mevcut erişilebilirlik sözleşmesini koruyor.
 - `prefers-reduced-motion` altında hover/transform geçişleri kapatılıyor.
 
@@ -46,10 +48,11 @@ Son doğrulamada A-11 yeniden **60.0 fps** ölçüldü.
 - `F-R6-02` — ana iç sayfa CSS sözleşmesi
 - `F-R6-03` — genel sayfa hero + içerik yüzeyi
 - `F-R6-04` — iletişim formu önceliği
-- `F-R6-05` — hizmet/ilçe/sektör/blog/proje şablon uyumu
+- `F-R6-05` — hizmet/ilçe/sektör/blog/proje/SSS/teşekkür şablon uyumu
 - `F-R6-06` — gerçek Chromium R6 matrisinin CI içinde çalışması
+- `F-R6-07` — SSS ve teşekkür sayfalarının R6 hero/yüzey sözleşmesi
 
-Son sonuç: **222/222 geçti, 0 kaldı, 0 atlandı**.
+Beklenen son test toplamı: **223 test, 0 atlanan**. Nihai sayı son PR CI ile doğrulanır.
 
 ### Chromium iç sayfa matrisi
 
@@ -62,6 +65,8 @@ Temsilci rotalar:
 - `/referanslar`
 - `/hakkimizda`
 - `/iletisim`
+- `/sss`
+- `/tesekkurler`
 - `/referanslar/akcay-pansiyon-rezervasyon-sitesi`
 - `/blog/yerel-aramada-gorunurluk-isletme-profili`
 
@@ -75,9 +80,10 @@ Denetimler:
 - proje/blog kartları
 - proje detay yapısı
 - iletişim formunun masaüstü ve 390px mobilde ilk viewport içinde kalması
+- SSS ve teşekkür akışının ortak R6 hero sözleşmesini koruması
 - 360px mobilde H1 viewport sınırları içinde kalması
 
-Sonuç: **R5 browser + genel tasarım browser + R6 iç sayfa browser paketlerinin tamamı geçti**.
+Sonuç kabul ölçütü: **R5 browser + genel tasarım browser + R6 iç sayfa browser paketlerinin tamamının geçmesi**.
 
 ## Korunan iş kuralları
 
@@ -88,6 +94,7 @@ R6 yalnız arayüz ve kabul testi katmanını değiştirir. Aşağıdakiler değ
 - yayın/taslak davranışları
 - canonical, hreflang ve yapılandırılmış veri çekirdeği
 - CSRF, honeypot, rate limit ve form saklama kuralları
+- `/tesekkurler` için ayrı dönüşüm URL'si ve `noindex` kararı
 - admin/editor yetki modeli
 - NAP ve WhatsApp veri kaynakları
 - R5 ana sayfa DOM ve hareket sözleşmesi
