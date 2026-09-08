@@ -35,6 +35,9 @@ $_alternates = $_alternates ?? [];
     </a>
 
     <button class="site-nav__toggle" type="button" data-nav-toggle
+            data-open-label="<?= Security::e(__('open_menu')) ?>"
+            data-close-label="<?= Security::e(__('close_menu')) ?>"
+            aria-label="<?= Security::e(__('open_menu')) ?>"
             aria-expanded="false" aria-controls="site-head-panel">
       <span class="visually-hidden"><?= Security::e(__('open_menu')) ?></span>
       <span class="site-nav__bars" aria-hidden="true"></span>
