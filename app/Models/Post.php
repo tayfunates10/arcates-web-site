@@ -2,7 +2,7 @@
 /**
  * Blog yazilari.
  *
- * Kategori, kapak, yayin tarihi, ileri tarihli yayin.  DOCS.md 8.2, 9.4
+ * Kategori, kapak, yayin tarihi, ileri tarihli yayin. DOCS.md 8.2, 9.4
  */
 
 declare(strict_types=1);
@@ -19,15 +19,10 @@ final class Post extends Model
     protected static string $translations = 'post_translations';
     protected static string $foreignKey = 'post_id';
 
-    /**
-     * Yayindaki yazilar.
-     *
-     * Ileri tarihli yazilar tarihi gelene kadar gorunmez.  DOCS.md 9.4
-     */
     public static function published(string $lang, int $limit = 20, int $offset = 0, string $category = ''): array
     {
         $sql = 'SELECT p.id, p.category, p.cover_id, p.published_at, p.updated_at,
-                       t.title, t.slug, t.excerpt
+                       t.title, t.slug, t.excerpt, t.word_count
                   FROM posts p
                   JOIN post_translations t ON t.post_id = p.id AND t.lang = :lang
                  WHERE p.status = :status
@@ -36,8 +31,8 @@ final class Post extends Model
         $args = [':lang' => $lang, ':status' => 'published'];
 
         if ($category !== '') {
-            $sql               .= ' AND p.category = :category';
-            $args[':category']  = $category;
+            $sql .= ' AND p.category = :category';
+            $args[':category'] = $category;
         }
 
         $sql .= ' ORDER BY p.published_at DESC, p.id DESC'
@@ -54,9 +49,8 @@ final class Post extends Model
                    AND (p.published_at IS NULL OR p.published_at <= NOW())';
 
         $args = [':lang' => $lang, ':status' => 'published'];
-
         if ($category !== '') {
-            $sql              .= ' AND p.category = :category';
+            $sql .= ' AND p.category = :category';
             $args[':category'] = $category;
         }
 
@@ -67,7 +61,7 @@ final class Post extends Model
     {
         $row = self::db()->first(
             'SELECT p.*, t.title, t.slug, t.excerpt, t.content, t.meta_title, t.meta_description,
-                    t.robots, t.lang, u.name AS author_name
+                    t.robots, t.lang, t.word_count, u.name AS author_name
                FROM posts p
                JOIN post_translations t ON t.post_id = p.id AND t.lang = :lang
                LEFT JOIN users u ON u.id = p.author_id
@@ -84,7 +78,6 @@ final class Post extends Model
         return self::attachCovers([$row], $lang)[0];
     }
 
-    /** Kategoriler. */
     public static function categories(string $lang): array
     {
         return self::db()->all(
@@ -108,8 +101,8 @@ final class Post extends Model
         $args = [':lang' => $lang];
 
         if ($search !== '') {
-            $sql        .= ' AND (t.title LIKE :q OR p.category LIKE :q)';
-            $args[':q']  = '%' . $search . '%';
+            $sql .= ' AND (t.title LIKE :q OR p.category LIKE :q)';
+            $args[':q'] = '%' . $search . '%';
         }
 
         return self::db()->all($sql . ' ORDER BY p.published_at DESC, p.id DESC', $args);
@@ -135,7 +128,6 @@ final class Post extends Model
                 }
 
                 $fields['word_count'] = Security::wordCount((string) ($fields['content'] ?? ''));
-
                 $existing = $db->first(
                     'SELECT id FROM post_translations WHERE post_id = :id AND lang = :lang',
                     [':id' => $postId, ':lang' => $lang]
@@ -145,7 +137,7 @@ final class Post extends Model
                     $db->update('post_translations', $fields, ['id' => (int) $existing['id']]);
                 } else {
                     $fields['post_id'] = $postId;
-                    $fields['lang']    = $lang;
+                    $fields['lang'] = $lang;
                     $db->insert('post_translations', $fields);
                 }
             }
