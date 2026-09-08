@@ -32,6 +32,7 @@ $_user   = $_user ?? null;
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin-redesign.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin-r7.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/admin-r7-responsive.css')) ?>">
 </head>
 <body class="admin admin--r7">
 
