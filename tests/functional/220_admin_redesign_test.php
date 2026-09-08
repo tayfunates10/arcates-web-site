@@ -76,15 +76,16 @@ test('F-R7-04', 'R7 sistem stili kurulum hata mobil ve azaltmis hareket durumlar
 test('F-R7-05', 'R7 tasarimi panel route ve guvenlik formlarini degistirmez', function (): void {
     $routes = arc_r7_file('config/routes.php');
     foreach ([
-        "$panel . '/giris'",
-        "$panel . '/sayfalar'",
-        "$panel . '/medya'",
-        "$panel . '/seo'",
-        "$panel . '/ayarlar'",
-        "$panel . '/yedekleme'",
-        "$panel . '/yonlendirmeler'",
+        'Admin\\AuthController@showLogin',
+        'Admin\\DashboardController@index',
+        'Admin\\PageController@index',
+        'Admin\\MediaController@index',
+        'Admin\\SeoController@index',
+        'Admin\\SettingController@index',
+        'Admin\\BackupController@index',
+        'Admin\\RedirectController@index',
     ] as $needle) {
-        assertContains($needle, $routes, 'R7 route sozlesmesi eksik: ' . $needle);
+        assertContains($needle, $routes, 'R7 route/controller sozlesmesi eksik: ' . $needle);
     }
 
     $layout = arc_r7_file('views/admin/layout.php');
