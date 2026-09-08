@@ -154,6 +154,8 @@ jobs:
           done
           mysql -h 127.0.0.1 -uroot -proot arcates_browser < db/schema.sql
           php tools/seed_content.php
+          R7_HASH="$(php -r 'echo password_hash("ArcatesBrowser!2026", PASSWORD_DEFAULT);')"
+          mysql -h 127.0.0.1 -uroot -proot arcates_browser -e "INSERT INTO users (name,email,password_hash,role,status) VALUES ('R7 Browser Admin','r7-browser@arcates.local','${R7_HASH}','admin',1);"
           touch storage/installed.lock
 
       - name: Chromium ve Playwright kur
@@ -196,6 +198,10 @@ jobs:
           node tools/browser/inner-pages-check.mjs | tee -a /tmp/arcates-browser.log
           inner_status=${PIPESTATUS[0]}
           if [ "$inner_status" -ne 0 ]; then browser_status=1; fi
+
+          node tools/browser/admin-check.mjs | tee -a /tmp/arcates-browser.log
+          admin_status=${PIPESTATUS[0]}
+          if [ "$admin_status" -ne 0 ]; then browser_status=1; fi
 
           exit "$browser_status"
 
