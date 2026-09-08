@@ -1,0 +1,387 @@
+/*
+ * Arcates full redesign foundation — R1 / R4
+ * Loaded after site.css so the existing functional contract remains intact.
+ * This file introduces the new visual roles without deleting legacy tokens.
+ */
+
+:root {
+  --rd-dark: #081426;
+  --rd-dark-raised: #10233D;
+  --rd-brand: #0B4FA8;
+  --rd-brand-bright: #1C7BF2;
+  --rd-brand-soft: #7FB6FF;
+  --rd-surface: #FFFFFF;
+  --rd-surface-soft: #F7FAFF;
+  --rd-text: #062244;
+  --rd-text-muted: #4A6588;
+  --rd-text-invert: #F5F8FF;
+  --rd-border: rgba(11, 79, 168, .16);
+  --rd-border-strong: rgba(11, 79, 168, .30);
+  --rd-focus: #1C7BF2;
+  --rd-success: #12805A;
+  --rd-danger: #B93828;
+  --rd-control-radius: 14px;
+  --rd-small-radius: 8px;
+  --rd-surface-radius: 22px;
+  --rd-control-min: 48px;
+  --rd-shadow-1: 0 8px 24px rgba(6, 34, 68, .07);
+  --rd-shadow-2: 0 20px 56px rgba(6, 34, 68, .11);
+}
+
+body {
+  background: var(--rd-surface);
+  color: var(--rd-text);
+}
+
+/* -------------------------------------------------------------------------
+   Header / navigation
+   ------------------------------------------------------------------------- */
+
+.site-head {
+  background: var(--rd-dark);
+  color: var(--rd-text-invert);
+  border-bottom: 1px solid rgba(127, 182, 255, .12);
+  box-shadow: none;
+}
+
+.site-head.is-stuck {
+  background: rgba(8, 20, 38, .96);
+  border-bottom-color: rgba(127, 182, 255, .22);
+  box-shadow: 0 10px 30px rgba(8, 20, 38, .14);
+  backdrop-filter: blur(12px);
+}
+
+.brand {
+  color: var(--rd-text-invert);
+  text-decoration: none;
+}
+
+.brand:hover { color: var(--rd-text-invert); }
+
+.brand__mark {
+  background: url('../img/logo-mark-light.png') center / contain no-repeat;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.brand__name { color: var(--rd-text-invert); }
+
+.site-nav__link {
+  color: rgba(245, 248, 255, .82);
+  text-decoration: none;
+}
+
+.site-nav__link:hover,
+.site-nav__link:focus-visible {
+  color: var(--rd-text-invert);
+}
+
+.site-nav__toggle {
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  color: var(--rd-text-invert);
+  border-color: rgba(245, 248, 255, .22);
+  border-radius: var(--rd-control-radius);
+}
+
+.lang-switch__item {
+  min-inline-size: 40px;
+  min-block-size: 40px;
+  border-radius: var(--rd-small-radius);
+  color: rgba(245, 248, 255, .78);
+}
+
+.lang-switch__item.is-current {
+  background: rgba(127, 182, 255, .16);
+  color: var(--rd-text-invert);
+}
+
+.progress__bar { background: var(--rd-brand-bright); }
+
+/* -------------------------------------------------------------------------
+   Button and action family
+   ------------------------------------------------------------------------- */
+
+.btn {
+  min-block-size: var(--rd-control-min);
+  border-radius: var(--rd-control-radius);
+  padding-inline: 22px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  transition: transform 160ms var(--ease), background-color 160ms var(--ease), border-color 160ms var(--ease), color 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--primary {
+  background: var(--rd-brand);
+  border-color: var(--rd-brand);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(11, 79, 168, .18);
+}
+
+.btn--primary:hover {
+  background: #0A458F;
+  border-color: #0A458F;
+  color: #fff;
+  box-shadow: 0 12px 26px rgba(11, 79, 168, .22);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--rd-border-strong);
+  color: var(--rd-brand);
+}
+
+.btn--ghost:hover {
+  background: var(--rd-surface-soft);
+  border-color: var(--rd-brand);
+  color: var(--rd-brand);
+}
+
+.hero .btn { min-block-size: 52px; }
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--rd-focus);
+  outline-offset: 3px;
+}
+
+/* -------------------------------------------------------------------------
+   Surface family
+   ------------------------------------------------------------------------- */
+
+.card,
+.work,
+.post-card,
+.project-card,
+.quick-facts,
+.toc,
+.aside-cta,
+.latest-list,
+.contact-card,
+.project-meta,
+.notice {
+  border-color: var(--rd-border);
+}
+
+.card,
+.post-card,
+.project-card,
+.contact-card,
+.project-meta {
+  border-radius: var(--rd-surface-radius);
+  box-shadow: var(--rd-shadow-1);
+}
+
+.card[class*='card--'] {
+  --card-accent: var(--rd-brand-bright);
+}
+
+.card__icon {
+  color: var(--rd-brand);
+  background: rgba(28, 123, 242, .08);
+  border-color: rgba(28, 123, 242, .12);
+}
+
+.badge,
+.tag,
+.chips__item,
+.pager__item {
+  border-radius: 999px;
+}
+
+/* -------------------------------------------------------------------------
+   Form family
+   ------------------------------------------------------------------------- */
+
+.section--form { background: transparent; }
+
+.form {
+  display: grid;
+  gap: 20px;
+}
+
+.form__grid { gap: 20px; }
+
+.field { min-width: 0; }
+
+.field label {
+  color: var(--rd-text);
+  font-weight: 700;
+}
+
+.field input[type='text'],
+.field input[type='tel'],
+.field input[type='email'],
+.field input[type='password'],
+.field input[type='url'],
+.field input[type='number'],
+.field input[type='search'],
+.field select,
+.field textarea {
+  min-block-size: var(--rd-control-min);
+  border: 1px solid var(--rd-border-strong);
+  border-radius: var(--rd-control-radius);
+  background: var(--rd-surface);
+  color: var(--rd-text);
+  box-shadow: 0 1px 0 rgba(6, 34, 68, .02);
+  transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease), background-color 160ms var(--ease);
+}
+
+.field textarea { min-block-size: 168px; }
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover { border-color: rgba(11, 79, 168, .46); }
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--rd-brand-bright);
+  box-shadow: 0 0 0 4px rgba(28, 123, 242, .10);
+}
+
+.field input[aria-invalid='true'],
+.field select[aria-invalid='true'],
+.field textarea[aria-invalid='true'],
+.field.is-invalid input,
+.field.is-invalid select,
+.field.is-invalid textarea {
+  border-color: var(--rd-danger);
+  background: rgba(185, 56, 40, .025);
+}
+
+.field__error {
+  display: block;
+  margin-block-start: 7px;
+  color: var(--rd-danger);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.field--check label {
+  align-items: flex-start;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.field--check input[type='checkbox'] {
+  inline-size: 20px;
+  block-size: 20px;
+  margin-block-start: 2px;
+  accent-color: var(--rd-brand);
+}
+
+.form-error-summary {
+  border: 1px solid rgba(185, 56, 40, .26);
+  border-inline-start: 4px solid var(--rd-danger);
+  border-radius: var(--rd-control-radius);
+  background: rgba(185, 56, 40, .045);
+  padding: 16px 18px;
+}
+
+.form-error-summary strong { display: block; margin-block-end: 6px; }
+.form-error-summary ul { margin: 8px 0 0; padding-inline-start: 20px; }
+.form-error-summary a { color: var(--rd-danger); font-weight: 600; }
+
+.notice {
+  border-radius: var(--rd-control-radius);
+  box-shadow: none;
+}
+
+.notice--success {
+  background: rgba(18, 128, 90, .06);
+  border-color: rgba(18, 128, 90, .24);
+}
+
+.notice--error {
+  background: rgba(185, 56, 40, .055);
+  border-color: rgba(185, 56, 40, .24);
+}
+
+/* -------------------------------------------------------------------------
+   Footer / closing surface
+   ------------------------------------------------------------------------- */
+
+.site-foot {
+  background: var(--rd-dark);
+  color: var(--rd-text-invert);
+  position: relative;
+  overflow: hidden;
+}
+
+.site-foot::before {
+  content: '';
+  position: absolute;
+  inline-size: min(62vw, 760px);
+  aspect-ratio: 1;
+  inset-inline-end: -24vw;
+  inset-block-start: -55%;
+  border: 1px solid rgba(127, 182, 255, .14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.site-foot__inner,
+.site-foot__base { position: relative; }
+
+.site-foot__title,
+.site-foot__legal,
+.site-foot__about,
+.nap,
+.hours { color: var(--rd-text-invert); }
+
+.site-foot a { color: rgba(245, 248, 255, .78); }
+.site-foot a:hover { color: #fff; }
+
+.site-foot__base { border-top-color: rgba(127, 182, 255, .16); }
+
+/* -------------------------------------------------------------------------
+   Mobile foundation
+   ------------------------------------------------------------------------- */
+
+@media (max-width: 58.75rem) {
+  .site-head__panel {
+    background: var(--rd-dark-raised);
+    border-color: rgba(127, 182, 255, .16);
+    border-radius: var(--rd-surface-radius);
+    box-shadow: var(--rd-shadow-2);
+  }
+
+  .site-nav__list { gap: 4px; }
+
+  .site-nav__link {
+    display: flex;
+    min-block-size: 48px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: var(--rd-small-radius);
+  }
+
+  .site-nav__link:hover { background: rgba(127, 182, 255, .08); }
+
+  .site-head__side {
+    border-top: 1px solid rgba(127, 182, 255, .14);
+    padding-block-start: 14px;
+  }
+
+  .form__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 30rem) {
+  .btn { inline-size: 100%; }
+  .form__actions { display: grid; grid-template-columns: 1fr; }
+}
+
+@media (max-width: 20rem) {
+  .site-head__inner { gap: 8px; }
+  .brand__name { font-size: 15px; }
+  .btn { padding-inline: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover,
+  .btn:active { transform: none; }
+}
