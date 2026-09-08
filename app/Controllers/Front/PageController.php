@@ -3,9 +3,9 @@
  * On yuz sayfa cozumleyicisi.
  *
  * Yol `/{slug}` bicimindedir; sayfa turune gore `page`, `service`,
- * `location` veya `sector` sablonu isler.  DOCS.md 4, 5
+ * `location` veya `sector` sablonu isler. DOCS.md 4, 5
  *
- * Taslak sayfa on yuzde 404 doner.  Test F-02
+ * Taslak sayfa on yuzde 404 doner. Test F-02
  */
 
 declare(strict_types=1);
@@ -35,14 +35,33 @@ final class PageController extends Controller
             return $this->notFound($request);
         }
 
-        $pageId   = (int) $page['id'];
-        $faqs     = Page::faqs($pageId, $lang);
-        $projects = [];
+        $pageId       = (int) $page['id'];
+        $faqs         = Page::faqs($pageId, $lang);
+        $projects     = [];
+        $relatedPages = [];
 
         // Her ilce sayfasi o ilceye ait en az bir ornek icermelidir.
         // DOCS.md 4.7
         if ($page['type'] === 'location' && !empty($page['district'])) {
             $projects = Page::districtProjects((string) $page['district'], $lang, 3);
+        }
+
+        // Ic sayfalardaki "diger hizmetler / sektorler / komsu bolgeler"
+        // listesi mevcut yayinlanmis sayfa verisinden uretilir. Taslaklar ve
+        // mevcut sayfa listeye girmez; sablona sabit baglanti gomulmez.
+        if (in_array((string) $page['type'], ['location', 'service', 'sector'], true)) {
+            foreach (Page::listing((string) $page['type'], $lang) as $related) {
+                if ((int) ($related['id'] ?? 0) === $pageId || ($related['status'] ?? '') !== 'published') {
+                    continue;
+                }
+                if (($related['title'] ?? '') === '' || ($related['slug'] ?? '') === '') {
+                    continue;
+                }
+                $relatedPages[] = $related;
+                if (count($relatedPages) >= 8) {
+                    break;
+                }
+            }
         }
 
         $path      = '/' . $page['slug'];
@@ -53,11 +72,13 @@ final class PageController extends Controller
             : 'page');
 
         return $this->render($template, [
-            'page'      => $page,
-            'faqs'      => $faqs,
-            'projects'  => $projects,
-            'crumbs'    => $crumbs,
-            'head'      => [
+            'page'         => $page,
+            'faqs'         => $faqs,
+            'projects'     => $projects,
+            'relatedPages' => $relatedPages,
+            'crumbs'       => $crumbs,
+            'body_class'   => 'page-type-' . (string) $page['type'],
+            'head'         => [
                 'title'       => Seo::title((string) $page['title'], $page['meta_title'] ?? null),
                 'description' => Seo::description(
                     $page['meta_description'] ?? null,
@@ -77,7 +98,7 @@ final class PageController extends Controller
      * `hreflang` seti.
      *
      * Ilce sayfalari yalnizca Turkce yayinlanir; diger dillerde hreflang
-     * verilmez.  DOCS.md 4.6
+     * verilmez. DOCS.md 4.6
      */
     private function hreflang(array $page): array
     {
@@ -94,10 +115,10 @@ final class PageController extends Controller
         $crumbs = [['label' => __('home'), 'url' => url('/')]];
 
         $section = match ($page['type']) {
-            'service' => ['label' => __('services'), 'url' => null],
+            'service'  => ['label' => __('services'), 'url' => null],
             'location' => ['label' => __('locations'), 'url' => null],
-            'sector' => ['label' => __('sectors'), 'url' => null],
-            default => null,
+            'sector'   => ['label' => __('sectors'), 'url' => null],
+            default    => null,
         };
 
         if ($section !== null) {
@@ -115,8 +136,8 @@ final class PageController extends Controller
         $schemas = [];
         $type    = (string) ($page['schema_type'] ?? '') ?: match ($page['type']) {
             'service', 'sector' => 'Service',
-            'location' => 'Service',
-            default    => '',
+            'location'          => 'Service',
+            default             => '',
         };
 
         $description = Seo::description(

@@ -214,3 +214,27 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - `config/config.example.php` içindeki örnek alan adı ve e-posta adresleri
   `arcatesyazilim.com` olarak güncellendi.
 - Posta kodu hâlâ boş; işletme girecek.
+
+### Düzeltildi (kurulmuş siteler için ayar göçü)
+- `Settings::defaults()` içindeki bir değeri değiştirmek, kurulmuş bir siteyi
+  hiç etkilemiyordu. `Seeder::settings()` yalnızca eksik satırı ekliyor,
+  `Settings::get()` de veritabanı satırını okuyor; `defaults()` değerine
+  düşmüyor. Bu yüzden kısaltılan adres alt bilgide, iletişim sayfasında ve
+  `LocalBusiness` yapısal verisinde eski uzun haliyle kalıyordu.
+- Yeni göç `db/migrations/2026_09_08_0001_ayar_ve_dil_uyumlastirma.sql` bu farkı
+  kapatıyor. Beş koşullu ifade var; hepsi yalnızca eski varsayılanın aynen
+  durduğu ya da hiç doldurulmamış satıra dokunuyor, elle girilmiş değeri
+  korunuyor:
+  - `nap_street` uzun adresten kısa adrese geçiyor,
+  - boş `nap_phone` gerçek numarayla doluyor,
+  - ilk fazın `info@arcates.com` yer tutucusu gerçek adresle değişiyor,
+  - satırı olmayan kuruluma `projects_notice` ekleniyor (satır yokken
+    `Settings::get('projects_notice', '')` boş dönüyor ve örnek site uyarısı
+    hiç basılmıyordu),
+  - sayfa, yazı ya da örnek site çevirisi girilmemiş dil yayından kalkıyor;
+    varsayılan dil ve çevirisi olan dil dokunulmadan kalıyor.
+- Göç `php tools/migrate.php` ile uygulanıyor ve iki kez çalıştırıldığında
+  değeri değiştirmiyor.
+- Yeni testler F-P17-a…e: göçün beş koşullu ifadeye ayrılması, eski
+  kurulumdaki değerlerin geçmesi, elle girilmiş değerlerin korunması, dil
+  kapatma kuralı ve tekrar çalıştırmaya dayanıklılık.

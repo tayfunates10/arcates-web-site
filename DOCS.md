@@ -583,6 +583,12 @@ CREATE TABLE menu_item_translations (
 ### 8.6 Göç kuralı
 `schema.sql` yalnızca sıfırdan kurulum içindir, elle düzenlenmez. Her şema değişikliği `db/migrations/YYYY_MM_DD_NNNN_aciklama.sql` olarak eklenir ve `migrations` tablosuna yazılır.
 
+**Varsayılan değer değişikliği de göç ister.** `Seeder::settings()` ve `Seeder::languages()` yalnızca eksik satırı ekler; var olan satıra dokunmaz. `Settings::get()` de veritabanı satırını okur, `Settings::defaults()` değerine düşmez. Bu yüzden `defaults()` içindeki bir değeri değiştirmek yalnızca yeni kurulumları etkiler, kurulmuş bir siteyi hiç etkilemez. Değişen değerin canlı siteye ulaşması gerekiyorsa aynı türde bir göç dosyası yazılır.
+
+Göç, yalnızca **eski varsayılanın aynen durduğu** ya da hiç doldurulmamış satırı günceller; koşulsuz `UPDATE` işletmenin elle girdiği değeri ezer ve yasaktır. Eksik satır `INSERT IGNORE` ile eklenir. Göç iki kez çalıştırıldığında sonucu değiştirmemelidir.
+
+Örnek: `2026_09_08_0001_ayar_ve_dil_uyumlastirma.sql` — kısaltılan adresi, boş bırakılmış telefonu, ilk fazın e-posta yer tutucusunu ve eksik `projects_notice` satırını uyumlaştırır; çevirisi girilmemiş dili yayından kaldırır. Testleri F-P17-a…e.
+
 ---
 
 ## 9. YÖNETİM PANELİ

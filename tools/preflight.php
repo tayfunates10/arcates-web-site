@@ -24,6 +24,7 @@ require ARC_ROOT . '/app/autoload.php';
 use Arcates\Core\Backup;
 use Arcates\Core\Config;
 use Arcates\Core\Database;
+use Arcates\Core\Migrator;
 use Arcates\Core\Seo;
 use Arcates\Core\Settings;
 use Arcates\Controllers\Front\RobotsController;
@@ -93,6 +94,15 @@ if (!$db->canConnect()) {
     check('Veritabanı bağlantısı', false, 'baglanilamadi');
 } else {
     check('Veritabanı bağlantısı', true);
+
+    // Bekleyen goc, kurulmus sitede yeni surumun eksik calismasi demektir.
+    // Sema disi degisiklikler de gocle tasiniyor: DOCS.md 8.6.
+    $pending = (new Migrator($db))->pending();
+    check(
+        'Bekleyen göç yok',
+        $pending === [],
+        $pending ? 'php tools/migrate.php — ' . implode(', ', $pending) : ''
+    );
 
     // Guclu sifre kontrolu yapilamaz (karma saklanir); en az bir admin olmali.
     $admins = (int) $db->value('SELECT COUNT(*) FROM users WHERE role = :r AND status = 1', [':r' => 'admin']);

@@ -1,31 +1,48 @@
 <?php
 /**
- * Sektor sayfasi sablonu.  DOCS.md 4.4
+ * Sektor sayfasi sablonu. DOCS.md 4.4
  *
  * @var array $page
  * @var array $faqs
+ * @var array $relatedPages
  * @var array $crumbs
  */
 
 declare(strict_types=1);
 
+use Arcates\Core\ContentOutline;
 use Arcates\Core\Security;
+
+$outline = ContentOutline::prepare((string) ($page['content'] ?? ''));
 ?>
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
 
-<article class="section section--page">
-  <div class="wrap wrap--text">
-    <header class="page__head">
-      <span class="page__eyebrow"><?= Security::e(__('sectors')) ?></span>
-      <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
-      <?php if (!empty($page['excerpt'])): ?>
-        <p class="page__lead"><?= Security::e($page['excerpt']) ?></p>
-      <?php endif; ?>
-    </header>
+<header class="page-hero section section--tight">
+  <div class="wrap">
+    <span class="page__eyebrow"><?= Security::e(__('sectors')) ?></span>
+    <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
+    <?php if (!empty($page['excerpt'])): ?>
+      <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
+    <?php endif; ?>
+  </div>
+</header>
 
-    <div class="prose">
-      <?= Security::sanitizeHtml((string) ($page['content'] ?? '')) ?>
+<article class="section section--page section--content">
+  <div class="wrap">
+    <div class="content-shell">
+      <div class="content-main" data-outline>
+        <div class="prose u-measure"><?= $outline['html'] ?></div>
+      </div>
+
+      <div class="content-aside">
+        <?= partial('front/partials/toc', ['items' => $outline['items']]) ?>
+        <?= partial('front/partials/related-links', [
+            'items' => $relatedPages ?? [],
+            'label' => __('other_sectors'),
+        ]) ?>
+        <?= partial('front/partials/aside-cta') ?>
+      </div>
     </div>
   </div>
 </article>

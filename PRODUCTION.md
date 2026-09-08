@@ -29,6 +29,25 @@ operasyon kontrol listesidir.
 - `config/config.php` web kökü dışında kalmalı.
 - `/install` tamamlandıktan sonra `storage/installed.lock` mevcut olmalı.
 
+### 3.1 Güncelleme (var olan kurulum)
+
+Yeni sürüm kurulmuş bir siteye yüklendiğinde:
+
+```
+php tools/migrate.php
+```
+
+Bekleyen göçler uygulanmadan yeni sürüm eksik çalışır. `db/schema.sql` yalnızca
+sıfırdan kurulum içindir; kurulmuş bir siteye uygulanmaz.
+
+Bu adım şema değişikliği olmasa da gerekir: `Settings::defaults()` yalnızca yeni
+kurulumu besler, kurulmuş sitenin `settings` satırlarına dokunmaz. Değişen bir
+varsayılanın canlıya ulaşması göç dosyasına bağlıdır (DOCS.md 8.6).
+
+Göçten sonra Ayarlar ekranında adres, telefon ve e-posta gözle kontrol edilir;
+göç elle girilmiş değeri korur, bu yüzden özelleştirilmiş bir alan bilerek eski
+haliyle kalmış olabilir.
+
 ## 4. Cron
 
 ```cron
