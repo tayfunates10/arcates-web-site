@@ -183,6 +183,7 @@ jobs:
           fi
 
           browser_status=0
+          set +e
 
           node tools/browser/animation-check.mjs | tee /tmp/arcates-browser.log
           animation_status=${PIPESTATUS[0]}
