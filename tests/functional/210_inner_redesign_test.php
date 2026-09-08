@@ -51,7 +51,7 @@ test('F-R6-04', 'Iletisim sayfasi kompakt R6 hero ile form onceligini korur', fu
     assertSame(1, substr_count($contact, '<h1'));
 });
 
-test('F-R6-05', 'Mevcut hizmet ilce sektor blog ve proje sablonlari R6 siniflariyla uyumludur', function (): void {
+test('F-R6-05', 'Mevcut hizmet ilce sektor blog proje SSS ve tesekkur sablonlari R6 siniflariyla uyumludur', function (): void {
     foreach ([
         'views/front/service.php',
         'views/front/location.php',
@@ -60,6 +60,8 @@ test('F-R6-05', 'Mevcut hizmet ilce sektor blog ve proje sablonlari R6 siniflari
         'views/front/post.php',
         'views/front/projects.php',
         'views/front/project.php',
+        'views/front/faqs.php',
+        'views/front/thanks.php',
     ] as $path) {
         $view = arc_r6_file($path);
         assertContains('page-hero', $view, $path . ' page-hero kullanmali');
@@ -79,9 +81,23 @@ test('F-R6-06', 'Gercek tarayici R6 ic sayfa matrisi CI icinde calisir', functio
         '/referanslar',
         '/hakkimizda',
         '/iletisim',
+        '/sss',
+        '/tesekkurler',
         '/referanslar/akcay-pansiyon-rezervasyon-sitesi',
         '/blog/yerel-aramada-gorunurluk-isletme-profili',
     ] as $route) {
         assertContains($route, $browser, 'Eksik R6 tarayici rotasi: ' . $route);
     }
+});
+
+test('F-R6-07', 'SSS ve tesekkur sayfalari R6 hero ve sonuc yuzeyini korur', function (): void {
+    $faqs = arc_r6_file('views/front/faqs.php');
+    $thanks = arc_r6_file('views/front/thanks.php');
+
+    assertContains('page-hero page-hero--simple', $faqs);
+    assertContains('section--page section--content', $faqs);
+    assertContains('page-hero page-hero--simple', $thanks);
+    assertContains('section--page section--thanks', $thanks);
+    assertSame(1, substr_count($faqs, '<h1'));
+    assertSame(1, substr_count($thanks, '<h1'));
 });
