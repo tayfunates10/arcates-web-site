@@ -170,6 +170,39 @@ test('F-R5-02', 'CTA WhatsApp hedefini yalnız NAP telefonundan üretir', functi
     assertNotContains('905359120691', $cta, 'Telefon sabitlenmemeli; NAP tek kaynak olmali');
 });
 
+test('F-R5-03', 'Örnek site vitrini paneldeki gösterim limitine uyar', function (): void {
+    $db = arc_need_db(); HomeSection::ensureDefaults();
+    HomeSection::saveConfig('works', ['limit' => 4], true);
+
+    $ids = [];
+    for ($i = 1; $i <= 4; $i++) {
+        $id = $db->insert('projects', [
+            'client_name' => 'R5 Limit ' . $i,
+            'sector' => 'Test',
+            'status' => 'published',
+            'sort' => $i,
+        ]);
+        $ids[] = $id;
+        $db->insert('project_translations', [
+            'project_id' => $id,
+            'lang' => 'tr',
+            'title' => 'R5 Limit Proje ' . $i,
+            'slug' => 'r5-limit-proje-' . $i,
+            'excerpt' => 'Limit regresyon denetimi.',
+        ]);
+    }
+
+    $body = arc_home()->body();
+    assertSame(4, substr_count($body, '<li class="work'), 'Controller tarafinda getirilen 4 kayit vitrinde korunmali');
+    assertContains('R5 Limit Proje 4', $body, 'Dorduncu kayit sessizce kirpilmamali');
+
+    foreach ($ids as $id) {
+        $db->run('DELETE FROM project_translations WHERE project_id = :id', [':id' => $id]);
+        $db->run('DELETE FROM projects WHERE id = :id', [':id' => $id]);
+    }
+    HomeSection::saveConfig('works', ['limit' => 6], true);
+});
+
 test('A-08', 'Dar ekranda R5 bileşenleri responsive kurallara sahiptir', function (): void {
     $site = arc_site_css();
     $home = arc_home_css();
