@@ -30,10 +30,6 @@ $cta2 = $content['cta2'] ?? null;
   <div class="wrap hero__grid">
 
     <div class="hero__body">
-      <?php if (($content['badge'] ?? '') !== ''): ?>
-        <p class="hero__badge"><?= Security::e($content['badge']) ?></p>
-      <?php endif; ?>
-
       <?php /* Tek H1; satirlar maskeli, gorunurluk JavaScript'e bagli degil. */ ?>
       <h1 class="hero__title">
         <?php foreach ($lines as $index => $line): ?>
