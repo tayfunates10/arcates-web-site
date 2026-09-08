@@ -21,8 +21,9 @@ use Arcates\Core\Security;
 <link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/admin-redesign.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/admin-r7.css')) ?>">
 </head>
-<body class="admin admin--auth">
+<body class="admin admin--auth admin--r7">
 <main class="system">
   <div class="system__card system__card--narrow">
 
