@@ -3,7 +3,7 @@
  * Anasayfa bolumleri.
  *
  * Bolum sirasi sabittir (surum 1); her bolum panelden acilip kapatilabilir ve
- * icerigi duzenlenebilir.  DOCS.md 5, 8.3, 9.2
+ * icerigi duzenlenebilir. DOCS.md 5, 8.3, 9.2
  */
 
 declare(strict_types=1);
@@ -24,11 +24,11 @@ final class HomeSection extends Model
     public const LABELS = [
         'header'   => 'Üst menü',
         'hero'     => 'Kahraman',
-        'strip'    => 'Sektör şeridi',
+        'strip'    => 'Sektör grubu',
         'services' => 'Hizmet kartları',
-        'coast'    => 'Bölge haritası',
         'steps'    => 'Süreç',
-        'works'    => 'Referanslar',
+        'works'    => 'Örnek siteler',
+        'coast'    => 'Hizmet bölgeleri',
         'faq'      => 'SSS',
         'cta'      => 'Çağrı bandı',
         'footer'   => 'Alt bilgi',
@@ -36,6 +36,8 @@ final class HomeSection extends Model
 
     /**
      * Tum bolumleri, verilen dildeki icerikleriyle birlikte dondurur.
+     * Veritabanindaki eski sort degerleri R5 oncesinden kalmis olabilir;
+     * sabit urun sirasi LABELS ile belirlenir.
      *
      * @return array<string, array{key:string, is_active:bool, sort:int, config:array, content:array}>
      */
@@ -45,20 +47,30 @@ final class HomeSection extends Model
             'SELECT s.`key`, s.is_active, s.sort, s.config, t.content
                FROM home_sections s
                LEFT JOIN home_section_translations t
-                      ON t.section_key = s.`key` AND t.lang = :lang
-              ORDER BY s.sort, s.`key`',
+                      ON t.section_key = s.`key` AND t.lang = :lang',
             [':lang' => $lang]
         );
 
-        $out = [];
+        $byKey = [];
         foreach ($rows as $row) {
-            $out[$row['key']] = [
+            $byKey[$row['key']] = [
                 'key'       => (string) $row['key'],
                 'is_active' => (int) $row['is_active'] === 1,
                 'sort'      => (int) $row['sort'],
                 'config'    => self::decode($row['config']),
                 'content'   => self::decode($row['content']),
             ];
+        }
+
+        $out = [];
+        foreach (array_keys(self::LABELS) as $key) {
+            if (isset($byKey[$key])) {
+                $out[$key] = $byKey[$key];
+                unset($byKey[$key]);
+            }
+        }
+        foreach ($byKey as $key => $section) {
+            $out[$key] = $section;
         }
 
         return $out;
