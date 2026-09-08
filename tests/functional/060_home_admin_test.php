@@ -3,7 +3,6 @@
  * Anasayfa bolum yoneticisi ve ilce haritasi paneli.
  * DOCS.md 9.2 — testler F-14, F-15, F-16
  */
-
 declare(strict_types=1);
 
 use Arcates\Controllers\Admin\HomeController as AdminHomeController;
@@ -37,7 +36,7 @@ test('F-14b', 'Panelden bölüm kapatılınca on yüzde görünmez', function ()
     arc_logout_test();
 });
 
-test('F-15b', 'Panelden kaydedilen kahraman metni on yüze yansır', function (): void {
+test('F-15b', 'Panelden kaydedilen kahraman metni on yüze yansır, rozet gösterilmez', function (): void {
     $db = arc_need_db();
     HomeSection::ensureDefaults();
     arc_login_as($db, 'admin');
@@ -64,7 +63,7 @@ test('F-15b', 'Panelden kaydedilen kahraman metni on yüze yansır', function ()
     assertSame(302, $response->status(), 'Yönlendirme dönmeli');
 
     $body = arc_home()->body();
-    assertContains('Panelden girilen rozet', $body, 'Rozet yansımalı');
+    assertNotContains('Panelden girilen rozet', $body, 'Kahraman üst rozeti artık ön yüzde gösterilmemeli');
     assertContains('Üçüncü satır degrade', $body, 'Üçüncü satır yansımalı');
     assertContains('Panelden girilen açıklama metni.', $body, 'Açıklama yansımalı');
     assertContains('Teklif alın', $body, 'Buton metni yansımalı');
