@@ -184,6 +184,7 @@ jobs:
 
           node tools/browser/animation-check.mjs | tee /tmp/arcates-browser.log
           node tools/browser/design-check.mjs | tee -a /tmp/arcates-browser.log
+          node tools/browser/inner-pages-check.mjs | tee -a /tmp/arcates-browser.log
 
       - name: Tarayıcı çıktısını artefakt olarak sakla
         if: always()
