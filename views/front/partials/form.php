@@ -153,7 +153,8 @@ $errorTargets = [
       </div>
 
       <div class="form__actions">
-        <button class="btn btn--primary" type="submit"><?= Security::e(__('form_submit')) ?></button>
+        <button class="btn btn--primary" type="submit"
+                data-loading-label="<?= Security::e(__('form_sending')) ?>"><?= Security::e(__('form_submit')) ?></button>
       </div>
     </form>
 
