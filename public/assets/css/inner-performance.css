@@ -1,0 +1,36 @@
+/* R6 scroll-performance guard for long inner pages. */
+
+/* Keep the premium dark entrance while avoiding large masked/radial repaint work. */
+.page-hero {
+  background: linear-gradient(135deg, #081426 0%, #0B1D35 58%, #102A4D 100%);
+}
+
+.page-hero::before {
+  box-shadow: none;
+  opacity: .62;
+}
+
+.page-hero::after {
+  display: none;
+}
+
+/* Long editorial surfaces rely on border/contrast instead of blurred shadows. */
+.content-main,
+.article-main,
+.page-hero + .section--page > .wrap--text,
+.content-aside .toc,
+.article-aside .toc,
+.article-aside .latest-list,
+.content-aside .related-links,
+.article-aside .related-links,
+.section--related .work {
+  box-shadow: none;
+}
+
+/* Sticky conversion cards must not trigger expensive shadow/gradient repaints. */
+.content-aside [data-sticky-cta],
+.article-aside [data-sticky-cta] {
+  background: #0B1D35;
+  box-shadow: none;
+  contain: paint;
+}

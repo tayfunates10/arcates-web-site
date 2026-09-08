@@ -61,6 +61,8 @@ if ($ogImage === '') {
 
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/redesign.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/inner-redesign.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/inner-performance.css')) ?>">
 <?php foreach ((array) ($head['styles'] ?? []) as $style): ?>
 <link rel="stylesheet" href="<?= Security::e(asset((string) $style)) ?>">
 <?php endforeach; ?>

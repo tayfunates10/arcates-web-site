@@ -14,20 +14,22 @@ use Arcates\Core\Security;
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
 
-<section class="section section--tight">
-  <div class="wrap wrap--text">
-    <header class="page__head">
-      <h1 class="page__title"><?= Security::e($page['title'] ?? __('faq')) ?></h1>
-      <?php if (!empty($page['excerpt'])): ?>
-        <p class="page__lead"><?= Security::e($page['excerpt']) ?></p>
-      <?php endif; ?>
-    </header>
-
-    <?php if (!empty($page['content'])): ?>
-      <div class="prose"><?= Security::sanitizeHtml((string) $page['content']) ?></div>
+<header class="page-hero page-hero--simple section section--tight">
+  <div class="wrap">
+    <h1 class="page__title"><?= Security::e($page['title'] ?? __('faq')) ?></h1>
+    <?php if (!empty($page['excerpt'])): ?>
+      <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
     <?php endif; ?>
   </div>
-</section>
+</header>
+
+<?php if (!empty($page['content'])): ?>
+  <section class="section section--page section--content">
+    <div class="wrap wrap--text">
+      <div class="prose"><?= Security::sanitizeHtml((string) $page['content']) ?></div>
+    </div>
+  </section>
+<?php endif; ?>
 
 <?php if (!$faqs): ?>
   <section class="section section--tight">

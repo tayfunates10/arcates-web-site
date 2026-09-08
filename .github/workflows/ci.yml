@@ -165,7 +165,7 @@ jobs:
       - name: Gerçek tarayıcı denetimleri
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           php -S 127.0.0.1:8321 -t public >/tmp/arcates-server.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
@@ -182,8 +182,22 @@ jobs:
             exit 1
           fi
 
+          browser_status=0
+          set +e
+
           node tools/browser/animation-check.mjs | tee /tmp/arcates-browser.log
+          animation_status=${PIPESTATUS[0]}
+          if [ "$animation_status" -ne 0 ]; then browser_status=1; fi
+
           node tools/browser/design-check.mjs | tee -a /tmp/arcates-browser.log
+          design_status=${PIPESTATUS[0]}
+          if [ "$design_status" -ne 0 ]; then browser_status=1; fi
+
+          node tools/browser/inner-pages-check.mjs | tee -a /tmp/arcates-browser.log
+          inner_status=${PIPESTATUS[0]}
+          if [ "$inner_status" -ne 0 ]; then browser_status=1; fi
+
+          exit "$browser_status"
 
       - name: Tarayıcı çıktısını artefakt olarak sakla
         if: always()

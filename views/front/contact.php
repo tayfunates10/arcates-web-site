@@ -27,15 +27,17 @@ if (strlen($digits) === 11 && str_starts_with($digits, '0')) {
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
 
-<section class="section section--page section--contact">
+<header class="page-hero page-hero--contact section section--tight">
   <div class="wrap">
-    <header class="page__head contact-head">
-      <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
-      <?php if (!empty($page['excerpt'])): ?>
-        <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
-      <?php endif; ?>
-    </header>
+    <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
+    <?php if (!empty($page['excerpt'])): ?>
+      <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
+    <?php endif; ?>
+  </div>
+</header>
 
+<section class="section section--page section--contact section--content">
+  <div class="wrap">
     <div class="contact-shell">
       <aside class="contact-card" aria-label="<?= Security::e(__('request_quote')) ?>">
         <?= partial('front/partials/form', [
