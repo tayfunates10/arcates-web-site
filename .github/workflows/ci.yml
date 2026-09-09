@@ -203,6 +203,10 @@ jobs:
           media_status=${PIPESTATUS[0]}
           if [ "$media_status" -ne 0 ]; then browser_status=1; fi
 
+          node tools/browser/status-check.mjs | tee -a /tmp/arcates-browser.log
+          status_state=${PIPESTATUS[0]}
+          if [ "$status_state" -ne 0 ]; then browser_status=1; fi
+
           node tools/browser/admin-check.mjs | tee -a /tmp/arcates-browser.log
           admin_status=${PIPESTATUS[0]}
           if [ "$admin_status" -ne 0 ]; then browser_status=1; fi
