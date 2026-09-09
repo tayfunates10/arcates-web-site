@@ -7,15 +7,16 @@
 - G-03 `main`e PR #14 / `ba350110e16fc2da8131e6f35bf75526af8ddad0` ile alındı.
 - G-04/G-05 `main`e PR #15 / `ff926db04a162cdc797d9e4be3507ed0a9a1ede2` ile alındı.
 - G-06/G-07 `main`e PR #16 / `81bf25622bc8b973e1159fee9e2c2f4cd94a844f` ile alındı.
-- G-08/G-10 dalı: `redesign/r3-cta-status-states`.
+- G-08/G-10 `main`e PR #17 / `09805e665fcd63dc5b795ab2691e453a422108cc` ile alındı.
+- G-09 dalı: `redesign/r3-social-brand-assets`.
 
 ## Nerede kalındı?
 
 R0/R1/R4, R5 ana sayfa, R6 iç sayfalar, R7 panel/sistem kodları ve R8 otomatik
-responsive/klavye/RTL/reduced-motion kabul denetimleri `main`dedir. R3 özgün
-görsel ailesinde G-01–G-07 tamamlandı; bu dal G-08 final CTA ve G-10 boş/hata/
-başarı durum görsellerini aynı Arcates ailesine taşır. Canlı yayın kabulü
-tamamlanmış sayılmaz.
+responsive/klavye/RTL/reduced-motion kabul denetimleri `main`dedir. Bu dal R3
+özgün görsel ailesinin son açık parçası G-09 sosyal/OG görsel sistemi ile küçük
+boyut favicon/logo kalite kontrolünü tamamlar. Canlı yayın kabulü tamamlanmış
+sayılmaz.
 
 ## G-01 — hero
 
@@ -48,11 +49,9 @@ scroll çizim motoru korunur.
 
 Repo ve seed envanteri incelendi. `db/seed/projects.php` içindeki sekiz kayıt açıkça
 örnek kurgudur; `public/uploads` içinde sürüm kontrollü gerçek müşteri/proje medyası
-yoktur. Bu nedenle sahte ekran görüntüsü üretilmedi.
-
-Gerçek `cover` veya `gallery` medyası panelden yüklendiğinde ana sayfa vitrini,
-`/referanslar` kartları ve proje detayında otomatik Arcates sunum çerçevesi
-kullanılır. Çerçeve yalnız gerçek medya mevcutsa oluşur.
+yoktur. Bu nedenle sahte ekran görüntüsü üretilmedi. Gerçek `cover` veya `gallery`
+medyası panelden yüklendiğinde ana sayfa vitrini, `/referanslar` ve proje detayında
+otomatik Arcates sunum çerçevesi kullanılır.
 
 ## G-07 — blog kapak sistemi
 
@@ -63,52 +62,66 @@ gömülmez.
 
 ## G-08 — final CTA bağlantı yayı
 
-`views/front/partials/cta.php` içindeki final çağrı alanı panel/ayar veri akışına
-dokunulmadan bağlantı yayı sahnesiyle tamamlandı. Başlık/metin mevcut CTA içeriği
-veya `cta_title` / `cta_text` ayarından, telefon ise tek NAP kaynağı olan
-`nap_phone` ayarından gelmeye devam eder.
-
-Yeni dekoratif SVG iki bağlantı yayı ve üç düğümden oluşur. Görsel `aria-hidden`
-olduğu için erişilebilir isim üretmez; görselin içinde metin, sayı, logo, müşteri
-veya performans iddiası bulunmaz. Mobilde kompozisyon geri çekilir ve içerik/CTA
-önceliği korunur.
+Final çağrı alanı panel/ayar veri akışına dokunulmadan bağlantı yayı sahnesiyle
+tamamlandı. Başlık/metin mevcut CTA içeriği veya `cta_title` / `cta_text` ayarından,
+telefon ise tek NAP kaynağı olan `nap_phone` ayarından gelmeye devam eder.
 
 ## G-10 — boş, hata ve başarı durumları
 
-Aynı geometriyi kullanan ortak `state-mark` ailesi oluşturuldu:
+Ortak `state-mark` ailesi başarı, boş/bekleme ve hata durumlarını aynı görsel dilde
+toplar. `/tesekkurler`, proje/blog/SSS boş durumları ve 403/404/419/500/503
+şablonları semantik metin, HTTP kodu, aksiyon ve robots davranışlarını korur.
 
-- **Başarı:** `/tesekkurler` sayfasında yeşil başarı işareti; mevcut ayrı URL,
-  dönüşüm akışı ve `noindex,nofollow` davranışı korunur.
-- **Boş:** proje listesi, blog filtresi ve SSS boş durumunda ortak mavi nötr işaret;
-  gerçek `__('no_results')` metni korunur. 503 bakım ekranı da kırmızı hata yerine
-  nötr bekleme/boş işareti kullanır.
-- **Hata:** 403, 404, 419 ve 500 standalone sayfaları aynı kırmızı hata işaretini
-  kullanır. Mevcut HTTP kodu, güvenli mesaj, aksiyon ve robots davranışı değişmez.
+## G-09 — sosyal/OG ve küçük boyut marka sistemi
 
-Ortak stil: `public/assets/css/r3-cta-status.css`. Normal ön yüz sayfalarında
-`views/front/partials/head.php` üzerinden, standalone HTTP hata şablonlarında ise
-doğrudan yüklenir. Stil responsive ve reduced-motion uyumludur.
+Mevcut onaylı marka rasterları yeniden çizilmedi. Kaynak sürekliliği şu şekilde
+korunur:
 
-## G-08/G-10 kabul
+- `logo-mark.png`: 192×192 ana marka işareti,
+- `favicon-32.png`: mevcut 32×32 küçük favicon,
+- `apple-touch-icon.png`: mevcut 180×180 Apple Touch Icon,
+- `logo-wordmark.png`: 560×187 onaylı wordmark,
+- `og-default.png`: GD kullanılamadığı durumda güvenli 1200×630 statik fallback.
 
-- `F-R3-08`: CTA başlık/telefon veri kaynağını ve dekoratif bağlantı yayı
-  sözleşmesini doğrular.
-- `F-R3-10`: teşekkür, boş durumlar ve 403/404/419/500/503 durum işaretlerinin
-  semantik metni ve `noindex` davranışını koruduğunu doğrular.
-- `F-R3-0810`: ortak CSS'in `< 16 KB`, harici kaynaksız, `!important` içermeyen ve
-  reduced-motion uyumlu olduğunu doğrular.
-- `tools/browser/status-check.mjs`: gerçek Chromium'da masaüstü ve mobilde final
-  CTA, teşekkür, kasıtlı boş blog filtresi ve gerçek 404 yanıtını; HTTP 404,
-  `noindex` ve yatay taşmasızlık sözleşmeleriyle birlikte doğrular.
-- Mevcut R8 PHP/MySQL, medya ve diğer Chromium regresyon kapıları çalışmaya devam eder.
+Yeni `public/assets/brand-icon.php`, yalnız 16 ve 48 px hedeflerini kabul eder.
+16 px mevcut 32 px favicon kaynağından, 48 px ise 192 px ana marka işaretinden
+`imagecopyresampled` ile üretilir. Böylece 16/32/48/180/192 zinciri farklı logo
+geometrileri icat edilmeden tamamlanır.
+
+Yeni `public/assets/social-card.php`, onaylı `logo-wordmark.png` kaynağını kullanarak
+1200×630 PNG üretir. Kompozisyon koyu lacivert/kobalt R3 alanı, beyaz marka yüzeyi,
+grid, bağlantı yayları ve nötr arayüz bloklarından oluşur. Sosyal karta dinamik
+slogan, müşteri adı, sayı, puan veya performans metriği yazılmaz. Sayfaya özel gerçek
+`og_image` varsa her zaman önceliklidir; bu görsel yalnız varsayılan fallback'tir.
+
+`views/front/partials/head.php` artık:
+
+- varsayılan OG görselini `/assets/social-card.php` üzerinden verir,
+- `og:image:type`, 1200×630 boyutu, `og:image:alt` ve Twitter image metadata'sını
+  tamamlar,
+- 16/32/48/192 favicon hedeflerini ve 180×180 Apple ikonunu açıkça bildirir,
+- Arcates koyu lacivertini `theme-color` olarak tanımlar.
+
+## G-09 kabul
+
+- `F-R3-09`: OG/Twitter metadata ve 16/32/48/180/192 ikon bağlantı sözleşmesini
+  doğrular.
+- `F-R3-09Q`: mevcut raster master boyutlarını, resample kaynaklarını, sosyal kart
+  boyutunu ve harici/dinamik metin kullanılmamasını doğrular.
+- `tools/browser/brand-check.mjs`: gerçek Chromium/HTTP ortamında sosyal kartın
+  1200×630 PNG, faviconların gerçek 16/32/48/192, Apple ikonunun 180×180 olduğunu,
+  MIME ve byte bütçelerini, header/footer'ın onaylı logo kaynaklarını ve geçersiz
+  favicon boyutunun reddedildiğini doğrular.
+- Mevcut R8 PHP/MySQL ve diğer Chromium regresyon kapıları çalışmaya devam eder.
 
 ## Açık işlerin sırası
 
-1. **G-09:** sosyal/OG görsel yenilemesi ve favicon/logo küçük boyut kalite kontrolü.
-2. Tüm görseller entegre edilince R8 tekrar; gerçek üretim LCP/CLS/INP/PageSpeed,
-   800 KB ilk yük bütçesi, e-posta/cron/yedek ve canlı içerik kabulü.
+1. Tüm R3 görselleri birleştirildikten sonra tam R8 regresyonunu tekrar doğrula.
+2. Gerçek üretimde LCP/CLS/INP/PageSpeed ve 800 KB ilk yük bütçesini ölç.
+3. E-posta, cron, yedek, gerçek içerik ve canlı yayın kabulünü `PRODUCTION.md`
+   üzerinden tamamla.
 
 ## Canlı yayın sınırı
 
-G-08/G-10'un tamamlanması canlı dağıtım onayı değildir. FTP/üretim dağıtımı bu
-modülde yapılmaz; PR ve CI başarılı olduktan sonra G-09'a geçilir.
+G-09'un tamamlanması canlı dağıtım onayı değildir. FTP/üretim dağıtımı bu modülde
+yapılmaz; PR ve CI başarılı olduktan sonra yalnız genel R8/üretim kabulüne geçilir.
