@@ -3,18 +3,19 @@
 Bu dosya `DOCS.md` şartnamesini değiştirmez; canlıya çıkışta uygulanacak kısa
 operasyon kontrol listesidir.
 
-## 1. Birleştirme kapısı
+## 1. Repo birleştirme kapısı
 
 - GitHub CI yeşil olmalı.
 - CI çıktısında atlanan test bulunmamalı.
 - Tüm PHP dosyaları `php -l` kontrolünden geçmeli.
 - Güvenlik testleri S-01…S-21 geçmeli.
 - Ön yüz değişmişse gerçek Chromium kabul zinciri çalıştırılmalı.
-- `php tools/preflight.php` engelleyici madde göstermemeli.
 
-Repo/CI kapısının yeşil olması canlı hosting doğrulamasının yerine geçmez. Canlı
-ortam doğrulaması için GitHub Actions içindeki **Live Acceptance** workflow'u
-ayrıca gerçek HTTPS alan adına karşı çalıştırılır.
+Repo/CI kapısının yeşil olması canlı hosting doğrulamasının yerine geçmez.
+`php tools/preflight.php` repo PR kapısı değil, deploy ve göç sonrasında gerçek
+production yapılandırmasıyla çalıştırılan canlı yayın kapısıdır. Canlı ortam
+doğrulaması için GitHub Actions içindeki **Live Acceptance** workflow'u ayrıca
+gerçek HTTPS alan adına karşı çalıştırılır.
 
 ## 2. Yetki ve kişisel veri
 
