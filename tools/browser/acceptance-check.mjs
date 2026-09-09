@@ -52,6 +52,13 @@ async function layoutState(page) {
   });
 }
 
+function isContained(state, width) {
+  return state.mainLeft !== null && state.mainLeft >= -1
+    && state.mainRight !== null && state.mainRight <= width + 1
+    && state.h1Left !== null && state.h1Left >= -1
+    && state.h1Right !== null && state.h1Right <= width + 1;
+}
+
 // R8-01: 320–1920 CSS-pixel responsive matrix on representative public families.
 for (const viewport of viewports) {
   const ctx = await browser.newContext({ viewport });
@@ -63,16 +70,13 @@ for (const viewport of viewports) {
     const ok = response?.status() === 200
       && state.h1Count === 1
       && state.overflow <= 1
-      && state.mainLeft !== null && state.mainLeft >= -1
-      && state.mainRight !== null && state.mainRight <= viewport.width + 1
-      && state.h1Left !== null && state.h1Left >= -1
-      && state.h1Right !== null && state.h1Right <= viewport.width + 1;
+      && isContained(state, viewport.width);
     if (!ok) {
       viewportFailures++;
       console.log(`  KALDI ${viewport.width}px ${route}: status=${response?.status()} h1=${state.h1Count} overflow=${state.overflow} main=${state.mainLeft}..${state.mainRight} h1=${state.h1Left}..${state.h1Right}`);
     }
   }
-  check(viewportFailures === 0, `R8 ${viewport.width}px matrisi ${matrixRoutes.length}/${matrixRoutes.length} rota tasmasiz ve tek H1`);
+  check(viewportFailures === 0, `R8 ${viewport.width}px matrisi ${matrixRoutes.length}/${matrixRoutes.length} rota tasmasiz, viewport icinde ve tek H1`);
 
   if (viewport.width <= 390) {
     await page.goto(BASE + '/', { waitUntil: 'networkidle' });
@@ -95,8 +99,12 @@ for (const viewport of [{ width: 320, height: 800 }, { width: 1920, height: 1080
   for (const route of ['/sss', '/tesekkurler']) {
     const response = await page.goto(BASE + route, { waitUntil: 'networkidle' });
     const state = await layoutState(page);
-    check(response?.status() === 200 && state.h1Count === 1 && state.overflow <= 1,
-      `R8 ${viewport.width}px ${route} HTTP 200, tek H1 ve yatay tasmasiz (${state.overflow}px)`);
+    const ok = response?.status() === 200
+      && state.h1Count === 1
+      && state.overflow <= 1
+      && isContained(state, viewport.width);
+    check(ok,
+      `R8 ${viewport.width}px ${route} HTTP 200, tek H1, viewport icinde ve yatay tasmasiz (${state.overflow}px; main=${state.mainLeft}..${state.mainRight}; h1=${state.h1Left}..${state.h1Right})`);
   }
   await ctx.close();
 }
