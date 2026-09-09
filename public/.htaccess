@@ -1,6 +1,7 @@
 # Arcates Web Site — public/.htaccess
 # DOCS.md 10.10
 
+DirectoryIndex index.php
 RewriteEngine On
 
 # HTTPS zorunlu
