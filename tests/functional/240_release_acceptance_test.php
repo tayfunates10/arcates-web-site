@@ -73,3 +73,18 @@ test('F-R9-05', 'R9 teslim kaydi otomatik ve elle production kapilarini ayirir',
         assertContains($needle, $doc, 'Eksik R9 teslim kaydi: ' . $needle);
     }
 });
+
+test('F-R9-06', 'R9 canli smoke testi GET-only sinirini ve operasyonel telemetri yan etkisini aciklar', function (): void {
+    $browser = arc_r9_file('tools/browser/live-check.mjs');
+    $production = arc_r9_file('PRODUCTION.md');
+    $release = arc_r9_file('RELEASE-R9-PRODUCTION.md');
+
+    assertContains('GET-only smoke checks', $browser);
+    assertContains('yalnız HTTP GET yapar; form/panel mutasyonu yapmaz', $browser);
+    foreach (['not_found', 'redirect', 'telemetri'] as $needle) {
+        assertContains($needle, $production, 'PRODUCTION.md telemetri siniri eksik: ' . $needle);
+        assertContains($needle, $release, 'R9 teslim kaydi telemetri siniri eksik: ' . $needle);
+    }
+    assertTrue(!str_contains($production, 'production\'a yazma yapmaz'), 'Production dokumani mutlak yazmasizlik iddiasi tasimamali');
+    assertTrue(!str_contains($release, 'Production\'a veri yazmaz'), 'R9 dokumani mutlak yazmasizlik iddiasi tasimamali');
+});
