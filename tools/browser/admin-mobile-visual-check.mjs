@@ -1,4 +1,5 @@
 /* Arcates admin drawer visual regression check in Android-like Chromium. */
+import fs from 'node:fs';
 import path from 'node:path';
 
 let chromium;
@@ -27,20 +28,17 @@ const labels = [
   'Pano', 'Anasayfa', 'Sayfalar', 'Örnek siteler', 'Blog', 'SSS', 'Medya', 'Menüler',
   'SEO', 'Yönlendirmeler', 'Formlar', 'İstatistik', 'Kullanıcılar', 'Ayarlar', 'Yedekleme', 'İşlem günlüğü',
 ];
-
 const nav = labels.map((label, index) =>
   `<li><a href="#" class="admin__nav-link${index === 0 ? ' is-current' : ''}">${label}</a></li>`
 ).join('');
-
-const logoSvg = 'data:image/svg+xml,' + encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="158" height="53" viewBox="0 0 158 53"><rect width="158" height="53" rx="8" fill="%23ffffff"/><text x="79" y="32" text-anchor="middle" font-family="Arial" font-size="18" font-weight="700" fill="%23081426">ARCATES</text></svg>'
-);
+const logoBytes = fs.readFileSync(path.resolve('public/assets/img/logo-wordmark.png'));
+const logoSrc = 'data:image/png;base64,' + logoBytes.toString('base64');
 
 await page.setContent(`<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body class="admin admin--r7 admin-nav-open">
 <div class="admin__shell">
   <aside class="admin__side is-open" id="admin-side" data-admin-side>
-    <a class="admin__brand" href="#"><img class="admin__logo" src="${logoSvg}" alt="Arcates Yazılım" width="158" height="53"></a>
+    <a class="admin__brand" href="#"><img class="admin__logo" src="${logoSrc}" alt="Arcates Yazılım" width="158" height="53"></a>
     <nav class="admin__nav" aria-label="Panel menusu"><ul>${nav}</ul></nav>
     <div class="admin__side-foot"><a class="admin__side-link" href="#">Siteyi gör</a></div>
   </aside>
