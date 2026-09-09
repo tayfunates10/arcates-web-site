@@ -1,0 +1,18 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/locqyjadry1t/public_html/arcatesyazilim.com/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R app $DEPLOYPATH
+    - /bin/cp -R config $DEPLOYPATH
+    - /bin/cp -R db $DEPLOYPATH
+    - /bin/cp -R lang $DEPLOYPATH
+    - /bin/cp -R public $DEPLOYPATH
+    - /bin/cp -R storage $DEPLOYPATH
+    - /bin/cp -R tools $DEPLOYPATH
+    - /bin/cp -R views $DEPLOYPATH
+    - /bin/cp VERSION $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/public/uploads
+    - /bin/mkdir -p $DEPLOYPATH/storage/logs
+    - /bin/mkdir -p $DEPLOYPATH/storage/cache
+    - /bin/mkdir -p $DEPLOYPATH/storage/backups
