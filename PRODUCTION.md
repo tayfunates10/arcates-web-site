@@ -102,8 +102,12 @@ adresi `base_url` alanına tam HTTPS URL olarak girilir. `admin_path` üretimdek
 panel yoludur. Bilinen bir eski slug için 301 kanıtı isteniyorsa `redirect_from`
 ve `redirect_to` birlikte girilir.
 
-Workflow `tools/browser/live-check.mjs` dosyasını gerçek Chromium ile çalıştırır
-ve production'a yazma yapmaz. Şunları otomatik doğrular:
+Workflow `tools/browser/live-check.mjs` dosyasını gerçek Chromium ile çalıştırır.
+Yalnız HTTP GET istekleri yapar; form göndermez, panelde oturum açmaz ve ayar/içerik
+mutasyonu yapmaz. Ancak uygulamanın normal ziyaret ölçümü bu GET isteklerini
+kaydedebilir; 404 kontrolü `not_found` sayacını, opsiyonel 301 kontrolü redirect
+isabet sayacını artırabilir. Bu operasyonel telemetri canlı testin beklenen yan
+etkisidir. Workflow şunları otomatik doğrular:
 
 - 390 px ve 1366 px temsilci rotalarda HTTP 200, tek H1, viewport containment ve yatay taşma,
 - yönlendirme sonrası aynı HTTPS production origininde kalma,
@@ -113,9 +117,8 @@ ve production'a yazma yapmaz. Şunları otomatik doğrular:
 - gerçek 404 cevabı ve 404 sayfası containment,
 - isteğe bağlı eski slug için doğrudan 301 ve beklenen hedef.
 
-Bu workflow form göndermez, panel oturumu açmaz, veritabanına yazmaz ve gerçek
-e-posta teslimi, cron, yedek/geri yükleme, Search Console, Rich Results veya
-Lighthouse/PageSpeed sonucunu kanıtlamaz.
+Bu workflow gerçek e-posta teslimi, cron, yedek/geri yükleme, Search Console,
+Rich Results veya Lighthouse/PageSpeed sonucunu kanıtlamaz.
 
 ## 8. Elle doğrulanacak yayın maddeleri
 
