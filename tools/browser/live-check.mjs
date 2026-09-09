@@ -46,12 +46,25 @@ const check = (ok, msg) => {
   if (!ok) fail++;
 };
 
-function sameOrigin(value) {
+function parsedUrl(value) {
   try {
-    return new URL(value, BASE).origin === base.origin;
+    return new URL(value, BASE);
   } catch {
-    return false;
+    return null;
   }
+}
+
+function sameOrigin(value) {
+  const url = parsedUrl(value);
+  return url !== null && url.origin === base.origin;
+}
+
+function canonicalMatches(value, finalUrl) {
+  const canonical = parsedUrl(value);
+  if (!canonical) return false;
+  const expectedPath = finalUrl.pathname.replace(/\/$/, '') || '/';
+  const canonicalPath = canonical.pathname.replace(/\/$/, '') || '/';
+  return canonical.origin === base.origin && canonicalPath === expectedPath;
 }
 
 async function documentState(page) {
@@ -98,8 +111,8 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1366, height: 900 
       `R9 ${viewport.width}px ${route} ayni HTTPS canonical hostta`);
     check(contained(state, viewport.width),
       `R9 ${viewport.width}px ${route} tek H1, viewport icinde ve yatay tasmasiz (${state.overflow}px)`);
-    check(state.canonical !== '' && sameOrigin(state.canonical),
-      `R9 ${viewport.width}px ${route} canonical ayni origin`);
+    check(state.canonical !== '' && sameOrigin(state.canonical) && canonicalMatches(state.canonical, finalUrl),
+      `R9 ${viewport.width}px ${route} canonical ayni origin ve dogru path`);
   }
 
   await context.close();
@@ -107,17 +120,23 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1366, height: 900 
 
 // Public machine-readable endpoints.
 {
-  const context = await browser.newContext();
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const robotsResponse = await context.request.get(BASE + '/robots.txt', { failOnStatusCode: false });
   const robots = await robotsResponse.text();
+  const sitemapMatch = robots.match(/^Sitemap:\s*(\S+)\s*$/im);
+  const robotsSitemap = sitemapMatch ? parsedUrl(sitemapMatch[1]) : null;
   check(robotsResponse.status() === 200, 'R9 robots.txt HTTP 200');
-  check(/Sitemap:\s*https:\/\//i.test(robots), 'R9 robots.txt HTTPS Sitemap satiri tasiyor');
+  check(robotsSitemap !== null && robotsSitemap.protocol === 'https:' && robotsSitemap.origin === base.origin,
+    'R9 robots.txt ayni production origininde HTTPS Sitemap satiri tasiyor');
   check(robots.includes(`Disallow: /${adminPath}`), `R9 robots.txt /${adminPath} yolunu engelliyor`);
 
   const sitemapResponse = await context.request.get(BASE + '/sitemap.xml', { failOnStatusCode: false });
   const sitemap = await sitemapResponse.text();
+  const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/gi)].map(match => parsedUrl(match[1])).filter(Boolean);
   check(sitemapResponse.status() === 200, 'R9 sitemap.xml HTTP 200');
-  check(/<urlset\b/i.test(sitemap) && /<loc>https:\/\//i.test(sitemap), 'R9 sitemap.xml URL listesi uretiyor');
+  check(/<urlset\b/i.test(sitemap) && locs.length > 0, 'R9 sitemap.xml URL listesi uretiyor');
+  check(locs.length > 0 && locs.every(url => url.protocol === 'https:' && url.origin === base.origin),
+    `R9 sitemap.xml tum loc adreslerini ayni HTTPS production origininde tutuyor (${locs.length})`);
 
   const home = await context.newPage();
   const homeResponse = await home.goto(BASE + '/', { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -126,14 +145,16 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1366, height: 900 
 
   if (homeState.favicon) {
     const faviconResponse = await context.request.get(homeState.favicon, { failOnStatusCode: false });
-    check(faviconResponse.status() >= 200 && faviconResponse.status() < 400, 'R9 favicon gercek URLden aciliyor');
+    check(sameOrigin(homeState.favicon) && faviconResponse.status() >= 200 && faviconResponse.status() < 400,
+      'R9 favicon ayni origindeki gercek URLden aciliyor');
   } else {
     check(false, 'R9 favicon linki mevcut');
   }
 
   if (homeState.ogImage) {
     const ogResponse = await context.request.get(homeState.ogImage, { failOnStatusCode: false });
-    check(ogResponse.status() >= 200 && ogResponse.status() < 400, 'R9 OG gorseli gercek URLden aciliyor');
+    check(sameOrigin(homeState.ogImage) && ogResponse.status() >= 200 && ogResponse.status() < 400,
+      'R9 OG gorseli ayni origindeki gercek URLden aciliyor');
   } else {
     check(false, 'R9 og:image mevcut');
   }
@@ -153,6 +174,8 @@ if (redirectFrom || redirectTo) {
     const context = await browser.newContext();
     const fromUrl = new URL(redirectFrom, BASE);
     const expectedUrl = new URL(redirectTo, BASE);
+    check(fromUrl.origin === base.origin && expectedUrl.origin === base.origin,
+      'R9 redirect kaniti production origin disina cikmiyor');
     const response = await context.request.get(fromUrl.href, { maxRedirects: 0, failOnStatusCode: false });
     const location = response.headers()['location'] || '';
     let actual = '';
