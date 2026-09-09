@@ -100,6 +100,33 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
   await ctx.close();
 }
 
+// F-R3-02: hizmet kartlarindaki altı özgün görsel gerçek tarayıcıda yüklenir.
+{
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+  await page.locator('.home-services').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(350);
+
+  const images = await page.evaluate(() => [...document.querySelectorAll('.service-card__image')].map(img => ({
+    complete: img.complete,
+    width: img.naturalWidth,
+    height: img.naturalHeight,
+    src: img.currentSrc,
+    alt: img.getAttribute('alt'),
+    loading: img.getAttribute('loading'),
+  })));
+
+  check(images.length === 6, `F-R3-02 altı hizmet gorseli DOM'da (${images.length})`);
+  check(images.every(img => img.complete && img.width > 0 && img.height > 0),
+    'F-R3-02 hizmet gorselleri tam olarak yuklendi');
+  check(images.every(img => Math.abs((img.width / img.height) - (4 / 3)) < 0.01),
+    'F-R3-02 hizmet gorselleri 4:3 oraninda');
+  check(images.every(img => img.alt === '' && img.loading === 'lazy'),
+    'F-R3-02 dekoratif alt metin bos ve lazy yukleme aktif');
+  await ctx.close();
+}
+
 await browser.close();
 console.log(fail === 0 ? '\nTUM TASARIM TARAYICI DENETIMLERI GECTI' : `\n${fail} TASARIM DENETIMI KALDI`);
 process.exit(fail === 0 ? 0 : 1);

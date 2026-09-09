@@ -1,5 +1,5 @@
 <?php
-/** Hizmet kartlari — R5 tek mavi gorsel aile. */
+/** Hizmet kartlari — R3 G-02 özgün görsel aile. */
 declare(strict_types=1);
 use Arcates\Core\Security;
 $content = $content ?? [];
@@ -22,8 +22,23 @@ $icons = [
     </header>
     <ul class="cards cards--services">
       <?php foreach ($cards as $index => $card): ?>
-        <?php $icon = $icons[(string) ($card['icon'] ?? '')] ?? $icons['layout']; ?>
+        <?php
+        $iconKey = (string) ($card['icon'] ?? 'layout');
+        $visualKey = isset($icons[$iconKey]) ? $iconKey : 'layout';
+        $icon = $icons[$visualKey];
+        ?>
         <li class="card service-card" data-reveal>
+          <span class="service-card__media" aria-hidden="true">
+            <img
+              class="service-card__image"
+              src="<?= Security::e(asset('img/redesign/service-' . $visualKey . '.svg')) ?>"
+              width="480"
+              height="360"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async">
+          </span>
           <span class="service-card__index" aria-hidden="true"><?= (int) ($index + 1) ?></span>
           <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false"><?= $icon ?></svg></span>
           <h3 class="card__title">
