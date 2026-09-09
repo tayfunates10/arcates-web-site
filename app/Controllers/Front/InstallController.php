@@ -19,13 +19,13 @@ namespace Arcates\Controllers\Front;
 use Arcates\Core\App;
 use Arcates\Core\Auth;
 use Arcates\Core\Config;
+use Arcates\Core\ContentSeeder;
 use Arcates\Core\Database;
 use Arcates\Core\Logger;
 use Arcates\Core\Migrator;
 use Arcates\Core\Request;
 use Arcates\Core\Response;
 use Arcates\Core\Security;
-use Arcates\Core\Seeder;
 use Arcates\Core\Session;
 use Arcates\Core\Validator;
 use Arcates\Core\View;
@@ -76,7 +76,7 @@ final class InstallController
 
     // --- Adimlar ------------------------------------------------------------
 
-    /** Sema uygulanir ve tohum verisi yazilir. */
+    /** Sema uygulanir ve tum baslangic tohum verisi yazilir. */
     private function applySchema(Request $request): Response
     {
         if (!$this->requirementsMet()) {
@@ -98,9 +98,11 @@ final class InstallController
                 $db->insert('migrations', ['filename' => $file]);
             }
 
-            (new Seeder($db))->run();
+            // Diller ve anasayfa bolumleriyle birlikte sayfalar, hizmetler,
+            // bolgeler, sektorler, blog, SSS ve ornek projeler de kurulur.
+            (new ContentSeeder($db))->runMissing();
 
-            Session::flash('success', 'Veritabanı hazırlandı. Şimdi yönetici hesabını oluşturun.');
+            Session::flash('success', 'Veritabanı ve başlangıç içeriği hazırlandı. Şimdi yönetici hesabını oluşturun.');
         } catch (Throwable $e) {
             Logger::exception($e);
             Session::flash('error', 'Veritabanı hazırlanamadı: ' . $e->getMessage());
