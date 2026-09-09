@@ -17,10 +17,12 @@ use Arcates\Core\Security;
 <link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/system-r7.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/r3-cta-status.css')) ?>">
 </head>
 <body class="system-r7 system-r7--error">
 <main class="system">
   <div class="system__card">
+    <span class="system__visual state-mark state-mark--error" aria-hidden="true"><span class="state-mark__glyph"></span></span>
     <p class="system__code">500</p>
     <h1>Beklenmeyen bir hata oluştu</h1>
     <p class="system__lead">

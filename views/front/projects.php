@@ -34,7 +34,10 @@ use Arcates\Core\Settings;
 <section class="section section--content" data-reveal-group>
   <div class="wrap">
     <?php if (!$projects): ?>
-      <p class="muted"><?= Security::e(__('no_results')) ?></p>
+      <div class="empty-state" role="status">
+        <span class="state-mark state-mark--empty" aria-hidden="true"><span class="state-mark__glyph"></span></span>
+        <div class="empty-state__copy"><p><?= Security::e(__('no_results')) ?></p></div>
+      </div>
     <?php else: ?>
       <ul class="project-grid">
         <?php foreach ($projects as $project): ?>

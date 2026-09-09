@@ -162,7 +162,7 @@ jobs:
         shell: bash
         run: |
           npm install --no-save playwright@1.55.0
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
 
       - name: Gerçek tarayıcı denetimleri
         shell: bash
@@ -202,6 +202,10 @@ jobs:
           node tools/browser/media-check.mjs | tee -a /tmp/arcates-browser.log
           media_status=${PIPESTATUS[0]}
           if [ "$media_status" -ne 0 ]; then browser_status=1; fi
+
+          node tools/browser/status-check.mjs | tee -a /tmp/arcates-browser.log
+          status_state=${PIPESTATUS[0]}
+          if [ "$status_state" -ne 0 ]; then browser_status=1; fi
 
           node tools/browser/admin-check.mjs | tee -a /tmp/arcates-browser.log
           admin_status=${PIPESTATUS[0]}

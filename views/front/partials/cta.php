@@ -25,6 +25,16 @@ elseif (strlen($digits) === 10 && str_starts_with($digits, '5')) $digits = '90' 
 <section class="section section--cta home-cta" data-reveal-group>
   <div class="wrap">
     <div class="cta">
+      <div class="cta__visual" aria-hidden="true">
+        <svg viewBox="0 0 420 300" focusable="false">
+          <path class="cta-arc" d="M18 250 C92 98 184 58 402 72"></path>
+          <path class="cta-arc cta-arc--bright" d="M54 274 C144 154 218 124 386 116"></path>
+          <circle class="cta-node" cx="54" cy="274" r="10"></circle>
+          <circle class="cta-node cta-node--soft" cx="220" cy="124" r="8"></circle>
+          <circle class="cta-node" cx="386" cy="116" r="11"></circle>
+        </svg>
+      </div>
+
       <div class="cta__copy">
         <h2 class="cta__title" data-reveal><?= Security::e($title) ?></h2>
         <?php if ($text !== ''): ?><p class="cta__text" data-reveal><?= Security::e($text) ?></p><?php endif; ?>
