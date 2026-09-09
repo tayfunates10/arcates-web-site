@@ -18,10 +18,21 @@
     return toggle.getAttribute('aria-expanded') === 'true';
   }
 
+  function resetDrawerScroll() {
+    side.scrollTop = 0;
+    var nav = side.querySelector('.admin__nav');
+    if (nav) nav.scrollTop = 0;
+  }
+
   function setOpen(open, restoreFocus) {
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     side.classList.toggle('is-open', open);
     body.classList.toggle('admin-nav-open', open);
+
+    if (open) {
+      resetDrawerScroll();
+      window.requestAnimationFrame(resetDrawerScroll);
+    }
 
     if (!open && restoreFocus) toggle.focus();
   }
