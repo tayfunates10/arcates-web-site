@@ -49,11 +49,13 @@ use Arcates\Core\Settings;
 
     <div class="project-detail">
       <?php if (!empty($project['cover'])): ?>
-        <img class="project-cover"
-             src="<?= Security::e(Media::url((string) $project['cover']['path'])) ?>"
-             alt="<?= Security::e($project['cover']['alt'] ?: $project['title']) ?>"
-             width="<?= (int) $project['cover']['width'] ?>" height="<?= (int) $project['cover']['height'] ?>"
-             decoding="async">
+        <figure class="project-shot project-shot--detail">
+          <img class="project-cover"
+               src="<?= Security::e(Media::url((string) $project['cover']['path'])) ?>"
+               alt="<?= Security::e($project['cover']['alt'] ?: $project['title']) ?>"
+               width="<?= (int) $project['cover']['width'] ?>" height="<?= (int) $project['cover']['height'] ?>"
+               decoding="async">
+        </figure>
       <?php endif; ?>
 
       <div class="project-story">
@@ -64,7 +66,7 @@ use Arcates\Core\Settings;
         <ul class="gallery">
           <?php foreach ($project['gallery'] as $image): ?>
             <?php $variant = $image['variants']['medium'] ?? null; ?>
-            <li>
+            <li class="project-gallery__frame">
               <img src="<?= Security::e(Media::url((string) ($variant['path'] ?? $image['path']))) ?>"
                    alt="<?= Security::e($image['alt'] ?: $project['title']) ?>"
                    width="<?= (int) ($variant['width'] ?? $image['width'] ?? 768) ?>"
