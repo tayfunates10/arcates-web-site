@@ -75,3 +75,14 @@ test('F-R8-07', 'R8 teslim kaydi kapsam metod sinir ve performans kapisini belge
         assertContains($needle, $doc, 'Eksik R8 teslim kaydi: ' . $needle);
     }
 });
+
+test('F-R8-08', 'R8 edge rotalari belge tasmasina ek olarak main ve H1 viewport containment denetler', function (): void {
+    $browser = arc_r8_file('tools/browser/acceptance-check.mjs');
+    assertContains('function isContained(state, width)', $browser);
+    assertContains('state.mainLeft !== null && state.mainLeft >= -1', $browser);
+    assertContains('state.mainRight !== null && state.mainRight <= width + 1', $browser);
+    assertContains('state.h1Left !== null && state.h1Left >= -1', $browser);
+    assertContains('state.h1Right !== null && state.h1Right <= width + 1', $browser);
+    assertContains("for (const route of ['/sss', '/tesekkurler'])", $browser);
+    assertContains('&& isContained(state, viewport.width)', $browser);
+});
