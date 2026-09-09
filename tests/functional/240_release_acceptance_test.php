@@ -88,3 +88,22 @@ test('F-R9-06', 'R9 canli smoke testi GET-only sinirini ve operasyonel telemetri
     assertTrue(!str_contains($production, 'production\'a yazma yapmaz'), 'Production dokumani mutlak yazmasizlik iddiasi tasimamali');
     assertTrue(!str_contains($release, 'Production\'a veri yazmaz'), 'R9 dokumani mutlak yazmasizlik iddiasi tasimamali');
 });
+
+test('F-R9-07', 'R9 temsilci rota kabulunde son URL istenen pathte kalmak zorundadir', function (): void {
+    $browser = arc_r9_file('tools/browser/live-check.mjs');
+    assertContains('const requestedUrl = new URL(BASE + route);', $browser);
+    assertContains('normalizedPath(finalUrl.pathname) === normalizedPath(requestedUrl.pathname)', $browser);
+    assertContains('ayni HTTPS production origininde ve istenen pathte', $browser);
+});
+
+test('F-R9-08', 'R9 canli workflow basarisizlikta da job summary yazar ve sonra hata kodunu dondurur', function (): void {
+    $workflow = arc_r9_file('.github/workflows/live-acceptance.yml');
+    $disableErrexit = strpos($workflow, 'set +e');
+    $capture = strpos($workflow, 'acceptance_status=${PIPESTATUS[0]}');
+    $summary = strpos($workflow, 'GITHUB_STEP_SUMMARY');
+    $exit = strpos($workflow, 'exit "$acceptance_status"');
+    assertTrue($disableErrexit !== false && $capture !== false && $summary !== false && $exit !== false,
+        'Canli workflow failure statusunu yakalayip summary sonrasinda geri dondurmeli');
+    assertTrue($disableErrexit < $capture && $capture < $summary && $summary < $exit,
+        'Canli workflow sirasiyla errexit kapat, status yakala, summary yaz ve exit etmeli');
+});
