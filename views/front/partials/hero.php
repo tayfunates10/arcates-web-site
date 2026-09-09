@@ -49,33 +49,15 @@ $cta2 = $content['cta2'] ?? null;
     </div>
 
     <div class="hero-scene" aria-hidden="true">
-      <svg class="hero-scene__orbit" viewBox="0 0 620 520" focusable="false">
-        <path d="M82 430 C118 228 258 70 532 78 C578 80 604 118 588 160 C548 264 430 394 220 450"></path>
-        <circle cx="91" cy="411" r="7"></circle>
-        <circle cx="531" cy="79" r="7"></circle>
-      </svg>
-
-      <div class="hero-scene__web">
-        <div class="ui-window__bar"><span></span><span></span><span></span></div>
-        <div class="ui-window__nav"><b></b><i></i><i></i><i></i></div>
-        <div class="ui-window__hero">
-          <div><strong></strong><strong></strong><em></em><small></small></div>
-          <span class="ui-window__visual"></span>
-        </div>
-        <div class="ui-window__cards"><span></span><span></span><span></span></div>
-      </div>
-
-      <div class="hero-scene__mobile">
-        <div class="ui-mobile__speaker"></div>
-        <div class="ui-mobile__screen">
-          <b></b><strong></strong><strong></strong><em></em>
-          <div><span></span><span></span></div>
-        </div>
-      </div>
-
-      <div class="hero-scene__mark">
-        <img src="/assets/img/logo-mark-light.png" alt="" aria-hidden="true" width="64" height="64" decoding="async">
-      </div>
+      <picture class="hero-scene__art">
+        <source type="image/webp"
+                srcset="<?= Security::e(asset('img/redesign/hero-640.webp')) ?> 640w, <?= Security::e(asset('img/redesign/hero-1280.webp')) ?> 1280w"
+                sizes="(max-width: 720px) 100vw, (max-width: 940px) 560px, 46vw">
+        <img class="hero-scene__image"
+             src="<?= Security::e(asset('img/redesign/hero-1280.webp')) ?>"
+             alt="" aria-hidden="true" width="1280" height="960"
+             loading="eager" decoding="async">
+      </picture>
     </div>
   </div>
 </section>

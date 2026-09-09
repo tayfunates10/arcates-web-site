@@ -21,7 +21,7 @@ const check = (ok, msg) => { console.log((ok ? 'GECTI ' : 'KALDI ') + msg); if (
   await page.goto(URL, { waitUntil: 'load' });
   const state = await page.evaluate(() => {
     const hidden = [];
-    document.querySelectorAll('[data-reveal], .hero__line > span, .hero__text, .hero__actions, .hero-scene__web, .hero-scene__mobile, .hero-scene__mark').forEach(el => {
+    document.querySelectorAll('[data-reveal], .hero__line > span, .hero__text, .hero__actions, .hero-scene__art').forEach(el => {
       const cs = getComputedStyle(el);
       if (parseFloat(cs.opacity) < 0.99 || cs.visibility === 'hidden' || cs.display === 'none') {
         hidden.push((el.className || el.tagName) + ' opacity=' + cs.opacity + ' display=' + cs.display);
@@ -49,7 +49,7 @@ const check = (ok, msg) => { console.log((ok ? 'GECTI ' : 'KALDI ') + msg); if (
   await page.waitForTimeout(250);
   const state = await page.evaluate(() => {
     const reveal = [...document.querySelectorAll('[data-reveal]')];
-    const hero = [...document.querySelectorAll('.hero__line > span, .hero__text, .hero__actions, .hero-scene__web, .hero-scene__mobile, .hero-scene__mark')];
+    const hero = [...document.querySelectorAll('.hero__line > span, .hero__text, .hero__actions, .hero-scene__art')];
     return {
       revealTotal: reveal.length,
       revealHidden: reveal.filter(el => parseFloat(getComputedStyle(el).opacity) < 0.99).length,
@@ -72,15 +72,17 @@ const check = (ok, msg) => { console.log((ok ? 'GECTI ' : 'KALDI ') + msg); if (
   await page.waitForTimeout(1050);
   const hero = await page.evaluate(() => {
     const content = [...document.querySelectorAll('.hero__line > span, .hero__text, .hero__actions')];
-    const scene = [...document.querySelectorAll('.hero-scene__web, .hero-scene__mobile, .hero-scene__mark')];
+    const scene = [...document.querySelectorAll('.hero-scene__art')];
     return {
       contentOk: content.length > 0 && content.every(el => parseFloat(getComputedStyle(el).opacity) > 0.95),
-      sceneOk: scene.length === 3 && scene.every(el => parseFloat(getComputedStyle(el).opacity) > 0.95),
+      sceneOk: scene.length === 1 && scene.every(el => parseFloat(getComputedStyle(el).opacity) > 0.95),
+      imageOk: [...document.querySelectorAll('.hero-scene__image')].some(el => el.complete && el.naturalWidth > 0),
       oldShapes: document.querySelectorAll('.shapes .shape').length,
       movingStrip: document.querySelectorAll('[data-strip], .strip__track').length,
     };
   });
   check(hero.contentOk, 'A-03 hero icerigi 1.05 s icinde yerine oturdu');
+  check(hero.imageOk, 'R3 hero dosyasi gercekten yuklendi ve cozuldu');
   check(hero.sceneOk, 'A-03 web + mobil yazilim sahnesi 1.05 s icinde yerine oturdu');
   check(hero.oldShapes === 0, 'A-03 eski soyut sekil kumesi DOMdan kaldirildi');
   check(hero.movingStrip === 0, 'A-10 eski kayan sektor seridi DOMda yok');
