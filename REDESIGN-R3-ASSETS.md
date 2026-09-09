@@ -1,105 +1,106 @@
 # R3 — Özgün görseller ve devam kaydı
 
-9 Eylül 2026. G-01 `main`e `5240c23d27f2102bdbc66c755b363556950182bb` ile alındı.
-G-02 `main`e PR #13 / `971ce94e0055c22f652813d581476b9c243f84f2` ile alındı.
-G-03 `main`e PR #14 / `ba350110e16fc2da8131e6f35bf75526af8ddad0` ile alındı.
-G-04/G-05 dalı: `redesign/r3-process-region-visuals`.
+9 Eylül 2026.
+
+- G-01 `main`e `5240c23d27f2102bdbc66c755b363556950182bb` ile alındı.
+- G-02 `main`e PR #13 / `971ce94e0055c22f652813d581476b9c243f84f2` ile alındı.
+- G-03 `main`e PR #14 / `ba350110e16fc2da8131e6f35bf75526af8ddad0` ile alındı.
+- G-04/G-05 `main`e PR #15 / `ff926db04a162cdc797d9e4be3507ed0a9a1ede2` ile alındı.
+- G-06/G-07 dalı: `redesign/r3-project-blog-media`.
 
 ## Nerede kalındı?
 
 R0/R1/R4, R5 ana sayfa, R6 iç sayfalar, R7 panel/sistem kodları ve R8 otomatik
-responsive/klavye/RTL/reduced-motion kabul denetimleri main'de. R3 özgün görsel
-ailesinde **G-01 hero, G-02 hizmet ve G-03 sektör** tamamlandı; bu dal **G-04 süreç**
-ve **G-05 hizmet bölgesi** vektör dilini aynı aileye taşır. Bütün R3 veya canlı
-yayın kabulü tamamlanmış sayılmaz.
+responsive/klavye/RTL/reduced-motion kabul denetimleri `main`dedir. R3 özgün
+görsel ailesinde G-01–G-05 tamamlandı; bu dal G-06 proje medya sunum sistemi ile
+G-07 blog kapak sistemini tamamlar. Canlı yayın kabulü tamamlanmış sayılmaz.
 
-## G-01 teslim
+## G-01 — hero
 
-| Dosya | Boyut / rol |
-|---|---|
-| `design-assets/hero-master.png` | 1448×1086 özgün PNG ana kaynak; web kökü dışında |
-| `public/assets/img/redesign/hero-640.webp` | 640×480, 14.606 bayt |
-| `public/assets/img/redesign/hero-1280.webp` | 1280×960, 34.574 bayt |
+Özgün ana hero görseli 4:3 WebP varyantlarıyla kullanılır. Metin ve CTA panel
+içeriğidir; görsel dekoratiftir ve sahte müşteri/metrik içermez.
 
-Hero `views/front/partials/hero.php` içinde responsive `srcset` ile kullanılır.
-Metin ve CTA panel içeriğidir; görsel dekoratiftir ve sahte müşteri/metrik içermez.
+## G-02 — altı hizmet görseli
 
-## G-02 teslim — altı hizmet görseli
+Koyu lacivert, beyaz yüzey ve kobalt vurgu ailesindeki altı 4:3 hizmet SVG'si
+ana sayfa hizmet kartlarında kullanılır. Başlık/açıklama panelden gelmeye devam eder.
 
-Aynı koyu lacivert zemin, beyaz yüzey, kobalt mavi vurgu, yumuşak stüdyo
-derinliği ve 4:3 kompozisyon diliyle altı ayrı hizmet illüstrasyonu hazırlandı.
-Görseller 480×360 intrinsic boyutlu SVG'dir; hizmet adı ve açıklaması HTML metni
-olarak panelden gelmeye devam eder.
+## G-03 — altı sektör görseli
 
-Yerleşim: `views/front/partials/cards.php`.
-Ek stil: `public/assets/css/r3-service-illustrations.css`.
+Gerçek müşteri/proje ekranı kanıtı bulunmadığı için sahte referans üretilmeden,
+sektörler nesne metaforlarıyla anlatılır. Altı 4:3 SVG ilgili sektör sayfası hero
+alanında slug eşlemesiyle kullanılır.
 
-## G-03 teslim — altı sektör görseli
+## G-04 — süreç
 
-Gerçek müşteri/proje ekranı kanıtı bulunmadığı için sahte referans veya ekran
-görüntüsü üretilmedi. Sektörler yalnız nesne metaforlarıyla anlatıldı ve aynı
-lacivert/kobalt/beyaz görsel aile korundu.
+“Nasıl çalışıyoruz” alanındaki üç adım, dekoratif keşif/kurulum/büyüme vektörleri
+ve bağlı akış hattıyla aynı görsel aileye taşındı. İçerik metni panelden gelir.
 
-| Sektör | Slug | Görsel fikri |
-|---|---|---|
-| Otel ve pansiyon | `otel-pansiyon-web-sitesi` | Konaklama cephesi + giriş |
-| Zeytinyağı üreticisi | `zeytinyagi-e-ticaret-sitesi` | Şişe + zeytin dalı/ürün yüzeyi |
-| Restoran ve kafe | `restoran-kafe-qr-menu` | Tabak + servis + soyut dijital menü |
-| Emlak ofisi | `emlak-web-sitesi` | Ev formu + kapı/pencere yüzeyleri |
-| Nakliyat | `nakliyat-web-sitesi` | Koli yüklü taşıma aracı |
-| Tabela ve matbaa | `tabela-matbaa-web-sitesi` | Tabela yüzeyi + baskı panelleri |
+## G-05 — hizmet bölgesi
 
-Altı SVG `public/assets/img/redesign/sector-*.svg` altında 480×360 / 4:3 olarak
-tutulur. Görseller ilgili sektör sayfalarının hero alanına slug eşlemesiyle eklenir.
+Dinamik bölge SVG'si koyu sahne, grid, rota derinliği ve kobalt rota diliyle
+yenilendi. İlçe adı, konumu ve URL'leri panel/veritabanı verisidir; `site.js`
+scroll çizim motoru korunur.
 
-## G-04 teslim — süreç görsel dili
+## G-06 — gerçek proje medya sunum sistemi
 
-`views/front/partials/steps.php` içindeki üç adımlı süreç, panel metnine dokunmadan
-özgün dekoratif vektör metaforlarıyla yenilendi:
+Repo ve seed envanteri incelendi. `db/seed/projects.php` içindeki sekiz kayıt açıkça
+örnek kurgudur; `public/uploads` içinde sürüm kontrollü gerçek müşteri/proje medyası
+yoktur. Bu nedenle sahte ekran görüntüsü üretilmedi.
 
-1. Konuşma/keşif — kullanıcı + konuşma balonu.
-2. Kurulum — tarayıcı/arayüz yüzeyi.
-3. Büyüme — bağlantılı yükseliş rotası.
+Gerçek `cover` veya `gallery` medyası panelden yüklendiğinde aşağıdaki yüzeylerde
+otomatik premium Arcates sunum çerçevesi kullanılır:
 
-Vektörler `aria-hidden="true"` ve `focusable="false"` kullanır; başlık ve açıklama
-panelden gelen metin olarak kalır. Masaüstünde üç kart tek bağlı hat üzerinde,
-940 px altında tek sütunda gösterilir. Sahte metrik, müşteri adı veya ekran içeriği
-yoktur.
+- ana sayfa örnek site vitrini,
+- `/referanslar` kartları,
+- proje detay kapak görseli,
+- proje detay galeri görselleri.
 
-## G-05 teslim — hizmet bölgesi bağlantı sahnesi
+Çerçeve yalnız medya verisi mevcutsa oluşturulur. Medyasız örnek kayıtlar gerçek
+ekran görüntüsü varmış gibi gösterilmez. Tarayıcı üst çubuğunda URL, marka,
+performans değeri veya başka sahte içerik bulunmaz; yalnız nötr üç noktalı sunum
+kromu kullanılır.
 
-`views/front/partials/coast.php` içindeki dinamik SVG korunarak görsel dil yeniden
-kuruldu. Koyu lacivert sahne, düşük kontrastlı grid, derinlik rotası ve kobalt rota
-gradienti eklendi. İlçe noktaları, etiketleri ve URL'leri yine panel/veritabanı
-verisinden üretilir; hiçbir ilçe adı şablona sabitlenmez.
+Stil: `public/assets/css/r3-project-blog-media.css`.
 
-Mevcut `data-coast`, `.coast__path`, `data-at` ve `site.js` scroll ilerleme motoru
-aynen korunur. SVG ayrıca `role="img"` + dinamik `aria-label` taşır ve altında gerçek
-HTML bağlantı listesi bulunduğu için klavye/ekran okuyucu erişimi kaybolmaz.
+## G-07 — blog kapak sistemi
 
-G-04 ve G-05 için ortak ek stil:
-`public/assets/css/r3-process-region-visuals.css`.
-Bu dosya yalnız ana sayfada `HomeController` üzerinden yüklenir.
+`db/seed/posts.php` başlangıç yazılarının kapak alanını bilerek boş bırakır. Sistem
+bu davranışı bozmaz:
 
-## G-04/G-05 kabul
+1. Panelden gerçek bir `cover` yüklenmişse gerçek medya her zaman önceliklidir.
+2. Kapak yoksa yazının kategorisinden türetilen soyut Arcates editoryal kapağı
+   gösterilir.
 
-- `F-R3-04`: süreç vektörlerinin dekoratif olduğunu ve içerik metninin panelden
-  gelmeye devam ettiğini doğrular.
-- `F-R3-05`: bölge isim/URL kaynağını, erişilebilir SVG + HTML liste sözleşmesini
-  ve mevcut scroll çizim kancalarının korunduğunu doğrular.
-- `F-R3-045`: ek CSS'in `< 16 KB`, responsive, reduced-motion uyumlu ve
-  `!important` içermeyen ana sayfaya özel bir katman olduğunu doğrular.
-- Mevcut R8 PHP/MySQL ve gerçek Chromium regresyon kapıları PR üzerinde tekrar çalışır.
+Fallback kapaklar metinsizdir; başlık, tarih, kategori, sayı, istatistik, müşteri
+ve marka iddiası görselin içine gömülmez. Yerel SEO, Performans, Dönüşüm, Çoklu dil,
+Bakım ve İçerik kategorileri aynı lacivert/kobalt/beyaz aile içinde farklı soyut
+geometri kullanır. Bilinmeyen kategoriler genel kompozisyona düşer.
+
+Partial: `views/front/partials/editorial-cover.php`.
+Stil: `public/assets/css/r3-project-blog-media.css`.
+
+## G-06/G-07 kabul
+
+- `F-R3-06`: proje sunum çerçevesinin yalnız gerçek `cover/gallery` verisine bağlı
+  olduğunu ve projelerde sahte editoryal fallback üretilmediğini doğrular.
+- `F-R3-07`: blogda gerçek kapağın önceliğini, kapaksız durumda metinsiz ve
+  `aria-hidden` editoryal fallback kullanılmasını doğrular.
+- `F-R3-067`: ortak CSS'in `< 18 KB`, harici kaynaksız ve reduced-motion uyumlu
+  olduğunu; ilgili controller'larda yüklendiğini doğrular.
+- `tools/browser/media-check.mjs`: gerçek Chromium'da seed proje kayıtlarında
+  sahte `project-shot` oluşmadığını, altı seed blog yazısında fallback kapakların
+  16:10 ve metinsiz olduğunu, masaüstü/mobil yatay taşma olmadığını doğrular.
+- Mevcut R8 PHP/MySQL ve diğer Chromium regresyon kapıları çalışmaya devam eder.
 
 ## Açık işlerin sırası
 
-1. **G-06/G-07:** gerçek ekran görüntüsü sunum çerçeveleri ve blog kapakları; canlı medya envanteri gerekiyor.
-2. **G-08/G-10:** CTA yayı ve boş/hata/başarı işaretleri.
-3. **G-09:** sosyal görsel yenilemesi ve favicon/logo küçük boyut kalite kontrolü.
-4. Tüm görseller entegre edilince R8 tekrar; gerçek üretim LCP/CLS/INP/PageSpeed,
+1. **G-08/G-10:** CTA yayı ve boş/hata/başarı görsel durumları.
+2. **G-09:** sosyal görsel yenilemesi ve favicon/logo küçük boyut kalite kontrolü.
+3. Tüm görseller entegre edilince R8 tekrar; gerçek üretim LCP/CLS/INP/PageSpeed,
    800 KB ilk yük bütçesi, e-posta/cron/yedek ve canlı içerik kabulü.
 
 ## Canlı yayın sınırı
 
-G-04/G-05'in tamamlanması canlı dağıtım onayı değildir. Bu modülde FTP/üretim
-dağıtımı yapılmaz; PR ve CI başarılı olduktan sonra G-06/G-07'ye geçilir.
+G-06/G-07'nin tamamlanması canlı dağıtım onayı değildir. FTP/üretim dağıtımı
+bu modülde yapılmaz; PR ve CI başarılı olduktan sonra G-08/G-10'a geçilir.

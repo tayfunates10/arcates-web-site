@@ -40,7 +40,7 @@ use Arcates\Core\Settings;
         <?php foreach ($projects as $project): ?>
           <li class="project-card" data-reveal>
             <?php if (!empty($project['cover'])): ?>
-              <a class="project-card__media" href="<?= Security::e(url('/referanslar/' . $project['slug'])) ?>" tabindex="-1" aria-hidden="true">
+              <a class="project-card__media project-shot" href="<?= Security::e(url('/referanslar/' . $project['slug'])) ?>" tabindex="-1" aria-hidden="true">
                 <img src="<?= Security::e(Media::url((string) $project['cover']['path'])) ?>"
                      alt="" width="<?= (int) $project['cover']['width'] ?>" height="<?= (int) $project['cover']['height'] ?>"
                      loading="lazy" decoding="async">

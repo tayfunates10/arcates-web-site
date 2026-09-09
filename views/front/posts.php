@@ -57,6 +57,10 @@ use Arcates\Core\Security;
                      alt="" width="<?= (int) $post['cover']['width'] ?>" height="<?= (int) $post['cover']['height'] ?>"
                      loading="lazy" decoding="async">
               </a>
+            <?php else: ?>
+              <a class="post-card__media post-card__media--fallback" href="<?= Security::e(url('/blog/' . $post['slug'])) ?>" tabindex="-1" aria-hidden="true">
+                <?= partial('front/partials/editorial-cover', ['category' => (string) ($post['category'] ?? '')]) ?>
+              </a>
             <?php endif; ?>
 
             <div class="post-card__body">

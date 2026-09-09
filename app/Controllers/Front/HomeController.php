@@ -97,6 +97,7 @@ final class HomeController extends Controller
                     'css/home-redesign.css',
                     'css/r3-service-illustrations.css',
                     'css/r3-process-region-visuals.css',
+                    'css/r3-project-blog-media.css',
                 ],
             ],
         ]);

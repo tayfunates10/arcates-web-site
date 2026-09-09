@@ -1,0 +1,48 @@
+<?php
+declare(strict_types=1);
+
+test('F-R3-06', 'Proje cercevesi yalniz gercek yuklenmis medya icin kullanilir', function (): void {
+    $list = (string) file_get_contents(ARC_ROOT . '/views/front/projects.php');
+    $detail = (string) file_get_contents(ARC_ROOT . '/views/front/project.php');
+    $home = (string) file_get_contents(ARC_ROOT . '/views/front/partials/works.php');
+
+    foreach ([$list, $detail, $home] as $template) {
+        assertContains("!empty(\$project['cover'])", $template, 'Proje gorsel cercevesi cover verisine bagli olmali');
+        assertContains('project-shot', $template, 'Gercek proje medyasi R3 cercevesi kullanmali');
+        assertNotContains('editorial-cover', $template, 'Proje icin sahte editoryal ekran uretilmemeli');
+    }
+
+    assertContains('project-gallery__frame', $detail, 'Gercek galeri medyasi sunum yuzeyi kullanmali');
+});
+
+test('F-R3-07', 'Blog kapagi gercek medyayi onceleyip metinsiz fallback kullanir', function (): void {
+    $list = (string) file_get_contents(ARC_ROOT . '/views/front/posts.php');
+    $detail = (string) file_get_contents(ARC_ROOT . '/views/front/post.php');
+    $partial = (string) file_get_contents(ARC_ROOT . '/views/front/partials/editorial-cover.php');
+
+    assertContains("if (!empty(\$post['cover']))", $list);
+    assertContains("if (!empty(\$post['cover']))", $detail);
+    assertContains("partial('front/partials/editorial-cover'", $list);
+    assertContains("partial('front/partials/editorial-cover'", $detail);
+    assertContains('aria-hidden="true"', $partial, 'Fallback kapak dekoratif olmali');
+    assertNotContains('<img', $partial, 'Fallback harici veya sahte raster kullanmamali');
+    assertNotContains('<text', strtolower($partial), 'Fallback gorselin icine metin gommemeli');
+});
+
+test('F-R3-067', 'G-06 G-07 stili hafif ve ilgili yuzeylerde yuklenir', function (): void {
+    $cssPath = ARC_ROOT . '/public/assets/css/r3-project-blog-media.css';
+    assertTrue(is_file($cssPath), 'R3 proje/blog medya CSS dosyasi bulunmali');
+    $bytes = filesize($cssPath);
+    assertTrue($bytes !== false && $bytes < 18 * 1024, 'R3 proje/blog medya CSS 18 KB altinda olmali');
+
+    $home = (string) file_get_contents(ARC_ROOT . '/app/Controllers/Front/HomeController.php');
+    $projects = (string) file_get_contents(ARC_ROOT . '/app/Controllers/Front/ProjectController.php');
+    $posts = (string) file_get_contents(ARC_ROOT . '/app/Controllers/Front/PostController.php');
+    foreach ([$home, $projects, $posts] as $controller) {
+        assertContains('css/r3-project-blog-media.css', $controller, 'Ilgili controller R3 medya stilini yuklemeli');
+    }
+
+    $css = strtolower((string) file_get_contents($cssPath));
+    assertNotContains('url(http', $css, 'R3 medya stili harici kaynak kullanmamali');
+    assertContains('@media (prefers-reduced-motion: reduce)', $css, 'Hareket azaltma davranisi korunmali');
+});

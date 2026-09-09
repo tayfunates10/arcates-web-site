@@ -40,12 +40,17 @@ $minutes = max(1, (int) ceil(((int) ($post['word_count'] ?? 0)) / 200));
     <div class="article-shell">
       <div class="article-main" data-outline>
         <?php if (!empty($post['cover'])): ?>
-          <img class="project-cover"
+          <img class="article-cover-image"
                src="<?= Security::e(Media::url((string) $post['cover']['path'])) ?>"
                alt="<?= Security::e($post['cover']['alt'] ?: $post['title']) ?>"
                width="<?= (int) $post['cover']['width'] ?>"
                height="<?= (int) $post['cover']['height'] ?>"
                decoding="async">
+        <?php else: ?>
+          <?= partial('front/partials/editorial-cover', [
+              'category' => (string) ($post['category'] ?? ''),
+              'class' => 'article-cover-fallback',
+          ]) ?>
         <?php endif; ?>
 
         <div class="prose u-measure"><?= $outline['html'] ?></div>
