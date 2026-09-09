@@ -33,7 +33,12 @@ use Arcates\Core\Security;
 
 <?php if (!$faqs): ?>
   <section class="section section--tight">
-    <div class="wrap wrap--text"><p class="muted"><?= Security::e(__('no_results')) ?></p></div>
+    <div class="wrap wrap--text">
+      <div class="empty-state" role="status">
+        <span class="state-mark state-mark--empty" aria-hidden="true"><span class="state-mark__glyph"></span></span>
+        <div class="empty-state__copy"><p><?= Security::e(__('no_results')) ?></p></div>
+      </div>
+    </div>
   </section>
 <?php else: ?>
   <section class="section section--faq" data-reveal-group>
