@@ -22,8 +22,10 @@ test('F-R3-03', 'Alti sektor gorseli 4:3, guvenli ve butce icindedir', function 
         assertContains('viewBox="0 0 480 360"', $svg, 'Sektor gorseli 4:3 olmali: ' . $slug);
         assertNotContains('<text', strtolower($svg), 'Sektor gorselinde sahte metin olmamali: ' . $slug);
         assertNotContains('<script', strtolower($svg), 'Sektor gorselinde script olmamali: ' . $slug);
-        assertNotContains('http://', strtolower($svg), 'Sektor gorseli harici kaynak kullanmamali: ' . $slug);
-        assertNotContains('https://', strtolower($svg), 'Sektor gorseli harici kaynak kullanmamali: ' . $slug);
+        assertTrue(
+            preg_match('/(?:xlink:)?href\s*=\s*["\'][^#]/i', $svg) !== 1,
+            'Sektor gorseli harici href kaynagi kullanmamali: ' . $slug
+        );
     }
 
     assertTrue($total < 40 * 1024, 'Alti sektor gorselinin toplam butcesi 40 KB altinda olmali');
