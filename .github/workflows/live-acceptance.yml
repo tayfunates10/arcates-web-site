@@ -47,14 +47,18 @@ jobs:
           ARC_LIVE_REDIRECT_FROM: ${{ inputs.redirect_from }}
           ARC_LIVE_REDIRECT_TO: ${{ inputs.redirect_to }}
         run: |
+          set +e
           set -o pipefail
           node tools/browser/live-check.mjs | tee /tmp/arcates-live-acceptance.log
+          acceptance_status=${PIPESTATUS[0]}
+          set -e
           {
             echo '## Arcates R9 canlı host kabul çıktısı'
             echo '```text'
             cat /tmp/arcates-live-acceptance.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+          exit "$acceptance_status"
 
       - name: Canli kabul ciktisini artefakt olarak sakla
         if: always()
