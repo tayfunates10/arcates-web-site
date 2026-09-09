@@ -1,13 +1,14 @@
 # R3 — Özgün görseller ve devam kaydı
 
-9 Eylül 2026. İncelenen main: `00c21bc8b8125607062696ff1d9902a7b0ad0180`.
-Kaynak CI: https://github.com/tayfunates10/arcates-web-site/actions/runs/34319903851 — başarılı.
+9 Eylül 2026. G-01 `main`e `5240c23d27f2102bdbc66c755b363556950182bb` ile alındı.
+G-02 dalı: `redesign/r3-service-illustrations`.
 
 ## Nerede kalındı?
 
-R0/R1/R4, R5 ana sayfa, R6 iç sayfalar ve R7 panel/sistem kodları main'de. R8 responsive/klavye/RTL/reduced-motion otomasyonları main'de. Eski `TASARIM-PLANI.md` içindeki “sıradaki iş T1” yönlendirmesi tarihsel; tamamlanan işi yeniden başlatmamalı.
-
-R3 özgün görsel ailesi atlanmıştı. Bu modül **G-01 hero sahnesini** üretip entegre eder. Bütün R3 veya bütün projenin tamamlandığı anlamına gelmez. R2 bağımsız tüm ekran prototipinin teslim kaydı ve canlı R0 envanteri de repo kanıtından doğrulanamamıştır.
+R0/R1/R4, R5 ana sayfa, R6 iç sayfalar, R7 panel/sistem kodları ve R8 otomatik
+responsive/klavye/RTL/reduced-motion kabul denetimleri main'de. R3 özgün görsel
+ailesinde **G-01 hero** tamamlandı; bu dal **G-02 altı hizmet görselini** tamamlar.
+Bütün R3 veya canlı yayın kabulü tamamlanmış sayılmaz.
 
 ## G-01 teslim
 
@@ -17,26 +18,59 @@ R3 özgün görsel ailesi atlanmıştı. Bu modül **G-01 hero sahnesini** üret
 | `public/assets/img/redesign/hero-640.webp` | 640×480, 14.606 bayt |
 | `public/assets/img/redesign/hero-1280.webp` | 1280×960, 34.574 bayt |
 
-Yerleşim: `views/front/partials/hero.php`; stil: `home-redesign.css`. Dekoratif tek grup, boş alt metin, aynı 4:3 oranı. Metin ve CTA'lar paneldeki HTML içeriği olarak kalır. İlk ekran görseli eager yüklenir; dosya preload edilmez. Responsive seçimde küçük ekran ve retina kaynakları `srcset/sizes` ile değerlendirilir. Koyu zeminli kompozisyon bilinçli seçildi; PNG şeffafmış gibi sunulmaz. Tasarım onayı kullanıcıdan henüz alınmış değildir.
+Hero `views/front/partials/hero.php` içinde responsive `srcset` ile kullanılır.
+Metin ve CTA panel içeriğidir; görsel dekoratiftir ve sahte müşteri/metrik içermez.
 
-Görsel; üç çeyrek açıdaki web paneli, mobil panel ve mavi bağlantı şeridini içerir. Görsel üretimi yerleşik imagegen ile yapıldı; WebP sürümleri aynı görselin boyut/format dönüşümüdür. Kaynakta müşteri, performans değeri, gerçek proje ekranı veya üçüncü taraf marka bulunmaz.
+## G-02 teslim — altı hizmet görseli
 
-## Üretim promptu
+Aynı koyu lacivert zemin, beyaz yüzey, kobalt mavi vurgu, yumuşak stüdyo
+derinliği ve 4:3 kompozisyon diliyle altı ayrı hizmet illüstrasyonu hazırlandı:
 
-Create a production-ready standalone hero illustration for ARCATES software/web design studio, landscape 4:3. Premium elegant sculptural 3D studio render: exactly three main elements, a matte white desktop browser panel at gentle three-quarter angle, smaller white mobile panel slightly in front to right, and a cobalt-blue curved connector ribbon passing behind and between them, hinting at an angular A shape without text or actual logo. Screen surfaces contain restrained abstract blue and pale-white modular layout blocks only, no letters, no numbers, no charts, no fake performance indicators. Unified subtle bevels, matte porcelain and small translucent blue glass accents, soft upper-left studio light and natural contact shadows. Palette deep midnight navy #081426 background perfectly uniform all the way to outer edges, cobalt #0B4FA8 and #1C7BF2, white. Center composition with generous 10 percent safe area on every edge, all objects fully in frame. Beautiful purposeful graphic for web development, not a screenshot of a finished website, no page titles, no buttons with labels, no watermark, no decorative spheres, no random floating shapes. Image will be used on the right half of an actual website hero; do not include the website itself.
+| Hizmet | Anahtar | Görsel fikri |
+|---|---|---|
+| Kurumsal web tasarım | `layout` | Masaüstü panel + mobil panel |
+| E-ticaret sitesi | `cart` | Ürün yüzeyleri + alışveriş çantası/sepet |
+| Rezervasyon sistemi | `calendar` | Rezervasyon paneli + takvim |
+| SEO hizmeti | `search` | Sonuç yüzeyi + büyüteç |
+| Çoklu dil web sitesi | `globe` | Küre + çoklu içerik kartları |
+| Web sitesi bakım | `shield` | Sunucu katmanları + güvenlik kalkanı |
+
+Görseller 480×360 intrinsic boyutlu, ölçeklenebilir SVG'dir. Altı dosyanın
+toplamı yaklaşık 15 KB'dır; kart genişliğine göre tek kaynaktan kayıpsız ölçeklenir.
+Hizmet bölümünde `loading="lazy"` ve `decoding="async"` ile yüklenir. Dekoratif
+oldukları için alt metinleri boştur; hizmet adı ve açıklaması HTML metni olarak
+panelden gelmeye devam eder.
+
+Yerleşim: `views/front/partials/cards.php`.
+Ek stil: `public/assets/css/r3-service-illustrations.css`.
+Bu stil yalnız ana sayfada `HomeController` üzerinden yüklenir.
+
+Görsellerde harf, sayı, üçüncü taraf logo, müşteri adı, gerçek proje ekranı veya
+uydurma performans metriği bulunmaz. Hizmetlerin ayrımı yalnız nesne/sahne
+metaforuyla yapılır.
+
+## G-02 kabul
+
+- PHP `F-R3-02`: altı SVG'nin varlığını, 480×360 / 4:3 sözleşmesini,
+  tek dosya `< 8 KB` ve toplam `< 32 KB` bütçesini doğrular.
+- Şablon testi hizmet görsellerinin `service-card__image` ve `loading="lazy"`
+  sözleşmesini kontrol eder.
+- Gerçek Chromium `design-check.mjs`, ana sayfayı açıp hizmet bölümüne kaydırır;
+  altı görselin `complete/naturalWidth`, 4:3, boş dekoratif alt ve lazy-loading
+  durumlarını doğrular.
+- R8'in geri kalan testleri regresyon kapısı olarak çalışmaya devam eder.
 
 ## Açık işlerin sırası
 
-1. G-02: altı hizmet illüstrasyonu; aynı kamera, beyaz/mavi malzeme ve ışık ailesi.
-2. G-03: altı sektör görseli; gerçek proje kanıtı gerektiren sahneler gerçek kaynakla hazırlanmalı.
-3. G-04/G-05: süreç ve bölge için mevcut vektörlerin marka tutarlılığı kontrolü.
-4. G-06/G-07: gerçek ekran görüntüsü sunum çerçeveleri ve blog kapakları; canlı medya envanteri gerekiyor.
-5. G-08/G-10: CTA yayı ve boş/hata/başarı işaretleri.
-6. G-09: plandaki sosyal görsel yenilemesi ve favicon/logo küçük boyut kalite kontrolü.
-7. Tüm görseller entegre edilince R8 tekrar; gerçek üretim LCP/CLS/INP/PageSpeed, 800 KB transfer bütçesi, e-posta/cron/yedek ve canlı içerik kabulü.
+1. **G-03:** altı sektör görseli; gerçek proje kanıtı gerektiren sahneler gerçek kaynakla hazırlanmalı.
+2. **G-04/G-05:** süreç ve bölge için mevcut vektörlerin marka tutarlılığı kontrolü.
+3. **G-06/G-07:** gerçek ekran görüntüsü sunum çerçeveleri ve blog kapakları; canlı medya envanteri gerekiyor.
+4. **G-08/G-10:** CTA yayı ve boş/hata/başarı işaretleri.
+5. **G-09:** sosyal görsel yenilemesi ve favicon/logo küçük boyut kalite kontrolü.
+6. Tüm görseller entegre edilince R8 tekrar; gerçek üretim LCP/CLS/INP/PageSpeed,
+   800 KB ilk yük bütçesi, e-posta/cron/yedek ve canlı içerik kabulü.
 
-## Kabul ve sınırlar
+## Canlı yayın sınırı
 
-PHP varlık testi WebP'nin çözülebildiğini, gerçek boyutunu, oranını ve 220 KB hero bütçesini kontrol eder. Tarayıcı animasyon testi görüntünün `complete` ve `naturalWidth` değerlerini, JS kapalı/reduced-motion görünürlüğünü izler. Eski üç DOM şeklinin sayısını korumak yerine yeni tek görselin yüklenmesi test edilir.
-
-Yerelde PHP/MySQL çalışma ortamı bulunmadığından PHP ve gerçek uygulama tarayıcı sonuçları CI üzerinden değerlendirilmelidir. Kaynak main CI başarısı yeni dal için başarı sayılmaz. Canlı siteye dağıtım bu modülde yapılmaz.
+G-02'nin tamamlanması canlı dağıtım onayı değildir. Bu modülde FTP/üretim
+dağıtımı yapılmaz; PR ve CI başarılı olduktan sonra G-03'e geçilir.
