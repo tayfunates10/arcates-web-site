@@ -215,6 +215,10 @@ jobs:
           admin_status=${PIPESTATUS[0]}
           if [ "$admin_status" -ne 0 ]; then browser_status=1; fi
 
+          node tools/browser/admin-mobile-drawer-check.mjs | tee -a /tmp/arcates-browser.log
+          admin_mobile_status=${PIPESTATUS[0]}
+          if [ "$admin_mobile_status" -ne 0 ]; then browser_status=1; fi
+
           mysql -h 127.0.0.1 -uroot -proot arcates_browser -e "UPDATE languages SET is_active=1 WHERE code='ar';" | tee -a /tmp/arcates-browser.log
           rtl_seed_status=${PIPESTATUS[0]}
           if [ "$rtl_seed_status" -ne 0 ]; then browser_status=1; fi
