@@ -25,7 +25,7 @@ test('F-R9-02', 'R9 canli Chromium denetimi responsive canonical robots sitemap 
         "link[rel=\"canonical\"]",
         "'/robots.txt'",
         "'/sitemap.xml'",
-        "'__arcates-r9-live-404__'",
+        "'/__arcates-r9-live-404__'",
         'state.mainLeft !== null && state.mainLeft >= -1',
         'state.h1Right !== null && state.h1Right <= width + 1',
         'maxRedirects: 0',
