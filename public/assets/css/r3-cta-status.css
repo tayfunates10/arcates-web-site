@@ -23,6 +23,8 @@
 .state-mark {
   --state-accent: #1C7BF2;
   --state-soft: #EDF4FF;
+  --state-ring: rgba(28,123,242,.28);
+  --state-inset: rgba(28,123,242,.18);
   position: relative;
   width: 112px;
   aspect-ratio: 1;
@@ -42,7 +44,7 @@
   position: absolute;
   width: 88px;
   aspect-ratio: 1;
-  border: 1px solid color-mix(in srgb, var(--state-accent) 28%, transparent);
+  border: 1px solid var(--state-ring);
   border-radius: 50%;
 }
 .state-mark::after {
@@ -52,10 +54,15 @@
   aspect-ratio: 1;
   border-radius: 18px;
   background: var(--state-soft);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--state-accent) 18%, transparent);
+  box-shadow: inset 0 0 0 1px var(--state-inset);
 }
 .state-mark__glyph { position: relative; z-index: 2; display: block; width: 28px; height: 28px; }
-.state-mark--success { --state-accent: #12805A; --state-soft: #EAF7F2; }
+.state-mark--success {
+  --state-accent: #12805A;
+  --state-soft: #EAF7F2;
+  --state-ring: rgba(18,128,90,.28);
+  --state-inset: rgba(18,128,90,.18);
+}
 .state-mark--success .state-mark__glyph::before {
   content: '';
   position: absolute;
@@ -67,7 +74,12 @@
   border-width: 0 4px 4px 0;
   transform: rotate(45deg);
 }
-.state-mark--error { --state-accent: #B93828; --state-soft: #FCEFEB; }
+.state-mark--error {
+  --state-accent: #B93828;
+  --state-soft: #FCEFEB;
+  --state-ring: rgba(185,56,40,.28);
+  --state-inset: rgba(185,56,40,.18);
+}
 .state-mark--error .state-mark__glyph::before,
 .state-mark--error .state-mark__glyph::after {
   content: '';
