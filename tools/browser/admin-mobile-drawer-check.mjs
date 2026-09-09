@@ -1,4 +1,4 @@
-/* Arcates mobile admin drawer regression check — real Chromium. */
+/* Arcates mobile admin drawer regression check — real Chromium integration. */
 let chromium;
 try {
   ({ chromium } = await import(process.env.PLAYWRIGHT_PATH || 'playwright'));
@@ -28,25 +28,33 @@ await Promise.all([
 
 const toggle = page.locator('[data-admin-nav-toggle]');
 await toggle.click();
+await page.waitForTimeout(260);
 
 const state = await page.evaluate(() => {
   const side = document.querySelector('[data-admin-side]');
   const brand = side?.querySelector('.admin__brand');
-  const firstLink = side?.querySelector('.admin__nav-link');
+  const nav = side?.querySelector('.admin__nav');
+  const links = [...(side?.querySelectorAll('.admin__nav-link') || [])];
   const rect = side?.getBoundingClientRect();
   const brandRect = brand?.getBoundingClientRect();
-  const firstRect = firstLink?.getBoundingClientRect();
-  const style = side ? getComputedStyle(side) : null;
+  const navRect = nav?.getBoundingClientRect();
+  const firstRect = links[0]?.getBoundingClientRect();
+  const sideStyle = side ? getComputedStyle(side) : null;
+  const navStyle = nav ? getComputedStyle(nav) : null;
 
   return {
     width: rect?.width ?? 0,
     top: rect?.top ?? 999,
     bottom: rect?.bottom ?? 0,
     brandTop: brandRect?.top ?? 999,
+    navTop: navRect?.top ?? 999,
     firstNavTop: firstRect?.top ?? 999,
-    navCount: side?.querySelectorAll('.admin__nav-link').length ?? 0,
-    overflowY: style?.overflowY ?? '',
-    justify: style?.justifyContent ?? '',
+    navCount: links.length,
+    firstLabels: links.slice(0, 5).map(link => (link.textContent || '').trim()),
+    sideDisplay: sideStyle?.display ?? '',
+    sideOverflowY: sideStyle?.overflowY ?? '',
+    navOverflowY: navStyle?.overflowY ?? '',
+    navScrollTop: nav?.scrollTop ?? -1,
     bodyOverflow: getComputedStyle(document.body).overflow,
     docOverflow: document.documentElement.scrollWidth - innerWidth,
   };
@@ -54,11 +62,15 @@ const state = await page.evaluate(() => {
 
 check(state.width <= 273 && state.width >= 220, `mobil drawer kompakt genislikte (${state.width}px)`);
 check(Math.abs(state.top) <= 1 && state.bottom >= 843, `mobil drawer viewport yuksekligini kapliyor (${state.top}..${state.bottom})`);
+check(state.sideDisplay === 'grid', `drawer kesin grid yerlesiminde (${state.sideDisplay})`);
 check(state.brandTop < 40, `mobil marka ustten basliyor (${state.brandTop}px)`);
-check(state.firstNavTop < 170, `ilk menu ogesi ust bolumde (${state.firstNavTop}px)`);
-check(state.navCount >= 10, `admin menu ogeleri drawer icinde mevcut (${state.navCount})`);
-check(state.overflowY === 'auto' || state.overflowY === 'scroll', `drawer dikey kaydirilabilir (${state.overflowY})`);
-check(state.justify === 'flex-start' || state.justify === 'normal', `drawer icerigi dikey ortalanmiyor (${state.justify})`);
+check(state.navTop < 100, `menu marka altinda basliyor (${state.navTop}px)`);
+check(state.firstNavTop < 135, `ilk menu ogesi ust bolumde (${state.firstNavTop}px)`);
+check(state.navCount === 16, `admin menu ogeleri eksiksiz (${state.navCount})`);
+check(state.firstLabels.join('|') === 'Pano|Anasayfa|Sayfalar|Örnek siteler|Blog', `ilk menu sirasi dogru (${state.firstLabels.join(', ')})`);
+check(state.sideOverflowY === 'hidden', `drawer govdesi sabit kalir (${state.sideOverflowY})`);
+check(state.navOverflowY === 'auto' || state.navOverflowY === 'scroll', `yalniz menu dikey kaydirilabilir (${state.navOverflowY})`);
+check(state.navScrollTop === 0, `menu acilista en ustte (${state.navScrollTop})`);
 check(state.bodyOverflow === 'hidden', `drawer acikken arka sayfa kaymasi kilitli (${state.bodyOverflow})`);
 check(state.docOverflow <= 1, `mobil panel yatay tasma yok (${state.docOverflow}px)`);
 
@@ -67,5 +79,5 @@ check(await toggle.getAttribute('aria-expanded') === 'false', 'Escape drawer kap
 
 await context.close();
 await browser.close();
-console.log(fail === 0 ? '\nMOBIL ADMIN DRAWER DENETIMI GECTI' : `\n${fail} MOBIL DRAWER DENETIMI KALDI`);
+console.log(fail === 0 ? '\nMOBIL ADMIN DRAWER ENTEGRASYON DENETIMI GECTI' : `\n${fail} MOBIL DRAWER DENETIMI KALDI`);
 process.exit(fail === 0 ? 0 : 1);

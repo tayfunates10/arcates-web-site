@@ -1,0 +1,34 @@
+name: Admin Mobile Visual
+
+on:
+  pull_request:
+    paths:
+      - 'public/assets/css/admin*.css'
+      - 'public/assets/js/admin-redesign.js'
+      - 'tools/browser/admin-mobile-visual-check.mjs'
+      - '.github/workflows/admin-mobile-visual.yml'
+
+jobs:
+  drawer-visual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Chromium ve Playwright kur
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+
+      - name: Android mobil drawer gorsel denetimi
+        run: node tools/browser/admin-mobile-visual-check.mjs | tee /tmp/admin-mobile-visual.log
+
+      - name: Gorsel ve log artefaktini sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-mobile-drawer-visual
+          path: |
+            /tmp/admin-mobile-drawer-verified.png
+            /tmp/admin-mobile-visual.log
+          if-no-files-found: error
+          retention-days: 7
