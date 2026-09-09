@@ -18,3 +18,12 @@ test('F-CPANEL-01', 'cPanel pull deployment manifesti guvenli hedef ve proje aga
     assertNotContains('/bin/rm', $yaml, 'Deployment mevcut canli dosyalari silmemeli');
     assertNotContains('--delete', $yaml, 'Runtime config/upload/storage verileri silinmemeli');
 });
+
+test('F-CPANEL-02', 'public kok istegi index.php ile acilir', function (): void {
+    $path = ARC_ROOT . '/public/.htaccess';
+    assertTrue(is_file($path), 'public/.htaccess bulunmali');
+
+    $htaccess = (string) file_get_contents($path);
+    assertContains('DirectoryIndex index.php', $htaccess, 'Apache kok isteginde index.php baslangic dosyasi olmali');
+    assertContains('Options -Indexes', $htaccess, 'Dizin listeleme kapali kalmali');
+});
