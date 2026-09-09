@@ -44,6 +44,7 @@ final class ProjectController extends Controller
                 'robots'      => (string) ($page['robots'] ?? 'index,follow'),
                 'hreflang'    => $page !== null ? Seo::hreflang(Page::alternates((int) $page['id'])) : [],
                 'schemas'     => array_filter([Seo::breadcrumbList($crumbs)]),
+                'styles'      => ['css/r3-project-blog-media.css'],
             ],
         ]);
     }
@@ -93,6 +94,7 @@ final class ProjectController extends Controller
                     Seo::breadcrumbList($crumbs),
                 ]),
                 'og_image_id' => $project['cover_id'] ?? null,
+                'styles'      => ['css/r3-project-blog-media.css'],
             ],
         ]);
     }
