@@ -50,46 +50,72 @@
   }
 
   /*
-   * Mobile admin drawer: keep the navigation compact and anchored to the
-   * viewport top. Long role-based menus scroll inside the drawer instead of
-   * vertically centering or pushing the useful items below the fold.
+   * Mobile drawer uses an explicit three-row grid instead of relying on a
+   * flexible column. This guarantees the brand stays at the top, the menu is
+   * the only scrollable area, and the footer stays at the bottom on real
+   * mobile visual viewports as well as desktop-narrow emulation.
    */
   .admin--r7 .admin__side {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-content: stretch;
+    align-items: stretch;
+    justify-content: stretch;
     inline-size: min(74vw, 272px);
     block-size: 100dvh;
     min-block-size: 100dvh;
     max-block-size: 100dvh;
-    padding: max(14px, env(safe-area-inset-top)) 12px max(14px, env(safe-area-inset-bottom));
-    gap: 12px;
+    padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+    gap: 8px;
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .admin--r7 .admin__brand {
+    display: flex;
+    flex: none;
+    align-items: center;
     justify-content: flex-start;
-    align-items: stretch;
+    align-self: stretch;
+    min-block-size: 54px;
+    margin: 0;
+    padding: 4px 8px 10px;
+  }
+
+  .admin--r7 .admin__logo {
+    display: block;
+    inline-size: min(144px, 100%);
+    max-inline-size: 100%;
+    block-size: auto;
+    margin: 0;
+  }
+
+  .admin--r7 .admin__nav {
+    display: block;
+    min-block-size: 0;
+    margin: 0;
+    padding: 2px 0 8px;
     overflow-y: auto;
+    overflow-x: hidden;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-gutter: stable;
   }
 
-  .admin--r7 .admin__brand {
-    flex: 0 0 auto;
-    min-block-size: 0;
-    padding: 4px 8px 12px;
-  }
-
-  .admin--r7 .admin__logo {
-    inline-size: min(148px, 100%);
-  }
-
-  .admin--r7 .admin__nav {
-    flex: 0 0 auto;
-    min-block-size: 0;
-  }
-
   .admin--r7 .admin__nav::before {
-    margin: 2px 10px 6px;
+    margin: 0 10px 6px;
   }
 
   .admin--r7 .admin__nav ul {
+    display: grid;
     gap: 3px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .admin--r7 .admin__nav li {
+    margin: 0;
+    padding: 0;
   }
 
   .admin--r7 .admin__nav-link {
@@ -99,9 +125,19 @@
   }
 
   .admin--r7 .admin__side-foot {
-    flex: 0 0 auto;
-    margin-top: 6px;
+    align-self: end;
+    margin: 0;
     padding: 10px 8px 4px;
+  }
+}
+
+@supports not (height: 100dvh) {
+  @media (max-width: 58.75rem) {
+    .admin--r7 .admin__side {
+      block-size: 100vh;
+      min-block-size: 100vh;
+      max-block-size: 100vh;
+    }
   }
 }
 
