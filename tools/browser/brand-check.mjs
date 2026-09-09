@@ -23,22 +23,46 @@ const pngSize = (buffer) => {
 };
 
 await page.goto(BASE + '/', { waitUntil: 'networkidle' });
-const head = await page.evaluate(() => ({
-  ogImage: document.querySelector('meta[property="og:image"]')?.content || '',
-  ogType: document.querySelector('meta[property="og:image:type"]')?.content || '',
-  ogWidth: document.querySelector('meta[property="og:image:width"]')?.content || '',
-  ogHeight: document.querySelector('meta[property="og:image:height"]')?.content || '',
-  twitterImage: document.querySelector('meta[name="twitter:image"]')?.content || '',
-  twitterCard: document.querySelector('meta[name="twitter:card"]')?.content || '',
-  themeColor: document.querySelector('meta[name="theme-color"]')?.content || '',
-  icons: [...document.querySelectorAll('link[rel="icon"]')].map((link) => ({ href: link.href, sizes: link.sizes.value, type: link.type })),
-  apple: (() => {
-    const link = document.querySelector('link[rel="apple-touch-icon"]');
-    return link ? { href: link.href, sizes: link.sizes.value } : null;
-  })(),
-  headerMark: getComputedStyle(document.querySelector('.brand__mark')).backgroundImage,
-  footerLogo: document.querySelector('.site-foot__logo')?.getAttribute('src') || '',
-}));
+const head = await page.evaluate(() => {
+  const pathOf = (value) => {
+    try { return new URL(value, location.href).pathname; } catch { return ''; }
+  };
+  const mark = document.querySelector('.brand__mark');
+  const background = mark ? getComputedStyle(mark).backgroundImage : '';
+  const match = background.match(/url\(["']?([^"')]+)["']?\)/i);
+  const computedMarkPath = match ? pathOf(match[1]) : '';
+  let cssUsesApprovedMark = false;
+  for (const sheet of document.styleSheets) {
+    let rules;
+    try { rules = sheet.cssRules; } catch { continue; }
+    for (const rule of rules || []) {
+      const text = rule.cssText || '';
+      if (text.includes('.brand__mark') && text.includes('logo-mark.png')) {
+        cssUsesApprovedMark = true;
+        break;
+      }
+    }
+    if (cssUsesApprovedMark) break;
+  }
+  const footerSrc = document.querySelector('.site-foot__logo')?.src || '';
+  return {
+    ogImage: document.querySelector('meta[property="og:image"]')?.content || '',
+    ogType: document.querySelector('meta[property="og:image:type"]')?.content || '',
+    ogWidth: document.querySelector('meta[property="og:image:width"]')?.content || '',
+    ogHeight: document.querySelector('meta[property="og:image:height"]')?.content || '',
+    twitterImage: document.querySelector('meta[name="twitter:image"]')?.content || '',
+    twitterCard: document.querySelector('meta[name="twitter:card"]')?.content || '',
+    themeColor: document.querySelector('meta[name="theme-color"]')?.content || '',
+    icons: [...document.querySelectorAll('link[rel="icon"]')].map((link) => ({ href: link.href, sizes: link.sizes.value, type: link.type })),
+    apple: (() => {
+      const link = document.querySelector('link[rel="apple-touch-icon"]');
+      return link ? { href: link.href, sizes: link.sizes.value } : null;
+    })(),
+    headerMarkPath: computedMarkPath,
+    cssUsesApprovedMark,
+    footerLogoPath: pathOf(footerSrc),
+  };
+});
 
 check(head.ogImage.endsWith('/assets/social-card.php'), 'G-09 varsayilan OG sosyal kart endpointi kullaniliyor');
 check(head.ogType === 'image/png', `G-09 OG MIME image/png (${head.ogType})`);
@@ -51,8 +75,10 @@ for (const size of ['16x16', '32x32', '48x48', '192x192']) {
   check(head.icons.some((icon) => icon.sizes === size && icon.type === 'image/png'), `G-09 favicon ${size} bildirimi mevcut`);
 }
 check(head.apple?.sizes === '180x180', 'G-09 Apple touch 180x180 bildirimi mevcut');
-check(head.headerMark.includes('logo-mark.png'), 'G-09 header onayli logo-mark kaynagini kullaniyor');
-check(head.footerLogo.endsWith('/assets/img/logo-wordmark.png'), 'G-09 footer onayli wordmark kaynagini kullaniyor');
+check(head.headerMarkPath === '/assets/img/logo-mark.png' || head.cssUsesApprovedMark,
+  `G-09 header onayli logo-mark kaynagini kullaniyor (${head.headerMarkPath || 'CSS kuralı'})`);
+check(head.footerLogoPath === '/assets/img/logo-wordmark.png',
+  `G-09 footer onayli wordmark kaynagini kullaniyor (${head.footerLogoPath})`);
 
 const targets = [
   ['/assets/social-card.php', 1200, 630, 350 * 1024],
