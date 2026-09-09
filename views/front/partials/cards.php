@@ -35,6 +35,7 @@ $icons = [
               width="480"
               height="360"
               alt=""
+              aria-hidden="true"
               loading="lazy"
               decoding="async">
           </span>
