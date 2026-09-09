@@ -33,6 +33,10 @@
 }
 
 @media (max-width: 58.75rem) {
+  body.admin-nav-open {
+    overflow: hidden;
+  }
+
   .admin--r7 .admin__content > *,
   .admin--r7 .panel,
   .admin--r7 .table-scroll,
@@ -43,5 +47,66 @@
 
   .admin--r7 .table-scroll {
     scrollbar-gutter: stable;
+  }
+
+  /*
+   * Mobile admin drawer: keep the navigation compact and anchored to the
+   * viewport top. Long role-based menus scroll inside the drawer instead of
+   * vertically centering or pushing the useful items below the fold.
+   */
+  .admin--r7 .admin__side {
+    inline-size: min(74vw, 272px);
+    block-size: 100dvh;
+    min-block-size: 100dvh;
+    max-block-size: 100dvh;
+    padding: max(14px, env(safe-area-inset-top)) 12px max(14px, env(safe-area-inset-bottom));
+    gap: 12px;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable;
+  }
+
+  .admin--r7 .admin__brand {
+    flex: 0 0 auto;
+    min-block-size: 0;
+    padding: 4px 8px 12px;
+  }
+
+  .admin--r7 .admin__logo {
+    inline-size: min(148px, 100%);
+  }
+
+  .admin--r7 .admin__nav {
+    flex: 0 0 auto;
+    min-block-size: 0;
+  }
+
+  .admin--r7 .admin__nav::before {
+    margin: 2px 10px 6px;
+  }
+
+  .admin--r7 .admin__nav ul {
+    gap: 3px;
+  }
+
+  .admin--r7 .admin__nav-link {
+    min-block-size: 42px;
+    padding: 8px 11px;
+    font-size: 13px;
+  }
+
+  .admin--r7 .admin__side-foot {
+    flex: 0 0 auto;
+    margin-top: 6px;
+    padding: 10px 8px 4px;
+  }
+}
+
+@media (max-width: 30rem) {
+  .admin--r7 .admin__side {
+    inline-size: min(72vw, 264px);
   }
 }
