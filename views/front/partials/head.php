@@ -19,6 +19,7 @@ $head = $head ?? [];
 ?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#081426">
 
 <title><?= Security::e($head['title'] ?? '') ?></title>
 <meta name="description" content="<?= Security::e($head['description'] ?? '') ?>">
@@ -39,21 +40,30 @@ $head = $head ?? [];
 <?php
 $ogImage = (string) ($head['og_image'] ?? '');
 if ($ogImage === '') {
-    $ogImage = path_url('/assets/img/og-default.png');
+    $ogImage = path_url('/assets/social-card.php');
 }
+$ogAlt = trim((string) ($_site['name'] ?? 'Arcates Yazılım'));
 ?>
 <meta property="og:image" content="<?= Security::e($ogImage) ?>">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="<?= Security::e($ogAlt) ?>">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?= Security::e($head['title'] ?? '') ?>">
+<meta name="twitter:description" content="<?= Security::e($head['description'] ?? '') ?>">
+<meta name="twitter:image" content="<?= Security::e($ogImage) ?>">
 
 <?php $verification = (string) Settings::get('gsc_verification', ''); ?>
 <?php if ($verification !== ''): ?>
 <meta name="google-site-verification" content="<?= Security::e($verification) ?>">
 <?php endif; ?>
 
-<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/assets/brand-icon.php?size=16" sizes="16x16">
+<link rel="icon" type="image/png" href="/assets/img/favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/assets/brand-icon.php?size=48" sizes="48x48">
+<link rel="icon" type="image/png" href="/assets/img/logo-mark.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" sizes="180x180">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
