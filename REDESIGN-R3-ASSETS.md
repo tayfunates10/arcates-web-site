@@ -8,7 +8,7 @@
 - G-04/G-05 `main`e PR #15 / `ff926db04a162cdc797d9e4be3507ed0a9a1ede2` ile alındı.
 - G-06/G-07 `main`e PR #16 / `81bf25622bc8b973e1159fee9e2c2f4cd94a844f` ile alındı.
 - G-08/G-10 `main`e PR #17 / `09805e665fcd63dc5b795ab2691e453a422108cc` ile alındı.
-- G-09 dalı: `redesign/r3-social-brand-assets`.
+- G-09 `main`e `82431fd8d5b4f4d153c35c1c49e476c28dd7a341` ile alındı.
 
 ## Nerede kalındı?
 
@@ -116,7 +116,7 @@ slogan, müşteri adı, sayı, puan veya performans metriği yazılmaz. Sayfaya 
 
 ## Açık işlerin sırası
 
-1. Tüm R3 görselleri birleştirildikten sonra tam R8 regresyonunu tekrar doğrula.
+1. Tam R8 regresyonu doğrulandı: `82431fd8d5b4f4d153c35c1c49e476c28dd7a341`, [CI 34387612830](https://github.com/tayfunates10/arcates-web-site/actions/runs/34387612830). PHP/MySQL ve Chromium işleri başarılı; atlanan PHP testini reddeden kapı geçti.
 2. Gerçek üretimde LCP/CLS/INP/PageSpeed ve 800 KB ilk yük bütçesini ölç.
 3. E-posta, cron, yedek, gerçek içerik ve canlı yayın kabulünü `PRODUCTION.md`
    üzerinden tamamla.
@@ -125,3 +125,20 @@ slogan, müşteri adı, sayı, puan veya performans metriği yazılmaz. Sayfaya 
 
 G-09'un tamamlanması canlı dağıtım onayı değildir. FTP/üretim dağıtımı bu modülde
 yapılmaz; PR ve CI başarılı olduktan sonra yalnız genel R8/üretim kabulüne geçilir.
+
+## Güncel devam kaydı — 9 Eylül 2026
+
+Güncel main üzerinde sekiz Chromium denetimi CI içinde çalıştırılmıştır:
+animasyon, tasarım, iç sayfalar, medya, durumlar, marka, panel ve R8 kabul.
+İki işin bütün test adımları başarıyla tamamlanmıştır. Aynı kodu yeniden
+çalıştırmak yerine bu sürüme ait tamamlanmış CI kaydı doğrulandı.
+
+Sıradaki iş üretim kabulüdür. `config/config.example.php` içindeki
+`https://arcatesyazilim.com` örnek yapılandırmadır; gerçek yayın adresi veya
+bu commit'in üretimde olduğunun kanıtı sayılmaz. Canlı adres/sürüm doğrulandıktan
+sonra performans ve ilk yük bütçesi ölçülmeli; sunucuda preflight, gerçek e-posta,
+cron ve yedekten geri yükleme kanıtları tamamlanmalıdır. CI mail yöntemi `log`
+olduğu için gerçek e-posta teslimini doğrulamaz. Bu kontrolde dağıtım yapılmadı.
+
+Önceki çalışma dalındaki alternatif raster hizmet görselleri mevcut SVG
+entegrasyonunun üzerine uygulanmadı; R3 tamamlanmış iş olarak korunur.
