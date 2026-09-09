@@ -6,25 +6,21 @@
  * en cok ziyaret edilen 10 sayfa, son 404 kayitlari, taslak icerik sayisi,
  * sistem durumu.  DOCS.md 9.1
  */
-
 declare(strict_types=1);
-
 namespace Arcates\Controllers\Admin;
-
+use Arcates\Core\Auth;
+use Arcates\Core\ContentSeeder;
 use Arcates\Core\Request;
 use Arcates\Core\Response;
 use Throwable;
-
 final class DashboardController extends Controller
 {
     protected string $section = 'dashboard';
-
     public function index(Request $request, array $params): Response
     {
         if ($guard = $this->guard()) {
             return $guard;
         }
-
         return $this->view('dashboard', [
             'title'    => 'Pano',
             'visits'   => $this->visitSeries(),
@@ -34,7 +30,42 @@ final class DashboardController extends Controller
             'drafts'   => $this->draftCounts(),
             'system'   => $this->systemState(),
             'newForms' => $this->newSubmissionCount(),
+            'contentRepair' => $this->contentRepairState(),
         ]);
+    }
+
+    /** Eksik kurulum icerigini, mevcut kayitlara dokunmadan tamamlar. */
+    public function seedContent(Request $request, array $params): Response
+    {
+        if ($guard = $this->guardAdmin()) {
+            return $guard;
+        }
+        if ($csrf = $this->verifyCsrf($request)) {
+            return $csrf;
+        }
+
+        try {
+            $summary = (new ContentSeeder($this->db()))->runMissing();
+            $added = $summary['pages'] + $summary['projects'] + $summary['posts'] + $summary['faqs'];
+            $message = $added > 0
+                ? "Başlangıç içeriği tamamlandı: {$summary['pages']} sayfa, {$summary['projects']} örnek site, {$summary['posts']} blog yazısı, {$summary['faqs']} SSS eklendi."
+                : 'Başlangıç içeriği zaten tam; mevcut kayıtlara dokunulmadı.';
+            return $this->back(admin_url(), 'success', $message);
+        } catch (Throwable $e) {
+            return $this->back(admin_url(), 'error', 'İçerik tamamlanamadı: ' . $e->getMessage());
+        }
+    }
+
+    private function contentRepairState(): array
+    {
+        try {
+            return [
+                'missing' => (new ContentSeeder($this->db()))->missingCoreCount(),
+                'can_run' => Auth::isAdmin(),
+            ];
+        } catch (Throwable) {
+            return ['missing' => 0, 'can_run' => false];
+        }
     }
 
     /** Son 30 gunun gunluk ziyaret ve oturum sayisi. Botlar disaridadir. */
@@ -63,7 +94,6 @@ final class DashboardController extends Controller
                 }
             }
 
-            // Ham kayitlar toplanmissa gunluk tablodan tamamla. DOCS.md 8.4
             $daily = $this->db()->all(
                 'SELECT day, SUM(views) AS views, SUM(sessions) AS sessions
                    FROM visits_daily WHERE day >= :since GROUP BY day',
@@ -77,13 +107,11 @@ final class DashboardController extends Controller
                 }
             }
         } catch (Throwable) {
-            // Istatistik tablolari henuz doldurulmamis olabilir.
         }
 
         return array_values($series);
     }
 
-    /** Donusum hunisi: yeni → arandi → teklif → kazanildi. DOCS.md 9.1 */
     private function funnel(): array
     {
         $labels = [
@@ -93,21 +121,17 @@ final class DashboardController extends Controller
             'won'       => 'Kazanıldı',
             'lost'      => 'Kaybedildi',
         ];
-
         $counts = array_fill_keys(array_keys($labels), 0);
-
         try {
             foreach ($this->db()->all('SELECT status, COUNT(*) AS total FROM submissions GROUP BY status') as $row) {
                 $counts[$row['status']] = (int) $row['total'];
             }
         } catch (Throwable) {
         }
-
         $out = [];
         foreach ($labels as $key => $label) {
             $out[] = ['key' => $key, 'label' => $label, 'count' => $counts[$key]];
         }
-
         return $out;
     }
 
@@ -123,7 +147,6 @@ final class DashboardController extends Controller
         }
     }
 
-    /** En cok ziyaret edilen 10 sayfa. */
     private function topPages(): array
     {
         try {
@@ -150,27 +173,22 @@ final class DashboardController extends Controller
         }
     }
 
-    /** Taslak icerik sayilari. */
     private function draftCounts(): array
     {
         $out = ['pages' => 0, 'projects' => 0, 'posts' => 0];
-
         try {
             $out['pages']    = (int) $this->db()->count('pages', ['status' => 'draft']);
             $out['projects'] = (int) $this->db()->count('projects', ['status' => 'draft']);
             $out['posts']    = (int) $this->db()->count('posts', ['status' => 'draft']);
         } catch (Throwable) {
         }
-
         return $out;
     }
 
-    /** PHP surumu, disk, son yedek tarihi. DOCS.md 9.1 */
     private function systemState(): array
     {
         $backupDir  = ARC_ROOT . '/storage/backups';
         $lastBackup = null;
-
         if (is_dir($backupDir)) {
             $files = glob($backupDir . '/*.sql.gz') ?: [];
             if ($files) {
@@ -178,10 +196,8 @@ final class DashboardController extends Controller
                 $lastBackup = date('Y-m-d H:i', (int) filemtime($files[0]));
             }
         }
-
         $free  = @disk_free_space(ARC_ROOT);
         $total = @disk_total_space(ARC_ROOT);
-
         return [
             'php'          => PHP_VERSION,
             'disk_free'    => is_float($free) ? (int) $free : null,
