@@ -43,3 +43,11 @@ test('F-PROD-04', 'Panel tamamlama işlemi admin ve CSRF korumalıdır', functio
     assertContains('Eksik içerikleri yükle', $dashboard, 'Kullanıcıya açık tek tıklama eylemi bulunmalı');
     assertContains('missingCoreCount()', $controller, 'Pano düğmeyi yalnız eksik içerik varsa göstermeli');
 });
+
+test('F-PROD-05', 'Yeni kurulum tam başlangıç içeriğini otomatik yükler', function (): void {
+    $installer = (string) file_get_contents(ARC_ROOT . '/app/Controllers/Front/InstallController.php');
+
+    assertContains('use Arcates\\Core\\ContentSeeder;', $installer, 'Installer ContentSeeder kullanmalı');
+    assertContains('(new ContentSeeder($db))->runMissing();', $installer, 'Şema sonrası tam içerik seed edilmeli');
+    assertNotContains('(new Seeder($db))->run();', $installer, 'Eksik temel seeder tek başına kullanılmamalı');
+});
