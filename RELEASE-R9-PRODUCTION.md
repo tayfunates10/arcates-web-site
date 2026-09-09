@@ -27,7 +27,7 @@ R9 iki parça ekler:
 1. `tools/browser/live-check.mjs`
 2. GitHub Actions **Live Acceptance** workflow'u
 
-Workflow manuel çalışır ve gerçek `https://` production adresini input olarak alır. Production'a veri yazmaz; form göndermez, panelde oturum açmaz, veritabanını veya içerikleri değiştirmez.
+Workflow manuel çalışır ve gerçek `https://` production adresini input olarak alır. Yalnız HTTP GET istekleri yapar; form göndermez, panelde oturum açmaz ve ayar/içerik mutasyonu yapmaz. Bununla birlikte uygulamanın normal ölçüm davranışı bu istekleri kaydedebilir: public ziyaretler istatistik oluşturabilir, bilinmeyen rota `not_found` sayacını, bilinen redirect kontrolü ise redirect isabet sayacını artırabilir. Bu sınırlı operasyonel telemetri R9 smoke testinin beklenen yan etkisidir.
 
 Otomatik canlı kontroller:
 
