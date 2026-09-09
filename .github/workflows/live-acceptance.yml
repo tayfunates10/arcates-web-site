@@ -1,0 +1,66 @@
+name: Live Acceptance
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Canli HTTPS adresi (or. https://www.example.com)'
+        required: true
+        type: string
+      admin_path:
+        description: 'Panel yolu; robots.txt kontrolunde kullanilir'
+        required: true
+        default: 'panel'
+        type: string
+      redirect_from:
+        description: 'Opsiyonel eski slug/yol (or. /eski-adres)'
+        required: false
+        type: string
+      redirect_to:
+        description: 'Opsiyonel beklenen yeni slug/yol (redirect_from ile birlikte)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    name: live-host
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Chromium ve Playwright kur
+        shell: bash
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Canli host kabul denetimleri
+        shell: bash
+        env:
+          ARC_LIVE_BASE_URL: ${{ inputs.base_url }}
+          ARC_LIVE_ADMIN_PATH: ${{ inputs.admin_path }}
+          ARC_LIVE_REDIRECT_FROM: ${{ inputs.redirect_from }}
+          ARC_LIVE_REDIRECT_TO: ${{ inputs.redirect_to }}
+        run: |
+          set -o pipefail
+          node tools/browser/live-check.mjs | tee /tmp/arcates-live-acceptance.log
+          {
+            echo '## Arcates R9 canlı host kabul çıktısı'
+            echo '```text'
+            cat /tmp/arcates-live-acceptance.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Canli kabul ciktisini artefakt olarak sakla
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: arcates-live-acceptance
+          path: /tmp/arcates-live-acceptance.log
+          if-no-files-found: warn
+          retention-days: 14
