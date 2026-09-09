@@ -22,7 +22,7 @@ $cta = $content['cta'] ?? null;
       <?php foreach ($projects as $index => $project): ?>
         <li class="work<?= $index === 0 ? ' work--featured' : ' work--support' ?>" data-reveal>
           <?php if (!empty($project['cover'])): ?>
-            <div class="work__media">
+            <div class="work__media project-shot">
               <img src="<?= Security::e(Media::url((string) $project['cover']['path'])) ?>"
                    alt="<?= Security::e($project['cover']['alt'] ?? $project['title']) ?>"
                    width="<?= (int) ($project['cover']['width'] ?? 768) ?>"
