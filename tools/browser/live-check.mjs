@@ -1,4 +1,4 @@
-/* Arcates R9 live-host acceptance — real Chromium, no production writes. */
+/* Arcates R9 live-host acceptance — real Chromium, GET-only smoke checks. */
 let chromium;
 try {
   ({ chromium } = await import(process.env.PLAYWRIGHT_PATH || 'playwright'));
@@ -38,6 +38,8 @@ base.pathname = base.pathname.replace(/\/$/, '');
 base.search = '';
 base.hash = '';
 const BASE = base.href.replace(/\/$/, '');
+
+console.log('NOT: Bu smoke testi yalnız HTTP GET yapar; form/panel mutasyonu yapmaz. Uygulamanin normal ziyaret, 404 ve redirect sayaçları bu istekleri kaydedebilir.');
 
 const browser = await chromium.launch();
 let fail = 0;
