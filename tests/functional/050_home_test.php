@@ -88,7 +88,7 @@ test('O-01', 'Anasayfada tek H1 bulunur ve başlık hiyerarşisi atlamaz', funct
 test('E-03', 'Hero sahnesi dekoratif, anlamlı görseller alt metinlidir', function (): void {
     arc_need_db(); HomeSection::ensureDefaults(); $body = arc_home()->body();
     assertContains('<div class="hero-scene" aria-hidden="true">', $body);
-    assertContains('alt="" aria-hidden="true"', $body, 'Dekoratif hero logo gorseli acikca gizlenmeli');
+    assertContains('alt="" aria-hidden="true"', $body, 'Dekoratif hero gorseli acikca gizlenmeli');
     if (preg_match('#<div class="hero-scene" aria-hidden="true">(.*?)</div>\s*</div>\s*</section>#s', $body, $m) === 1) {
         assertNotContains('<h', $m[1]);
     }
@@ -209,7 +209,7 @@ test('A-08', 'Dar ekranda R5 bileşenleri responsive kurallara sahiptir', functi
     assertContains('overflow-x: hidden', $site, 'Govde yatay tasmayi kesmeli');
     assertContains('width: min(calc(100% - (var(--sp-5) * 2)), var(--wrap))', $site);
     assertContains('@media (max-width: 45rem)', $home);
-    assertContains('.hero-scene { min-height: 300px;', $home);
+    assertContains('.hero-scene { width: min(100%, 430px);', $home);
     assertContains('.sector-links__grid { grid-template-columns: repeat(2, 1fr); }', $home);
     assertContains('.cards--services { grid-template-columns: 1fr; }', $home);
     assertContains('.works--showcase { grid-template-columns: 1fr; }', $home);

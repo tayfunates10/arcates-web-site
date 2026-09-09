@@ -1,3 +1,5 @@
+> **Tarihsel plan:** Aşağıdaki T1–T6 başlangıç durumu güncel devam noktası değildir. 9 Eylül 2026 devam kaydı için `REDESIGN-R3-ASSETS.md`, güncel davranış için `DOCS.md` esas alınır. R5/R6/R7 ve otomatik R8 main dalına girmiştir; R3 görsel üretimi kısmen açıktır.
+
 # Arcates Web Site — CSS / JS Yeniden Tasarım Planı
 
 Bu belge `DOCS.md`'yi **değiştirmez**, uygular. Çelişki halinde `DOCS.md` esastır;

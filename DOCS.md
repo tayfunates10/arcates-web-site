@@ -326,7 +326,7 @@ Hero içerik ve sahnesi **1.05 saniye içinde** yerleşmiş olmalıdır. Eski 1.
 Mobilde içerik sırf animasyon için aşağı itilmez. Hero sahnesi CSS ile küçülür. Sektör grubu statiktir; sekmenin arka plana alınmasıyla yönetilecek animasyon durumu yoktur.
 
 ### 7.5 Performans sınırı
-Scroll sırasında pahalı layout animasyonu yoktur. Ana sayfa görsel katmanı CSS/DOM tabanlıdır; sahte büyük raster hero eklenmez. R8 kabul turunda LCP/CLS/INP ve ilk yük bütçesi ayrıca ölçülür.
+Scroll sırasında pahalı layout animasyonu yoktur. Ana sayfa görsel katmanı R3 G-01 özgün raster sahnesini kullanır; 640/1280 genişlikli WebP varyantları sırasıyla 14.606/34.574 bayttır. PNG ana kaynak tarayıcıya yüklenmez. Sahne metin, müşteri veya performans verisi içermez. R8 kabul turunda LCP/CLS/INP ve ilk yük bütçesi ayrıca ölçülür.
 
 ---
 
@@ -759,3 +759,8 @@ Gerçek workflow kanoniktir. Özet:
 - [ ] `php tools/preflight.php` üretimde geçti
 - [ ] Tüm PHP/MySQL ve gerçek Chromium CI yeşil
 - [ ] R8 viewport/RTL/%200 zoom/keyboard/reduced-motion/performance matrisi geçti
+
+
+### Yeniden tasarım devam kaydı — 9 Eylül 2026
+
+R0/R1/R4 foundation, R5, R6 ve R7 kodları main dalındadır; R8 otomatik kabul matrisi eklenmiştir. `00c21bc` kaynak sürümünün CI sonucu başarılıdır. R8 bütün özgün görsellerin veya canlı yayın kontrollerinin tamamlandığı anlamına gelmez. R3 G-01 hero sahnesi bu modülde eklenir; kalan görseller ve üretim doğrulamaları `REDESIGN-R3-ASSETS.md` kaydında açık tutulur.

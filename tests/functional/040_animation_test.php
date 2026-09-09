@@ -89,7 +89,7 @@ test('A-02', 'prefers-reduced-motion R5 dahil tüm hareketi kapatır', function 
     $homeStart = strpos($home, '@media (prefers-reduced-motion: reduce)');
     assertTrue($homeStart !== false, 'R5 azaltilmis hareket bloku bulunmali');
     $homeBlock = substr($home, (int) $homeStart);
-    assertContains('hero-scene__web', $homeBlock);
+    assertContains('hero-scene__art', $homeBlock);
     assertContains('opacity: 1', $homeBlock);
     assertContains('transform: none', $homeBlock);
     assertContains('animation: none', $homeBlock);
@@ -111,8 +111,6 @@ test('A-03', 'R5 hero acilisi bir saniyenin altinda oturur', function (): void {
         'animation-delay: 160ms',
         'animation-delay: 210ms',
         'animation-delay: 100ms',
-        'animation-delay: 180ms',
-        'animation-delay: 240ms',
     ] as $needle) assertContains($needle, $css);
 
     $js = arc_site_js();

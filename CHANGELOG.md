@@ -4,6 +4,14 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Eklendi (R3 G-01 özgün hero görseli)
+- Web ve mobil yüzeyleri Arcates mavisi bağlantı formuyla anlatan özgün sahne ve PNG ana kaynak eklendi.
+- 640/1280 WebP varyantları, responsive kaynak seçimi ve sabit 4:3 oranı eklendi; ana kaynak sayfada yüklenmez.
+- Eski CSS/DOM çizim sahnesi ve artık kullanılmayan 3D kontrol stilleri kaldırıldı.
+- Tarayıcı kontrolü dosyanın gerçekten yüklenip çözüldüğünü doğrular; reduced-motion ve JS kapalı kontroller yeni sahneyi izler.
+- R3 varlık durumu kaydedildi; tarihsel tasarım planının yanıltıcı T1 başlangıç yönlendirmesine güncel durum notu eklendi.
+
+
 ### Eklendi (tam arayüz yeniden tasarımı — R0/R1/R4)
 - `REDESIGN-R0-INVENTORY.md` ile route, şablon, CSS/JS, statik varlık ve canlı medya sınırları kaydedildi.
 - Ziyaretçi sitesi için ortak semantik renk/yüzey rolleri ve 14px kontrol / 22px büyük yüzey sistemi eklendi.
