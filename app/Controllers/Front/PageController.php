@@ -90,6 +90,7 @@ final class PageController extends Controller
                 'hreflang'    => $this->hreflang($page),
                 'schemas'     => $schemas,
                 'og_image_id' => $page['og_image_id'] ?? null,
+                'styles'      => $page['type'] === 'sector' ? ['css/r3-sector-illustrations.css'] : [],
             ],
         ]);
     }
