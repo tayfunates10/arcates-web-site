@@ -9,12 +9,10 @@
  * @var array $drafts
  * @var array $system
  * @var int   $newForms
+ * @var array $contentRepair
  */
-
 declare(strict_types=1);
-
 use Arcates\Core\Security;
-
 $maxViews = 0;
 foreach ($visits as $day) {
     $maxViews = max($maxViews, (int) $day['views']);
@@ -22,6 +20,26 @@ foreach ($visits as $day) {
 $totalViews    = array_sum(array_column($visits, 'views'));
 $totalSessions = array_sum(array_column($visits, 'sessions'));
 ?>
+
+<?php if (($contentRepair['missing'] ?? 0) > 0 && !empty($contentRepair['can_run'])): ?>
+<section class="panel">
+  <div class="panel__head">
+    <div>
+      <h2 class="panel__title">Başlangıç içeriği eksik</h2>
+      <p class="muted">
+        Yeni kurulumda bazı hazır sayfalar veritabanına yazılmamış. Bu işlem yalnızca eksik kayıtları ekler;
+        panelden oluşturduğunuz veya düzenlediğiniz mevcut içeriklere dokunmaz.
+      </p>
+    </div>
+    <form method="post" action="<?= Security::e(admin_url('ayarlar')) ?>"
+          data-confirm="Eksik başlangıç içerikleri eklenecek. Mevcut içerikler korunacak. Devam edilsin mi?">
+      <?= csrf_field() ?>
+      <input type="hidden" name="_action" value="seed_content">
+      <button class="btn btn--primary btn--sm" type="submit">Eksik içerikleri yükle</button>
+    </form>
+  </div>
+</section>
+<?php endif; ?>
 
 <div class="cards">
   <div class="card card--stat">
@@ -51,9 +69,6 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
          aria-label="Son 30 günün günlük görüntüleme sayısı. Toplam <?= Security::e((string) $totalViews) ?> görüntüleme.">
       <?php foreach ($visits as $day): ?>
         <?php
-        // Yukseklik satir ici stil yerine sinifla verilir; icerik guvenlik
-        // politikasi satir ici stile izin vermez ve boylece cubuklar
-        // JavaScript olmadan da dogru cizilir. DOCS.md 7.1, 10.7
         $ratio = $maxViews > 0 ? ((int) $day['views'] / $maxViews) : 0;
         $step  = max(5, (int) (round($ratio * 20) * 5));
         ?>
@@ -65,7 +80,6 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
 </section>
 
 <div class="grid grid--2">
-
   <section class="panel">
     <h2 class="panel__title">Dönüşüm hunisi</h2>
     <?php $funnelMax = max(1, max(array_column($funnel, 'count'))); ?>
@@ -74,7 +88,7 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
         <li>
           <span class="funnel__label"><?= Security::e($stage['label']) ?></span>
           <?php $step = max(5, (int) (round(($stage['count'] / $funnelMax) * 20) * 5)); ?>
-        <span class="funnel__bar is-w<?= Security::e((string) $step) ?>"></span>
+          <span class="funnel__bar is-w<?= Security::e((string) $step) ?>"></span>
           <span class="funnel__count"><?= Security::e((string) $stage['count']) ?></span>
         </li>
       <?php endforeach; ?>
@@ -124,11 +138,9 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
       </li>
     </ul>
   </section>
-
 </div>
 
 <div class="grid grid--2">
-
   <section class="panel">
     <h2 class="panel__title">En çok ziyaret edilen sayfalar</h2>
     <?php if (!$topPages): ?>
@@ -168,5 +180,4 @@ $totalSessions = array_sum(array_column($visits, 'sessions'));
       <a class="btn btn--ghost btn--sm" href="<?= Security::e(admin_url('yonlendirmeler')) ?>">Yönlendirmelere git</a>
     <?php endif; ?>
   </section>
-
 </div>
