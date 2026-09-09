@@ -6,7 +6,7 @@ Edremit ve Balıkesir Körfez bölgesinde yerel aramalardan müşteri adayı top
 
 - **Sürüm:** `VERSION` dosyasına bakınız
 - **Tam şartname:** [`DOCS.md`](DOCS.md)
-- **Yeniden tasarım devam durumu:** [`REDESIGN-R3-ASSETS.md`](REDESIGN-R3-ASSETS.md) — R3 G-01 hero, G-02 hizmet ve G-03 sektör görselleri tamamlandı; sıradaki açık modül G-04/G-05 süreç ve bölge görsel tutarlılığıdır. R8 CI canlı yayın kabulünün yerine geçmez.
+- **Yeniden tasarım devam durumu:** [`REDESIGN-R3-ASSETS.md`](REDESIGN-R3-ASSETS.md) — R3 G-01 hero, G-02 hizmet, G-03 sektör, G-04 süreç ve G-05 bölge görsel katmanları tamamlandı; sıradaki açık modül G-06/G-07 gerçek ekran sunumları ve blog kapaklarıdır. R8 CI canlı yayın kabulünün yerine geçmez.
 - **Canlı yayın kontrolü:** [`PRODUCTION.md`](PRODUCTION.md)
 - **Çalışma kuralları:** [`CLAUDE.md`](CLAUDE.md)
 

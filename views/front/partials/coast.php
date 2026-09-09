@@ -1,5 +1,5 @@
 <?php
-/** Hizmet bolgeleri — R5 erisilebilir grafik + HTML baglantilar. */
+/** Hizmet bolgeleri — R3 G-05 erisilebilir baglanti sahnesi + HTML baglantilar. */
 declare(strict_types=1);
 use Arcates\Core\Security;
 $content = $content ?? [];
@@ -37,7 +37,20 @@ $total = max(1, count($sorted));
     <figure class="coast__figure" data-coast>
       <svg class="coast__svg" viewBox="0 0 <?= $viewWidth ?> <?= $viewHeight ?>" role="img"
            aria-label="<?= Security::e(__('locations') . ': ' . $names) ?>" preserveAspectRatio="xMidYMid meet">
-        <path class="coast__path" d="<?= Security::e($path) ?>"></path>
+        <defs>
+          <linearGradient id="coast-route-gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#7FB6FF"></stop>
+            <stop offset=".5" stop-color="#1C7BF2"></stop>
+            <stop offset="1" stop-color="#9DD5FF"></stop>
+          </linearGradient>
+          <pattern id="coast-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M48 0H0V48" fill="none" stroke="rgba(127,182,255,.09)" stroke-width="1"></path>
+          </pattern>
+        </defs>
+        <rect class="coast__backdrop" x="0" y="0" width="<?= $viewWidth ?>" height="<?= $viewHeight ?>" rx="22"></rect>
+        <rect class="coast__grid" x="0" y="0" width="<?= $viewWidth ?>" height="<?= $viewHeight ?>" rx="22" fill="url(#coast-grid)"></rect>
+        <path class="coast__route-shadow" d="<?= Security::e($path) ?>"></path>
+        <path class="coast__path" d="<?= Security::e($path) ?>" stroke="url(#coast-route-gradient)"></path>
         <?php foreach ($sorted as $index => $district): ?>
           <?php
           $x = (int) $district['map_x']; $y = (int) $district['map_y'];

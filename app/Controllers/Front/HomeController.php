@@ -93,7 +93,11 @@ final class HomeController extends Controller
                 'robots'      => 'index,follow',
                 'hreflang'    => $this->homeHreflang(),
                 'schemas'     => $schemas,
-                'styles'      => ['css/home-redesign.css', 'css/r3-service-illustrations.css'],
+                'styles'      => [
+                    'css/home-redesign.css',
+                    'css/r3-service-illustrations.css',
+                    'css/r3-process-region-visuals.css',
+                ],
             ],
         ]);
     }
