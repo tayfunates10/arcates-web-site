@@ -56,6 +56,11 @@ function parsedUrl(value) {
   }
 }
 
+function normalizedPath(pathname) {
+  const value = String(pathname || '').replace(/\/+$/, '');
+  return value || '/';
+}
+
 function sameOrigin(value) {
   const url = parsedUrl(value);
   return url !== null && url.origin === base.origin;
@@ -64,9 +69,8 @@ function sameOrigin(value) {
 function canonicalMatches(value, finalUrl) {
   const canonical = parsedUrl(value);
   if (!canonical) return false;
-  const expectedPath = finalUrl.pathname.replace(/\/$/, '') || '/';
-  const canonicalPath = canonical.pathname.replace(/\/$/, '') || '/';
-  return canonical.origin === base.origin && canonicalPath === expectedPath;
+  return canonical.origin === base.origin
+    && normalizedPath(canonical.pathname) === normalizedPath(finalUrl.pathname);
 }
 
 async function documentState(page) {
@@ -104,13 +108,16 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 1366, height: 900 
   const page = await context.newPage();
 
   for (const route of routes) {
-    const response = await page.goto(BASE + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    const requestedUrl = new URL(BASE + route);
+    const response = await page.goto(requestedUrl.href, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.waitForTimeout(100);
     const state = await documentState(page);
     const finalUrl = new URL(page.url());
     check(response?.status() === 200, `R9 ${viewport.width}px ${route} HTTP 200`);
-    check(finalUrl.protocol === 'https:' && finalUrl.origin === base.origin,
-      `R9 ${viewport.width}px ${route} ayni HTTPS canonical hostta`);
+    check(finalUrl.protocol === 'https:'
+        && finalUrl.origin === base.origin
+        && normalizedPath(finalUrl.pathname) === normalizedPath(requestedUrl.pathname),
+      `R9 ${viewport.width}px ${route} ayni HTTPS production origininde ve istenen pathte`);
     check(contained(state, viewport.width),
       `R9 ${viewport.width}px ${route} tek H1, viewport icinde ve yatay tasmasiz (${state.overflow}px)`);
     check(state.canonical !== '' && sameOrigin(state.canonical) && canonicalMatches(state.canonical, finalUrl),
