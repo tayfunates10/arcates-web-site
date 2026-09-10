@@ -22,7 +22,7 @@ use Arcates\Core\Settings;
     <?php if (!empty($project['excerpt'])): ?>
       <p class="page__lead u-measure-lead"><?= Security::e($project['excerpt']) ?></p>
     <?php endif; ?>
-    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
+    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', Settings::defaults()['projects_notice'])]) ?>
   </div>
 </header>
 

@@ -95,3 +95,13 @@ test('U-12e', 'Dil öneki yönlendirmeden önce ayıklanır', function (): void 
 
     Lang::reset();
 });
+
+
+test('U-12f', 'HEAD yalniz GET rotasini ve parametrelerini kullanir', function (): void {
+    $router = new Router();
+    $router->get('/blog/{slug}', 'Post@show');
+    $router->post('/iletisim', 'Contact@store');
+    assertSame($router->match('GET', '/blog/ornek'), $router->match('HEAD', '/blog/ornek'));
+    assertSame(null, $router->match('HEAD', '/iletisim'), 'HEAD POST islemi baslatmamali');
+    assertSame(null, $router->match('HEAD', '/bulunamayan'), 'Olmayan rota 404 akisini korumali');
+});

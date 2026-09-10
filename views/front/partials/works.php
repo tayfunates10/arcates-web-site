@@ -16,7 +16,7 @@ $cta = $content['cta'] ?? null;
       <?php if (($content['description'] ?? '') !== ''): ?><p class="section__lead" data-reveal><?= Security::e($content['description']) ?></p><?php endif; ?>
     </header>
 
-    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
+    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', Settings::defaults()['projects_notice'])]) ?>
 
     <ul class="works works--showcase">
       <?php foreach ($projects as $index => $project): ?>

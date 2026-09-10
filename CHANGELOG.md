@@ -4,6 +4,16 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Düzeltildi (10 Eylül 2026 canlı arayüz denetimi)
+- HEAD istekleri GET rotasına eşlenir; geçerli sayfaların izleme araçlarına yanlış 404 dönmesi önlenir.
+- İç sayfalarda eksik kalan ortak Teklif Al eylemi, footer sütunları ve yasal bağlantılar paneldeki header/footer içeriğinden yüklenir; açık null/boş tercihler korunur.
+- Eksik formda gönder butonu erişilebilir kalır; ilk hatalı alana odak ve tarayıcının açıklaması gösterilir. Kilit yalnız gönderim sürerken uygulanır, geri dönüşte açılır.
+- Koyu CTA bandındaki WhatsApp eylemine okunabilir beyaz metin ve belirgin sınır verildi.
+- Blog kategori seçimi aria-current ile bildiriliyor.
+- Örnek site notu ayarı hiç bulunmayan eski kurulumlarda varsayılan açıklama gösterilir; bilerek boş bırakılmış ayar korunur.
+- Ortak kabuk için PHP regresyonu; form, kategori ve koyu CTA için Chromium kontrolleri eklendi.
+
+
 ### Eklendi (R3 G-01 özgün hero görseli)
 - Web ve mobil yüzeyleri Arcates mavisi bağlantı formuyla anlatan özgün sahne ve PNG ana kaynak eklendi.
 - 640/1280 WebP varyantları, responsive kaynak seçimi ve sabit 4:3 oranı eklendi; ana kaynak sayfada yüklenmez.

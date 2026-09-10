@@ -764,3 +764,10 @@ Gerçek workflow kanoniktir. Özet:
 ### Yeniden tasarım devam kaydı — 9 Eylül 2026
 
 R0/R1/R4 foundation, R5, R6 ve R7 kodları main dalındadır; R8 otomatik kabul matrisi eklenmiştir. `00c21bc` kaynak sürümünün CI sonucu başarılıdır. R8 bütün özgün görsellerin veya canlı yayın kontrollerinin tamamlandığı anlamına gelmez. R3 G-01 hero sahnesi bu modülde eklenir; kalan görseller ve üretim doğrulamaları `REDESIGN-R3-ASSETS.md` kaydında açık tutulur.
+
+
+### Canlı arayüz denetimi — 10 Eylül 2026
+
+`LIVE-AUDIT-2026-09-10.md` mevcut üretim bulgularını ve yayın sınırlarını kaydeder. Header CTA ve footer içeriği tüm ön yüz controller'larında aynı panel kaynağından gelir. Eksik form gönderimi alan hatasını açıklar; buton yalnız devam eden gönderimde kilitlenir. Koyu zemindeki ikincil eylem rengi ortak CSS katmanındadır. Eksik `projects_notice` anahtarı varsayılana düşer, mevcut boş değer değiştirilmez. F-LIVE-01 ve inner/design browser kontrolleri bu davranışları korur.
+
+HEAD, GET rotasını kullanır; POST handler çalıştırmaz ve ziyaret sayacına eklenmez. U-12f ve LIVE-04 HTTP testleri izleme uyumluluğunu korur.

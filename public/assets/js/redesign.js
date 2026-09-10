@@ -58,7 +58,7 @@
           submit.textContent = idle;
           submit.removeAttribute('aria-busy');
           form.removeAttribute('aria-busy');
-          submit.disabled = !form.checkValidity();
+          submit.disabled = false;
         });
       })(forms[i]);
     }

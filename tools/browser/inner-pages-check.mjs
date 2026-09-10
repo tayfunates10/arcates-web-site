@@ -41,6 +41,11 @@ const representativeRoutes = [
       const titleStyle = title ? getComputedStyle(title) : null;
       return {
         h1: document.querySelectorAll('h1').length,
+        darkActions: [...document.querySelectorAll('.cta .btn--on-dark')].every(
+          action => getComputedStyle(action).color === 'rgb(255, 255, 255)'),
+        headerCta: !!document.querySelector('.site-head a.btn'),
+        footerColumns: document.querySelectorAll('.site-foot nav.site-foot__col').length,
+        legal: !!document.querySelector('.site-foot a[href$="/kvkk"]'),
         hero: !!hero,
         background: heroStyle?.backgroundImage || '',
         titleColor: titleStyle?.color || '',
@@ -48,6 +53,16 @@ const representativeRoutes = [
       };
     });
     check(response?.status() === 200, `R6 ${route} HTTP 200`);
+    if (route === '/blog') {
+      const head = await page.request.head(BASE + route);
+      check(head.status() === 200 && (await head.body()).length === 0,
+        'LIVE-04 HEAD blog GET ile ayni durum kodunu ve bos govdeyi dondurur');
+      const missing = await page.request.head(BASE + '/live-audit-missing-route');
+      check(missing.status() === 404, 'LIVE-04 HEAD bulunamayan sayfada 404 kalir');
+    }
+    check(state.darkActions, `LIVE-02 ${route} koyu CTA ikincil eylemi okunabilir`);
+    check(state.headerCta && state.footerColumns >= 3 && state.legal,
+      `LIVE-01 ${route} ortak teklif, alt menu ve yasal baglantilar`);
     check(state.h1 === 1, `R6 ${route} tek H1 (${state.h1})`);
     check(state.hero === true && state.background !== 'none', `R6 ${route} ortak hero yuzeyi`);
     check(state.titleColor === 'rgb(245, 248, 255)', `R6 ${route} hero basligi yuksek kontrast (${state.titleColor})`);
@@ -102,6 +117,11 @@ const representativeRoutes = [
     cards: document.querySelectorAll('.post-card').length,
     rounded: parseFloat(getComputedStyle(document.querySelector('.post-card')).borderRadius),
   }));
+  check(await page.locator('.chips [aria-current="page"]').count() === 1,
+    'LIVE-03 tum kategoriler secimi erisilebilir');
+  await page.locator('.chips a').nth(1).click();
+  check(await page.locator('.chips .is-current[aria-current="page"]').count() === 1,
+    'LIVE-03 secili kategori ekran okuyucuya aktarilir');
   check(posts.cards >= 1, `R6 blog kartlari mevcut (${posts.cards})`);
   check(posts.rounded >= 14, `R6 blog karti yeni yuzey ailesinde (${posts.rounded}px)`);
 
