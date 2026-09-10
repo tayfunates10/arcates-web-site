@@ -65,8 +65,12 @@ test('E-REF-02', 'Dekoratif hero gorseli erisilebilirlik agacindan gizlenir ve t
 
     assertContains('<div class="ref-hero__visual" aria-hidden="true">', $body);
     assertContains('img/reference/hero-laptop.webp', $body);
-    assertContains('alt=""', $body, 'Dekoratif hero gorseli bos alt metniyle isaretlenmeli');
-    assertSame(0, Arcates\Core\Seo::countImagesWithoutAlt($body));
+    assertContains('alt=""', $body, 'Dekoratif gorsel bos alt metniyle isaretlenmeli');
+
+    preg_match_all('#<img\b[^>]*>#i', $body, $images);
+    foreach ($images[0] as $tag) {
+        assertTrue(preg_match('#\salt\s*=#i', $tag) === 1, 'Tum img etiketleri alt niteligi tasimali');
+    }
 });
 
 test('F-REF-03', 'Hero CMS basligi degisince referans arayuze aninda yansir', function (): void {
