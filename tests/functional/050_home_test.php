@@ -8,6 +8,7 @@ use Arcates\Controllers\Front\HomeController;
 use Arcates\Core\Lang;
 use Arcates\Core\Request;
 use Arcates\Models\HomeSection;
+use Arcates\Models\Project;
 
 function arc_home(string $lang = 'tr'): Arcates\Core\Response
 {
@@ -28,7 +29,6 @@ test('F-REF-01', 'Referans anasayfa temel bolumleri ve stil katmaniyla islenir',
         'ref-hero',
         'ref-metrics',
         'ref-services',
-        'ref-projects',
         'ref-process',
         'ref-why',
         'ref-final-cta',
@@ -95,14 +95,37 @@ test('F-REF-04', 'Hizmet bolumu panelden kapatilinca referans kartlari gorunmez'
 });
 
 test('F-REF-05', 'Vitrin referanstaki uc kartlik siniri korur ve gercek proje verisini kullanir', function (): void {
-    arc_need_db();
+    $db = arc_need_db();
     HomeSection::ensureDefaults();
+    $db->run('DELETE FROM projects');
+
+    $id = Project::save(
+        [
+            'client_name' => 'Referans Test',
+            'sector' => 'Yazilim',
+            'district' => 'Edremit',
+            'live_url' => '',
+            'status' => 'published',
+            'sort' => 1,
+        ],
+        ['tr' => [
+            'title' => 'Gercek CMS Referansi',
+            'slug' => 'gercek-cms-referansi',
+            'excerpt' => 'Referans karti test verisi.',
+            'content' => '<p>Gercek proje verisi.</p>',
+            'robots' => 'index,follow',
+        ]]
+    );
 
     $body = arc_home()->body();
     $count = substr_count($body, '<li class="ref-project">');
-    assertTrue($count > 0, 'En az bir yayinlanmis proje vitrinde gorunmeli');
+    assertSame(1, $count, 'Yayinlanmis CMS projesi vitrinde gorunmeli');
+    assertContains('Gercek CMS Referansi', $body);
     assertTrue($count <= 3, 'Referans masaustu duzeni en fazla uc proje karti gostermeli');
     assertNotContains('Sahte Proje', $body);
+
+    $db->run('DELETE FROM project_translations WHERE project_id = :id', [':id' => $id]);
+    $db->run('DELETE FROM projects WHERE id = :id', [':id' => $id]);
 });
 
 test('F-REF-06', 'Referans gorselleri yerel optimize WebP dosyalari olarak bulunur', function (): void {
