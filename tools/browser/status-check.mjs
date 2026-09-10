@@ -19,14 +19,20 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
   const page = await ctx.newPage();
 
   await page.goto(BASE + '/', { waitUntil: 'networkidle' });
-  const cta = await page.evaluate(() => ({
-    visual: !!document.querySelector('.section--cta .cta__visual'),
-    arc: !!document.querySelector('.section--cta .cta-arc--bright'),
-    actions: document.querySelectorAll('.section--cta .cta__actions .btn').length,
-    overflow: document.documentElement.scrollWidth - innerWidth,
-  }));
-  check(cta.visual && cta.arc, `G-08 ${viewport.width}px CTA baglanti gorseli mevcut`);
-  check(cta.actions >= 1, `G-08 ${viewport.width}px CTA eylemi korunuyor (${cta.actions})`);
+  const cta = await page.evaluate(() => {
+    const card = document.querySelector('.ref-final-cta__card');
+    const action = document.querySelector('.ref-final-cta__action .ref-btn[href]');
+    const background = card ? getComputedStyle(card).backgroundImage : '';
+    return {
+      card: !!card,
+      background,
+      action: !!action,
+      href: action?.getAttribute('href') || '',
+      overflow: document.documentElement.scrollWidth - innerWidth,
+    };
+  });
+  check(cta.card && cta.background.includes('cta-mountain.webp'), `G-08 ${viewport.width}px referans CTA gorseli mevcut`);
+  check(cta.action && cta.href && cta.href !== '#', `G-08 ${viewport.width}px CTA eylemi gercek URL tasiyor`);
   check(cta.overflow <= 1, `G-08 ${viewport.width}px CTA yatay tasma yok (${cta.overflow}px)`);
 
   await page.goto(BASE + '/tesekkurler', { waitUntil: 'networkidle' });
