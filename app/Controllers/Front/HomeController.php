@@ -62,7 +62,7 @@ final class HomeController extends Controller
                 'robots'      => 'index,follow',
                 'hreflang'    => $this->homeHreflang(),
                 'schemas'     => [Seo::professionalService()],
-                'styles'      => ['css/reference-home.css'],
+                'styles'      => ['css/reference-home.css', 'css/reference-parity.css'],
             ],
         ]);
     }
