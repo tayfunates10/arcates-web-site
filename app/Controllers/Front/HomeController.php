@@ -14,10 +14,7 @@ use Arcates\Core\Request;
 use Arcates\Core\Response;
 use Arcates\Core\Seo;
 use Arcates\Core\Settings;
-use Arcates\Models\District;
-use Arcates\Models\Faq;
 use Arcates\Models\HomeSection;
-use Arcates\Models\Page;
 use Arcates\Models\Post;
 use Arcates\Models\Project;
 
@@ -35,25 +32,8 @@ final class HomeController extends Controller
         }
 
         $worksLimit = max(3, (int) ($sections['works']['config']['limit'] ?? Settings::getInt('works_limit', 6)));
-        $faqLimit   = (int) ($sections['faq']['config']['limit'] ?? 6);
-
-        $projects  = ($sections['works']['is_active'] ?? false) ? Project::latest($lang, $worksLimit) : [];
-        $posts     = Post::published($lang, 3);
-        $faqs      = ($sections['faq']['is_active'] ?? false) ? Faq::forHome($lang, $faqLimit) : [];
-        $districts = ($sections['coast']['is_active'] ?? false) ? District::forMap($lang) : [];
-
-        $sectors = [];
-        if ($sections['strip']['is_active'] ?? false) {
-            foreach (Page::listing('sector', $lang) as $sector) {
-                if (($sector['status'] ?? '') !== 'published' || ($sector['slug'] ?? '') === '' || ($sector['title'] ?? '') === '') {
-                    continue;
-                }
-                $sectors[] = [
-                    'title' => (string) $sector['title'],
-                    'slug'  => (string) $sector['slug'],
-                ];
-            }
-        }
+        $projects   = ($sections['works']['is_active'] ?? false) ? Project::latest($lang, $worksLimit) : [];
+        $posts      = Post::published($lang, 3);
 
         $heroContent = $sections['hero']['content'] ?? [];
         $title       = trim(implode(' ', array_filter([
@@ -64,19 +44,10 @@ final class HomeController extends Controller
 
         $siteName = (string) Settings::get('site_name', '');
 
-        $schemas = [Seo::professionalService()];
-        $faqSchema = Seo::faqPage($faqs);
-        if ($faqSchema !== null) {
-            $schemas[] = $faqSchema;
-        }
-
         return $this->render('front/home', [
             'sections'      => $sections,
             'projects'      => $projects,
             'posts'         => $posts,
-            'faqs'          => $faqs,
-            'districts'     => $districts,
-            'sectors'       => $sectors,
             'headerCta'     => $sections['header']['content']['cta'] ?? null,
             'footerContent' => $sections['footer']['content'] ?? [],
             'body_class'    => 'is-home is-reference-home',
@@ -90,7 +61,7 @@ final class HomeController extends Controller
                 'canonical'   => url('/'),
                 'robots'      => 'index,follow',
                 'hreflang'    => $this->homeHreflang(),
-                'schemas'     => $schemas,
+                'schemas'     => [Seo::professionalService()],
                 'styles'      => ['css/reference-home.css'],
             ],
         ]);
