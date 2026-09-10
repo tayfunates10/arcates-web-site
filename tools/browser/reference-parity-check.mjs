@@ -38,6 +38,22 @@ async function desktopCheck() {
       if (!node) return 0;
       return getComputedStyle(node).gridTemplateColumns.split(' ').filter(Boolean).length;
     };
+    const physicalTextLines = (selector) => {
+      const root = document.querySelector(selector);
+      if (!root) return 0;
+      const ys = [];
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const text = walker.currentNode;
+        if (!text.textContent || !text.textContent.trim()) continue;
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        for (const r of range.getClientRects()) {
+          if (r.width > 1 && !ys.some((y) => Math.abs(y - r.y) < 2)) ys.push(r.y);
+        }
+      }
+      return ys.length;
+    };
 
     const serviceCards = cards('.ref-service');
     const projectCards = cards('.ref-project');
@@ -45,6 +61,7 @@ async function desktopCheck() {
     const why = rect('.ref-why');
     const about = rect('.ref-about');
     const posts = rect('.ref-posts');
+    const heroImage = document.querySelector('.ref-hero__visual img');
 
     return {
       wrap: rect('.ref-hero .wrap'),
@@ -63,6 +80,8 @@ async function desktopCheck() {
       posts,
       cta: rect('.ref-final-cta__card'),
       footer: rect('.site-foot'),
+      heroTitleLines: physicalTextLines('.ref-hero__title'),
+      heroImageReady: !!heroImage && heroImage.complete && heroImage.naturalWidth > 0 && heroImage.naturalHeight > 0,
       overflow: document.documentElement.scrollWidth - innerWidth,
       pageHeight: document.documentElement.scrollHeight,
     };
@@ -71,6 +90,8 @@ async function desktopCheck() {
   check(state.wrap && inRange(state.wrap.width, 1250, 1290), `DESKTOP 1280px referans rayi (${state.wrap?.width}px)`);
   check(state.header && inRange(state.header.height, 60, 69), `DESKTOP kompakt header (${state.header?.height}px)`);
   check(state.hero && inRange(state.hero.height, 360, 440), `DESKTOP hero referans yogunlugunda (${state.hero?.height}px)`);
+  check(state.heroTitleLines === 3, `DESKTOP hero basligi CMS uc satirini fiziksel olarak koruyor (${state.heroTitleLines})`);
+  check(state.heroImageReady, 'DESKTOP laptop hero gorseli gercekten decode edildi');
   check(state.metric && inRange(state.metric.height, 56, 72), `DESKTOP metrik bandi kompakt (${state.metric?.height}px)`);
   check(state.serviceColumns === 6, `DESKTOP hizmetler 6 kolon (${state.serviceColumns})`);
   check(state.serviceCards.length >= 4 && state.serviceCards.every(card => inRange(card.height, 130, 165)), `DESKTOP hizmet kartlari 130-165px (${state.serviceCards.map(c => Math.round(c.height)).join(',')})`);
@@ -81,8 +102,9 @@ async function desktopCheck() {
   check(state.editorialColumns === 2, `DESKTOP biz kimiz + son yazilar yan yana (${state.editorialColumns})`);
   check((!state.about || !state.posts) || Math.abs(state.about.y - state.posts.y) <= 2, `DESKTOP editorial ust hiza farki ${Math.abs((state.about?.y || 0) - (state.posts?.y || 0)).toFixed(1)}px`);
   check(state.cta && inRange(state.cta.height, 95, 130), `DESKTOP final CTA kompakt (${state.cta?.height}px)`);
+  check(state.footer && state.footer.height < 350, `DESKTOP footer referans yogunlugunda (${state.footer?.height}px)`);
   check(state.overflow <= 1, `DESKTOP yatay tasma yok (${state.overflow}px)`);
-  check(state.pageHeight < 2200, `DESKTOP referans gibi tek akis yogunlugu (${state.pageHeight}px)`);
+  check(state.pageHeight < 2050, `DESKTOP referans gibi sikistirilmis tek akis (${state.pageHeight}px)`);
 
   await page.screenshot({ path: '/tmp/arcates-reference-parity/desktop.png', fullPage: true });
   await ctx.close();
@@ -113,6 +135,7 @@ async function mobileCheck() {
     const firstPost = document.querySelector('.ref-post');
     const postMedia = firstPost?.querySelector('.ref-post__media');
     const postBody = firstPost?.querySelector('.ref-post__body');
+    const heroImage = document.querySelector('.ref-hero__visual img');
     const r = (node) => {
       if (!node) return null;
       const b = node.getBoundingClientRect();
@@ -120,8 +143,12 @@ async function mobileCheck() {
     };
     return {
       header: rect('.site-head'),
+      brand: rect('.brand'),
+      mobileCta: rect('.ref-mobile-head-cta'),
+      menuToggle: rect('.site-nav__toggle'),
       hero: rect('.ref-hero'),
       heroVisual: rect('.ref-hero__visual'),
+      heroImageReady: !!heroImage && heroImage.complete && heroImage.naturalWidth > 0 && heroImage.naturalHeight > 0,
       metric: rect('.ref-metric'),
       service: rect('.ref-service'),
       serviceColumns: columns('.ref-services__grid'),
@@ -133,14 +160,19 @@ async function mobileCheck() {
       postMedia: r(postMedia),
       postBody: r(postBody),
       cta: rect('.ref-final-cta__card'),
+      footer: rect('.site-foot'),
       overflow: document.documentElement.scrollWidth - innerWidth,
       pageHeight: document.documentElement.scrollHeight,
     };
   });
 
   check(state.header && inRange(state.header.height, 60, 69), `MOBILE kompakt header (${state.header?.height}px)`);
+  check(state.brand && state.mobileCta && state.menuToggle, 'MOBILE logo + CTA + hamburger birlikte render edildi');
+  check(state.brand && state.mobileCta && state.menuToggle && state.brand.x < state.mobileCta.x && state.mobileCta.x < state.menuToggle.x, 'MOBILE header sirasi logo -> CTA -> hamburger');
+  check(state.mobileCta && inRange(state.mobileCta.height, 30, 44), `MOBILE header CTA referans yuksekligi (${state.mobileCta?.height}px)`);
   check(state.hero && inRange(state.hero.height, 520, 760), `MOBILE hero tek kolon akisi (${state.hero?.height}px)`);
   check(state.heroVisual && inRange(state.heroVisual.height, 230, 310), `MOBILE hero gorseli telefon oraninda (${state.heroVisual?.height}px)`);
+  check(state.heroImageReady, 'MOBILE laptop hero gorseli gercekten decode edildi');
   check(state.metric && inRange(state.metric.height, 52, 66), `MOBILE metrik karti kompakt (${state.metric?.height}px)`);
   check(state.serviceColumns === 1, `MOBILE hizmetler tek kolon (${state.serviceColumns})`);
   check(state.service && inRange(state.service.height, 82, 104), `MOBILE hizmet karti referans yuksekligi (${state.service?.height}px)`);
@@ -150,8 +182,9 @@ async function mobileCheck() {
   check(state.whyColumns === 2, `MOBILE neden Arcates iki kolon (${state.whyColumns})`);
   check(state.postMedia && state.postBody && state.postBody.y >= state.postMedia.y && state.postBody.bottom <= state.postMedia.bottom + 1, 'MOBILE blog metni gorsel uzerinde');
   check(state.cta && inRange(state.cta.height, 300, 370), `MOBILE final CTA referans kart orani (${state.cta?.height}px)`);
+  check(state.footer && state.footer.height < 720, `MOBILE footer referans yogunlugunda (${state.footer?.height}px)`);
   check(state.overflow <= 1, `MOBILE yatay tasma yok (${state.overflow}px)`);
-  check(state.pageHeight < 5200, `MOBILE gereksiz dikey bosluk yok (${state.pageHeight}px)`);
+  check(state.pageHeight < 4900, `MOBILE gereksiz dikey bosluk yok (${state.pageHeight}px)`);
 
   await page.screenshot({ path: '/tmp/arcates-reference-parity/mobile.png', fullPage: true });
   await ctx.close();
