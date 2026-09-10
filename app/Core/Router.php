@@ -87,6 +87,8 @@ final class Router
     public function match(string $method, string $path): ?array
     {
         $method = strtoupper($method);
+        // HEAD ayni GET kaynagini sorgular; POST isleyicilerini calistirmaz.
+        if ($method === 'HEAD') $method = 'GET';
         $path   = '/' . trim($path, '/');
         if ($path !== '/') {
             $path = rtrim($path, '/');

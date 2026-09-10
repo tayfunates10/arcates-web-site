@@ -96,3 +96,18 @@ test('F-P14-d', 'Tohum kayıtları teslim edilmiş iş iddiası taşımaz', func
     assertContains('örnek', mb_strtolower($notice, 'UTF-8'), 'Varsayılan not örnek olduğunu söylemeli');
     assertContains('değildir', $notice, 'Varsayılan not müşteri işi olmadığını söylemeli');
 });
+
+
+test('F-P14-e', 'Not ayari bulunmayan eski kurulumda varsayilan aciklama gorunur', function (): void {
+    $db = arc_need_db();
+    Lang::use('tr');
+    $notice = Settings::get('projects_notice', '');
+    try {
+        $db->delete('settings', ['key' => 'projects_notice']);
+        Settings::flush();
+        $list = (new ProjectController())->index(Request::make('GET', '/referanslar'), []);
+        assertContains(Settings::defaults()['projects_notice'], $list->body());
+    } finally {
+        Settings::set('projects_notice', $notice);
+    }
+});

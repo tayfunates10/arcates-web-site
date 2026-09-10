@@ -53,6 +53,13 @@ const representativeRoutes = [
       };
     });
     check(response?.status() === 200, `R6 ${route} HTTP 200`);
+    if (route === '/blog') {
+      const head = await page.request.head(BASE + route);
+      check(head.status() === 200 && (await head.body()).length === 0,
+        'LIVE-04 HEAD blog GET ile ayni durum kodunu ve bos govdeyi dondurur');
+      const missing = await page.request.head(BASE + '/live-audit-missing-route');
+      check(missing.status() === 404, 'LIVE-04 HEAD bulunamayan sayfada 404 kalir');
+    }
     check(state.darkActions, `LIVE-02 ${route} koyu CTA ikincil eylemi okunabilir`);
     check(state.headerCta && state.footerColumns >= 3 && state.legal,
       `LIVE-01 ${route} ortak teklif, alt menu ve yasal baglantilar`);

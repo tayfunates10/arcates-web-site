@@ -5,6 +5,7 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 ## [Yayınlanmamış]
 
 ### Düzeltildi (10 Eylül 2026 canlı arayüz denetimi)
+- HEAD istekleri GET rotasına eşlenir; geçerli sayfaların izleme araçlarına yanlış 404 dönmesi önlenir.
 - İç sayfalarda eksik kalan ortak Teklif Al eylemi, footer sütunları ve yasal bağlantılar paneldeki header/footer içeriğinden yüklenir; açık null/boş tercihler korunur.
 - Eksik formda gönder butonu erişilebilir kalır; ilk hatalı alana odak ve tarayıcının açıklaması gösterilir. Kilit yalnız gönderim sürerken uygulanır, geri dönüşte açılır.
 - Koyu CTA bandındaki WhatsApp eylemine okunabilir beyaz metin ve belirgin sınır verildi.
