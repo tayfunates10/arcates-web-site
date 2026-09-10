@@ -771,3 +771,19 @@ R0/R1/R4 foundation, R5, R6 ve R7 kodları main dalındadır; R8 otomatik kabul 
 `LIVE-AUDIT-2026-09-10.md` mevcut üretim bulgularını ve yayın sınırlarını kaydeder. Header CTA ve footer içeriği tüm ön yüz controller'larında aynı panel kaynağından gelir. Eksik form gönderimi alan hatasını açıklar; buton yalnız devam eden gönderimde kilitlenir. Koyu zemindeki ikincil eylem rengi ortak CSS katmanındadır. Eksik `projects_notice` anahtarı varsayılana düşer, mevcut boş değer değiştirilmez. F-LIVE-01 ve inner/design browser kontrolleri bu davranışları korur.
 
 HEAD, GET rotasını kullanır; POST handler çalıştırmaz ve ziyaret sayacına eklenmez. U-12f ve LIVE-04 HTTP testleri izleme uyumluluğunu korur.
+
+### Tam plan kabulü — hizmet detayları ve form açıklamaları
+
+Altı bilinen hizmet slug'ı ana sayfanın mevcut G-02 SVG ailesini kendi giriş
+alanında da kullanır. Metin panelden gelir; görsel dekoratiftir, 480×360 boyutu
+ayrılmıştır ve eager yüklenir. 940px altında metinden sonra tek sütunda görünür;
+bilinmeyen slug için görsel URL'si veya boş sağ sütun üretilmez.
+
+İstemci doğrulaması native `validationMessage` metnini kalıcı alan açıklaması
+olarak gösterir ve `aria-describedby` ile bağlar. Alan düzeltildiğinde yalnız
+istemci açıklaması temizlenir; mevcut sunucu hataları ve yardımcı açıklamalar
+silinmez. CSRF, sunucu doğrulaması ve gönderim kilidi korunur.
+
+F-LIVE-05 gerçek şablon çıktısını; LIVE-05 altı hizmeti 320/390/768/1440px'te;
+LIVE-06 boş form, alan açıklaması ve düzeltme davranışını doğrular. Tam planın
+canlı/panel kabulü ayrıca `REDESIGN-PLAN-AUDIT-2026-09-10.md` kaydındadır.

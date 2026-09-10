@@ -4,6 +4,11 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Düzeltildi (tam plan kabul denetimi — 10 Eylül 2026)
+- Ana sayfa kartlarında kalan altı G-02 görseli hizmet detaylarına da bağlandı; dar ekranda başlık/açıklama önce, görsel sonra gelir. Bilinmeyen slug görselsiz kalır.
+- İstemci form hataları kalıcı metin ve `aria-describedby` ile alanlara bağlandı; düzeltildiğinde istemci açıklaması temizlenir, sunucu açıklamaları korunur.
+- F-LIVE-05, LIVE-05 ve LIVE-06 regresyonları eklendi. Canlı/panel kabul sınırları `REDESIGN-PLAN-AUDIT-2026-09-10.md` içinde kaydedildi.
+
 ### Düzeltildi (10 Eylül 2026 canlı arayüz denetimi)
 - HEAD istekleri GET rotasına eşlenir; geçerli sayfaların izleme araçlarına yanlış 404 dönmesi önlenir.
 - İç sayfalarda eksik kalan ortak Teklif Al eylemi, footer sütunları ve yasal bağlantılar paneldeki header/footer içeriğinden yüklenir; açık null/boş tercihler korunur.

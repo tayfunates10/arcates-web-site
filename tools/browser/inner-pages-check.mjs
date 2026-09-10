@@ -185,6 +185,36 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
   await ctx.close();
 }
 
+// LIVE-05: every G-02 illustration must also appear on its service detail page.
+for (const width of [320, 390, 768, 1440]) {
+  const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+  const page = await ctx.newPage();
+  for (const [slug, key] of Object.entries({
+    'web-tasarim': 'layout', 'e-ticaret-sitesi': 'cart',
+    'rezervasyon-sistemi': 'calendar', 'seo-hizmeti': 'search',
+    'coklu-dil-web-sitesi': 'globe', 'web-sitesi-bakim': 'shield',
+  })) {
+    await page.goto(BASE + '/' + slug, { waitUntil: 'networkidle' });
+    const state = await page.evaluate(() => {
+      const image = document.querySelector('.service-hero__media img');
+      const rect = image?.getBoundingClientRect();
+      const copy = document.querySelector('.service-hero__copy')?.getBoundingClientRect();
+      return {
+        loaded: !!image && image.complete && image.naturalWidth === 480,
+        src: image?.getAttribute('src'), decorative: image?.getAttribute('alt') === '',
+        inside: !!rect && rect.left >= 0 && rect.right <= innerWidth,
+        belowCopy: !!rect && !!copy && rect.top >= copy.bottom,
+        overflow: document.documentElement.scrollWidth - innerWidth,
+      };
+    });
+    check(state.loaded && state.src.includes('service-' + key + '.svg') && state.decorative,
+      `LIVE-05 ${slug} ${width}px dogru hizmet gorseli yuklendi`);
+    check(state.inside && state.overflow <= 1 && (width > 940 || state.belowCopy),
+      `LIVE-05 ${slug} ${width}px gorsel tasmaz ve mobilde metinden sonra gelir`);
+  }
+  await ctx.close();
+}
+
 await browser.close();
 console.log(fail === 0 ? '\nTUM R6 IC SAYFA DENETIMLERI GECTI' : `\n${fail} R6 DENETIMI KALDI`);
 process.exit(fail === 0 ? 0 : 1);

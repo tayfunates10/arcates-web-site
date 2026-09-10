@@ -79,6 +79,21 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
     'F-T4 eksik gonderim ilk hatali alana odaklanir ve hatayi aciklar');
   check(invalid.busy !== 'true' && new URL(page.url()).pathname === '/iletisim',
     'F-T4 eksik form sunucuya gonderilmez ve tekrar denenebilir');
+  const explained = await page.locator('#teklif-formu [aria-invalid="true"]').evaluateAll(fields =>
+    fields.length === 5 && fields.every(field =>
+      (field.getAttribute('aria-describedby') || '').split(/\s+/).some(id => {
+        const error = document.getElementById(id);
+        return error && !error.hidden && error.textContent.trim().length > 0;
+      })));
+  check(explained, 'LIVE-06 tum hatali alanlar kalici aciklamayla iliskili');
+  await page.locator('#form_name').fill('Arayuz kontrolu');
+  check(await page.locator('#form_name').getAttribute('aria-invalid') === 'false'
+    && await page.locator('#form_name_client_error').isHidden(),
+    'LIVE-06 duzeltilen alanin istemci hatasi temizlenir');
+  await page.locator('#form_name').fill('');
+  check(await page.locator('#form_name_client_error').count() === 1
+    && await page.locator('#form_name_client_error').isVisible(),
+    'LIVE-06 tekrar hatada aciklama cogalmaz');
   await ctx.close();
 }
 
