@@ -110,30 +110,41 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
   await ctx.close();
 }
 
-// F-R3-02: hizmet kartlarindaki altı özgün görsel gerçek tarayıcıda yüklenir.
+// REF-UI: referans anasayfa masaustu servis gridini, ikonlarini ve hero medyasini dogrular.
 {
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(BASE + '/', { waitUntil: 'networkidle' });
-  await page.locator('.home-services').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(350);
+  await page.locator('.ref-services').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(250);
 
-  const images = await page.evaluate(() => [...document.querySelectorAll('.service-card__image')].map(img => ({
-    complete: img.complete,
-    width: img.naturalWidth,
-    height: img.naturalHeight,
-    src: img.currentSrc,
-    alt: img.getAttribute('alt'),
-    loading: img.getAttribute('loading'),
-  })));
+  const state = await page.evaluate(() => {
+    const cards = [...document.querySelectorAll('.ref-service')];
+    const serviceGrid = document.querySelector('.ref-services__grid');
+    const hero = document.querySelector('.ref-hero__visual img');
+    const projectGrid = document.querySelector('.ref-projects__grid');
+    const projectCards = [...document.querySelectorAll('.ref-project')];
+    return {
+      cards: cards.length,
+      linked: cards.filter(card => card.matches('a[href]') && card.getAttribute('href') && card.getAttribute('href') !== '#').length,
+      icons: cards.filter(card => card.querySelector('.ref-service__icon svg')).length,
+      serviceColumns: serviceGrid ? getComputedStyle(serviceGrid).gridTemplateColumns.split(' ').filter(Boolean).length : 0,
+      heroLoaded: !!hero && hero.complete && hero.naturalWidth > 0 && hero.naturalHeight > 0,
+      heroSrc: hero?.currentSrc || '',
+      projects: projectCards.length,
+      projectColumns: projectGrid ? getComputedStyle(projectGrid).gridTemplateColumns.split(' ').filter(Boolean).length : 0,
+      overflow: document.documentElement.scrollWidth - innerWidth,
+    };
+  });
 
-  check(images.length === 6, `F-R3-02 altı hizmet gorseli DOM'da (${images.length})`);
-  check(images.every(img => img.complete && img.width > 0 && img.height > 0),
-    'F-R3-02 hizmet gorselleri tam olarak yuklendi');
-  check(images.every(img => Math.abs((img.width / img.height) - (4 / 3)) < 0.01),
-    'F-R3-02 hizmet gorselleri 4:3 oraninda');
-  check(images.every(img => img.alt === '' && img.loading === 'lazy'),
-    'F-R3-02 dekoratif alt metin bos ve lazy yukleme aktif');
+  check(state.cards >= 4, `REF hizmet kartlari DOM'da (${state.cards})`);
+  check(state.linked === state.cards, `REF tum hizmet kartlari gercek URL tasiyor (${state.linked}/${state.cards})`);
+  check(state.icons === state.cards, `REF tum hizmet kartlari yerel SVG ikon tasiyor (${state.icons}/${state.cards})`);
+  check(state.serviceColumns >= 3, `REF masaustunde hizmet gridi cok sutunlu (${state.serviceColumns})`);
+  check(state.heroLoaded && state.heroSrc.includes('/img/reference/hero-laptop.webp'), 'REF hero WebP yerel kaynaktan yuklendi');
+  check(state.projects === 0 || (state.projects <= 3 && state.projectColumns >= 1),
+    `REF proje vitrini 0-3 gercek CMS kartiyla uyumlu (${state.projects}, kolon=${state.projectColumns})`);
+  check(state.overflow <= 1, `REF masaustu anasayfa yatay tasma yok (${state.overflow}px)`);
   await ctx.close();
 }
 

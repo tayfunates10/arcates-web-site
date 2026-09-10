@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-test('F-R3-04', 'Surec sahnesi dekoratif vektorleri ve panel metnini ayri tutar', function (): void {
+test('F-R3-04', 'Eski surec partiali veri odakli ve erisilebilir kalir', function (): void {
     $template = (string) file_get_contents(ARC_ROOT . '/views/front/partials/steps.php');
     assertContains('step__visual', $template);
     assertContains('aria-hidden="true"', $template);
@@ -11,7 +11,7 @@ test('F-R3-04', 'Surec sahnesi dekoratif vektorleri ve panel metnini ayri tutar'
     assertNotContains('style="', $template, 'CSP nedeniyle satir ici stil olmamali');
 });
 
-test('F-R3-05', 'Bolge sahnesi dinamik ilce verisini korur ve marka vektor katmanini ekler', function (): void {
+test('F-R3-05', 'Eski bolge partiali dinamik ilce verisini ve erisilebilir baglantilari korur', function (): void {
     $template = (string) file_get_contents(ARC_ROOT . '/views/front/partials/coast.php');
     assertContains('coast__backdrop', $template);
     assertContains('coast__grid', $template);
@@ -26,7 +26,7 @@ test('F-R3-05', 'Bolge sahnesi dinamik ilce verisini korur ve marka vektor katma
     assertNotContains('style="', $template, 'CSP nedeniyle satir ici stil olmamali');
 });
 
-test('F-R3-045', 'G-04 G-05 stil katmani hafif responsive ve sadece anasayfada yuklenir', function (): void {
+test('F-R3-045', 'Eski G-04 G-05 stili korunur fakat yeni referans anasayfaya yuklenmez', function (): void {
     $path = ARC_ROOT . '/public/assets/css/r3-process-region-visuals.css';
     assertTrue(is_file($path), 'G-04/G-05 CSS dosyasi mevcut olmali');
     $css = (string) file_get_contents($path);
@@ -40,7 +40,8 @@ test('F-R3-045', 'G-04 G-05 stil katmani hafif responsive ve sadece anasayfada y
     assertNotContains('!important', $css);
 
     $controller = (string) file_get_contents(ARC_ROOT . '/app/Controllers/Front/HomeController.php');
-    assertContains("'css/r3-process-region-visuals.css'", $controller);
+    assertContains("'css/reference-home.css'", $controller);
+    assertNotContains("'css/r3-process-region-visuals.css'", $controller, 'Referans anasayfa eski bolge/surec stilini yuklememeli');
 
     $pageController = (string) file_get_contents(ARC_ROOT . '/app/Controllers/Front/PageController.php');
     assertNotContains('r3-process-region-visuals.css', $pageController, 'Ek stil ic sayfalara tasinmamali');
