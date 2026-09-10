@@ -14,14 +14,16 @@
  * @var array  $_site
  * @var array  $_alternates
  * @var array  $headerCta
+ * @var bool   $isReferenceHome
  */
 
 declare(strict_types=1);
 
 use Arcates\Core\Security;
 
-$headerCta   = $headerCta ?? null;
-$_alternates = $_alternates ?? [];
+$headerCta       = $headerCta ?? null;
+$_alternates     = $_alternates ?? [];
+$isReferenceHome = $isReferenceHome ?? false;
 ?>
 <header class="site-head" data-site-head>
   <?php /* Sayfa ilerleme cubugu; scroll'a bagli scaleX. DOCS.md 7.4 */ ?>
@@ -33,6 +35,13 @@ $_alternates = $_alternates ?? [];
       <span class="brand__mark" aria-hidden="true"></span>
       <span class="brand__name"><?= Security::e($_site['name'] ?? '') ?></span>
     </a>
+
+    <?php if ($isReferenceHome && $headerCta !== null && ($headerCta['label'] ?? '') !== ''): ?>
+      <a class="btn btn--primary btn--head ref-mobile-head-cta"
+         href="<?= Security::e(url((string) ($headerCta['url'] ?? '/iletisim'))) ?>">
+        <?= Security::e($headerCta['label']) ?> <span aria-hidden="true">→</span>
+      </a>
+    <?php endif; ?>
 
     <button class="site-nav__toggle" type="button" data-nav-toggle
             data-open-label="<?= Security::e(__('open_menu')) ?>"
