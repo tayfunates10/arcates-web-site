@@ -140,6 +140,18 @@ body {
   color: var(--rd-brand);
 }
 
+/* Koyu CTA yuzeylerinde ikincil eylem her sayfada okunabilir kalir. */
+.btn--ghost.btn--on-dark {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .65);
+  background: rgba(255, 255, 255, .06);
+}
+.btn--ghost.btn--on-dark:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, .14);
+}
+
 .hero .btn { min-block-size: 52px; }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {

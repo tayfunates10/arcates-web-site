@@ -79,7 +79,7 @@ $firstHours = $hours[0] ?? null;
         </h2>
       </header>
 
-      <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
+      <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', Settings::defaults()['projects_notice'])]) ?>
 
       <ul class="works">
         <?php foreach ($projects as $project): ?>

@@ -23,7 +23,7 @@ use Arcates\Core\Settings;
       <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
     <?php endif; ?>
 
-    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', '')]) ?>
+    <?= partial('front/partials/notice', ['text' => Settings::get('projects_notice', Settings::defaults()['projects_notice'])]) ?>
 
     <?php if (!empty($page['content'])): ?>
       <div class="prose u-measure project-intro"><?= Security::sanitizeHtml((string) $page['content']) ?></div>

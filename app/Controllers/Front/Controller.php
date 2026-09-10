@@ -18,6 +18,7 @@ use Arcates\Core\Response;
 use Arcates\Core\Settings;
 use Arcates\Core\View;
 use Arcates\Models\MenuItem;
+use Arcates\Models\HomeSection;
 
 abstract class Controller
 {
@@ -56,6 +57,16 @@ abstract class Controller
         ];
 
         $lang = Lang::current();
+
+        // Header ve footer tum ziyaretci sayfalarinda ayni panel icerigini kullanir.
+        // Sayfanin bilerek verdigi null/bos degerleri gecersiz kilmayiz.
+        if (!array_key_exists('headerCta', $data)) {
+            $header = HomeSection::content('header', $lang, Lang::defaultCode());
+            $data['headerCta'] = $header['cta'] ?? null;
+        }
+        if (!array_key_exists('footerContent', $data)) {
+            $data['footerContent'] = HomeSection::content('footer', $lang, Lang::defaultCode());
+        }
 
         $data['_site'] = [
             'name'      => (string) Settings::get('site_name', ''),

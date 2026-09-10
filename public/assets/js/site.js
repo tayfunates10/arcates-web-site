@@ -247,20 +247,14 @@
           }
         }
 
-        function syncButton() {
-          submit.disabled = !form.checkValidity();
-        }
-
         for (var i = 0; i < required.length; i++) {
           required[i].addEventListener('input', function () {
             this.setAttribute('data-touched', '1');
             setFieldState(this, false);
-            syncButton();
           });
           required[i].addEventListener('change', function () {
             this.setAttribute('data-touched', '1');
             setFieldState(this, false);
-            syncButton();
           });
           required[i].addEventListener('blur', function () {
             this.setAttribute('data-touched', '1');
@@ -268,8 +262,11 @@
           });
         }
 
-        syncButton();
         form.addEventListener('submit', function (event) {
+          if (form.getAttribute('aria-busy') === 'true') {
+            event.preventDefault();
+            return;
+          }
           if (!form.checkValidity()) {
             event.preventDefault();
             var firstInvalid = null;
@@ -278,7 +275,10 @@
               setFieldState(required[i], true);
               if (!firstInvalid && !required[i].checkValidity()) firstInvalid = required[i];
             }
-            if (firstInvalid) firstInvalid.focus();
+            if (firstInvalid) {
+              firstInvalid.focus();
+              firstInvalid.reportValidity();
+            }
             return;
           }
           submit.disabled = true;

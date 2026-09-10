@@ -68,7 +68,17 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
   if (viewport.width < 940) {
     check(state.copyTop !== null && state.formTop < state.copyTop, 'F-T4-a mobilde form metinden once');
   }
-  check(state.disabled === true, 'F-T4 form gecerli olana kadar gonder butonu kilitli');
+  check(state.disabled === false, 'F-T4 eksik formda gonder kontrolu ulasilabilir');
+  await page.locator('#teklif-formu button[type="submit"]').click();
+  const invalid = await page.evaluate(() => ({
+    focused: document.activeElement?.getAttribute('name'),
+    marked: document.activeElement?.getAttribute('aria-invalid'),
+    busy: document.querySelector('#teklif-formu form')?.getAttribute('aria-busy'),
+  }));
+  check(invalid.focused === 'name' && invalid.marked === 'true',
+    'F-T4 eksik gonderim ilk hatali alana odaklanir ve hatayi aciklar');
+  check(invalid.busy !== 'true' && new URL(page.url()).pathname === '/iletisim',
+    'F-T4 eksik form sunucuya gonderilmez ve tekrar denenebilir');
   await ctx.close();
 }
 

@@ -28,11 +28,12 @@ use Arcates\Core\Security;
 
     <?php if ($categories): ?>
       <nav class="chips" aria-label="<?= Security::e(__('category')) ?>">
-        <a class="chips__item<?= $category === '' ? ' is-current' : '' ?>" href="<?= Security::e(url('/blog')) ?>">
+        <a class="chips__item<?= $category === '' ? ' is-current' : '' ?>" href="<?= Security::e(url('/blog')) ?>"<?= $category === '' ? ' aria-current="page"' : '' ?>>
           <?= Security::e(__('all')) ?>
         </a>
         <?php foreach ($categories as $row): ?>
           <a class="chips__item<?= $category === $row['category'] ? ' is-current' : '' ?>"
+             <?= $category === $row['category'] ? 'aria-current="page"' : '' ?>
              href="<?= Security::e(url('/blog') . '?kategori=' . rawurlencode((string) $row['category'])) ?>">
             <?= Security::e($row['category']) ?> (<?= (int) $row['total'] ?>)
           </a>
