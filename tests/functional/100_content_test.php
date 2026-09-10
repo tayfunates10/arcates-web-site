@@ -63,7 +63,6 @@ test('F-P10-a', 'Referans listesi ve detayı yayındakileri gösterir', function
     assertContains('"CreativeWork"', $body, 'CreativeWork şeması bulunmalı');
     assertSame(1, substr_count($body, '<h1'), 'Tek H1 bulunmalı');
 
-    // Taslak referans 404 doner.
     $draft = (new ProjectController())->show(Request::make('GET', '/referanslar/taslak-is'), ['slug' => 'taslak-is']);
     assertSame(404, $draft->status(), 'Taslak referans 404 döndürmeli');
 
@@ -100,13 +99,11 @@ test('F-P10-c', 'İleri tarihli blog yazısı tarihi gelene kadar görünmez', f
     $db->run('DELETE FROM pages');
     Lang::use('tr');
 
-    // Yayindaki yazi
     Post::save(
         ['category' => 'SEO', 'status' => 'published', 'published_at' => date('Y-m-d H:i:s', strtotime('-1 day'))],
         ['tr' => ['title' => 'Yerel SEO rehberi', 'slug' => 'yerel-seo-rehberi', 'content' => '<p>İçerik.</p>', 'robots' => 'index,follow']]
     );
 
-    // Ileri tarihli yazi
     Post::save(
         ['category' => 'SEO', 'status' => 'published', 'published_at' => date('Y-m-d H:i:s', strtotime('+7 days'))],
         ['tr' => ['title' => 'Gelecek yazı', 'slug' => 'gelecek-yazi', 'content' => '<p>Henüz yok.</p>', 'robots' => 'index,follow']]
@@ -125,7 +122,6 @@ test('F-P10-c', 'İleri tarihli blog yazısı tarihi gelene kadar görünmez', f
     assertContains('"Article"', $post->body(), 'Article şeması bulunmalı');
     assertContains('datePublished', $post->body(), 'Yayın tarihi şemada olmalı');
 
-    // Sitemap'e de girmemeli.
     $xml = arc_sitemap();
     assertContains('/blog/yerel-seo-rehberi', $xml, 'Yayındaki yazı haritada olmalı');
     assertNotContains('/blog/gelecek-yazi', $xml, 'İleri tarihli yazı haritada olmamalı');
@@ -134,7 +130,7 @@ test('F-P10-c', 'İleri tarihli blog yazısı tarihi gelene kadar görünmez', f
     $db->run('DELETE FROM not_found');
 });
 
-test('F-P10-d', 'SSS kaydı sayfaya atanır ve FAQPage şemasına girer', function (): void {
+test('F-P10-d', 'SSS kaydı hizmet ve SSS sayfasına atanır; referans anasayfa gizli FAQ üretmez', function (): void {
     $db = arc_need_db();
     $db->run('DELETE FROM faqs');
     $db->run('DELETE FROM pages');
@@ -155,22 +151,20 @@ test('F-P10-d', 'SSS kaydı sayfaya atanır ve FAQPage şemasına girer', functi
 
     assertGreaterThan(0, $faqId, 'SSS kaydı oluşmalı');
 
-    // Hizmet sayfasinda gorunmeli
     $body = arc_visit('web-tasarim')->body();
     assertContains('Site ne kadar sürede biter?', $body, 'Soru sayfada görünmeli');
     assertContains('Ortalama üç hafta', $body, 'Cevap sayfada görünmeli');
     assertContains('"FAQPage"', $body, 'FAQPage şeması bulunmalı');
 
-    // Anasayfada da gorunmeli
     Arcates\Models\HomeSection::ensureDefaults();
-    assertContains('Site ne kadar sürede biter?', arc_home()->body(), 'Anasayfada görünmeli');
+    $homeBody = arc_home()->body();
+    assertNotContains('Site ne kadar sürede biter?', $homeBody, 'Referans anasayfa görünmeyen SSS metni basmamalı');
+    assertNotContains('"FAQPage"', $homeBody, 'Referans anasayfa görünmeyen FAQPage şeması basmamalı');
 
-    // /sss sayfasinda gorunmeli
     $faqPage = (new FaqController())->index(Request::make('GET', '/sss'), []);
     assertSame(200, $faqPage->status(), 'SSS sayfası açılmalı');
     assertContains('Site ne kadar sürede biter?', $faqPage->body(), 'SSS listesinde görünmeli');
 
-    // Kapatilinca gorunmemeli
     $db->update('faqs', ['status' => 0], ['id' => $faqId]);
     assertNotContains('Site ne kadar sürede biter?', arc_visit('web-tasarim')->body(), 'Kapalı SSS görünmemeli');
 
