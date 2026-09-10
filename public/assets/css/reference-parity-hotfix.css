@@ -1,0 +1,61 @@
+/* Final reference-parity corrections. Loaded after reference-parity.css. */
+
+.is-reference-home .site-head__inner,
+.is-reference-home .site-head.is-stuck .site-head__inner{
+  min-height:64px;
+  height:64px;
+  padding-block:0;
+}
+
+.is-reference-home .site-head{
+  min-height:64px;
+}
+
+@media(min-width:941px){
+  .ref-hero{
+    min-height:398px;
+    height:398px;
+    padding-block:18px;
+  }
+  .ref-hero__grid{
+    height:362px;
+    min-height:0;
+  }
+  .ref-hero__visual{
+    align-self:center;
+    min-height:0;
+    height:350px;
+    overflow:visible;
+  }
+  .ref-hero__visual img{
+    width:auto;
+    max-width:100%;
+    height:350px;
+    max-height:350px;
+    object-fit:contain;
+    object-position:center;
+  }
+  .ref-hero__halo{
+    width:min(72%,350px);
+  }
+}
+
+@media(max-width:940px){
+  .is-reference-home .site-head__inner,
+  .is-reference-home .site-head.is-stuck .site-head__inner{
+    min-height:64px;
+    height:64px;
+    padding-block:0;
+  }
+}
+
+@media(max-width:640px){
+  .ref-hero__visual{
+    overflow:visible;
+  }
+  .ref-hero__visual img{
+    height:auto;
+    max-height:285px;
+    object-fit:contain;
+  }
+}
