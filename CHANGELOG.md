@@ -277,3 +277,23 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Yeni testler F-HS-a…f: tohum içeriği, uydurma iddia denetimi, sayfada
   basılması, panelden boşaltılınca kaybolması, göçün yalnızca eksik sahneye
   dokunması ve panel kaydının sahneyi silmemesi.
+
+### Düzeltildi (çalışma saatlerinde İngilizce gün kodu)
+- Çalışma saatleri alt bilgide, iletişim kartında ve ilçe sayfasının hızlı
+  olgu şeridinde `Mo-Fr 09:00–18:00` olarak görünüyordu. `opening_hours`
+  ayarı schema.org biçimini saklıyor ve bu kod doğrudan ekrana basılıyordu;
+  Türkçe sayfada İngilizce gün kısaltması çıkıyordu.
+- Yeni `opening_days()` yardımcısı kodu sayfanın dilindeki gün adına
+  çeviriyor: `Mo-Fr` → `Pzt–Cum`, `Mo,We,Fr` → `Pzt, Çar, Cum`. Aralık ve
+  virgüllü liste korunuyor.
+- **Yapısal veri değişmedi.** `Seo::professionalService()` ham kodu
+  kullanmaya devam ediyor; `dayOfWeek` alanında hâlâ `Mo-Fr` var. Çeviri
+  yalnızca görünen metinde.
+- Tanınmayan belirteç olduğu gibi geçiyor: işletme panele "Hafta içi"
+  yazarsa o metin bozulmadan görünüyor.
+- Gün adları dört dile de eklendi (`day_mo` … `day_su`).
+- Ayarlar ekranındaki biçim ipucu, ziyaretçinin çevrilmiş etiketi gördüğünü
+  açıklıyor.
+- Yeni testler F-OD-a…e: dile göre çeviri, serbest metnin korunması,
+  yapısal verinin ham kalması, ön yüzde gün kodunun görünmemesi ve
+  şablonlarda çevrilmeden basan yer kalmaması.

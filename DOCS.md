@@ -571,6 +571,8 @@ Tek H1, anlamlı H2/H3 sırası, title/description, canonical, gerektiğinde bre
 
 Uydurma yorum/puan veya `AggregateRating` eklenmez. NAP şeması gerçek işletme verisini kullanır.
 
+**Çalışma saatleri — iki biçim.** `opening_hours` ayarı schema.org gün kodunu saklar (`Mo-Fr`, `Sa`, `Mo,We,Fr`); `openingHoursSpecification.dayOfWeek` bu kodu **ham** kullanır, çevrilmez. Ziyaretçiye gösterilen metin ise `opening_days()` yardımcısından geçer ve sayfanın dilindeki gün adına döner (`Mo-Fr` → `Pzt–Cum`). Tanınmayan bir belirteç olduğu gibi geçer, böylece panele yazılan serbest metin (`Hafta içi`) bozulmaz. Şablonda gün kodu doğrudan basılmaz; test **F-OD-e** bunu denetler.
+
 ### 11.3 Çok dil
 Yalnız etkin ve gerçek karşılığı olan diller `hreflang` setine girer; `x-default` varsayılan dile gider. Arapça `dir="rtl"` ve mantıksal yön davranışı kullanır.
 

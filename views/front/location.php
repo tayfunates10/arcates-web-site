@@ -46,7 +46,7 @@ $firstHours = $hours[0] ?? null;
       <?php if (is_array($firstHours) && ($firstHours['opens'] ?? '') !== ''): ?>
         <div class="quick-facts__item">
           <dt><?= Security::e(__('opening_hours')) ?></dt>
-          <dd><?= Security::e(($firstHours['days'] ?? '') . ' ' . ($firstHours['opens'] ?? '') . '–' . ($firstHours['closes'] ?? '')) ?></dd>
+          <dd><?= Security::e(trim(opening_days((string) ($firstHours['days'] ?? '')) . ' ' . ($firstHours['opens'] ?? '') . '–' . ($firstHours['closes'] ?? ''))) ?></dd>
         </div>
       <?php endif; ?>
     </dl>

@@ -65,7 +65,7 @@ if (strlen($digits) === 11 && str_starts_with($digits, '0')) {
                 <span><?= Security::e(__('opening_hours')) ?></span>
                 <div>
                   <?php foreach ($_site['hours'] as $slot): ?>
-                    <strong><?= Security::e(($slot['days'] ?? '') . ' ' . ($slot['opens'] ?? '') . '–' . ($slot['closes'] ?? '')) ?></strong>
+                    <strong><?= Security::e(trim(opening_days((string) ($slot['days'] ?? '')) . ' ' . ($slot['opens'] ?? '') . '–' . ($slot['closes'] ?? ''))) ?></strong>
                   <?php endforeach; ?>
                 </div>
               </li>
