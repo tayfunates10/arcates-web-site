@@ -234,12 +234,13 @@
 }
 
 @media (max-width: 640px) {
-  /* Referans telefonda bant 71, marka 177x38, buton 113x40 css px.
-     Telefon genisligi mockupta 275 px ve 390 css px'i temsil ediyor
-     (olcek 0.705); degerler buna gore cevrildi. */
-  .is-reference-home .site-head,
-  .is-reference-home .site-head__inner { min-block-size: 70px; }
-
+  /* Telefon maketinin olcegi ekran genisliginden degil, acma dugmesinin
+     cubuk araligindan cikarildi: maket 5 px, bizde 6 css px, yani olcek
+     0.826. Bant yuksekligini bu maketten guvenle okumak mumkun degil —
+     durum cubugunun nerede bittigi belirsiz. Bu yuzden bant 66 px'lik
+     mevcut butcede birakildi; `reference-parity-check` 60-69 px bekliyor
+     ve ilk denememdeki 70 px kurali bandi 72 px'e cikarip o denetimi
+     dusurmustu. Marka ve buton olculeri maketten okunabiliyor. */
   .is-reference-home .brand {
     flex-basis: clamp(140px, 45vw, 180px);
     inline-size: clamp(140px, 45vw, 180px);

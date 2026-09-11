@@ -10,7 +10,7 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Açık sayfa işareti ölçülen renklere alındı: yazı `#5AC8F5`, alt çizgi `#3988BC`. Açılır menüde alt çizgi yerine sol şerit.
 - Menü 1200px üstünde ekran ortasına hizalandı; akış içinde ortalandığında marka genişliği kadar sağa kayıyordu.
 - Anasayfada bant alt çizgisi kaldırıldı, zemine referanstaki ince diyagonal ışık huzmeleri eklendi (ölçülen şiddet, dekoratif).
-- Mobil bantta marka, çağrı butonu ve açma düğmesi referans oranlarına getirildi; açma düğmesinin kutusu kaldırıldı.
+- Mobil bantta marka, çağrı butonu ve açma düğmesi referans oranlarına getirildi; açma düğmesinin kutusu kaldırıldı. Bant yüksekliği 66px'lik mevcut bütçede bırakıldı: telefon maketinden güvenle okunamıyor.
 
 ### Düzeltildi (11 Eylül 2026 — B1 üst menü)
 - Açma düğmesinin çubukları açık tema rengiyle (`--fg`, `#062244`) koyu bant üzerine çiziliyordu; ölçülen kontrast 1.2:1 idi, yani mobil menü düğmesi pratikte görünmüyordu. Çubuklar beyaza alındı.
