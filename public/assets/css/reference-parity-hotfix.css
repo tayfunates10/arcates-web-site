@@ -199,3 +199,123 @@
     height:38px;
   }
 }
+
+/* Live-deploy visual polish — measured against the supplied desktop/mobile reference. */
+@media(min-width:941px){
+  .is-reference-home .brand{
+    flex-basis:184px;
+    width:184px;
+    height:48px;
+    background-size:100% auto;
+  }
+  .is-reference-home .site-head__panel{gap:18px}
+  .is-reference-home .site-nav{flex:1}
+  .is-reference-home .site-nav__list{justify-content:center}
+  .is-reference-home .site-head__side{margin-inline-start:auto}
+
+  .ref-hero__visual::before{
+    content:'';
+    position:absolute;
+    z-index:4;
+    right:-1%;
+    top:24%;
+    width:112px;
+    height:156px;
+    border:1px solid rgba(43,154,255,.38);
+    border-radius:8px;
+    background:
+      linear-gradient(90deg,rgba(45,167,255,.86) 0 13px,transparent 13px) 14px 20px/13px 13px no-repeat,
+      linear-gradient(90deg,rgba(173,217,255,.42) 0 54%,transparent 54%) 36px 24px/60px 4px no-repeat,
+      linear-gradient(90deg,rgba(45,167,255,.86) 0 13px,transparent 13px) 14px 50px/13px 13px no-repeat,
+      linear-gradient(90deg,rgba(173,217,255,.42) 0 66%,transparent 66%) 36px 54px/60px 4px no-repeat,
+      linear-gradient(90deg,rgba(45,167,255,.86) 0 13px,transparent 13px) 14px 80px/13px 13px no-repeat,
+      linear-gradient(90deg,rgba(173,217,255,.42) 0 48%,transparent 48%) 36px 84px/60px 4px no-repeat,
+      linear-gradient(90deg,rgba(45,167,255,.86) 0 13px,transparent 13px) 14px 110px/13px 13px no-repeat,
+      linear-gradient(90deg,rgba(173,217,255,.42) 0 60%,transparent 60%) 36px 114px/60px 4px no-repeat,
+      linear-gradient(145deg,rgba(7,27,48,.96),rgba(4,16,31,.96));
+    box-shadow:0 0 28px rgba(17,130,255,.14),inset 0 0 22px rgba(22,118,255,.06);
+    pointer-events:none;
+  }
+  .ref-hero__visual::after{
+    content:'//  digital\A//  systems';
+    white-space:pre;
+    position:absolute;
+    z-index:4;
+    right:20%;
+    top:8%;
+    width:126px;
+    min-height:62px;
+    padding:11px 12px;
+    border:1px solid rgba(42,153,255,.34);
+    border-radius:7px;
+    color:rgba(105,199,255,.78);
+    background:rgba(4,18,34,.82);
+    font:700 9px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;
+    box-shadow:0 0 24px rgba(12,116,255,.12);
+    pointer-events:none;
+  }
+
+  .ref-project>a{min-height:158px}
+  .ref-project__media{min-height:158px}
+  .ref-project__fallback{
+    width:100%;
+    height:100%;
+    min-height:158px;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+  }
+
+  .ref-post>a{min-height:160px}
+  .ref-post__media{height:160px}
+
+  .is-reference-home .site-foot__inner{
+    grid-template-columns:minmax(210px,1.22fr) repeat(3,minmax(120px,.72fr)) minmax(220px,1.18fr);
+    gap:18px;
+    padding-top:14px;
+    padding-bottom:8px;
+  }
+  .is-reference-home .site-foot__logo{width:138px}
+  .is-reference-home .site-foot__about{font-size:9px;line-height:1.4}
+  .is-reference-home .site-foot__title{margin-bottom:7px;font-size:10px}
+  .is-reference-home .site-foot a,
+  .is-reference-home .site-foot .nap,
+  .is-reference-home .site-foot .hours{font-size:9px;line-height:1.42}
+  .is-reference-home .site-foot__base{margin-block-start:10px;padding-block-start:8px}
+}
+
+@media(max-width:640px){
+  .is-reference-home .brand{
+    flex-basis:148px;
+    width:148px;
+    height:42px;
+    background-size:100% auto;
+  }
+  .is-reference-home .site-head__inner{gap:6px}
+  .is-reference-home .ref-mobile-head-cta{min-height:36px;padding-inline:10px}
+  .is-reference-home .site-nav__toggle{flex-basis:36px;width:36px;height:36px}
+
+  .ref-hero__title{font-size:clamp(36px,10.2vw,41px);line-height:1.01}
+  .ref-hero__lead{font-size:12.5px;line-height:1.5}
+  .ref-metric,.ref-metric:nth-child(n){min-height:64px;padding:10px 13px}
+
+  .ref-project>a{min-height:132px;grid-template-columns:45% 55%}
+  .ref-project__media,.ref-project__body{min-height:132px}
+  .ref-project__fallback{width:100%;height:100%;min-height:132px;margin:0;border:0;border-radius:0}
+
+  .ref-process__list:before{left:22px}
+  .ref-process__list li{grid-template-columns:48px 1fr;gap:11px;padding-bottom:16px}
+  .ref-process__dot{width:44px;height:44px;font-size:9px}
+  .ref-process h3{font-size:12.5px}
+
+  .ref-post>a{min-height:156px}
+  .ref-post__media{height:156px}
+
+  .is-reference-home .site-foot__logo{width:128px}
+  .is-reference-home .site-foot__about{max-width:34ch;font-size:9px;line-height:1.45}
+  .is-reference-home .site-foot__title{font-size:9.5px}
+  .is-reference-home .site-foot a,
+  .is-reference-home .site-foot .nap,
+  .is-reference-home .site-foot .hours{font-size:8.5px;line-height:1.38}
+}
