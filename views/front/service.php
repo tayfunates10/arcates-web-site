@@ -14,15 +14,33 @@ use Arcates\Core\ContentOutline;
 use Arcates\Core\Security;
 
 $outline = ContentOutline::prepare((string) ($page['content'] ?? ''));
+$serviceVisuals = [
+    'web-tasarim' => 'layout',
+    'e-ticaret-sitesi' => 'cart',
+    'rezervasyon-sistemi' => 'calendar',
+    'seo-hizmeti' => 'search',
+    'coklu-dil-web-sitesi' => 'globe',
+    'web-sitesi-bakim' => 'shield',
+];
+$serviceVisual = $serviceVisuals[(string) ($page['slug'] ?? '')] ?? null;
 ?>
 
 <?= partial('front/partials/breadcrumbs', ['crumbs' => $crumbs]) ?>
 
 <header class="page-hero section section--tight">
-  <div class="wrap">
+  <div class="wrap<?= $serviceVisual !== null ? ' service-hero__grid' : '' ?>">
+    <div class="service-hero__copy">
     <h1 class="page__title"><?= Security::e($page['title']) ?></h1>
     <?php if (!empty($page['excerpt'])): ?>
       <p class="page__lead u-measure-lead"><?= Security::e($page['excerpt']) ?></p>
+    <?php endif; ?>
+    </div>
+    <?php if ($serviceVisual !== null): ?>
+      <figure class="service-hero__media" aria-hidden="true">
+        <img src="<?= Security::e(asset('img/redesign/service-' . $serviceVisual . '.svg')) ?>"
+             width="480" height="360" alt="" aria-hidden="true"
+             loading="eager" decoding="async">
+      </figure>
     <?php endif; ?>
   </div>
 </header>
