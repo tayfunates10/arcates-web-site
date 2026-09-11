@@ -34,3 +34,11 @@
   box-shadow: none;
   contain: paint;
 }
+
+/* Lighthouse/WCAG touch-target guard: footer phone and e-mail stay comfortably tappable. */
+.site-foot .nap > a.nap__line {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 1.5rem;
+  padding-block: .1875rem;
+}
