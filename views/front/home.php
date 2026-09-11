@@ -35,6 +35,13 @@ $postItems    = array_slice($posts ?? [], 0, 3);
 $aboutText    = trim((string) ($footerContent['about'] ?? ''));
 
 $icons = [
+    'cube'     => '<path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 9 9-4M12 12 3 8m9 4v9"/>',
+    'phone'    => '<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4m-3 14h2"/>',
+    'bolt'     => '<path d="m13 2-9 12h7l-1 8 10-13h-8l1-7Z"/>',
+    'headset'  => '<path d="M3 13v-1a9 9 0 0 1 18 0v1m0 5v1a3 3 0 0 1-3 3h-4"/><rect x="3" y="11" width="4" height="8" rx="2"/><rect x="17" y="11" width="4" height="8" rx="2"/>',
+    'code'     => '<path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"/>',
+    'pen'      => '<path d="m15 4 5 5M4 15 15 4a3.5 3.5 0 0 1 5 5L9 20l-7 2 2-7Zm0 0 5 5"/>',
+    'rocket'   => '<path d="M14 5c3-3 7-3 7-3s0 4-3 7l-8 8-5-5 9-7Zm-6 4H4l-2 6 4-1m9 2v4l-6 2 1-5M6 18l-3 3"/><circle cx="16" cy="7" r="1.5"/>',
     'layout'   => '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/>',
     'cart'     => '<circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6"/>',
     'calendar' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
@@ -42,6 +49,13 @@ $icons = [
     'globe'    => '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"/>',
     'shield'   => '<path d="M12 3l7 3v5.5c0 4.3-2.9 8.3-7 9.5-4.1-1.2-7-5.2-7-9.5V6l7-3Z"/><path d="m9 12 2.2 2.2L15.5 10"/>',
 ];
+
+// Only trusted local paths are rendered; CMS icon names never become SVG markup.
+$renderIcon = static function (string $key) use ($icons): string {
+    $path = $icons[$key] ?? $icons['layout'];
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $path . '</svg>';
+};
+$processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['search', 'pen', 'code', 'rocket'];
 ?>
 
 <div class="ref-home">
@@ -104,10 +118,10 @@ $icons = [
 
   <section class="ref-metrics" aria-label="<?= Security::e(__('core_capabilities')) ?>">
     <div class="wrap ref-metrics__grid">
-      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true">◇</span><p><strong><?= Security::e(__('custom_design')) ?></strong><small><?= Security::e(__('custom_design_short')) ?></small></p></article>
-      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true">◎</span><p><strong><?= Security::e(__('mobile_first')) ?></strong><small><?= Security::e(__('mobile_first_short')) ?></small></p></article>
-      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true">ϟ</span><p><strong><?= Security::e(__('speed_and_seo')) ?></strong><small><?= Security::e(__('speed_and_seo_short')) ?></small></p></article>
-      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true">◉</span><p><strong><?= Security::e(__('continuous_support')) ?></strong><small><?= Security::e(__('continuous_support_short')) ?></small></p></article>
+      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true"><?= $renderIcon('cube') ?></span><p><strong><?= Security::e(__('custom_design')) ?></strong><small><?= Security::e(__('custom_design_short')) ?></small></p></article>
+      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true"><?= $renderIcon('phone') ?></span><p><strong><?= Security::e(__('mobile_first')) ?></strong><small><?= Security::e(__('mobile_first_short')) ?></small></p></article>
+      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true"><?= $renderIcon('bolt') ?></span><p><strong><?= Security::e(__('speed_and_seo')) ?></strong><small><?= Security::e(__('speed_and_seo_short')) ?></small></p></article>
+      <article class="ref-metric"><span class="ref-metric__icon" aria-hidden="true"><?= $renderIcon('headset') ?></span><p><strong><?= Security::e(__('continuous_support')) ?></strong><small><?= Security::e(__('continuous_support_short')) ?></small></p></article>
     </div>
   </section>
 <?php endif; ?>
@@ -124,7 +138,7 @@ $icons = [
           <?php $iconKey = isset($icons[(string) ($card['icon'] ?? '')]) ? (string) $card['icon'] : 'layout'; ?>
           <li>
             <a class="ref-service" href="<?= Security::e(url((string) ($card['url'] ?? '/'))) ?>">
-              <span class="ref-service__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><?= $icons[$iconKey] ?></svg></span>
+              <span class="ref-service__icon" aria-hidden="true"><?= $renderIcon($iconKey) ?></span>
               <strong><?= Security::e((string) ($card['title'] ?? '')) ?></strong>
               <span class="ref-service__text"><?= Security::e((string) ($card['text'] ?? '')) ?></span>
               <span class="ref-service__more"><?= Security::e(__('more_details')) ?> →</span>
@@ -180,8 +194,8 @@ $icons = [
         <ol class="ref-process__list">
           <?php foreach ($stepItems as $index => $step): ?>
             <li>
-              <span class="ref-process__dot" aria-hidden="true"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span>
-              <div><h3><?= Security::e((string) ($step['title'] ?? '')) ?></h3><p><?= Security::e((string) ($step['text'] ?? '')) ?></p></div>
+              <span class="ref-process__dot" aria-hidden="true"><?= $renderIcon((string) ($step['icon'] ?? $processIcons[$index] ?? 'layout')) ?></span>
+              <div><span class="ref-process__number" aria-hidden="true"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span><h3><?= Security::e((string) ($step['title'] ?? '')) ?></h3><p><?= Security::e((string) ($step['text'] ?? '')) ?></p></div>
             </li>
           <?php endforeach; ?>
         </ol>
@@ -194,7 +208,7 @@ $icons = [
         <div class="ref-why__body">
           <ul>
             <?php foreach (array_slice($serviceCards, 0, 5) as $card): ?>
-              <li><span aria-hidden="true">✓</span><?= Security::e((string) ($card['title'] ?? '')) ?></li>
+              <li><span aria-hidden="true"><?= $renderIcon((string) ($card['icon'] ?? 'layout')) ?></span><?= Security::e((string) ($card['title'] ?? '')) ?></li>
             <?php endforeach; ?>
           </ul>
           <div class="ref-why__statement">

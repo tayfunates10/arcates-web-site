@@ -4,7 +4,7 @@
 /* The supplied desktop reference presents project copy on the left and the
    visual preview on the right. Keep the real project record, only mirror the
    visual order to match that composition. */
-@media (min-width: 941px) {
+@media (min-width: 641px) {
   .ref-project > a {
     grid-template-columns: minmax(0, 42%) minmax(0, 58%);
   }
@@ -23,6 +23,49 @@
     right: auto;
     bottom: 10px;
   }
+}
+
+/* A crisp stroke with a tight light core and a soft halo, visible without hover.
+   Static shadows remain visible with reduced motion and JavaScript disabled. */
+.is-reference-home .ref-metric__icon,
+.is-reference-home .ref-service__icon,
+.is-reference-home .ref-process__dot,
+.is-reference-home .ref-why__body li > span {
+  color: #29adff;
+  overflow: visible;
+  filter: none;
+  background-image: radial-gradient(circle, rgba(14, 132, 255, .22), transparent 72%);
+}
+
+.is-reference-home .ref-metric__icon svg,
+.is-reference-home .ref-service__icon svg,
+.is-reference-home .ref-process__dot svg,
+.is-reference-home .ref-why__body li > span svg {
+  display: block;
+  width: 27px;
+  height: 27px;
+  overflow: visible;
+  filter: drop-shadow(0 0 2px rgba(24, 161, 255, .8)) drop-shadow(0 0 9px rgba(0, 120, 255, .6));
+}
+
+.is-reference-home .ref-metric__icon svg { width: 31px; height: 31px; }
+.is-reference-home .ref-process__dot {
+  box-shadow: 0 0 6px rgba(20, 155, 255, .3), 0 0 20px rgba(0, 118, 255, .22);
+}
+.is-reference-home .ref-process__dot svg { width: 23px; height: 23px; }
+.is-reference-home .ref-why__body li > span { flex-shrink: 0; }
+.is-reference-home .ref-why__body li > span svg { width: 14px; height: 14px; }
+.ref-process__number { display: block; margin-bottom: 3px; color: #29adff; font-size: 14px; font-weight: 700; }
+
+@media (min-width: 641px) {
+  /* Adapt to the real CMS step count; no fabricated fourth step. */
+  .ref-process__list { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .is-reference-home .ref-service__icon { margin-bottom: 0; }
+  .is-reference-home .ref-service__icon svg { width: 25px; height: 25px; }
+  .ref-process__number { display: none; }
 }
 
 /* The phone reference uses the same copy-left / visual-right project card

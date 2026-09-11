@@ -193,6 +193,39 @@ async function mobileCheck() {
 await import('node:fs').then(({ mkdirSync }) => mkdirSync('/tmp/arcates-reference-parity', { recursive: true }));
 await desktopCheck();
 await mobileCheck();
+await iconAndTabletCheck();
 await browser.close();
 console.log(fail === 0 ? '\nREFERANS GEOMETRI DENETIMLERI GECTI' : `\n${fail} REFERANS GEOMETRI DENETIMI KALDI`);
 process.exit(fail === 0 ? 0 : 1);
+
+// Catch missing glyph replacements, hover-only glows and the tablet ordering gap.
+async function iconAndTabletCheck() {
+  for (const width of [320, 390, 768, 1024, 1440]) {
+    const ctx = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce', javaScriptEnabled: false });
+    const page = await ctx.newPage();
+    await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+    const state = await page.evaluate(() => {
+      const groups = ['.ref-metric__icon', '.ref-service__icon', '.ref-process__dot', '.ref-why__body li > span'];
+      const icons = groups.flatMap(selector => [...document.querySelectorAll(selector)]);
+      const body = document.querySelector('.ref-project__body')?.getBoundingClientRect();
+      const media = document.querySelector('.ref-project__media')?.getBoundingClientRect();
+      return {
+        count: icons.length,
+        valid: icons.every(node => {
+          const svg = node.querySelector('svg');
+          if (!svg) return false;
+          const rect = svg.getBoundingClientRect();
+          const style = getComputedStyle(svg);
+          return rect.width >= 14 && rect.height >= 14 && style.filter.includes('drop-shadow') && style.visibility === 'visible' && style.opacity !== '0' && svg.getAttribute('focusable') === 'false';
+        }),
+        projectOrder: !body || !media || (body.x < media.x && Math.abs(body.y - media.y) < 2),
+        overflow: document.documentElement.scrollWidth - innerWidth,
+      };
+    });
+    check(state.count >= 4 && state.valid, `${width}px SVG ikonlar ve sabit isik JS kapali/reduced-motion ile gorunur`);
+    check(state.projectOrder, `${width}px proje metni solda ve gorsel sagda`);
+    check(state.overflow <= 1, `${width}px yatay tasma yok (${state.overflow}px)`);
+    await page.screenshot({ path: `/tmp/arcates-reference-parity/icons-${width}.png`, fullPage: true });
+    await ctx.close();
+  }
+}
