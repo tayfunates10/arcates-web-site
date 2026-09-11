@@ -24,6 +24,7 @@ use Arcates\Core\Security;
 $headerCta       = $headerCta ?? null;
 $_alternates     = $_alternates ?? [];
 $isReferenceHome = $isReferenceHome ?? false;
+$brandLabel      = trim((string) ($_site['name'] ?? '')) ?: 'Arcates Yazılım';
 ?>
 <header class="site-head" data-site-head>
   <?php /* Sayfa ilerleme cubugu; scroll'a bagli scaleX. DOCS.md 7.4 */ ?>
@@ -31,7 +32,7 @@ $isReferenceHome = $isReferenceHome ?? false;
 
   <div class="wrap site-head__inner">
 
-    <a class="brand" href="<?= Security::e(url('/')) ?>">
+    <a class="brand" href="<?= Security::e(url('/')) ?>" aria-label="<?= Security::e($brandLabel) ?>">
       <span class="brand__mark" aria-hidden="true"></span>
       <span class="brand__name"><?= Security::e($_site['name'] ?? '') ?></span>
     </a>
