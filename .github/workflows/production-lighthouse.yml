@@ -1,0 +1,66 @@
+name: Production Lighthouse
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Canonical production URL'
+        required: true
+        default: 'https://arcatesyazilim.com'
+        type: string
+  workflow_run:
+    workflows: ['Live Acceptance']
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      BASE_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.base_url || 'https://arcatesyazilim.com' }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Lighthouse kur
+        run: npm install --no-save lighthouse@13.4.1
+
+      - name: Production mobil audit
+        run: >-
+          npx lighthouse "$BASE_URL"
+          --quiet
+          --output=json
+          --output-path=lighthouse-mobile.json
+          --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+
+      - name: Production masaustu audit
+        run: >-
+          npx lighthouse "$BASE_URL"
+          --quiet
+          --preset=desktop
+          --output=json
+          --output-path=lighthouse-desktop.json
+          --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+
+      - name: Hedefleri kontrol et
+        run: node tools/browser/lighthouse-gate.mjs lighthouse-mobile.json lighthouse-desktop.json
+
+      - name: Lighthouse raporlarini sakla
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: arcates-production-lighthouse
+          path: |
+            lighthouse-mobile.json
+            lighthouse-desktop.json
+            lighthouse-summary.json
+          if-no-files-found: warn
+          retention-days: 14
