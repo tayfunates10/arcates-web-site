@@ -77,6 +77,14 @@ $ogAlt = trim((string) ($_site['name'] ?? 'Arcates Yazılım'));
 <?php foreach ((array) ($head['styles'] ?? []) as $style): ?>
 <link rel="stylesheet" href="<?= Security::e(asset((string) $style)) ?>">
 <?php endforeach; ?>
+<style>
+  .nap > a.nap__line {
+    display: flex;
+    align-items: center;
+    min-block-size: 28px;
+    padding-block: 2px;
+  }
+</style>
 
 <?php foreach ($head['schemas'] ?? [] as $schema): ?>
 <script type="application/ld+json"><?= Security::json($schema) ?></script>
