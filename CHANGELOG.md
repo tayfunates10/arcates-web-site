@@ -4,6 +4,13 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Düzeltildi (11 Eylül 2026 referans ikonları)
+- Ana sayfa bilgi kartlarındaki fonta bağlı semboller yerel SVG ikonlarla değiştirildi; hizmet/süreç/avantaj ikonları aynı çizgi ve sabit mavi ışık ailesine alındı.
+- Süreç ikonları eklendi; masaüstü numaraları ikon altına taşındı. Kolonlar CMS'deki gerçek adım sayısını izler.
+- 641–940px aralığında ters kalan proje metin/görsel sırası düzeltildi; mobil hizmet ikonunun alt boşluğu sıfırlandı.
+- 320/390/768/1024/1440px için JS kapalı ve reduced-motion ikon/gölge, proje sırası ve taşma tarayıcı kontrolleri eklendi.
+
+
 ### Düzeltildi (10 Eylül 2026 canlı arayüz denetimi)
 - HEAD istekleri GET rotasına eşlenir; geçerli sayfaların izleme araçlarına yanlış 404 dönmesi önlenir.
 - İç sayfalarda eksik kalan ortak Teklif Al eylemi, footer sütunları ve yasal bağlantılar paneldeki header/footer içeriğinden yüklenir; açık null/boş tercihler korunur.

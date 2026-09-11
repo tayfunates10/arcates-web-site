@@ -771,3 +771,19 @@ R0/R1/R4 foundation, R5, R6 ve R7 kodları main dalındadır; R8 otomatik kabul 
 `LIVE-AUDIT-2026-09-10.md` mevcut üretim bulgularını ve yayın sınırlarını kaydeder. Header CTA ve footer içeriği tüm ön yüz controller'larında aynı panel kaynağından gelir. Eksik form gönderimi alan hatasını açıklar; buton yalnız devam eden gönderimde kilitlenir. Koyu zemindeki ikincil eylem rengi ortak CSS katmanındadır. Eksik `projects_notice` anahtarı varsayılana düşer, mevcut boş değer değiştirilmez. F-LIVE-01 ve inner/design browser kontrolleri bu davranışları korur.
 
 HEAD, GET rotasını kullanır; POST handler çalıştırmaz ve ziyaret sayacına eklenmez. U-12f ve LIVE-04 HTTP testleri izleme uyumluluğunu korur.
+
+
+### Referans ana sayfa ikon düzeltmesi — 11 Eylül 2026
+
+Güncel `is-reference-home` sayfası `reference-home.css`, `reference-parity.css`,
+`reference-parity-hotfix.css`, `reference-parity-final.css` sırasını kullanır.
+Bilgi, hizmet, süreç ve avantaj ikonları güvenilir yerel SVG yollarından üretilir;
+CMS ikon anahtarı izin verilen çizimler arasından seçilir, bilinmeyen anahtar
+`layout` ikonuna düşer. İkonlar dekoratiftir, odak almaz; anlam görünür metindedir.
+Işık iki sabit drop-shadow katmanıdır; hover, JS veya animasyona bağlı değildir.
+CMS süreç sayısı korunur; masaüstü kolon sayısı gerçek öğe sayısına uyarlanır.
+Proje kartları tablet dahil metin solda/görsel sağda düzenini korur.
+`reference-parity-check.mjs` 320/390/768/1024/1440px ekran görüntülerini ve
+JS kapalı/reduced-motion ikon görünürlüğünü denetler. Bu kontroller piksel
+birebirliği veya canlı cPanel dağıtımı kabulü değildir. Elle A-01, A-02,
+A-08 ve E (klavye, %200 zoom) kontrolleri uygulanmalıdır.
