@@ -165,14 +165,13 @@
   .is-reference-home .ref-scene-chips { inset-inline-start: 4%; inset-block-end: 8%; }
 }
 
+/* Telefonda sahnenin tamami duser.
+ *
+ * Rozetleri akisa sokmak kahraman yuksekligini buyutuyor ve referans
+ * geometrisini bozuyordu (tek kolon akisi ve gorsel orani denetimleri).
+ * Sahne dekoratif oldugu icin dar ekranda hic basilmamasi dogru davranis:
+ * ayni bilgi zaten hizmet kartlarinda ve iletisim bolumunde duruyor. */
 @media (max-width: 640px) {
-  .is-reference-home .ref-scene-card { display: none; }
-  .is-reference-home .ref-scene-chips {
-    position: static;
-    translate: none;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-block-start: 14px;
-  }
-  .is-reference-home .ref-scene-chip { flex: 1 1 140px; }
+  .is-reference-home .ref-scene-card,
+  .is-reference-home .ref-scene-chips { display: none; }
 }
