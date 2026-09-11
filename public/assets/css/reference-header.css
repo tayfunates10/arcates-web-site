@@ -1,53 +1,262 @@
-/* Arcates — ust menu duzeni. Referans B1.
+/* Arcates — ust menu. Referans B1.
  *
- * Referansta menu satirin ortasinda durur, marka solda ve buton sagda kalir;
- * acik sayfanin ogesi alt cizgiyle isaretlidir.
+ * Bu dosya ust menunun SON katmanidir: `head.php` icinde sayfaya ozel
+ * stillerden sonra yuklenir, boylece `.is-reference-home` onekli kurallar
+ * burayi geri ezemez.
  *
- * 940 px altinda panel acilir kutuya donuyor (site.css); orada ortalama
- * uygulanmaz, aksi halde acilir menu ortadan hizalanirdi.
+ * --- Olculer nereden geliyor ---------------------------------------------
+ *
+ * Referans gorsel 1086 px genisliginde bir ekran goruntusu. Icindeki macOS
+ * trafik isigi noktasi 7 px olctu; gercekte 12 css px oldugundan gorsel
+ * 7/12 = 0.583 oraninda kucultulmus, yani tasarimin kendi genisligi
+ * 1086 / 0.583 ~= 1863 px. Asagidaki her deger once bu 1863 px'lik tasarimda
+ * kac css px ise ona cevrildi, sonra `vw` cinsinden yazildi. Boylece duzen
+ * 1863 px'te referansla birebir olur, dar ekranda ise orantili kucultur.
+ *
+ * Piksel olarak ornekleneni (tahmin degil):
+ *   pasif menu yazisi  #CFDFF2     acik sayfa yazisi  #5AC8F5
+ *   alt cizgi          #3988BC     buton zemini       #0E78FE
+ *   buton yazisi       #FFFFFF     bant zemini        ~#000A1A
+ *
+ * 940 px altinda panel acilir kutuya donuyor (site.css); orada ortalama ve
+ * alt cizgi uygulanmaz, acilir menu ortadan hizalanirdi.
  */
 
+.site-head {
+  /* Referanstan olculen renkler. Menu koyu bir yuzey; acik tema `--fg`
+     rolu burada kullanilamaz, kontrast 1.1:1'e duserdi. */
+  --ref-nav:           #CFDFF2;
+  --ref-nav-active:    #5AC8F5;
+  --ref-nav-underline: #3988BC;
+  --ref-cta:           #0E78FE;
+
+  position: relative;
+}
+
+/* Bant zemininin ustunde kalsinlar; asagidaki isik huzmeleri `::after`. */
+.site-head > * { position: relative; z-index: 1; }
+
+/* --- Masaustu duzeni ------------------------------------------------------ */
+
 @media (min-width: 941px) {
-  /* Panel satiri kaplar; menu ortada, yan blok sagda. */
-  .site-head__panel { justify-content: flex-start; }
+
+  /* Bant yuksekligi: referansta 86 css px / 1863 px = 4.62vw. */
+  .site-head,
+  .site-head__inner { min-block-size: clamp(64px, 4.62vw, 86px); }
+
+  /* Marka: referansta 274 x 65 css px = 14.7vw x 3.49vw. */
+  .is-reference-home .brand {
+    flex: 0 0 clamp(168px, 14.7vw, 274px);
+    inline-size: clamp(168px, 14.7vw, 274px);
+    block-size: clamp(42px, 3.49vw, 65px);
+  }
+
+  /* Panel satiri kaplar; menu ortada, yan blok sagda.
+   *
+   * `justify-content` ve `gap` yalnizca `reference-home.css` icinde ve
+   * `.is-reference-home` onekiyle tanimliydi; ic sayfalarda panel duzensiz
+   * kaliyordu. Menu asagida akistan cikinca yan blok sola dusup menunun
+   * uzerine biniyordu. Bu yuzden duzen burada, her sayfa icin kuruluyor. */
+  .site-head .site-head__panel {
+    flex: 1;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 26px;
+  }
+
+  /* Menu akistan ciksa da yan blok sag kenarda kalir. */
+  .site-head .site-head__side { margin-inline-start: auto; }
 
   .site-head__panel > .site-nav {
     flex: 1;
     display: flex;
     justify-content: center;
-    min-width: 0;
+    min-inline-size: 0;
   }
 
-  .site-nav__list { gap: var(--sp-2); }
+  /* Ogeler arasi bosluk: referansta 54 css px = 2.9vw. */
+  .site-head .site-nav__list { gap: clamp(18px, 2.9vw, 54px); }
+
+  /* Yazi: referansta 13 css px = .7vw, kalinlik 500. Bizdeki 12px/700
+     referanstan %25 genis duruyordu. Alt sinir 11px; okunurluk. */
+  .site-head .site-nav__link {
+    padding-inline: 0;
+    font-size: clamp(11px, .7vw, 14px);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .site-head .site-nav__link:hover,
+  .site-head .site-nav__link:focus-visible { background: none; }
+
+  /* Yan blok: arama/buton arasi 15 css px = .8vw. */
+  .site-head .site-head__side { gap: clamp(8px, .8vw, 15px); }
 }
 
-/* --- Acik sayfa isareti -------------------------------------------------- */
+/* Referansta menunun ortasi ekranin %49.1'i, yani markanin ve yan blogun
+   kapladigi yerden bagimsiz olarak EKRAN ortasi. Akis icinde ortalarsak
+   menu markanin genisligi kadar saga kayiyor (1440 px'te 63 px fark).
+   Bu yuzden 1200 px ustunde menu mutlak konumla ekran ortasina alinir;
+   asagisinda yer daralinca akis icindeki ortalama surer, cakisma olmaz. */
+@media (min-width: 1200px) {
+  .site-head .site-head__inner { position: relative; }
 
-/* Ust menu ters (koyu) bir yuzey: metin rengi `--fg` degil, ters yuzey
- * rolunden gelir. `--fg` acik tema metni oldugu icin burada okunmazdi. */
-.site-nav__link.is-current {
+  .site-head .site-head__panel > .site-nav {
+    position: absolute;
+    inset-inline-start: 50%;
+    flex: 0 0 auto;
+    transform: translateX(-50%);
+  }
+}
+
+.site-head .site-nav__link { color: var(--ref-nav); }
+
+.site-head .site-nav__link:hover,
+.site-head .site-nav__link:focus-visible { color: #fff; }
+
+/* --- Acik sayfa isareti --------------------------------------------------- */
+
+.site-head .site-nav__link.is-current {
   position: relative;
-  color: var(--fg-on-invert);
+  color: var(--ref-nav-active);
   font-weight: 600;
 }
 
-.site-nav__link.is-current::after {
-  content: '';
-  position: absolute;
-  inset-inline: var(--sp-3);
-  inset-block-end: .35rem;
-  block-size: 2px;
-  border-radius: 2px;
-  background: var(--brand-strong);
+/* Referansta cizgi yazidan her iki yana ~%16 tasar ve bandin alt
+   kenarindan 17 css px yukarida durur. */
+@media (min-width: 941px) {
+  .site-head .site-nav__link.is-current::after {
+    content: '';
+    position: absolute;
+    inset-inline: clamp(-11px, -.5vw, -6px);
+    inset-block-end: clamp(10px, .91vw, 17px);
+    block-size: 2px;
+    border-radius: 2px;
+    background: var(--ref-nav-underline);
+  }
 }
 
 /* Acilir menude alt cizgi yerine sol serit; dar kutuda cizgi kayboluyordu. */
 @media (max-width: 940px) {
-  .site-nav__link.is-current::after {
-    inset-inline: auto;
+  .site-head .site-nav__link.is-current::after {
+    content: '';
+    position: absolute;
     inset-block: .5rem auto;
     inset-inline-start: 0;
     inline-size: 2px;
     block-size: calc(100% - 1rem);
+    border-radius: 2px;
+    background: var(--ref-nav-underline);
+  }
+}
+
+/* --- Cagri butonu --------------------------------------------------------- */
+
+/* Referansta duz mavi bir dikdortgen: 147 x 46 css px, kose 11 px,
+   yazidan sonra ince bir ok. Bizdeki gradyan ve cerceve referansta yok. */
+@media (min-width: 941px) {
+  .is-reference-home .btn--head,
+  .site-head__side .btn--head {
+    min-block-size: clamp(36px, 2.47vw, 46px);
+    min-inline-size: clamp(96px, 7.9vw, 147px);
+    padding-inline: clamp(14px, 1.2vw, 22px);
+    justify-content: center;
+    border: 0;
+    border-radius: clamp(7px, .59vw, 11px);
+    background: var(--ref-cta);
+    box-shadow: 0 0 20px rgba(14, 120, 254, .16);
+    font-size: clamp(11px, .7vw, 14px);
+    font-weight: 600;
+  }
+}
+
+.site-head__side .btn--head:hover { background: #2A8CFF; }
+
+/* Ok dekoratiftir; isaretlemede `aria-hidden` tasir. Referansta yazidan
+   17 css px sonra basliyor. */
+.site-head .btn--head .btn__arrow {
+  flex: 0 0 auto;
+  margin-inline-start: clamp(6px, .9vw, 17px);
+  inline-size: clamp(11px, .75vw, 14px);
+  block-size: auto;
+}
+
+/* --- Bant zemini ---------------------------------------------------------- */
+
+/* Referansta bandin altinda cizgi yok; koyu lacivert dogrudan kahramana
+   karisiyor. Ic sayfalarda ayirici cizgi kalir. */
+.is-reference-home .site-head {
+  border-block-end: 0;
+  background: rgba(0, 10, 26, .94);
+}
+
+/* Referansta bandin saginda ince diyagonal isik huzmeleri var; dekoratif,
+   tiklamayi engellemez.
+ *
+ * Siddet olculdu: zemin (1,11,27) uzerinde huzme tepesi (2,18,43)...(6,29,59),
+ * yani mavi kanalda yalnizca +7..+18. Ilk denemede rgba(...,.13) kullanmistim,
+ * bu +28 veriyor ve referanstakinin iki katindan fazla parliyordu. Genislik de
+ * referansta 1-2 px; duraklar buna gore daraltildi.
+ *
+ * Huzmeler genisligin %78-84 araliginda toplaniyor. */
+.is-reference-home .site-head::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 78.5%, rgba(96, 186, 240, .055) 78.65%, transparent 78.8%),
+    linear-gradient(120deg, transparent 80.3%, rgba(96, 186, 240, .075) 80.45%, transparent 80.6%),
+    linear-gradient(120deg, transparent 82.1%, rgba(96, 186, 240, .045) 82.25%, transparent 82.4%),
+    linear-gradient(120deg, transparent 83.8%, rgba(96, 186, 240, .065) 83.95%, transparent 84.1%);
+}
+
+/* --- Acma dugmesi ve mobil bant --------------------------------------------
+ *
+ * Cubuklar `site.css` icinde `background: var(--fg)` ile boyaniyordu.
+ * `--fg` acik tema on plan rengi (#062244); menu bandi ise koyu lacivert.
+ * Olculen kontrast 1.2:1 idi, yani acma dugmesi pratikte gorunmuyordu.
+ * Referansta cubuklar beyaz ve cevrelerinde kutu yok.
+ */
+.site-head .site-nav__bars,
+.site-head .site-nav__bars::before,
+.site-head .site-nav__bars::after {
+  inline-size: 21px;
+  background: #fff;
+}
+
+/* Kutu kalkti; 44x44 dokunma alani erisilebilirlik icin yerinde kaliyor. */
+.is-reference-home .site-head .site-nav__toggle,
+.site-head .site-nav__toggle {
+  border: 0;
+  background: none;
+}
+
+@media (max-width: 640px) {
+  /* Referans telefonda bant 71, marka 177x38, buton 113x40 css px.
+     Telefon genisligi mockupta 275 px ve 390 css px'i temsil ediyor
+     (olcek 0.705); degerler buna gore cevrildi. */
+  .is-reference-home .site-head,
+  .is-reference-home .site-head__inner { min-block-size: 70px; }
+
+  .is-reference-home .brand {
+    flex-basis: clamp(140px, 45vw, 180px);
+    inline-size: clamp(140px, 45vw, 180px);
+    block-size: 41px;
+  }
+
+  /* Mobil cagri butonu da referansta duz mavi; gradyan ve cerceve yok. */
+  .is-reference-home .site-head .ref-mobile-head-cta {
+    min-block-size: 40px;
+    min-inline-size: 108px;
+    padding-inline: 14px;
+    justify-content: center;
+    border: 0;
+    border-radius: 9px;
+    background: var(--ref-cta);
+    box-shadow: 0 0 16px rgba(14, 120, 254, .16);
+    font-size: 11px;
+    font-weight: 600;
   }
 }

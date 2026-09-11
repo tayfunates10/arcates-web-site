@@ -24,6 +24,12 @@ use Arcates\Core\Security;
 $headerCta       = $headerCta ?? null;
 $_alternates     = $_alternates ?? [];
 $isReferenceHome = $isReferenceHome ?? false;
+
+/* Cagri butonundaki ok. Dekoratiftir: ekran okuyucu "Teklif Al ok" diye
+   okumasin diye `aria-hidden`, `focusable="false"`. Harici dosya yok. */
+$ctaArrow = '<svg class="btn__arrow" viewBox="0 0 16 12" aria-hidden="true" focusable="false">'
+    . '<path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor"'
+    . ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
 <header class="site-head" data-site-head>
   <?php /* Sayfa ilerleme cubugu; scroll'a bagli scaleX. DOCS.md 7.4 */ ?>
@@ -40,7 +46,7 @@ $isReferenceHome = $isReferenceHome ?? false;
     <?php if ($isReferenceHome && $headerCta !== null && ($headerCta['label'] ?? '') !== ''): ?>
       <a class="btn btn--primary btn--head ref-mobile-head-cta"
          href="<?= Security::e(url((string) ($headerCta['url'] ?? '/iletisim'))) ?>">
-        <?= Security::e($headerCta['label']) ?> <span aria-hidden="true">→</span>
+        <?= Security::e($headerCta['label']) ?><?= $ctaArrow ?>
       </a>
     <?php endif; ?>
 
@@ -92,7 +98,7 @@ $isReferenceHome = $isReferenceHome ?? false;
 
         <?php if ($headerCta !== null && ($headerCta['label'] ?? '') !== ''): ?>
           <a class="btn btn--primary btn--head" href="<?= Security::e(url((string) ($headerCta['url'] ?? '/iletisim'))) ?>">
-            <?= Security::e($headerCta['label']) ?>
+            <?= Security::e($headerCta['label']) ?><?= $ctaArrow ?>
           </a>
         <?php endif; ?>
       </div>

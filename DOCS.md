@@ -216,7 +216,11 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 | 9 | Çağrı bandı | `cta` | Koyu CTA; teklif + NAP telefondan üretilen WhatsApp |
 | 10 | Alt bilgi | `footer` | NAP, çalışma saatleri, bağlantılar |
 
-**Üst menü (bölüm 1).** Menü masaüstünde satırın ortasında durur; marka solda, dil seçici ve çağrı butonu sağdadır. 940 px altında açılır kutuya döner ve ortalama uygulanmaz. Açık sayfanın öğesi işaretlenir: masaüstünde alt çizgi, açılır menüde sol şerit, her ikisinde `aria-current="page"`. Aktif öğe sayfanın canonical adresine göre belirlenir; bir öğenin altındaki adres açıkken üst öğe de açık kalır, anasayfa öğesi bu kuralın dışındadır. Menü koyu bir yüzeydir: metin rengi `--fg` değil `--fg-on-invert` rolünden gelir. Testler F-HD-a…d.
+**Üst menü (bölüm 1).** Menü masaüstünde ekranın ortasında durur; marka solda, dil seçici ve çağrı butonu sağdadır. 940 px altında açılır kutuya döner ve ortalama uygulanmaz. Açık sayfanın öğesi işaretlenir: masaüstünde alt çizgi, açılır menüde sol şerit, her ikisinde `aria-current="page"`. Aktif öğe sayfanın canonical adresine göre belirlenir; bir öğenin altındaki adres açıkken üst öğe de açık kalır. Menünün ilk öğesi "Ana Sayfa"dır ve anasayfada işaret onun üzerinde durur. Testler F-HD-a…h, F-P18-a…c.
+
+*Ölçüler.* `public/assets/css/reference-header.css` menünün son katmanıdır ve `head.php` içinde sayfaya özel stillerden **sonra** yüklenir; önce yüklenirse `.is-reference-home` önekli kurallar (ağırlık 0,2,0) menüyü geri ezer. Dosyadaki her değer referans görselden ölçüldü: görseldeki macOS trafik ışığı noktası 7 px (gerçekte 12 css px), yani görsel 0.583 oranında küçültülmüş ve tasarımın kendi genişliği ≈1863 px. Değerler `vw` cinsinden yazılır, böylece 1863 px'te referansla birebir olur, dar ekranda orantılı küçülür. Ölçülen renkler: pasif öğe `#CFDFF2`, açık sayfa `#5AC8F5`, alt çizgi `#3988BC`, çağrı butonu `#0E78FE`, bant zemini `#000A1A`.
+
+*Koyu yüzey kuralı.* Menü koyu bir bant; `--fg` (açık tema metni, `#062244`) burada kullanılamaz, kontrast 1.1:1'e düşer. Aynı hata açma düğmesinin çubuklarındaydı: `site.css` çubukları `var(--fg)` ile boyuyordu ve düğme 1.2:1 kontrastla pratikte görünmüyordu. Menü katmanındaki her renk bant zeminine karşı en az 4.5:1 olmalı; F-HD-b ve F-HD-g bunu hesaplayarak doğrular.
 
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
