@@ -1,0 +1,40 @@
+/* Final structural parity pass after live-deploy MHT review.
+   Visual geometry only; all labels/projects/posts remain real CMS content. */
+
+/* The supplied desktop reference presents project copy on the left and the
+   visual preview on the right. Keep the real project record, only mirror the
+   visual order to match that composition. */
+@media (min-width: 941px) {
+  .ref-project > a {
+    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+  }
+
+  .ref-project__body {
+    order: 1;
+    padding: 14px 14px 38px 16px;
+  }
+
+  .ref-project__media {
+    order: 2;
+  }
+
+  .ref-project__arrow {
+    left: 14px;
+    right: auto;
+    bottom: 10px;
+  }
+}
+
+/* The phone reference uses the same copy-left / visual-right project card
+   pattern and keeps the circular action below the copy. */
+@media (max-width: 640px) {
+  .ref-project__body {
+    padding: 10px 10px 34px 10px;
+  }
+
+  .ref-project__arrow {
+    left: 10px;
+    right: auto;
+    bottom: 8px;
+  }
+}
