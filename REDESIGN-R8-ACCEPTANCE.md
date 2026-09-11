@@ -89,3 +89,23 @@ Bu kayıt **repo/CI düzeyindeki yeniden tasarım kabulünü** belgeler. Aşağ�
 - gerçek kullanıcı cihaz/analitik verisi
 
 Dolayısıyla R8’in yeşil olması kod, tasarım sistemi, responsive davranış, erişilebilirlik etkileşimleri ve regresyonlar açısından yayın adayı kapısını kapatır; canlı hosting doğrulamasının yerine geçmez.
+
+## 9. `main` kapanış kanıtı
+
+PR #10 squash merge ile `main` dalına alındı. Nihai merge commit:
+
+`00c21bc8b8125607062696ff1d9902a7b0ad0180`
+
+Bu exact commit için tetiklenen **CI #247** sonucunda:
+
+- test job: success
+- browser job: success
+- **238/238** PHP/unit/security/functional test geçti, 0 kaldı, 0 atlandı
+- R5, ortak tasarım, R6 ve R7 Chromium paketleri geçti
+- R8 320–1920 responsive matrisi geçti
+- `/sss` ve `/tesekkurler` edge containment kontrolleri geçti
+- %200 etkili reflow, klavye, RTL ve reduced-motion kontrolleri geçti
+- A-11 sticky scroll akıcılığı 60.0 fps ölçüldü
+- browser kapanış satırı: `TUM R8 NIHAI KABUL DENETIMLERI GECTI`
+
+Bu nedenle R8 repo/CI düzeyinde tamamlanmıştır. Canlı host kabulü R9 kapsamında ayrıca yürütülür.
