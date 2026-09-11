@@ -3,14 +3,19 @@
 Bu dosya `DOCS.md` şartnamesini değiştirmez; canlıya çıkışta uygulanacak kısa
 operasyon kontrol listesidir.
 
-## 1. Birleştirme kapısı
+## 1. Repo birleştirme kapısı
 
 - GitHub CI yeşil olmalı.
 - CI çıktısında atlanan test bulunmamalı.
 - Tüm PHP dosyaları `php -l` kontrolünden geçmeli.
 - Güvenlik testleri S-01…S-21 geçmeli.
-- Ön yüz değişmişse `tools/browser/animation-check.mjs` gerçek Chromium ile çalıştırılmalı.
-- `php tools/preflight.php` engelleyici madde göstermemeli.
+- Ön yüz değişmişse gerçek Chromium kabul zinciri çalıştırılmalı.
+
+Repo/CI kapısının yeşil olması canlı hosting doğrulamasının yerine geçmez.
+`php tools/preflight.php` repo PR kapısı değil, deploy ve göç sonrasında gerçek
+production yapılandırmasıyla çalıştırılan canlı yayın kapısıdır. Canlı ortam
+doğrulaması için GitHub Actions içindeki **Live Acceptance** workflow'u ayrıca
+gerçek HTTPS alan adına karşı çalıştırılır.
 
 ## 2. Yetki ve kişisel veri
 
@@ -33,7 +38,7 @@ operasyon kontrol listesidir.
 
 Yeni sürüm kurulmuş bir siteye yüklendiğinde:
 
-```
+```bash
 php tools/migrate.php
 ```
 
@@ -47,6 +52,20 @@ varsayılanın canlıya ulaşması göç dosyasına bağlıdır (DOCS.md 8.6).
 Göçten sonra Ayarlar ekranında adres, telefon ve e-posta gözle kontrol edilir;
 göç elle girilmiş değeri korur, bu yüzden özelleştirilmiş bir alan bilerek eski
 haliyle kalmış olabilir.
+
+### 3.2 Canlı preflight
+
+Göçten sonra gerçek hosting kullanıcısıyla:
+
+```bash
+php tools/preflight.php
+```
+
+çalıştırılır. Çıkış kodu `0` olmadan yayın kabulü tamamlanmış sayılmaz. Preflight
+HTTPS, secure cookie, kurulum kilidi, yazılabilir klasörler, veritabanı, bekleyen
+göçler, NAP, sitemap/robots, içerik ve yedek gibi makine tarafından denetlenebilir
+maddeleri kontrol eder; e-posta, cron, Search Console ve Rich Results gibi
+maddeleri ayrıca elle işaretler.
 
 ## 4. Cron
 
@@ -77,21 +96,54 @@ Arcates'in dahili ziyaret ve dönüşüm istatistikleri temel ölçüm sistemidi
 anlamına gelmez; mevcut CSP altında harici Analytics betiği otomatik eklenmez.
 Google Analytics kullanılacaksa ayrı entegrasyon ve gizlilik değerlendirmesi yapılmalıdır.
 
-## 7. Elle doğrulanacak yayın maddeleri
+## 7. Canlı host Chromium kabulü
+
+GitHub'da **Actions → Live Acceptance → Run workflow** açılır ve gerçek yayın
+adresi `base_url` alanına tam HTTPS URL olarak girilir. `admin_path` üretimdeki
+panel yoludur. Bilinen bir eski slug için 301 kanıtı isteniyorsa `redirect_from`
+ve `redirect_to` birlikte girilir.
+
+Workflow `tools/browser/live-check.mjs` dosyasını gerçek Chromium ile çalıştırır.
+Yalnız HTTP GET istekleri yapar; form göndermez, panelde oturum açmaz ve ayar/içerik
+mutasyonu yapmaz. Ancak uygulamanın normal ziyaret ölçümü bu GET isteklerini
+kaydedebilir; 404 kontrolü `not_found` sayacını, opsiyonel 301 kontrolü redirect
+isabet sayacını artırabilir. Bu operasyonel telemetri canlı testin beklenen yan
+etkisidir. Workflow şunları otomatik doğrular:
+
+- 390 px ve 1366 px temsilci rotalarda HTTP 200, tek H1, viewport containment ve yatay taşma,
+- yönlendirme sonrası aynı HTTPS production origininde kalma,
+- canonical origin ve path doğruluğu,
+- `robots.txt` ve `sitemap.xml` production HTTPS origin tutarlılığı,
+- favicon ve OG görselinin gerçek URL'den açılması,
+- gerçek 404 cevabı ve 404 sayfası containment,
+- isteğe bağlı eski slug için doğrudan 301 ve beklenen hedef.
+
+Bu workflow gerçek e-posta teslimi, cron, yedek/geri yükleme, Search Console,
+Rich Results veya Lighthouse/PageSpeed sonucunu kanıtlamaz.
+
+## 8. Elle doğrulanacak yayın maddeleri
 
 - İletişim formu gerçek e-posta kutusuna ulaşıyor.
 - Spam klasörü kontrol edildi.
 - Mobil 360 px ve masaüstü görünüm elle kontrol edildi.
 - Klavye ile temel akış tamamlanabiliyor.
-- 404 sayfası ve eski slug 301 yönlendirmesi canlı hostta çalışıyor.
+- 404 sayfası ve en az bir bilinen eski slug 301 yönlendirmesi canlı hostta çalışıyor.
 - Favicon ve OG görseli gerçek URL'den açılıyor.
 - En az bir veritabanı yedeği alındı ve ayrı bir test veritabanına geri yüklendi.
 - Cron görevleri gerçek hosting kullanıcısıyla çalışıyor.
 - `display_errors` kapalı.
 - Panel güçlü ve benzersiz parola kullanıyor.
+- Search Console doğrulandı ve sitemap gönderildi.
+- Yapısal veri Rich Results testinden geçti.
+- Üretim Lighthouse/PageSpeed sonucu gözden geçirildi.
 
-## 8. Sürümleme
+## 9. Sürümleme
 
-Tüm otomatik kontroller ve yukarıdaki elle kontroller tamamlanmadan `VERSION`
-`1.0.0` yapılmaz. Kod/CI kapıları geçip yalnız canlı-host elle kontrolleri kaldığında
-`1.0.0-rc1`; tüm maddeler doğrulandığında `1.0.0` kullanılır.
+`VERSION` dosyası sürüm için tek kaynak olarak kabul edilir. Kod/CI kapıları
+geçmiş fakat canlı hosting kontrol listesindeki maddeler tamamlanmamışsa sürüm
+release-candidate biçiminde (`X.Y.Z-rcN`) kalır. Gerçek hostingte preflight,
+**Live Acceptance** ve kalan elle doğrulamalar tamamlandıktan sonra aynı sürüm
+ayrı bir release değişikliğinde stabil `X.Y.Z` biçimine yükseltilir.
+
+Mevcut yayın adayı `VERSION` dosyasında `1.1.0-rc1` olarak tutulur; canlı kabul
+tamamlanmadan stabil sürüme çevrilmez.
