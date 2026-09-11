@@ -58,8 +58,11 @@ $isReferenceHome = $isReferenceHome ?? false;
       <nav class="site-nav" aria-label="<?= Security::e(__('menu')) ?>">
         <ul class="site-nav__list">
           <?php foreach ($_menu as $item): ?>
+            <?php $isCurrent = (bool) ($item['is_current'] ?? false); ?>
             <li class="site-nav__item">
-              <a class="site-nav__link" href="<?= Security::e($item['href']) ?>"
+              <a class="site-nav__link<?= $isCurrent ? ' is-current' : '' ?>"
+                 href="<?= Security::e($item['href']) ?>"
+                 <?= $isCurrent ? 'aria-current="page"' : '' ?>
                  <?= $item['target'] === '_blank' ? 'target="_blank" rel="noopener"' : '' ?>>
                 <?= Security::e($item['label']) ?>
               </a>

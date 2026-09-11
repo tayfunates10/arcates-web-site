@@ -74,6 +74,7 @@ $ogAlt = trim((string) ($_site['name'] ?? 'Arcates Yazılım'));
 <link rel="stylesheet" href="<?= Security::e(asset('css/inner-redesign.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/inner-performance.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/r3-cta-status.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/reference-header.css')) ?>">
 <?php foreach ((array) ($head['styles'] ?? []) as $style): ?>
 <link rel="stylesheet" href="<?= Security::e(asset((string) $style)) ?>">
 <?php endforeach; ?>

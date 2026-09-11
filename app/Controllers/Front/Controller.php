@@ -92,7 +92,12 @@ abstract class Controller
         }
         $data['_alternates'] = $alternates;
 
-        $data['_menu']   = MenuItem::tree('main', $lang);
+        // Aktif oge, sayfanin canonical adresine gore isaretlenir; ust menude
+        // alt cizgi bundan geliyor. DOCS.md 5 (bolum 1)
+        $data['_menu']   = self::markCurrent(
+            MenuItem::tree('main', $lang),
+            (string) ($data['head']['canonical'] ?? '')
+        );
         $data['_footer'] = MenuItem::tree('footer', $lang);
         $data['_lang']   = $lang;
         $data['_dir']    = Lang::direction($lang);
@@ -101,6 +106,44 @@ abstract class Controller
         View::shareMany(['_lang' => $lang, '_dir' => $data['_dir']]);
 
         return Response::html(View::renderIn('front/layout', $template, $data), $status);
+    }
+
+    /**
+     * Menu ogelerini gecerli sayfaya gore isaretler.
+     *
+     * Tam eslesme aktif sayar; ayrica ogenin altindaki bir adres acikken
+     * (ornegin /referanslar acikken /referanslar/akcay-ornek) ust oge de
+     * aktif kalir. Anasayfa ogesi ('/') bu kuralin disindadir, aksi halde
+     * her sayfada yanardi.
+     */
+    private static function markCurrent(array $items, string $canonical): array
+    {
+        $path = static function (string $url): string {
+            $only = parse_url($url, PHP_URL_PATH);
+            $only = is_string($only) ? $only : '/';
+            return rtrim($only, '/') === '' ? '/' : rtrim($only, '/');
+        };
+
+        $here = $path($canonical);
+
+        foreach ($items as &$item) {
+            $own = $path((string) ($item['href'] ?? ''));
+
+            $item['is_current'] = $own === $here
+                || ($own !== '/' && str_starts_with($here, $own . '/'));
+
+            if (($item['children'] ?? []) !== []) {
+                $item['children'] = self::markCurrent($item['children'], $canonical);
+                foreach ($item['children'] as $child) {
+                    if ($child['is_current'] ?? false) {
+                        $item['is_current'] = true;
+                    }
+                }
+            }
+        }
+        unset($item);
+
+        return $items;
     }
 
     /**

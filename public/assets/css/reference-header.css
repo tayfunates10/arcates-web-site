@@ -1,0 +1,53 @@
+/* Arcates — ust menu duzeni. Referans B1.
+ *
+ * Referansta menu satirin ortasinda durur, marka solda ve buton sagda kalir;
+ * acik sayfanin ogesi alt cizgiyle isaretlidir.
+ *
+ * 940 px altinda panel acilir kutuya donuyor (site.css); orada ortalama
+ * uygulanmaz, aksi halde acilir menu ortadan hizalanirdi.
+ */
+
+@media (min-width: 941px) {
+  /* Panel satiri kaplar; menu ortada, yan blok sagda. */
+  .site-head__panel { justify-content: flex-start; }
+
+  .site-head__panel > .site-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .site-nav__list { gap: var(--sp-2); }
+}
+
+/* --- Acik sayfa isareti -------------------------------------------------- */
+
+/* Ust menu ters (koyu) bir yuzey: metin rengi `--fg` degil, ters yuzey
+ * rolunden gelir. `--fg` acik tema metni oldugu icin burada okunmazdi. */
+.site-nav__link.is-current {
+  position: relative;
+  color: var(--fg-on-invert);
+  font-weight: 600;
+}
+
+.site-nav__link.is-current::after {
+  content: '';
+  position: absolute;
+  inset-inline: var(--sp-3);
+  inset-block-end: .35rem;
+  block-size: 2px;
+  border-radius: 2px;
+  background: var(--brand-strong);
+}
+
+/* Acilir menude alt cizgi yerine sol serit; dar kutuda cizgi kayboluyordu. */
+@media (max-width: 940px) {
+  .site-nav__link.is-current::after {
+    inset-inline: auto;
+    inset-block: .5rem auto;
+    inset-inline-start: 0;
+    inline-size: 2px;
+    block-size: calc(100% - 1rem);
+  }
+}

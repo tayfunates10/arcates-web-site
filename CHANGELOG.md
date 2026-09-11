@@ -297,3 +297,22 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Yeni testler F-OD-a…e: dile göre çeviri, serbest metnin korunması,
   yapısal verinin ham kalması, ön yüzde gün kodunun görünmemesi ve
   şablonlarda çevrilmeden basan yer kalmaması.
+
+### Değiştirildi (B1 — üst menü)
+- Menü masaüstünde satırın ortasına alındı; marka solda, dil seçici ve
+  "Teklif Al" sağda kalıyor. Referans üst menü düzeni bu.
+- Açık sayfanın menü öğesi artık işaretli: masaüstünde alt çizgi, dar ekrandaki
+  açılır menüde sol şerit. Ekran okuyucu için `aria-current="page"` veriliyor.
+- Aktif öğe canonical adrese göre belirleniyor (`Front\Controller::markCurrent()`).
+  Alt sayfadayken üst öğe açık kalıyor — `/referanslar/akcay-ornek` açıkken
+  "Örnek siteler" yanıyor. Anasayfa öğesi ('/') bu kuralın dışında, aksi halde
+  her sayfada yanardı.
+- Menü öğeleri değişmedi; hepsi panelden geliyor.
+- Yeni katman `public/assets/css/reference-header.css`, tüm sayfalara yükleniyor.
+- Yeni testler F-HD-a…d.
+
+### Düzeltildi (koyu menüde okunmayan aktif öğe)
+- Aktif menü öğesine önce `var(--fg)` verilmişti; o açık tema metin rengi
+  (`#062244`) ve üst menü koyu bir yüzey (`#081426`) — kontrast 1.1:1, yani
+  metin görünmüyordu. Ters yüzey rolü `--fg-on-invert` ile 18.45:1'e çıktı.
+- `F-HD-b` açık tema metin renginin bu dosyada kullanılmasını engelliyor.

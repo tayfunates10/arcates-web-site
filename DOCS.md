@@ -216,6 +216,8 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 | 9 | Çağrı bandı | `cta` | Koyu CTA; teklif + NAP telefondan üretilen WhatsApp |
 | 10 | Alt bilgi | `footer` | NAP, çalışma saatleri, bağlantılar |
 
+**Üst menü (bölüm 1).** Menü masaüstünde satırın ortasında durur; marka solda, dil seçici ve çağrı butonu sağdadır. 940 px altında açılır kutuya döner ve ortalama uygulanmaz. Açık sayfanın öğesi işaretlenir: masaüstünde alt çizgi, açılır menüde sol şerit, her ikisinde `aria-current="page"`. Aktif öğe sayfanın canonical adresine göre belirlenir; bir öğenin altındaki adres açıkken üst öğe de açık kalır, anasayfa öğesi bu kuralın dışındadır. Menü koyu bir yüzeydir: metin rengi `--fg` değil `--fg-on-invert` rolünden gelir. Testler F-HD-a…d.
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.
