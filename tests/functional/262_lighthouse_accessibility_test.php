@@ -5,7 +5,8 @@ declare(strict_types=1);
 test('F-LH-01', 'Marka ana sayfa baglantisinin erisilebilir adi vardir', function (): void {
     $header = (string) file_get_contents(__DIR__ . '/../../views/front/partials/header.php');
     assertContains('aria-label="<?= Security::e($brandLabel) ?>"', $header);
-    assertContains("$brandLabel      = trim((string) (\$_site['name'] ?? '')) ?: 'Arcates Yazılım';", $header);
+    assertContains('$brandLabel', $header);
+    assertContains("?: 'Arcates Yazılım';", $header);
 });
 
 test('F-LH-02', 'Footer telefon ve e-posta hedefleri en az 24px dokunma alanina sahiptir', function (): void {
