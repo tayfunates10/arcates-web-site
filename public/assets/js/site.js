@@ -244,6 +244,25 @@
           if (wrapper) {
             wrapper.classList.toggle('is-valid', valid);
             wrapper.classList.toggle('is-invalid', !valid);
+            // Keep each native validation message visible and associated with its field.
+            // Existing server errors and helper descriptions are left intact.
+            var error = wrapper.querySelector('[data-client-error]');
+            if (!valid && !error && field.id) {
+              error = doc.createElement('span');
+              error.id = field.id + '_client_error';
+              error.className = 'field__error';
+              error.setAttribute('data-client-error', '');
+              wrapper.appendChild(error);
+            }
+            if (error) {
+              var descriptions = (field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+              descriptions = descriptions.filter(function (id) { return id !== error.id; });
+              error.textContent = valid ? '' : field.validationMessage;
+              error.hidden = valid;
+              if (!valid) descriptions.push(error.id);
+              if (descriptions.length) field.setAttribute('aria-describedby', descriptions.join(' '));
+              else field.removeAttribute('aria-describedby');
+            }
           }
         }
 
