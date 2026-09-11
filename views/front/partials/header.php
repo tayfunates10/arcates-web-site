@@ -31,7 +31,8 @@ $isReferenceHome = $isReferenceHome ?? false;
 
   <div class="wrap site-head__inner">
 
-    <a class="brand" href="<?= Security::e(url('/')) ?>">
+    <a class="brand" href="<?= Security::e(url('/')) ?>"
+       aria-label="<?= Security::e((string) ($_site['name'] ?? 'Arcates Yazilim')) ?>">
       <span class="brand__mark" aria-hidden="true"></span>
       <span class="brand__name"><?= Security::e($_site['name'] ?? '') ?></span>
     </a>
