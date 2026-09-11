@@ -97,7 +97,7 @@ $value = static function (string $key) use ($settings): string {
 
   <section class="panel panel--form">
     <h2 class="panel__title">Çalışma saatleri</h2>
-    <p class="muted">Gün biçimi schema.org standardındadır: <code>Mo-Fr</code>, <code>Sa</code>, <code>Su</code>.</p>
+    <p class="muted">Gün biçimi schema.org standardındadır: <code>Mo-Fr</code>, <code>Sa</code>, <code>Su</code>. Yapısal veri bu kodu olduğu gibi kullanır; ziyaretçi sayfada sayfanın dilindeki gün adını görür (<code>Mo-Fr</code> → <em>Pzt–Cum</em>). Kod dışında bir metin yazarsanız aynen görünür.</p>
 
     <div class="repeat" data-repeat="hours">
       <?php $rows = $hours ?: [['days' => '', 'opens' => '', 'closes' => '']]; ?>

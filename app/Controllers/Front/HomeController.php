@@ -67,6 +67,7 @@ final class HomeController extends Controller
                     'css/reference-parity.css',
                     'css/reference-parity-hotfix.css',
                     'css/reference-parity-final.css',
+                    'css/reference-hero-scene.css',
                 ],
             ],
         ]);

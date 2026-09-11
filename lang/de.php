@@ -7,4 +7,7 @@ return [
  'request_quote'=>'Angebot für Ihr Projekt','quote_card_text'=>'Beschreiben Sie kurz Ihren Bedarf; gemeinsam klären wir die passende Lösung und den nächsten Schritt.','whatsapp'=>'WhatsApp','write_on_whatsapp'=>'Nachricht senden','contact_details'=>'Kontaktdaten',
  'form_name'=>'Name','form_phone'=>'Telefon','form_email'=>'E-Mail','form_service'=>'Gewünschte Leistung','form_message'=>'Ihre Nachricht','form_kvkk'=>'Ich habe die Datenschutzhinweise gelesen.','form_submit'=>'Angebot anfordern','form_sending'=>'Wird gesendet','form_choose'=>'Bitte wählen','form_required'=>'Pflichtfeld','form_error_title'=>'Das Formular konnte nicht gesendet werden','form_error_text'=>'Bitte prüfen Sie die Felder und versuchen Sie es erneut.','form_success'=>'Vielen Dank — wir melden uns in Kürze.',
  'phone'=>'Telefon','email'=>'E-Mail','address'=>'Adresse','opening_hours'=>'Öffnungszeiten','follow_us'=>'Folgen Sie uns','error_404_title'=>'Seite nicht gefunden','error_404_text'=>'Die gesuchte Seite wurde verschoben oder entfernt.','error_500_title'=>'Ein Fehler ist aufgetreten','error_419_title'=>'Sitzung konnte nicht geprüft werden','maintenance_title'=>'Wir sind gleich zurück','all_rights'=>'Alle Rechte vorbehalten.','legal'=>'Rechtliches',
+    // Gun kisaltmalari. `opening_hours` semada Mo-Fr bicimindedir; ekranda
+    // bu etiketlere cevrilir, yapisal veride ham kod kalir.
+    'day_mo'=>'Mo','day_tu'=>'Di','day_we'=>'Mi','day_th'=>'Do','day_fr'=>'Fr','day_sa'=>'Sa','day_su'=>'So',
 ];

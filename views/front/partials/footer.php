@@ -83,7 +83,7 @@ $legal         = $footerContent['legal'] ?? [];
         <ul class="hours">
           <?php foreach ($_site['hours'] as $slot): ?>
             <li>
-              <span><?= Security::e($slot['days'] ?? '') ?></span>
+              <span><?= Security::e(opening_days((string) ($slot['days'] ?? ''))) ?></span>
               <span><?= Security::e(($slot['opens'] ?? '') . '–' . ($slot['closes'] ?? '')) ?></span>
             </li>
           <?php endforeach; ?>

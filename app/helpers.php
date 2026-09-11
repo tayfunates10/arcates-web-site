@@ -211,3 +211,45 @@ if (!function_exists('format_bytes')) {
         return ($i === 0 ? (string) (int) $value : number_format($value, 1, ',', '.')) . ' ' . $units[$i];
     }
 }
+
+if (!function_exists('opening_days')) {
+    /**
+     * `opening_hours` gun kodunu ekran etiketine cevirir.
+     *
+     * Ayar semadaki bicimi saklar (`Mo-Fr`, `Sa`, `Mo,We,Fr`) cunku
+     * `Seo::professionalService()` yapisal veride ham kodu kullanmak
+     * zorundadir. Ziyaretciye ise dilin kendi gun adi gosterilir:
+     * Turkce sayfada "Mo-Fr" degil "Pzt–Cum".
+     *
+     * Tanimadigi belirtec oldugu gibi gecer; isletme panelde "Hafta ici"
+     * yazdiysa o metin bozulmaz.  DOCS.md 11.2
+     */
+    function opening_days(string $code): string
+    {
+        $code = trim($code);
+        if ($code === '') {
+            return '';
+        }
+
+        $label = static function (string $token): string {
+            $key = 'day_' . strtolower(trim($token));
+            $text = __($key);
+            // __() bilinmeyen anahtari kendisi dondurur; o durumda ham belirtec kalir.
+            return $text === $key ? trim($token) : $text;
+        };
+
+        // Once virgullu liste, sonra her parcada tire araligi.
+        $groups = array_map(
+            static function (string $part) use ($label): string {
+                $range = explode('-', $part);
+                if (count($range) === 2) {
+                    return $label($range[0]) . '–' . $label($range[1]);
+                }
+                return $label($part);
+            },
+            explode(',', $code)
+        );
+
+        return implode(', ', $groups);
+    }
+}
