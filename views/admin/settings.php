@@ -40,6 +40,14 @@ $value = static function (string $key) use ($settings): string {
     <?php endforeach; ?>
 
     <div class="field">
+      <label for="projects_notice"><?= Security::e($fields['projects_notice'][0]) ?></label>
+      <textarea id="projects_notice" name="projects_notice" rows="3"
+                maxlength="<?= Security::e((string) $fields['projects_notice'][1]) ?>"><?= Security::e($value('projects_notice')) ?></textarea>
+      <span class="field__hint">Örnek proje kayıtlarının gerçek müşteri işi olmadığını ziyaretçiye açıkça belirtir.</span>
+      <?php if ($m = error_for('projects_notice')): ?><span class="field__error"><?= Security::e($m) ?></span><?php endif; ?>
+    </div>
+
+    <div class="field">
       <label for="default_lang">Varsayılan dil</label>
       <select id="default_lang" name="default_lang">
         <?php $current = (string) old('default_lang', $settings['default_lang'] ?? 'tr'); ?>
