@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       base_url:
-        description: 'Canli HTTPS adresi (or. https://www.example.com)'
+        description: 'Canonical canli HTTPS adresi'
         required: true
+        default: 'https://arcatesyazilim.com'
         type: string
       admin_path:
         description: 'Panel yolu; robots.txt kontrolunde kullanilir'
