@@ -8,6 +8,12 @@ on:
         required: true
         default: 'https://arcatesyazilim.com'
         type: string
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/production-lighthouse.yml'
+      - 'tools/browser/lighthouse-session-warmup.mjs'
+      - 'tools/browser/lighthouse-gate.mjs'
   workflow_run:
     workflows: ['Live Acceptance']
     types: [completed]
@@ -17,7 +23,7 @@ permissions:
 
 jobs:
   lighthouse:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
