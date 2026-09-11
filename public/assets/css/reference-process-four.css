@@ -1,0 +1,19 @@
+/* Reference mockup parity: four-stage desktop process.
+   Mobile stacking stays under the base reference responsive rules. */
+@media (min-width: 941px) {
+  .is-reference-home .ref-process__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .is-reference-home .ref-process__list li {
+    padding-right: 14px;
+  }
+
+  .is-reference-home .ref-process h3 {
+    font-size: 15px;
+  }
+
+  .is-reference-home .ref-process li p {
+    font-size: 10.5px;
+  }
+}
