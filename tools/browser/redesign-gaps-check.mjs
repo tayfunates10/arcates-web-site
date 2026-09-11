@@ -57,7 +57,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 
   const page = await ctx.newPage();
   await page.goto(BASE + '/iletisim', { waitUntil: 'networkidle' });
 
-  await page.locator('#teklif-formu').evaluate(form => {
+  await page.locator('#teklif-formu form').evaluate(form => {
     form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
   });
   await page.waitForTimeout(50);
