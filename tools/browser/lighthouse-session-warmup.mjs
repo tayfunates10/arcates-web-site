@@ -9,6 +9,7 @@ if (!baseUrl) {
 }
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const challengePattern = /wsidchk|imunify|anti[- ]?bot|checking your browser|javascript challenge/i;
 
 const browser = await puppeteer.connect({ browserURL: browserUrl });
 const pages = await browser.pages();
@@ -26,7 +27,7 @@ for (let attempt = 0; attempt < 20; attempt += 1) {
     text: (document.body?.innerText || '').slice(0, 1200),
   }));
 
-  const looksLikeChallenge = /wsidchk|imunify|anti[- ]?bot|checking your browser|javascript challenge/i.test(
+  const looksLikeChallenge = challengePattern.test(
     `${snapshot.url}\n${snapshot.title}\n${snapshot.text}`,
   );
 
@@ -35,6 +36,22 @@ for (let attempt = 0; attempt < 20; attempt += 1) {
     break;
   }
 }
+
+let robots = { ok: false, status: 0, text: '' };
+if (settled) {
+  robots = await page.evaluate(async () => {
+    const response = await fetch('/robots.txt', { credentials: 'include', cache: 'no-store' });
+    return {
+      ok: response.ok,
+      status: response.status,
+      text: (await response.text()).slice(0, 2000),
+    };
+  });
+}
+
+const robotsIsReal = robots.ok
+  && /user-agent\s*:/i.test(robots.text)
+  && !challengePattern.test(robots.text);
 
 const cookies = await page.cookies(baseUrl);
 const cookieNames = cookies.map(({ name }) => name);
@@ -45,10 +62,15 @@ console.log(JSON.stringify({
   title: snapshot?.title ?? '',
   settled,
   cookieNames,
+  robots: {
+    status: robots.status,
+    verified: robotsIsReal,
+    preview: robots.text.slice(0, 240),
+  },
 }, null, 2));
 
-if (!settled) {
-  console.error('Tarayici oturumu challenge sonrasinda production sayfasina yerlesemedi.');
+if (!settled || !robotsIsReal) {
+  console.error('Challenge sonrasi production oturumu veya robots.txt dogrulamasi basarisiz.');
   await browser.disconnect();
   process.exit(1);
 }
