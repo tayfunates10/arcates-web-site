@@ -18,6 +18,8 @@
 declare(strict_types=1);
 
 use Arcates\Core\Security;
+
+$isReferenceHome = str_contains((string) ($body_class ?? ''), 'is-reference-home');
 ?><!doctype html>
 <html lang="<?= Security::e($_lang) ?>" dir="<?= Security::e($_dir) ?>">
 <head>
@@ -32,12 +34,13 @@ use Arcates\Core\Security;
 <a class="skip-link" href="#icerik"><?= Security::e(__('skip_to_content')) ?></a>
 
 <?= partial('front/partials/header', [
-    '_menu'       => $_menu,
-    '_langs'      => $_langs,
-    '_lang'       => $_lang,
-    '_site'       => $_site,
-    '_alternates' => $_alternates ?? [],
-    'headerCta'   => $headerCta ?? null,
+    '_menu'           => $_menu,
+    '_langs'          => $_langs,
+    '_lang'           => $_lang,
+    '_site'           => $_site,
+    '_alternates'     => $_alternates ?? [],
+    'headerCta'       => $headerCta ?? null,
+    'isReferenceHome' => $isReferenceHome,
 ]) ?>
 
 <main id="icerik">

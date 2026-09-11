@@ -1,0 +1,201 @@
+/* Final reference-parity corrections. Loaded after reference-parity.css. */
+
+.is-reference-home .site-head__inner,
+.is-reference-home .site-head.is-stuck .site-head__inner{
+  min-height:64px;
+  height:64px;
+  padding-block:0;
+}
+
+.is-reference-home .site-head{
+  min-height:64px;
+}
+
+/* Duplicate of the real CMS header CTA, rendered only on the reference mobile header. */
+.ref-mobile-head-cta{display:none}
+
+/* Project records without uploaded cover images still read as website previews,
+   without inventing customer screenshots or changing the project content. */
+.ref-project__fallback{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 78% 28%,rgba(31,155,255,.24),transparent 32%),
+    linear-gradient(145deg,#0b2a4c,#06182d 58%,#03101f);
+}
+.ref-project__fallback::before{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  inset:27% 9% 12% 18%;
+  border:1px solid rgba(78,169,255,.28);
+  border-radius:4px;
+  background:
+    linear-gradient(90deg,rgba(28,142,255,.65) 0 24%,transparent 24% 100%) 10% 18%/62% 3px no-repeat,
+    linear-gradient(90deg,rgba(164,208,255,.30) 0 62%,transparent 62% 100%) 10% 32%/76% 2px no-repeat,
+    linear-gradient(90deg,rgba(164,208,255,.20) 0 48%,transparent 48% 100%) 10% 43%/76% 2px no-repeat,
+    linear-gradient(145deg,rgba(9,35,64,.96),rgba(4,18,34,.96));
+  box-shadow:0 8px 24px rgba(0,0,0,.24);
+}
+.ref-project__fallback::after{
+  content:'';
+  position:absolute;
+  right:8%;
+  bottom:13%;
+  width:28%;
+  height:31%;
+  border:1px solid rgba(55,157,255,.32);
+  border-radius:4px;
+  background:
+    linear-gradient(180deg,rgba(24,126,226,.5),rgba(4,26,48,.88));
+  box-shadow:0 0 18px rgba(19,139,255,.14);
+}
+.ref-project__fallback i{position:relative;z-index:2}
+
+/* The blog fallback remains abstract and content-neutral, but fills the image-led reference tile. */
+.ref-post__media>span{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  color:rgba(73,177,255,.88);
+  font-size:0;
+  background:
+    radial-gradient(circle at 72% 26%,rgba(57,146,255,.28),transparent 22%),
+    linear-gradient(125deg,rgba(21,70,126,.72),rgba(4,20,38,.94) 58%,rgba(10,46,82,.82));
+}
+.ref-post__media>span::before{
+  content:'</>';
+  font:800 27px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  text-shadow:0 0 22px rgba(25,153,255,.5);
+}
+.ref-post:nth-child(2) .ref-post__media>span{
+  background:
+    radial-gradient(circle at 28% 30%,rgba(42,191,255,.25),transparent 25%),
+    linear-gradient(135deg,#0c2947,#06182d 55%,#102e50);
+}
+.ref-post:nth-child(3) .ref-post__media>span{
+  background:
+    radial-gradient(circle at 70% 34%,rgba(44,115,255,.32),transparent 27%),
+    linear-gradient(120deg,#061a31,#0b2d50 52%,#051323);
+}
+
+.is-reference-home .site-foot{
+  padding-block:22px 12px;
+}
+.is-reference-home .site-foot__inner{
+  padding-block:0;
+  align-items:start;
+  gap:22px;
+}
+.is-reference-home .site-foot__base{
+  margin-block-start:16px;
+  padding-block-start:11px;
+}
+.is-reference-home .site-foot__title--sub{margin-block-start:12px}
+.is-reference-home .nap{gap:5px}
+.is-reference-home .hours{gap:3px}
+
+@media(min-width:941px){
+  .ref-hero{
+    min-height:398px;
+    height:398px;
+    padding-block:18px;
+  }
+  .ref-hero__grid{
+    grid-template-columns:minmax(590px,.98fr) minmax(0,1.02fr);
+    height:362px;
+    min-height:0;
+  }
+  .ref-hero__copy{max-width:605px}
+  .ref-hero__title{font-size:clamp(40px,3.15vw,46px)}
+  .ref-hero__title span{white-space:nowrap}
+  .ref-hero__visual{
+    align-self:center;
+    min-height:0;
+    height:350px;
+    overflow:visible;
+  }
+  .ref-hero__visual img{
+    width:auto;
+    max-width:100%;
+    height:350px;
+    max-height:350px;
+    object-fit:contain;
+    object-position:center;
+    opacity:1;
+  }
+  .ref-hero__halo{
+    width:min(72%,350px);
+  }
+}
+
+@media(max-width:940px){
+  .is-reference-home .site-head__inner,
+  .is-reference-home .site-head.is-stuck .site-head__inner{
+    min-height:64px;
+    height:64px;
+    padding-block:0;
+  }
+  .is-reference-home .ref-mobile-head-cta{
+    display:inline-flex;
+    width:auto;
+    min-height:38px;
+    margin-inline-start:auto;
+    padding-inline:13px;
+    font-size:10px;
+    white-space:nowrap;
+  }
+  .is-reference-home .site-nav__toggle{
+    flex:0 0 40px;
+    width:40px;
+    height:40px;
+    margin-inline-start:0;
+  }
+  .is-reference-home .site-head__panel .btn--head{display:none}
+}
+
+@media(max-width:640px){
+  .ref-hero__visual{
+    overflow:visible;
+  }
+  .ref-hero__visual img{
+    height:auto;
+    max-height:285px;
+    object-fit:contain;
+    opacity:1;
+  }
+  .is-reference-home .site-foot{padding-block:18px 10px}
+  .is-reference-home .site-foot__inner{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:15px 14px;
+    padding-block:0;
+  }
+  .is-reference-home .site-foot__brand{grid-column:1/-1}
+  .is-reference-home .site-foot__nap{grid-column:auto}
+  .is-reference-home .site-foot__about{max-width:30ch;margin-block-start:6px}
+  .is-reference-home .site-foot__social{margin-block-start:8px;gap:8px}
+  .is-reference-home .site-foot__title{margin-block-end:7px}
+  .is-reference-home .site-foot__title--sub{margin-block-start:10px}
+  .is-reference-home .site-foot__col ul{gap:2px}
+  .is-reference-home .site-foot__base{
+    margin-block-start:12px;
+    padding-block-start:9px;
+    gap:7px;
+  }
+  .is-reference-home .site-foot__links{gap:9px}
+}
+
+@media(max-width:390px){
+  .is-reference-home .ref-mobile-head-cta{
+    min-height:36px;
+    padding-inline:10px;
+    font-size:9px;
+  }
+  .is-reference-home .site-nav__toggle{
+    flex-basis:38px;
+    width:38px;
+    height:38px;
+  }
+}

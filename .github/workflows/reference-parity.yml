@@ -1,0 +1,123 @@
+name: Reference Parity
+
+on:
+  push:
+    branches:
+      - fix/reference-visual-parity-final2
+  pull_request:
+    paths:
+      - 'views/front/home.php'
+      - 'app/Controllers/Front/HomeController.php'
+      - 'public/assets/css/reference-*.css'
+      - 'public/assets/img/reference/**'
+      - 'tools/browser/reference-parity-check.mjs'
+      - '.github/workflows/reference-parity.yml'
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: arcates_parity
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_mysql, mbstring, gd, fileinfo
+
+      - name: Test config
+        shell: bash
+        run: |
+          cat > config/config.php <<'PHP'
+          <?php
+          declare(strict_types=1);
+          return [
+              'app' => [
+                  'base_url' => 'http://127.0.0.1:8321',
+                  'env' => 'local',
+                  'debug' => false,
+                  'timezone' => 'Europe/Istanbul',
+                  'name' => 'Arcates Reference Parity',
+                  'admin_path' => 'panel',
+              ],
+              'db' => [
+                  'host' => '127.0.0.1', 'port' => 3306, 'name' => 'arcates_parity',
+                  'user' => 'root', 'pass' => 'root', 'charset' => 'utf8mb4',
+              ],
+              'lang' => ['default' => 'tr', 'available' => ['tr', 'en', 'de', 'ar']],
+              'mail' => ['method' => 'log', 'from' => 'test@arcates.local', 'from_name' => 'Arcates Test', 'to' => 'test@arcates.local'],
+              'security' => [
+                  'session_name' => 'arcsid', 'session_idle' => 7200,
+                  'login_max_tries' => 5, 'login_lock' => 900, 'password_min' => 10,
+                  'form_max_hourly' => 5, 'form_min_seconds' => 3, 'cookie_secure' => false,
+              ],
+              'upload' => [
+                  'max_size' => 5 * 1024 * 1024,
+                  'allowed_ext' => ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'pdf'],
+                  'variants' => ['thumb' => 320, 'medium' => 768, 'large' => 1600],
+              ],
+              'privacy' => ['submission_retention_days' => 730, 'visit_retention_days' => 90],
+          ];
+          PHP
+
+      - name: Seed database
+        shell: bash
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+              break
+            fi
+            sleep 2
+          done
+          mysql -h 127.0.0.1 -uroot -proot arcates_parity < db/schema.sql
+          php tools/seed_content.php
+          touch storage/installed.lock
+
+      - name: Install Chromium
+        shell: bash
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+
+      - name: Reference geometry and screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          php -S 127.0.0.1:8321 -t public >/tmp/arcates-parity-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8321/ >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          node tools/browser/reference-parity-check.mjs | tee /tmp/arcates-reference-parity.log
+
+      - name: Upload parity evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arcates-reference-parity
+          path: |
+            /tmp/arcates-reference-parity.log
+            /tmp/arcates-parity-server.log
+            /tmp/arcates-reference-parity/*.png
+          if-no-files-found: warn
+          retention-days: 7
