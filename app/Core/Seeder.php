@@ -155,6 +155,28 @@ final class Seeder
                     . 'Yönetimi kolay, hızlı ve çok dilli.',
                 'cta1'        => ['label' => 'Ücretsiz teklif alın', 'url' => '/iletisim'],
                 'cta2'        => ['label' => 'Örnek siteler', 'url' => '/referanslar'],
+
+                // Kahraman sahnesindeki yuzen katmanlar. Dekoratiftir; panelden
+                // bosaltilirsa ilgili parca hic basilmaz. Buraya yalnizca
+                // isletmenin arkasinda durabilecegi ifadeler yazilir:
+                // uydurma sayac ya da musteri metrigi konmaz.
+                'scene'       => [
+                    'card'  => [
+                        'title' => 'Fikirden yayına',
+                        'text'  => 'Konuşuyoruz, kuruyoruz, büyütüyoruz.',
+                    ],
+                    'chips' => [
+                        ['value' => '8 ilçe', 'label' => 'Yerinde görüşme'],
+                        ['value' => 'Aynı hafta', 'label' => 'Fiyat ve takvim'],
+                    ],
+                    'rail'  => [
+                        ['icon' => 'layout',   'label' => 'Kurumsal web tasarım'],
+                        ['icon' => 'cart',     'label' => 'E-ticaret sitesi'],
+                        ['icon' => 'calendar', 'label' => 'Rezervasyon sistemi'],
+                        ['icon' => 'search',   'label' => 'SEO hizmeti'],
+                        ['icon' => 'globe',    'label' => 'Çoklu dil web sitesi'],
+                    ],
+                ],
             ],
 
             'strip' => [

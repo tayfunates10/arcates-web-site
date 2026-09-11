@@ -243,3 +243,37 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Göç yalnız eski varsayılan/boş değere dokunur; elle girilmiş veriyi korur.
 - Eksik `projects_notice` eklenir ve çevirisi olmayan dil yayından düşer.
 - Yeni testler F-P17-a…e eklendi.
+
+### Eklendi (kahraman sahnesi)
+- Referans görseldeki laptop üstü yüzen katmanlar geldi: sol üstte kart, laptop
+  tabanında iki rozet, sağda beş maddelik yetkinlik rayı. Tamamı
+  `ref-hero__visual` içinde, yani `aria-hidden` — ekran okuyucuya bilgi
+  eklemiyor, içeriğin tekrarı değil.
+- `public/assets/css/reference-hero-scene.css` eklendi ve anasayfa stil
+  listesine son katman olarak girdi. Giriş animasyonu yalnızca `transform` ve
+  `opacity` kullanıyor, gizli başlangıç `html.js` altında, `prefers-reduced-motion`
+  altında kapanıyor (DOCS.md 7.1).
+- Sahne metni panelden geliyor (`hero.scene`): kart başlığı/metni, iki rozet,
+  beş ray maddesi. Boşaltılan parça hiç basılmıyor.
+- Tohumdaki değerler işletmenin arkasında durabileceği ifadeler: "8 ilçe /
+  Yerinde görüşme", "Aynı hafta / Fiyat ve takvim" ve yayındaki beş hizmet.
+  Referans kurgudaki "248+ tamamlanan proje", "%98 müşteri memnuniyeti" ve
+  "7/24 destek" gibi doğrulanamayan iddialar **bilerek alınmadı**; F-HS-b
+  bunu test olarak koruyor.
+- Yeni göç `db/migrations/2026_09_11_0001_kahraman_sahne_icerigi.sql`
+  sahneyi kurulmuş sitelere taşıyor. `JSON_MERGE_PATCH` ile yalnızca `scene`
+  alanı hiç yoksa yazıyor; elle girilmiş sahne korunuyor, iki kez
+  çalıştırıldığında sonucu değiştirmiyor.
+
+### Düzeltildi (panel kaydında sessiz veri kaybı)
+- `Admin\HomeController::readContent()` bölümün içeriğini beyaz listeden
+  yeniden kuruyordu; formda alanı olmayan her veri, ilgili bölüm her
+  kaydedildiğinde siliniyordu. Kahraman sahnesi de ilk başlık düzenlemesinde
+  kaybolacaktı.
+- `update()` artık saklanan içeriği `readContent()`'e veriyor; yeni
+  `readScene()` gönderilen sahneyi temizleyip sınırlıyor, form sahne
+  göndermediğinde saklanan değeri olduğu gibi bırakıyor. Beyaz liste
+  disiplini korundu.
+- Yeni testler F-HS-a…f: tohum içeriği, uydurma iddia denetimi, sayfada
+  basılması, panelden boşaltılınca kaybolması, göçün yalnızca eksik sahneye
+  dokunması ve panel kaydının sahneyi silmemesi.

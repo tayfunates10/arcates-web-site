@@ -133,7 +133,8 @@ final class HomeController extends Controller
             if (!is_array($raw)) {
                 continue;
             }
-            HomeSection::saveContent($key, $code, $this->readContent($key, $raw));
+            $current = HomeSection::content($key, $code, $code);
+            HomeSection::saveContent($key, $code, $this->readContent($key, $raw, $current));
         }
 
         Logger::activity('home.update', 'home_section', null, $key);
@@ -239,7 +240,48 @@ final class HomeController extends Controller
      * Her metin `Security::e()` ile basilacagi icin burada yalnizca kirpma ve
      * uzunluk sinirlamasi yapilir; zengin metin alanlari ayrica temizlenir.
      */
-    private function readContent(string $key, array $raw): array
+    /**
+     * Kahraman sahnesi — laptop ustu yuzen katmanlar.
+     *
+     * Sahnenin kendi form alanlari henuz yok. Form sahne gondermediginde
+     * saklanan deger oldugu gibi korunur; aksi halde isletme baslik satirini
+     * her duzenlediginde sahne sessizce silinirdi. Gonderilen deger ise
+     * diger alanlar gibi temizlenip sinirlanir.
+     */
+    private function readScene(mixed $raw, array $current): array
+    {
+        if (!is_array($raw)) {
+            return $current;
+        }
+
+        $text = static fn (mixed $value, int $max): string => mb_substr(trim((string) $value), 0, $max);
+
+        $pairs = static function (mixed $list, string $first, string $second, int $max) use ($text): array {
+            $rows = [];
+            foreach (is_array($list) ? $list : [] as $row) {
+                if (!is_array($row)) {
+                    continue;
+                }
+                $a = $text($row[$first] ?? '', $max);
+                if ($a === '') {
+                    continue;
+                }
+                $rows[] = [$first => $a, $second => $text($row[$second] ?? '', $max)];
+            }
+            return $rows;
+        };
+
+        return [
+            'card' => [
+                'title' => $text($raw['card']['title'] ?? '', 60),
+                'text'  => $text($raw['card']['text'] ?? '', 120),
+            ],
+            'chips' => array_slice($pairs($raw['chips'] ?? [], 'value', 'label', 40), 0, 2),
+            'rail'  => array_slice($pairs($raw['rail'] ?? [], 'label', 'icon', 60), 0, 5),
+        ];
+    }
+
+    private function readContent(string $key, array $raw, array $current = []): array
     {
         $text = static fn (mixed $value, int $max = 400): string => mb_substr(trim((string) $value), 0, $max);
 
@@ -262,6 +304,7 @@ final class HomeController extends Controller
                 'description' => $text($raw['description'] ?? '', 600),
                 'cta1'        => $link($raw['cta1'] ?? []),
                 'cta2'        => $link($raw['cta2'] ?? []),
+                'scene'       => $this->readScene($raw['scene'] ?? null, (array) ($current['scene'] ?? [])),
             ],
 
             'strip' => [

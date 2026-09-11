@@ -107,10 +107,58 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
         </ul>
       </div>
 
+      <?php
+      // Sahne tamamen dekoratiftir: metni panelden gelir, olcum/musteri verisi
+      // uretmez. Bos birakilan her parca hic basilmaz.
+      $scene      = (array) ($heroContent['scene'] ?? []);
+      $sceneCard  = (array) ($scene['card'] ?? []);
+      $sceneChips = array_values(array_filter(
+          (array) ($scene['chips'] ?? []),
+          static fn ($chip): bool => is_array($chip) && trim((string) ($chip['value'] ?? '')) !== ''
+      ));
+      $sceneRail  = array_values(array_filter(
+          (array) ($scene['rail'] ?? []),
+          static fn ($item): bool => is_array($item) && trim((string) ($item['label'] ?? '')) !== ''
+      ));
+      ?>
       <div class="ref-hero__visual" aria-hidden="true">
         <span class="ref-hero__halo"></span>
         <img src="<?= Security::e(asset('img/reference/hero-laptop.webp')) ?>"
              width="1448" height="1086" alt="" loading="eager" decoding="async">
+
+        <?php if (($sceneCard['title'] ?? '') !== ''): ?>
+          <div class="ref-scene-card">
+            <strong><?= Security::e((string) $sceneCard['title']) ?></strong>
+            <?php if (($sceneCard['text'] ?? '') !== ''): ?>
+              <span><?= Security::e((string) $sceneCard['text']) ?></span>
+            <?php endif; ?>
+          </div>
+        <?php endif; ?>
+
+        <?php if ($sceneChips !== []): ?>
+          <ul class="ref-scene-chips">
+            <?php foreach (array_slice($sceneChips, 0, 2) as $index => $chip): ?>
+              <li class="ref-scene-chip ref-scene-chip--<?= (int) ($index + 1) ?>">
+                <strong><?= Security::e((string) $chip['value']) ?></strong>
+                <?php if (($chip['label'] ?? '') !== ''): ?>
+                  <small><?= Security::e((string) $chip['label']) ?></small>
+                <?php endif; ?>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endif; ?>
+
+        <?php if ($sceneRail !== []): ?>
+          <ul class="ref-scene-rail">
+            <?php foreach (array_slice($sceneRail, 0, 5) as $item): ?>
+              <li>
+                <span class="ref-scene-rail__icon"><?= $renderIcon((string) ($item['icon'] ?? 'layout')) ?></span>
+                <?= Security::e((string) $item['label']) ?>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endif; ?>
+
         <p class="ref-hero__scribble"><?= Security::e(__('technology_for_limits')) ?></p>
       </div>
     </div>

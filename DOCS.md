@@ -223,6 +223,10 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 - Sahne bilgi taşımadığı için `aria-hidden="true"`; içindeki dekoratif logo `<img alt="" aria-hidden="true">` kullanır.
 - H1 görünürlüğü JS'ye bağlı değildir. `html.js` sadece kısa giriş animasyonunu iyileştirir.
 
+**Sahne katmanları (`hero.scene`).** Sahnenin üzerinde panelden beslenen üç dekoratif katman bulunur: bir kart (başlık + metin), en çok iki rozet (`value` + `label`) ve en çok beş maddelik yetkinlik rayı (`label` + ikon). Üçü de `ref-hero__visual` içindedir, yani `aria-hidden` kapsamındadır; boş bırakılan katman hiç basılmaz.
+
+Katmanların metni **işletmenin arkasında durabileceği** ifadelerle sınırlıdır. Doğrulanamayan sayaç, memnuniyet oranı, tamamlanan proje adedi ya da sunulmayan bir hizmet yazılmaz — bu, yukarıdaki "sahte müşteri, sahte puan, sahte metrik gösterilmez" kuralının sahneye uzantısıdır ve test **F-HS-b** ile korunur. Ray maddeleri yayındaki hizmet listesinden gelir (F-HS-a).
+
 ### 5.2 Sektör ve hizmet bölgeleri
 - `strip` adı veri tabanında geriye uyumluluk için korunur; ön yüzde artık kayan şerit değildir.
 - `HomeController`, `Page::listing('sector')` sonucundan yalnız `status=published`, başlık ve slug'ı bulunan sektörleri alır. Bunlar gerçek URL taşıyan statik kartlardır.
@@ -483,6 +487,8 @@ Son 30 gün ziyaretçi grafiği, yeni form sayısı, dönüşüm hunisi, en çok
 Bölüm listesi R5 sabit sırasını kullanır; her bölüm açılıp kapatılabilir. Kahraman metni/CTA'ları, sektör fallback etiketleri, hizmet içerikleri, süreç, örnek-site bölümü, bölge başlığı/açıklaması, SSS başlığı/açıklaması, CTA ve footer içerikleri yönetilebilir. Bölge noktaları `map_x`/`map_y` ile konumlandırılır.
 
 > `strip` anahtarı geriye uyumluluk için korunur. R5 ön yüzde kayma hızı kullanılmaz. R7 panel yeniden tasarımında eski hız kontrolleri arayüzden tamamen kaldırılacaktır; kayıtlı eski `speed` değerleri ön yüzde etkisizdir.
+
+**Kayıpsız kayıt.** Bölüm kaydı, içeriği beyaz listeden yeniden kurar. Formda alanı bulunmayan bir içerik alanı (örneğin `hero.scene`) bu sırada silinmez: `readContent()` saklanan içeriği alır ve gönderilmeyen alanı olduğu gibi bırakır. Gönderilen değer her zaman temizlenip sınırlanır. Test F-HS-f.
 
 ### 9.3 Sayfalar
 Tür filtresi (sayfa / hizmet / ilçe / sektör), dil sekmeleri, tam SEO paneli, içerik skoru ve sonuç önizlemesi. **Slug değişince otomatik 301** oluşturulur.
