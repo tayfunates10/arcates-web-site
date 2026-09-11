@@ -8,6 +8,12 @@ on:
         required: true
         default: 'https://arcatesyazilim.com'
         type: string
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/production-lighthouse.yml'
+      - 'tools/browser/lighthouse-session-warmup.mjs'
+      - 'tools/browser/lighthouse-gate.mjs'
   workflow_run:
     workflows: ['Live Acceptance']
     types: [completed]
@@ -17,11 +23,12 @@ permissions:
 
 jobs:
   lighthouse:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       BASE_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.base_url || 'https://arcatesyazilim.com' }}
+      CHROME_PORT: '9222'
 
     steps:
       - uses: actions/checkout@v6
@@ -30,25 +37,70 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Lighthouse kur
-        run: npm install --no-save lighthouse@13.4.1
+      - name: Lighthouse ve CDP istemcisini kur
+        run: npm install --no-save lighthouse@13.4.1 puppeteer-core@25.10.0
+
+      - name: Paylasilan Chromium oturumunu baslat
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME_BIN="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_BIN" ]; then
+            echo 'Chromium/Chrome bulunamadi.' >&2
+            exit 1
+          fi
+
+          PROFILE_DIR="$RUNNER_TEMP/arcates-lighthouse-profile"
+          rm -rf "$PROFILE_DIR"
+          mkdir -p "$PROFILE_DIR"
+
+          nohup "$CHROME_BIN" \
+            --headless=new \
+            --no-sandbox \
+            --disable-dev-shm-usage \
+            --remote-debugging-address=127.0.0.1 \
+            --remote-debugging-port="$CHROME_PORT" \
+            --user-data-dir="$PROFILE_DIR" \
+            about:blank \
+            >"$RUNNER_TEMP/arcates-chrome.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/arcates-chrome.pid"
+
+          ready=0
+          for _ in $(seq 1 30); do
+            if curl --fail --silent "http://127.0.0.1:$CHROME_PORT/json/version" >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" -ne 1 ]; then
+            cat "$RUNNER_TEMP/arcates-chrome.log" || true
+            echo 'Chrome DevTools portu hazir olmadi.' >&2
+            exit 1
+          fi
+
+      - name: WebShield challenge oturumunu isit
+        run: node tools/browser/lighthouse-session-warmup.mjs "$BASE_URL" "http://127.0.0.1:$CHROME_PORT"
 
       - name: Production mobil audit
         run: >-
           npx lighthouse "$BASE_URL"
           --quiet
+          --port="$CHROME_PORT"
+          --disable-storage-reset
           --output=json
           --output-path=lighthouse-mobile.json
-          --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
 
       - name: Production masaustu audit
         run: >-
           npx lighthouse "$BASE_URL"
           --quiet
+          --port="$CHROME_PORT"
+          --disable-storage-reset
           --preset=desktop
           --output=json
           --output-path=lighthouse-desktop.json
-          --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
 
       - name: Hedefleri kontrol et
         run: node tools/browser/lighthouse-gate.mjs lighthouse-mobile.json lighthouse-desktop.json
@@ -64,3 +116,11 @@ jobs:
             lighthouse-summary.json
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Paylasilan Chromium oturumunu kapat
+        if: always()
+        shell: bash
+        run: |
+          if [ -f "$RUNNER_TEMP/arcates-chrome.pid" ]; then
+            kill "$(cat "$RUNNER_TEMP/arcates-chrome.pid")" 2>/dev/null || true
+          fi
