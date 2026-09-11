@@ -1,0 +1,237 @@
+/* Arcates reference fidelity — supplied desktop/mobile mockup visual-density pass.
+   Decorative only: no client names, ratings, project counts or performance claims. */
+
+/* --------------------------------------------------------------------------
+   Featured projects: make cover-less sample records read like three distinct
+   interface previews instead of the same empty browser skeleton. Real uploaded
+   project media still wins because these rules only target .ref-project__fallback.
+   -------------------------------------------------------------------------- */
+.ref-project__fallback{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  display:block;
+}
+.ref-project__fallback i{
+  position:absolute;
+  display:block;
+  margin:0;
+  border-radius:3px;
+}
+
+/* 01 — bright commerce/product-style sample */
+.ref-project:nth-child(3n+1) .ref-project__fallback{
+  background:
+    radial-gradient(circle at 79% 42%,rgba(39,118,210,.14),transparent 24%),
+    linear-gradient(145deg,#eef4fb 0%,#dbe7f4 56%,#cbd9e8 100%);
+}
+.ref-project:nth-child(3n+1) .ref-project__fallback::before{
+  content:'';
+  position:absolute;
+  inset:8% 5% 9% 6%;
+  border:1px solid rgba(16,54,94,.2);
+  border-radius:6px;
+  background:
+    linear-gradient(90deg,#0d345e 0 17%,transparent 17%) 0 0/100% 13% no-repeat,
+    linear-gradient(90deg,#1c7bf2 0 16%,transparent 16%) 12% 30%/48% 5% no-repeat,
+    linear-gradient(90deg,rgba(20,53,88,.36) 0 58%,transparent 58%) 12% 41%/58% 3% no-repeat,
+    linear-gradient(90deg,rgba(20,53,88,.2) 0 43%,transparent 43%) 12% 50%/58% 3% no-repeat,
+    linear-gradient(145deg,#fff,#f4f8fc);
+  box-shadow:0 10px 28px rgba(1,15,31,.28);
+}
+.ref-project:nth-child(3n+1) .ref-project__fallback::after{
+  content:'';
+  position:absolute;
+  z-index:3;
+  right:10%;
+  top:23%;
+  width:31%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 42% 38%,#eff7ff 0 14%,#8fa9c7 15% 24%,#182c44 25% 31%,#0a1523 32% 42%,#6e8cab 43% 51%,#d6e5f3 52% 100%);
+  filter:drop-shadow(0 8px 9px rgba(6,25,46,.28));
+}
+.ref-project:nth-child(3n+1) .ref-project__fallback i:nth-child(1){
+  z-index:4;left:12%;bottom:18%;width:20%;height:8%;background:#157ff5;box-shadow:0 5px 12px rgba(21,127,245,.25);
+}
+.ref-project:nth-child(3n+1) .ref-project__fallback i:nth-child(2){
+  z-index:2;right:7%;bottom:11%;width:37%;height:18%;border:1px solid rgba(15,62,105,.13);background:rgba(255,255,255,.84);
+}
+.ref-project:nth-child(3n+1) .ref-project__fallback i:nth-child(3){
+  z-index:4;left:8%;top:13%;width:4px;height:4px;border-radius:50%;background:#ff6b63;box-shadow:7px 0 #f9bd4f,14px 0 #59c889;
+}
+
+/* 02 — dark corporate/site presentation sample */
+.ref-project:nth-child(3n+2) .ref-project__fallback{
+  background:
+    radial-gradient(circle at 78% 48%,rgba(34,114,255,.35),transparent 30%),
+    linear-gradient(145deg,#07172a 0%,#0b2443 54%,#03101f 100%);
+}
+.ref-project:nth-child(3n+2) .ref-project__fallback::before{
+  content:'';
+  position:absolute;
+  inset:9% 6% 9% 6%;
+  border:1px solid rgba(91,170,255,.28);
+  border-radius:6px;
+  background:
+    linear-gradient(115deg,transparent 0 47%,rgba(29,120,255,.18) 47% 52%,transparent 52%) 0 0/100% 100%,
+    linear-gradient(90deg,#23a1ff 0 24%,transparent 24%) 9% 24%/45% 4% no-repeat,
+    linear-gradient(90deg,rgba(203,229,255,.34) 0 66%,transparent 66%) 9% 35%/48% 2px no-repeat,
+    linear-gradient(90deg,rgba(203,229,255,.2) 0 42%,transparent 42%) 9% 43%/48% 2px no-repeat,
+    linear-gradient(150deg,rgba(10,33,60,.96),rgba(2,13,26,.96));
+  box-shadow:0 12px 28px rgba(0,0,0,.32);
+}
+.ref-project:nth-child(3n+2) .ref-project__fallback::after{
+  content:'';
+  position:absolute;
+  z-index:3;
+  right:8%;bottom:12%;width:45%;height:46%;
+  border:1px solid rgba(80,166,255,.28);border-radius:4px;
+  background:
+    linear-gradient(135deg,transparent 0 46%,rgba(38,135,255,.52) 47% 49%,transparent 50%) 0 0/100% 100%,
+    linear-gradient(180deg,#0b3767,#071c34);
+  box-shadow:-16px 12px 0 -10px rgba(26,91,160,.44),0 0 26px rgba(19,108,255,.16);
+}
+.ref-project:nth-child(3n+2) .ref-project__fallback i:nth-child(1){
+  z-index:4;right:13%;top:20%;width:31%;height:4px;background:rgba(108,190,255,.65);transform:rotate(-11deg);transform-origin:right center;
+}
+.ref-project:nth-child(3n+2) .ref-project__fallback i:nth-child(2){
+  z-index:4;right:17%;top:29%;width:24%;height:3px;background:rgba(108,190,255,.36);transform:rotate(-11deg);transform-origin:right center;
+}
+.ref-project:nth-child(3n+2) .ref-project__fallback i:nth-child(3){
+  z-index:4;left:9%;top:13%;width:4px;height:4px;border-radius:50%;background:#ff6b63;box-shadow:7px 0 #f9bd4f,14px 0 #59c889;
+}
+
+/* 03 — light SaaS/dashboard sample */
+.ref-project:nth-child(3n) .ref-project__fallback{
+  background:linear-gradient(145deg,#e8f1fb,#cfddeb 65%,#b9ccdf);
+}
+.ref-project:nth-child(3n) .ref-project__fallback::before{
+  content:'';
+  position:absolute;
+  inset:8% 5% 8% 6%;
+  border:1px solid rgba(22,72,118,.22);
+  border-radius:6px;
+  background:
+    linear-gradient(90deg,#12385d 0 18%,transparent 18%) 0 0/100% 100% no-repeat,
+    linear-gradient(90deg,#2195ff 0 32%,transparent 32%) 27% 21%/30% 5% no-repeat,
+    linear-gradient(90deg,rgba(37,79,120,.26) 0 72%,transparent 72%) 27% 34%/30% 3% no-repeat,
+    linear-gradient(90deg,#2f9cff 0 52%,#dbe8f4 52% 100%) 27% 56%/27% 8% no-repeat,
+    linear-gradient(90deg,#6bc0ff 0 28%,#dbe8f4 28% 100%) 27% 69%/27% 8% no-repeat,
+    linear-gradient(145deg,#fff,#f2f7fc);
+  box-shadow:0 10px 28px rgba(4,27,49,.26);
+}
+.ref-project:nth-child(3n) .ref-project__fallback::after{
+  content:'';
+  position:absolute;z-index:3;right:9%;top:25%;width:29%;height:36%;border-radius:50%;
+  background:conic-gradient(#1e8fff 0 31%,#68bdff 31% 57%,#bedcf5 57% 76%,#dfeaf4 76% 100%);
+  box-shadow:inset 0 0 0 10px #f7fbff,0 7px 16px rgba(11,56,98,.18);
+}
+.ref-project:nth-child(3n) .ref-project__fallback i:nth-child(1){
+  z-index:4;right:9%;bottom:18%;width:29%;height:9%;background:linear-gradient(90deg,#238ffc 0 64%,#b7d8f2 64%);
+}
+.ref-project:nth-child(3n) .ref-project__fallback i:nth-child(2){
+  z-index:4;right:9%;bottom:30%;width:23%;height:6%;background:linear-gradient(90deg,#77c4ff 0 43%,#d0e4f4 43%);
+}
+.ref-project:nth-child(3n) .ref-project__fallback i:nth-child(3){
+  z-index:4;left:8%;top:12%;width:4px;height:4px;border-radius:50%;background:#ff6b63;box-shadow:7px 0 #f9bd4f,14px 0 #59c889;
+}
+
+/* --------------------------------------------------------------------------
+   Latest articles: image-led, category-neutral editorial scenes. They remain
+   decorative fallbacks; an uploaded cover still replaces them.
+   -------------------------------------------------------------------------- */
+.ref-post__media>span{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  font-size:0;
+}
+.ref-post__media>span::before,
+.ref-post__media>span::after{
+  content:'';
+  position:absolute;
+  display:block;
+}
+
+/* 01 — AI / technology editorial scene */
+.ref-post:nth-child(3n+1) .ref-post__media>span{
+  background:
+    radial-gradient(circle at 72% 36%,rgba(126,152,255,.45),transparent 18%),
+    radial-gradient(circle at 18% 18%,rgba(36,85,255,.48),transparent 22%),
+    linear-gradient(135deg,#24125d 0%,#10366a 46%,#061b35 100%);
+}
+.ref-post:nth-child(3n+1) .ref-post__media>span::before{
+  z-index:2;right:14%;top:13%;width:35%;aspect-ratio:.78;border-radius:52% 48% 45% 55%/40% 43% 57% 60%;
+  background:
+    radial-gradient(circle at 57% 35%,rgba(231,242,255,.9) 0 3%,transparent 4%),
+    radial-gradient(circle at 47% 38%,rgba(231,242,255,.75) 0 2%,transparent 3%),
+    linear-gradient(145deg,#9ebaf0,#395594 55%,#182c5b);
+  box-shadow:-20px 10px 44px rgba(84,87,255,.34),inset -10px -12px 18px rgba(3,18,45,.45);
+  transform:rotate(-8deg);
+}
+.ref-post:nth-child(3n+1) .ref-post__media>span::after{
+  z-index:1;inset:8% 5% 8% 4%;opacity:.75;
+  background:
+    radial-gradient(circle,#83b8ff 0 2px,transparent 3px) 4% 22%/24% 32%,
+    linear-gradient(28deg,transparent 0 48%,rgba(91,178,255,.26) 49% 51%,transparent 52%) 0 0/48% 45%,
+    linear-gradient(-24deg,transparent 0 48%,rgba(117,116,255,.26) 49% 51%,transparent 52%) 0 0/55% 55%;
+}
+
+/* 02 — laptop + coffee/guide editorial scene */
+.ref-post:nth-child(3n+2) .ref-post__media>span{
+  background:
+    radial-gradient(circle at 80% 22%,rgba(115,208,255,.24),transparent 20%),
+    linear-gradient(145deg,#10314d 0%,#315d75 44%,#15263a 100%);
+}
+.ref-post:nth-child(3n+2) .ref-post__media>span::before{
+  z-index:2;left:13%;top:16%;width:56%;height:48%;border:5px solid #152b40;border-radius:5px;
+  background:
+    linear-gradient(90deg,#47b5ff 0 24%,transparent 24%) 10% 18%/58% 5% no-repeat,
+    linear-gradient(90deg,rgba(221,241,255,.55) 0 66%,transparent 66%) 10% 34%/68% 3% no-repeat,
+    linear-gradient(90deg,rgba(221,241,255,.32) 0 48%,transparent 48%) 10% 46%/68% 3% no-repeat,
+    linear-gradient(145deg,#0d2540,#174c70);
+  box-shadow:0 10px 20px rgba(0,0,0,.3);
+  transform:perspective(220px) rotateX(-4deg) rotateZ(-3deg);
+}
+.ref-post:nth-child(3n+2) .ref-post__media>span::after{
+  z-index:3;right:12%;bottom:13%;width:23%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 48%,#48301f 0 34%,#e7dccb 35% 54%,#b8aa96 55% 61%,transparent 62%);
+  filter:drop-shadow(0 9px 8px rgba(0,0,0,.28));
+}
+
+/* 03 — digital transformation / presentation scene */
+.ref-post:nth-child(3n) .ref-post__media>span{
+  background:
+    radial-gradient(circle at 70% 24%,rgba(47,160,255,.27),transparent 23%),
+    linear-gradient(135deg,#15304a,#274e69 46%,#071a2d);
+}
+.ref-post:nth-child(3n) .ref-post__media>span::before{
+  z-index:1;right:8%;top:13%;width:55%;height:49%;border:1px solid rgba(126,205,255,.35);border-radius:5px;
+  background:
+    linear-gradient(25deg,transparent 0 40%,#35b5ff 41% 44%,transparent 45%) 8% 55%/80% 35% no-repeat,
+    linear-gradient(-25deg,transparent 0 51%,#86d3ff 52% 54%,transparent 55%) 8% 55%/80% 35% no-repeat,
+    radial-gradient(circle at 68% 26%,rgba(55,166,255,.32),transparent 25%),
+    linear-gradient(145deg,#082947,#0c3a5f);
+  box-shadow:0 8px 22px rgba(0,0,0,.27);
+}
+.ref-post:nth-child(3n) .ref-post__media>span::after{
+  z-index:3;left:15%;bottom:8%;width:12%;height:42%;border-radius:44% 44% 20% 20%;
+  background:linear-gradient(180deg,#b9d7e9 0 18%,#15273a 19% 100%);
+  box-shadow:0 9px 12px rgba(0,0,0,.3);
+}
+
+/* Keep the original compact geometry that already passes the parity gate. */
+@media(min-width:941px){
+  .ref-project__fallback{min-height:158px}
+  .ref-post__media>span{min-height:160px}
+}
+@media(max-width:640px){
+  .ref-project__fallback{min-height:132px}
+  .ref-post__media>span{min-height:156px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ref-project__fallback,.ref-post__media>span{animation:none;transition:none}
+}

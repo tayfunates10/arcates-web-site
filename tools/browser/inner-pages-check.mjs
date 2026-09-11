@@ -119,9 +119,23 @@ const representativeRoutes = [
   }));
   check(await page.locator('.chips [aria-current="page"]').count() === 1,
     'LIVE-03 tum kategoriler secimi erisilebilir');
-  await page.locator('.chips a').nth(1).click();
+
+  // Kategori linki tam sayfa navigasyonu yapar. CI'da hizli localhost yaniti
+  // locator.click() doner donmez DOM'u kontrol ettigimizde eski dokumanin son
+  // mikro-adimi gorulebiliyordu. Semantik kosulu gevsetmeden yeni URL ve agin
+  // sakinlesmesini acikca bekle; ardindan hem gorsel hem aria secimini dogrula.
+  const categoryLink = page.locator('.chips a').nth(1);
+  const categoryHref = await categoryLink.getAttribute('href');
+  await Promise.all([
+    page.waitForURL(url => url.searchParams.has('kategori')),
+    categoryLink.click(),
+  ]);
+  await page.waitForLoadState('networkidle');
+  check(categoryHref !== null && page.url().includes('kategori='),
+    'LIVE-03 kategori baglantisi filtreli adrese gider');
   check(await page.locator('.chips .is-current[aria-current="page"]').count() === 1,
     'LIVE-03 secili kategori ekran okuyucuya aktarilir');
+
   check(posts.cards >= 1, `R6 blog kartlari mevcut (${posts.cards})`);
   check(posts.rounded >= 14, `R6 blog karti yeni yuzey ailesinde (${posts.rounded}px)`);
 
