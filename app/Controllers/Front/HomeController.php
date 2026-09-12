@@ -75,6 +75,9 @@ final class HomeController extends Controller
 
                     // Bolum basliklari ve metrik bandi; kahramandan sonra.
                     'css/reference-sections.css',
+
+                    // Projeler, surec ve "Neden ARCATES"; bolumlerden sonra.
+                    'css/reference-lower.css',
                 ],
             ],
         ]);

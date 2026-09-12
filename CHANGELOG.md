@@ -4,6 +4,12 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (12 Eylül 2026 — B5 projeler, süreç ve "Neden ARCATES")
+- "Neden ARCATES" madde ikonları referanstaki gibi dolu mavi daire + beyaz glif oldu. Önceki koyu lacivert gradyan (`#0b2c4c → #07192b`) zeminden neredeyse ayırt edilemiyordu.
+- Süreç adımları arasındaki kesikli çizgiye referanstaki ok başı eklendi. Bağlayıcı, listenin baştan sona uzanan tek çizgisi olmaktan çıkıp adım başına taşındı; son adımdan sonra basılmıyor.
+- Ok başı, buton oklarıyla aynı desende satır içi SVG ve dekoratif (`aria-hidden`).
+- 940px altında yatay bağlayıcı gizli; dikey çizgi eskisi gibi listenin kendi `::before`'undan geliyor.
+
 ### Değiştirildi (12 Eylül 2026 — B4 parity bütçeleri referans ölçülerine yükseltildi)
 - Site sahibinin kararıyla `reference-parity-check`teki beş bütçe, referansın kendi ölçülerine göre yükseltildi. Gerekçeleri (maket koordinatı → 1440 karşılığı) kontrol dosyasına yazıldı:
   - içerik rayı 1250–1290 → 1200–1250 (referans oranı %85.1, 1440'ta 1225px)

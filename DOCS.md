@@ -246,6 +246,12 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *İçerik uzunluğu ölçüyü bastırabilir.* Metrik etiketi referansta ~15px, bizde 13px: referansın etiketleri kısa ("Tamamlanan Proje"), bizimkiler uzun ("Her ekranda kusursuz deneyim") ve 15px'te ikinci satıra kaçıp hücreyi 81 → 102px yapıyordu. Aynı durum bölüm 2'deki başlık satır yüksekliğinde de vardı. Kural: ölçü ile içerik çakıştığında referansın **genel görünümünü** koruyan değer seçilir ve sebebi yazılır.
 
+**Projeler, süreç ve "Neden ARCATES" (bölüm 5).** `public/assets/css/reference-lower.css` bu katmanın son sözüdür. Ölçüler: madde ikonu 21px çap, zemini ölçülen `#075ADA` ailesinden dolu mavi; süreç dairesi ~46px; adımlar arası bağlayıcı kesikli çizgi **artı ok başı**. Testler F-LW-a…d.
+
+*Madde ikonu neden değişti.* Referansta ikon dolu mavi bir dairenin içinde beyaz durur ve liste bir rozet dizisi gibi okunur. Bizde daire koyu lacivert bir gradyandı (`#0b2c4c → #07192b`) ve zeminden neredeyse ayırt edilemiyordu; yalnızca glif görülüyordu.
+
+*Bağlayıcı.* Eskiden listenin baştan sona uzanan tek bir `::before` çizgisiydi. Referansta boşluklar ayrı ayrı ve her biri ok başıyla biter; bu yüzden bağlayıcı adım başına taşındı (son adımdan sonra basılmaz) ve ok başı, buton oklarıyla aynı desende satır içi SVG olarak eklendi. 940px altında liste dikey aktığı için yatay bağlayıcı gizlenir; dikey çizgiyi listenin kendi `::before`'u çizmeye devam eder.
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.
