@@ -230,6 +230,10 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 
 *Fonta bağlı glif kullanılmaz.* Buton okları (`→`, `↗`) ve onay işaretleri (`✓`) satır içi SVG'dir. Glif fonta bağlıdır; font yüklenmezse kutu olarak çizilir. F-HR-c metin glifinin geri dönmesini engeller.
 
+**Bölüm başlıkları ve metrik bandı (bölüm 3).** `public/assets/css/reference-sections.css` bu katmanın son sözüdür; `HomeController` listesinin sonunda yüklenir. Referansta **sağ tarafında bağlantı olan** bölümlerde ("Hizmetlerimiz", "Öne Çıkan Projeler") başlık ve alt yazı tek satırda, taban hizasında durur; **bağlantısız** bölümlerde ("Nasıl Çalışıyoruz?", "Neden ARCATES?") alt alta. Bu ayrım `--local` sınıfıyla birebir örtüşür ve kural ona göre yazılmıştır. Ölçüler: başlık ~29px, alt yazı ~16px, metrik başlığı ~26px, metrik etiketi ~15px, metrik ikonu ~37px (hepsi 1440 karşılığı). Testler F-SC-a…e.
+
+*Parity bütçesi ölçümden önce gelir.* Referansın kendi ölçüleri, bu depodaki üç parity bütçesinden daha geniştir: metrik hücresi ölçümde ~81px iken bütçe 56–72; hizmet kartı ~190px iken bütçe 130–165; `.wrap` oranı 1225px'e denk gelirken ray 1250–1290. Bu bütçeler sayfayı yoğun tutmak için konmuş tasarım hedefleridir ve CI onları uygular. Bölüm 3'te metrik başlığı bütçenin izin verdiği en iri değerde (20px) bırakıldı, hizmet kartına hiç dokunulmadı. Referansa tam çıkmak önce ilgili bütçenin yükseltilmesini gerektirir; bu, sayfanın genel yoğunluğunu değiştiren ayrı bir karardır.
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.

@@ -4,6 +4,13 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (12 Eylül 2026 — B3 bölüm başlıkları ve metrik bandı)
+- Sağ tarafında bağlantı olan bölümlerde ("Hizmetlerimiz", "Öne Çıkan Projeler") başlık ve alt yazı referanstaki gibi tek satırda, taban hizasında. Bağlantısız bölümler alt alta kalıyor — referans da öyle.
+- Bölüm başlığı 25.2 → 28.8px, alt yazı 11 → 15.8px.
+- Metrik hücresinin başlığı 15 → 20px, ikonu 31 → 35px; ikon `svg`'si ayrıca sabitlenmişti, o da açıldı.
+- Hizmet kartlarına dokunulmadı: referans kart 190px, parity bütçesi 130–165px. Yalnızca ikonu büyütmek bile CI'da bütçeye 6px bırakıyordu ve kart yüksekliği bu makinede yerel olarak doğrulanamıyor.
+- Ölçülen her değer `@media (min-width: 941px)` altında; mobil değerler korundu.
+
 ### Değiştirildi (12 Eylül 2026 — B2 kahraman referans uyumu)
 - Başlık satır yüksekliği 1.01'den 1.16'ya çıkarıldı; satırlar neredeyse birbirine değiyordu.
 - Paragraf 13px'ten 15.8px'e, genişliği referanstaki 489px'e getirildi.

@@ -1,0 +1,90 @@
+/* Arcates — bolum basliklari ve metrik bandi. Referans B3.
+ *
+ * Bolum stillerinin SON katmani: `HomeController` listesinin sonunda
+ * yuklenir, yoksa `reference-parity*.css` icindeki ayni agirliktaki
+ * kurallar burayi geri ezer.
+ *
+ * --- Olculer (B1'deki 0.583 olcegi, maket -> 1440 carpani 1.326) ---------
+ *
+ *   Hizmetlerimiz basligi  y471..486  x  74..196  -> govde ~29 px
+ *   alt yazi               y479..489  x 213..419  -> ~16 px, AYNI SATIRDA
+ *   metrik sayisi          y406..419            -> govde ~26 px
+ *   metrik etiketi         y429..436            -> ~15 px
+ *   metrik ikonu           y407..434            -> ~37 px
+ *
+ * --- Baslik ve alt yazi neden yan yana -----------------------------------
+ *
+ * Referansta sag tarafinda baglanti olan bolumlerde ("Hizmetlerimiz",
+ * "One Cikan Projeler") baslik ve alt yazi tek satirda, baslik hizasinda
+ * duruyor. Baglantisi olmayan bolumlerde ("Nasil Calisiyoruz?",
+ * "Neden ARCATES?") alt alta. Bu ayrim bizdeki `--local` sinifiyla
+ * birebir ortusuyor; kural ona gore yazildi.
+ *
+ * Bizde ikisi her yerde alt altaydi.
+ */
+
+@media (min-width: 941px) {
+
+  /* Baglantili bolum: baslik + alt yazi ayni satirda, taban hizasinda. */
+  .ref-home .ref-section__head:not(.ref-section__head--local) > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: clamp(12px, 1.55vw, 29px);
+  }
+
+  .ref-home .ref-section__head:not(.ref-section__head--local) > div > p {
+    margin-block-start: 0;
+  }
+
+  /* Referansta baslik bizdekinden biraz iri, alt yazi belirgin sekilde. */
+  .ref-home .ref-section__head h2 { font-size: clamp(22px, 2vw, 38px); }
+  .ref-home .ref-section__head p  { font-size: clamp(11px, 1.1vw, 20px); }
+}
+
+/* --- Metrik bandi --------------------------------------------------------- */
+
+/* Referansta hucre basligi ikona gore belirgin sekilde iri; bizde 15 px
+ * kalmisti ve 31 px'lik ikonun yaninda kuculmus duruyordu.
+ *
+ * Referansin olculen degeri 1440'ta ~26 px. Oraya cikilmadi: hucre o zaman
+ * ~77 px oluyor ve `reference-parity-check`in 56-72 px butcesini asiyor.
+ * Butce sayfayi yogun tutmak icin konmus bir tasarim hedefi; onu tek
+ * basima gevsetmek yerine butcenin izin verdigi en iri degerde durduk.
+ * Birebir 26 px istenirse once o butcenin yukseltilmesi gerekir.
+ */
+@media (min-width: 941px) {
+  .ref-home .ref-metric strong { font-size: clamp(15px, 1.4vw, 26px); }
+  .ref-home .ref-metric small  { font-size: clamp(11px, .9vw, 17px); }
+
+  .ref-home .ref-metric__icon {
+    inline-size: clamp(31px, 2.6vw, 48px);
+    block-size: clamp(31px, 2.6vw, 48px);
+    flex-basis: clamp(31px, 2.6vw, 48px);
+  }
+
+  /* `reference-parity-final.css` ikonun `svg`'sini ayrica 31 px'e
+     sabitliyor; kapsayiciyi buyutmek tek basina yetmiyor. */
+  .ref-home .ref-metric__icon svg {
+    inline-size: clamp(28px, 2.4vw, 44px);
+    block-size: clamp(28px, 2.4vw, 44px);
+  }
+}
+
+
+/* --- Hizmet kartlari ------------------------------------------------------
+ *
+ * Burada bilerek bir sey degistirilmedi.
+ *
+ * Referans kart 1440 olceginde 190 px: ikon ~34x29, ikon alti bosluk 24 px,
+ * baslik ~17 px, aciklama ~13/17. Bizde kart CI'da en buyuk 156 px ve
+ * `reference-parity-check` 130-165 px bekliyor. Yalnizca ikonu 27 -> 31 px
+ * yapmak bile karti yerelde 173 -> 176 px'e cikardi (CI'da ~159), yani
+ * butceye 6 px kaliyordu — ve bu sanal makinede Google Fonts yuklenmedigi
+ * icin kart yuksekligini yerelde dogrulamak mumkun degil.
+ *
+ * Dogrulanamayan bir riski marjinal bir gorsel kazanc icin almak yerine
+ * kart oldugu gibi birakildi. Kartin referansa cikmasi once 130-165 px
+ * butcesinin yukseltilmesini gerektirir; o, sayfanin genel yogunlugunu
+ * degistiren ayri bir karar.
+ */
