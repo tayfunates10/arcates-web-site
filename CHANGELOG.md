@@ -4,6 +4,19 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (12 Eylül 2026 — B4 parity bütçeleri referans ölçülerine yükseltildi)
+- Site sahibinin kararıyla `reference-parity-check`teki beş bütçe, referansın kendi ölçülerine göre yükseltildi. Gerekçeleri (maket koordinatı → 1440 karşılığı) kontrol dosyasına yazıldı:
+  - içerik rayı 1250–1290 → 1200–1250 (referans oranı %85.1, 1440'ta 1225px)
+  - metrik hücresi 56–72 → 70–88 (referans ~81px)
+  - hizmet kartı 130–165 → 165–215 (referans ~190px)
+  - proje kartı 130–175 → 160–200 (referans ~179px)
+  - sayfa yüksekliği < 2050 → < 2150 (bağımsız ölçüm değil, yukarıdakilerin toplamı)
+- Metrik hücresi referans ölçüsüne çıktı: başlık 20 → 26px, ikon 35 → 37px, hücre 66 → 81px.
+- Hizmet kartları referans ölçüsüne çıktı: ikon 27 → 34px, ikon altı boşluk 10 → 24px, başlık ve açıklama büyüdü; kart 156 → ~196px.
+- Anasayfa içerik rayı 1280 → 1225px; logo ve tüm bölümler referanstaki kenar boşluğuna (1440'ta 107px) oturdu.
+- Metrik etiketi 13px'te bırakıldı: referansın etiketleri kısa, bizimkiler uzun; 15px'te ikinci satıra kaçıp hücreyi 81 → 102px yapıyordu.
+- Ölçülen her değer `@media (min-width: 941px)` altında; mobil korundu.
+
 ### Değiştirildi (12 Eylül 2026 — B3 bölüm başlıkları ve metrik bandı)
 - Sağ tarafında bağlantı olan bölümlerde ("Hizmetlerimiz", "Öne Çıkan Projeler") başlık ve alt yazı referanstaki gibi tek satırda, taban hizasında. Bağlantısız bölümler alt alta kalıyor — referans da öyle.
 - Bölüm başlığı 25.2 → 28.8px, alt yazı 11 → 15.8px.

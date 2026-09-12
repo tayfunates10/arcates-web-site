@@ -47,44 +47,84 @@
 /* Referansta hucre basligi ikona gore belirgin sekilde iri; bizde 15 px
  * kalmisti ve 31 px'lik ikonun yaninda kuculmus duruyordu.
  *
- * Referansin olculen degeri 1440'ta ~26 px. Oraya cikilmadi: hucre o zaman
- * ~77 px oluyor ve `reference-parity-check`in 56-72 px butcesini asiyor.
- * Butce sayfayi yogun tutmak icin konmus bir tasarim hedefi; onu tek
- * basima gevsetmek yerine butcenin izin verdigi en iri degerde durduk.
- * Birebir 26 px istenirse once o butcenin yukseltilmesi gerekir.
+ * Referansin olculen degeri 1440'ta ~26 px ve hucre ~81 px. Site sahibinin
+ * karariyla `reference-parity-check`in metrik butcesi 56-72'den 70-88'e
+ * yukseltildi, boylece referansin kendi olcusune cikilabildi.
  */
 @media (min-width: 941px) {
-  .ref-home .ref-metric strong { font-size: clamp(15px, 1.4vw, 26px); }
-  .ref-home .ref-metric small  { font-size: clamp(11px, .9vw, 17px); }
+  .ref-home .ref-metric strong { font-size: clamp(15px, 1.81vw, 34px); }
+  .ref-home .ref-metric { min-block-size: clamp(64px, 5.6vw, 104px); }
+
+  /* Etiket referansta ~15 px, bizde 13 px. Sebep icerik: referansin
+     etiketleri kisa ("Tamamlanan Proje", "Musteri Memnuniyeti"), bizimkiler
+     uzun ("Her ekranda kusursuz deneyim"). 15 px'te ikinci satira kaciyor
+     ve hucre 81 -> 102 px oluyor. Tek satirda kalmak referansin genel
+     gorunumune 15 px'lik puntodan daha yakin. */
+  .ref-home .ref-metric small { font-size: clamp(11px, .9vw, 17px); }
 
   .ref-home .ref-metric__icon {
-    inline-size: clamp(31px, 2.6vw, 48px);
-    block-size: clamp(31px, 2.6vw, 48px);
-    flex-basis: clamp(31px, 2.6vw, 48px);
+    inline-size: clamp(31px, 2.85vw, 53px);
+    block-size: clamp(31px, 2.85vw, 53px);
+    flex-basis: clamp(31px, 2.85vw, 53px);
   }
 
   /* `reference-parity-final.css` ikonun `svg`'sini ayrica 31 px'e
      sabitliyor; kapsayiciyi buyutmek tek basina yetmiyor. */
   .ref-home .ref-metric__icon svg {
-    inline-size: clamp(28px, 2.4vw, 44px);
-    block-size: clamp(28px, 2.4vw, 44px);
+    inline-size: clamp(28px, 2.57vw, 48px);
+    block-size: clamp(28px, 2.57vw, 48px);
   }
 }
 
 
 /* --- Hizmet kartlari ------------------------------------------------------
  *
- * Burada bilerek bir sey degistirilmedi.
+ * Referans kart 1440 olceginde ~190 px (maket y501..643):
+ *   ikon      y520..541  x 89..114  -> 34 x 29
+ *   ikon alti bosluk 18 maket px    -> 24
+ *   baslik    y559..568             -> ~17
+ *   aciklama  satir basi 13 maket   -> 13 / 17
  *
- * Referans kart 1440 olceginde 190 px: ikon ~34x29, ikon alti bosluk 24 px,
- * baslik ~17 px, aciklama ~13/17. Bizde kart CI'da en buyuk 156 px ve
- * `reference-parity-check` 130-165 px bekliyor. Yalnizca ikonu 27 -> 31 px
- * yapmak bile karti yerelde 173 -> 176 px'e cikardi (CI'da ~159), yani
- * butceye 6 px kaliyordu — ve bu sanal makinede Google Fonts yuklenmedigi
- * icin kart yuksekligini yerelde dogrulamak mumkun degil.
+ * Once butce (130-165 px) bunlarin hicbirini barindirmiyordu; site
+ * sahibinin karariyla 165-215'e yukseltildi. Ust sinir bizim aciklama
+ * metinlerimiz referanstakinden bir satir uzun oldugu icin 190'in biraz
+ * uzerinde.
  *
- * Dogrulanamayan bir riski marjinal bir gorsel kazanc icin almak yerine
- * kart oldugu gibi birakildi. Kartin referansa cikmasi once 130-165 px
- * butcesinin yukseltilmesini gerektirir; o, sayfanin genel yogunlugunu
- * degistiren ayri bir karar.
+ * Mobil dokunulmadi: referansin telefon maketinde hizmet karti gorunmuyor.
  */
+@media (min-width: 941px) {
+  .ref-home .ref-service__icon {
+    inline-size: clamp(31px, 2.78vw, 52px);
+    block-size: clamp(31px, 2.78vw, 52px);
+    margin-block-end: clamp(10px, 1.67vw, 31px);
+  }
+
+  /* `reference-parity-final.css` svg'yi ayrica 25 px'e sabitliyor. */
+  .ref-home .ref-service__icon svg {
+    inline-size: clamp(27px, 2.36vw, 44px);
+    block-size: clamp(27px, 2.36vw, 44px);
+  }
+
+  .ref-home .ref-service h3 { font-size: clamp(13px, 1.18vw, 22px); }
+
+  .ref-home .ref-service p {
+    font-size: clamp(11px, .9vw, 17px);
+    line-height: 1.31;
+  }
+}
+
+/* --- Icerik rayi ---------------------------------------------------------- */
+
+/* Referansta icerik, tasarimin kendi genisliginde (~1863 px) 139..1724
+ * arasinda duruyor: ekranin %85.1'i, kenar basina %7.46. Bizde ray
+ * `min(1280px, 100% - 64px)` idi, yani 1440'ta %88.9 — referanstan genis.
+ * Kenar boslugu `vw` cinsinden yazildi, ust sinir referansin 1586 px'i.
+ *
+ * Yalnizca anasayfa: ic sayfalarin karsilastirilacak bir referansi yok.
+ */
+@media (min-width: 941px) {
+  .is-reference-home .wrap {
+    inline-size: min(1586px, calc(100% - 14.92vw));
+    max-inline-size: none;
+  }
+}
