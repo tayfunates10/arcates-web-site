@@ -1,0 +1,119 @@
+/* Arcates — kahraman bolumu. Referans B2.
+ *
+ * Bu dosya kahramanin SON katmanidir: `HomeController` icindeki stil
+ * listesinin sonunda yuklenir, boylece `reference-parity*.css` icindeki
+ * ayni agirliktaki kurallar burayi geri ezemez.
+ *
+ * --- Olculer nereden geliyor ---------------------------------------------
+ *
+ * B1'de saptandigi gibi referans gorsel 0.583 oraninda kucultulmus ve
+ * tasarimin kendi genisligi ~1863 px. Kahraman metnindeki her blok piksel
+ * olarak olculdu (maket koordinati -> 1440 px karsiligi, carpan 1.326):
+ *
+ *   uste yazi   y121..127  x 80..282     -> 13 px, harf araligi genis
+ *   H1 satir 1  y136..175  x 81..461     -> govde ~46 px
+ *   H1 satir 2  y181..214  x 81..375        satir basi farki 45 -> 1.30
+ *   paragraf    y226..274  en genis 369  -> 16 px / 1.50, en cok 489 px
+ *   butonlar    y292..330  x 80..351     -> yukseklik 52 px
+ *   onay satiri y343..361  x 83..469     -> ~15 px
+ *
+ * Birincil buton zemini duz `#0E77FE` olctu — ust menudeki cagri butonuyla
+ * ayni mavi. Ikincil butonun cercevesi `#184982`, zemini neredeyse siyah.
+ *
+ * --- Neden referansin satir yuksekligi birebir alinmadi -------------------
+ *
+ * Referansin baslugu iki satir ("Isinizi Gelecege Tasiyan / Yazilim
+ * Cozumleri", 42 karakter); bizimki uc satir (68 karakter, panelden gelen
+ * gercek metin). Ucuncu satir 1.30 satir yuksekligiyle kahramani referansin
+ * 411 px'inin epey uzerine cikariyor ve `reference-parity-check`in 360-440
+ * butcesini zorluyor. Bu yuzden satir yuksekligi 1.16'ya alindi: 1.01'deki
+ * sikisiklik gecti, toplam yukseklik referansin yaninda kaldi. Birebir 1.30
+ * icin baslik metninin kisalmasi gerekir; o icerik karari site sahibinin.
+ */
+
+/* --- Baslik --------------------------------------------------------------- */
+
+/* Onceki deger 1.01 idi: satirlar neredeyse birbirine degiyordu.
+ *
+ * Yalnizca masaustunde: dar ekranda baslik bes satira dusuyor ve ayni
+ * artis kahramani 773 -> 806 px yapip `reference-parity-check`in mobil
+ * 520-760 butcesini asiyor. Referansin telefon maketinde kahraman metni
+ * hic gorunmuyor, yani mobil icin elde olculecek bir deger yok; olcum
+ * yokken yerlesik butceyi bozmuyoruz. */
+@media (min-width: 941px) {
+  .ref-home .ref-hero__title { line-height: 1.16; }
+}
+
+/* --- Paragraf ------------------------------------------------------------- */
+
+/* Referansta paragraf basliga gore belirgin sekilde buyuk; bizde 13 px
+   kalmisti. Genislik de referanstaki 489 px'e acildi ki punto buyurken
+   satir sayisi artmasin.
+ *
+ * Masaustune sinirli: asagidaki her deger referansin MASAUSTU goruntusunden
+ * olculdu. Telefon maketinde kahraman metni gorunmuyor, yani mobil icin
+ * olculecek bir referans yok; oradaki mevcut degerler korunuyor. */
+@media (min-width: 941px) {
+  .ref-home .ref-hero__lead {
+    max-width: clamp(360px, 34vw, 633px);
+    font-size: clamp(13px, 1.1vw, 20px);
+    line-height: 1.5;
+  }
+
+  /* --- Butonlar ----------------------------------------------------------- */
+
+  .ref-home .ref-hero__actions .ref-btn {
+    min-block-size: clamp(44px, 3.35vw, 62px);
+    gap: clamp(8px, .75vw, 14px);
+    padding-inline: clamp(16px, 1.35vw, 25px);
+    border-radius: clamp(7px, .64vw, 12px);
+    font-size: clamp(12px, .95vw, 18px);
+  }
+}
+
+/* Referansta gradyan ve parlak cerceve yok; duz mavi bir dikdortgen. */
+.ref-home .ref-hero__actions .ref-btn--primary {
+  border-color: transparent;
+  background: #0E77FE;
+  box-shadow: 0 8px 24px rgba(14, 119, 254, .22);
+}
+
+.ref-home .ref-hero__actions .ref-btn--primary:hover { background: #2A8CFF; }
+
+.ref-home .ref-hero__actions .ref-btn--ghost {
+  border-color: #184982;
+  background: rgba(1, 10, 22, .72);
+}
+
+/* Ok isaretleri: referansta birincil buton duz ok, ikincil daire icinde ok
+   tasiyor. Ikisi de dekoratif (`aria-hidden`), satir ici SVG. */
+.ref-home .ref-btn__mark {
+  flex: 0 0 auto;
+  inline-size: clamp(13px, 1vw, 19px);
+  block-size: auto;
+}
+
+.ref-home .ref-btn--ghost .ref-btn__mark { inline-size: clamp(16px, 1.25vw, 23px); }
+
+/* --- Onay satiri ---------------------------------------------------------- */
+
+/* Referansta tik duz duruyor; bizde cember icindeydi ve kapali bir onay
+   kutusu gibi okunuyordu. Satir 940 px altinda zaten gizli. */
+@media (min-width: 941px) {
+  .ref-home .ref-trust {
+    gap: clamp(14px, 1.5vw, 28px);
+    font-size: clamp(11px, .95vw, 18px);
+  }
+
+  .ref-home .ref-trust li { gap: clamp(6px, .55vw, 10px); }
+}
+
+.ref-home .ref-trust__mark {
+  flex: 0 0 auto;
+  inline-size: clamp(12px, .95vw, 18px);
+  block-size: auto;
+  color: #34B5FF;
+}
+
+/* Eski cember kurali `reference-home.css` icinde `.ref-trust span` ile
+   geliyordu; isaret artik `svg`, o kural bu ogeye degmiyor. */

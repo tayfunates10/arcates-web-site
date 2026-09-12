@@ -50,6 +50,25 @@ $icons = [
     'shield'   => '<path d="M12 3l7 3v5.5c0 4.3-2.9 8.3-7 9.5-4.1-1.2-7-5.2-7-9.5V6l7-3Z"/><path d="m9 12 2.2 2.2L15.5 10"/>',
 ];
 
+/* Kahraman butonlarindaki oklar ve onay isaretleri. Referansta birincil
+   buton duz bir ok, ikincil buton daire icinde ok tasiyor; onay satirinda
+   cerceve degil duz bir tik var.
+
+   Metin glifi (→ ↗ ✓) yerine satir ici SVG: glif fonta bagli, font
+   yuklenmezse kutu olarak cizilir. Depoda bu donusum daha once bilgi
+   kartlari ve hizmet ikonlari icin de yapildi. */
+$heroMarks = [
+    'arrow'        => '<svg class="ref-btn__mark" viewBox="0 0 16 12" fill="none" stroke="currentColor"'
+        . ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+        . '<path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5"/></svg>',
+    'arrowCircled' => '<svg class="ref-btn__mark" viewBox="0 0 20 20" fill="none" stroke="currentColor"'
+        . ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+        . '<circle cx="10" cy="10" r="8.25"/><path d="M6.5 10h7M10.5 7l3 3-3 3"/></svg>',
+    'check'        => '<svg class="ref-trust__mark" viewBox="0 0 14 14" fill="none" stroke="currentColor"'
+        . ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+        . '<path d="m2 7.5 3.2 3.2L12 3.8"/></svg>',
+];
+
 // Only trusted local paths are rendered; CMS icon names never become SVG markup.
 $renderIcon = static function (string $key) use ($icons): string {
     $path = $icons[$key] ?? $icons['layout'];
@@ -90,20 +109,20 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
         <div class="ref-hero__actions">
           <?php if ($heroCta1 !== null && ($heroCta1['label'] ?? '') !== ''): ?>
             <a class="ref-btn ref-btn--primary" href="<?= Security::e(url((string) ($heroCta1['url'] ?? '/iletisim'))) ?>">
-              <?= Security::e((string) $heroCta1['label']) ?><span aria-hidden="true">→</span>
+              <?= Security::e((string) $heroCta1['label']) ?><?= $heroMarks['arrow'] ?>
             </a>
           <?php endif; ?>
           <?php if ($heroCta2 !== null && ($heroCta2['label'] ?? '') !== ''): ?>
             <a class="ref-btn ref-btn--ghost" href="<?= Security::e(url((string) ($heroCta2['url'] ?? '/referanslar'))) ?>">
-              <?= Security::e((string) $heroCta2['label']) ?><span aria-hidden="true">↗</span>
+              <?= Security::e((string) $heroCta2['label']) ?><?= $heroMarks['arrowCircled'] ?>
             </a>
           <?php endif; ?>
         </div>
 
         <ul class="ref-trust" aria-label="<?= Security::e(__('service_benefits')) ?>">
-          <li><span aria-hidden="true">✓</span><?= Security::e(__('free_consultation')) ?></li>
-          <li><span aria-hidden="true">✓</span><?= Security::e(__('quick_reply')) ?></li>
-          <li><span aria-hidden="true">✓</span><?= Security::e(__('tailored_solution')) ?></li>
+          <li><?= $heroMarks['check'] ?><?= Security::e(__('free_consultation')) ?></li>
+          <li><?= $heroMarks['check'] ?><?= Security::e(__('quick_reply')) ?></li>
+          <li><?= $heroMarks['check'] ?><?= Security::e(__('tailored_solution')) ?></li>
         </ul>
       </div>
 
