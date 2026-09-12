@@ -4,6 +4,14 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (12 Eylül 2026 — B2 kahraman referans uyumu)
+- Başlık satır yüksekliği 1.01'den 1.16'ya çıkarıldı; satırlar neredeyse birbirine değiyordu.
+- Paragraf 13px'ten 15.8px'e, genişliği referanstaki 489px'e getirildi.
+- Birincil çağrı butonu gradyan yerine düz `#0E77FE` (üst menüdeki butonla aynı mavi); yükseklik 42'den 48px'e. İkincil butonun çerçevesi `#184982`.
+- Buton okları ve onay işaretleri metin glifi yerine satır içi SVG oldu; ikincil buton referanstaki gibi daire içinde ok taşıyor.
+- Onay işaretlerindeki çember kaldırıldı — kapalı bir onay kutusu gibi okunuyordu; referansta düz mavi tik var.
+- Ölçülen her değer `@media (min-width: 941px)` altında: referansın telefon maketinde kahraman metni görünmüyor, mobilde ölçülecek referans yok.
+
 ### Değiştirildi (11 Eylül 2026 — B1 üst menü referans uyumu)
 - Üst menü referans görselden piksel olarak ölçülen değerlere getirildi: bant 66px, marka 212×50, öğe aralığı 42px, öğe yazısı 13px/500, çağrı butonu 114×36 düz `#0E78FE` ve ok. Değerler `vw` cinsinden yazıldı; referansın kendi genişliğinde (≈1863px) birebir, dar ekranda orantılı küçülür.
 - Menüye "Ana Sayfa" öğesi eklendi. Referans düzende açık sayfa işareti bu öğenin üzerinde duruyor; öğe olmadan işaret anasayfada hiç görünmüyordu.

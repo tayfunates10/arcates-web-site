@@ -222,6 +222,14 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 
 *Koyu yüzey kuralı.* Menü koyu bir bant; `--fg` (açık tema metni, `#062244`) burada kullanılamaz, kontrast 1.1:1'e düşer. Aynı hata açma düğmesinin çubuklarındaydı: `site.css` çubukları `var(--fg)` ile boyuyordu ve düğme 1.2:1 kontrastla pratikte görünmüyordu. Menü katmanındaki her renk bant zeminine karşı en az 4.5:1 olmalı; F-HD-b ve F-HD-g bunu hesaplayarak doğrular.
 
+**Kahraman (bölüm 2).** `public/assets/css/reference-hero.css` kahramanın son katmanıdır; `HomeController` stil listesinin **sonunda** yüklenir, yoksa `reference-parity*.css` içindeki aynı ağırlıktaki kurallar ezer. Ölçüler referansın masaüstü görüntüsünden alındı (bölüm 1'deki 0.583 ölçeği): başlık gövdesi ~46px ve satır başı farkı 45 maket px (oran 1.30), paragraf 16px/1.50 en çok 489px, butonlar 52px, onay satırı ~15px. Birincil buton zemini düz `#0E77FE` — üst menüdeki çağrı butonuyla aynı mavi; ikincil butonun çerçevesi `#184982`. Testler F-HR-a…f.
+
+*Satır yüksekliği neden 1.30 değil.* Referansın başlığı iki satır (42 karakter), bizimki panelden gelen gerçek metinle üç satır (68 karakter). Üçüncü satır 1.30 oranıyla kahramanı referansın 411px'inin epey üzerine çıkarır. Oran 1.16'da: eski 1.01'deki sıkışıklık geçti, toplam yükseklik referansın yanında kaldı. Birebir 1.30 başlık metninin kısalmasını gerektirir; o içerik kararıdır.
+
+*Ölçümün olmadığı yerde bütçe geçerlidir.* Referansın telefon maketinde kahraman metni görünmüyor. Bu yüzden bölüm 2'deki her ölçülen değer `@media (min-width: 941px)` altındadır; dar ekranda mevcut değerler korunur. Aynı kural bölüm 1'de mobil bant yüksekliği için de uygulandı: elde sağlam ölçüm yokken `reference-parity-check` bütçesi bozulmaz.
+
+*Fonta bağlı glif kullanılmaz.* Buton okları (`→`, `↗`) ve onay işaretleri (`✓`) satır içi SVG'dir. Glif fonta bağlıdır; font yüklenmezse kutu olarak çizilir. F-HR-c metin glifinin geri dönmesini engeller.
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.
