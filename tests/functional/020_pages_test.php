@@ -270,5 +270,10 @@ test('F-10', 'Menü sırası değişince on yüze yansır', function (): void {
     assertSame('İletişim', $reordered[0]['label'], 'Yeni sıra on yüze yansımalı');
 
     arc_logout_test();
+
+    // Bu test menuyu bastan yaziyor. Birakilan iz sonraki testleri
+    // etkilemesin diye menu tohumdaki haline geri getirilir:
+    // `Seeder::menus()` yalnizca tablo bosken calisir.
     $db->run('DELETE FROM menu_items');
+    (new Arcates\Core\Seeder($db))->menus();
 });

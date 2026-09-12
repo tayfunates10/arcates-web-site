@@ -4,6 +4,20 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (11 Eylül 2026 — B1 üst menü referans uyumu)
+- Üst menü referans görselden piksel olarak ölçülen değerlere getirildi: bant 66px, marka 212×50, öğe aralığı 42px, öğe yazısı 13px/500, çağrı butonu 114×36 düz `#0E78FE` ve ok. Değerler `vw` cinsinden yazıldı; referansın kendi genişliğinde (≈1863px) birebir, dar ekranda orantılı küçülür.
+- Menüye "Ana Sayfa" öğesi eklendi. Referans düzende açık sayfa işareti bu öğenin üzerinde duruyor; öğe olmadan işaret anasayfada hiç görünmüyordu.
+- Açık sayfa işareti ölçülen renklere alındı: yazı `#5AC8F5`, alt çizgi `#3988BC`. Açılır menüde alt çizgi yerine sol şerit.
+- Menü 1200px üstünde ekran ortasına hizalandı; akış içinde ortalandığında marka genişliği kadar sağa kayıyordu.
+- Anasayfada bant alt çizgisi kaldırıldı, zemine referanstaki ince diyagonal ışık huzmeleri eklendi (ölçülen şiddet, dekoratif).
+- Mobil bantta marka, çağrı butonu ve açma düğmesi referans oranlarına getirildi; açma düğmesinin kutusu kaldırıldı. Bant yüksekliği 66px'lik mevcut bütçede bırakıldı: telefon maketinden güvenle okunamıyor.
+
+### Düzeltildi (11 Eylül 2026 — B1 üst menü)
+- Açma düğmesinin çubukları açık tema rengiyle (`--fg`, `#062244`) koyu bant üzerine çiziliyordu; ölçülen kontrast 1.2:1 idi, yani mobil menü düğmesi pratikte görünmüyordu. Çubuklar beyaza alındı.
+- `reference-header.css` sayfaya özel stillerden önce yükleniyordu; `.is-reference-home` önekli kurallar (0,2,0) menü katmanını geri eziyordu. Menü stili son katmana taşındı.
+- İç sayfalarda panel düzeni yalnızca `.is-reference-home` altında tanımlıydı; menü akıştan çıkınca yan blok sola düşüp menünün üzerine biniyordu. Düzen her sayfa için kuruldu.
+- `F-10` testi menü satırlarının tümünü silip geri koymuyordu; sonraki testler boş menüyle çalışıyordu. Test kendi izini temizliyor.
+
 ### Düzeltildi (11 Eylül 2026 referans ikonları)
 - Ana sayfa bilgi kartlarındaki fonta bağlı semboller yerel SVG ikonlarla değiştirildi; hizmet/süreç/avantaj ikonları aynı çizgi ve sabit mavi ışık ailesine alındı.
 - Süreç ikonları eklendi; masaüstü numaraları ikon altına taşındı. Kolonlar CMS'deki gerçek adım sayısını izler.
@@ -297,3 +311,22 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Yeni testler F-OD-a…e: dile göre çeviri, serbest metnin korunması,
   yapısal verinin ham kalması, ön yüzde gün kodunun görünmemesi ve
   şablonlarda çevrilmeden basan yer kalmaması.
+
+### Değiştirildi (B1 — üst menü)
+- Menü masaüstünde satırın ortasına alındı; marka solda, dil seçici ve
+  "Teklif Al" sağda kalıyor. Referans üst menü düzeni bu.
+- Açık sayfanın menü öğesi artık işaretli: masaüstünde alt çizgi, dar ekrandaki
+  açılır menüde sol şerit. Ekran okuyucu için `aria-current="page"` veriliyor.
+- Aktif öğe canonical adrese göre belirleniyor (`Front\Controller::markCurrent()`).
+  Alt sayfadayken üst öğe açık kalıyor — `/referanslar/akcay-ornek` açıkken
+  "Örnek siteler" yanıyor. Anasayfa öğesi ('/') bu kuralın dışında, aksi halde
+  her sayfada yanardı.
+- Menü öğeleri değişmedi; hepsi panelden geliyor.
+- Yeni katman `public/assets/css/reference-header.css`, tüm sayfalara yükleniyor.
+- Yeni testler F-HD-a…d.
+
+### Düzeltildi (koyu menüde okunmayan aktif öğe)
+- Aktif menü öğesine önce `var(--fg)` verilmişti; o açık tema metin rengi
+  (`#062244`) ve üst menü koyu bir yüzey (`#081426`) — kontrast 1.1:1, yani
+  metin görünmüyordu. Ters yüzey rolü `--fg-on-invert` ile 18.45:1'e çıktı.
+- `F-HD-b` açık tema metin renginin bu dosyada kullanılmasını engelliyor.

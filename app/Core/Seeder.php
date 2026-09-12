@@ -378,6 +378,7 @@ final class Seeder
         }
 
         $main = [
+            ['label' => 'Ana Sayfa',   'url' => '/'],
             ['label' => 'Hizmetler',   'url' => '/web-tasarim'],
             ['label' => 'Bölgeler',    'url' => '/edremit-web-tasarim'],
             ['label' => 'Örnek siteler', 'url' => '/referanslar'],
