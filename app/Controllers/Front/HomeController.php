@@ -72,6 +72,9 @@ final class HomeController extends Controller
                     // Kahramanin son katmani: parity dosyalarindan sonra
                     // gelmeli, aksi halde ayni agirliktaki kurallar eziyor.
                     'css/reference-hero.css',
+
+                    // Bolum basliklari ve metrik bandi; kahramandan sonra.
+                    'css/reference-sections.css',
                 ],
             ],
         ]);
