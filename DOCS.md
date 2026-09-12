@@ -232,7 +232,19 @@ Anasayfa sabit sıralı bölümlerden oluşur. Her bölüm panelden açılıp ka
 
 **Bölüm başlıkları ve metrik bandı (bölüm 3).** `public/assets/css/reference-sections.css` bu katmanın son sözüdür; `HomeController` listesinin sonunda yüklenir. Referansta **sağ tarafında bağlantı olan** bölümlerde ("Hizmetlerimiz", "Öne Çıkan Projeler") başlık ve alt yazı tek satırda, taban hizasında durur; **bağlantısız** bölümlerde ("Nasıl Çalışıyoruz?", "Neden ARCATES?") alt alta. Bu ayrım `--local` sınıfıyla birebir örtüşür ve kural ona göre yazılmıştır. Ölçüler: başlık ~29px, alt yazı ~16px, metrik başlığı ~26px, metrik etiketi ~15px, metrik ikonu ~37px (hepsi 1440 karşılığı). Testler F-SC-a…e.
 
-*Parity bütçesi ölçümden önce gelir.* Referansın kendi ölçüleri, bu depodaki üç parity bütçesinden daha geniştir: metrik hücresi ölçümde ~81px iken bütçe 56–72; hizmet kartı ~190px iken bütçe 130–165; `.wrap` oranı 1225px'e denk gelirken ray 1250–1290. Bu bütçeler sayfayı yoğun tutmak için konmuş tasarım hedefleridir ve CI onları uygular. Bölüm 3'te metrik başlığı bütçenin izin verdiği en iri değerde (20px) bırakıldı, hizmet kartına hiç dokunulmadı. Referansa tam çıkmak önce ilgili bütçenin yükseltilmesini gerektirir; bu, sayfanın genel yoğunluğunu değiştiren ayrı bir karardır.
+*Parity bütçeleri referans ölçüsüne göre yükseltildi (bölüm 4).* Bu depodaki bütçelerin bir bölümü referansın kendi ölçülerinden dardı ve bölüm bölüm ilerlerken üç kez yola çıktı. Site sahibinin kararıyla beşi yükseltildi; her birinin gerekçesi `tools/browser/reference-parity-check.mjs` içinde ölçümle birlikte yazılıdır:
+
+| | Referans ölçümü | Eski bütçe | Yeni bütçe |
+|---|---|---|---|
+| İçerik rayı | 1225px (%85.1) | 1250–1290 | 1200–1250 |
+| Metrik hücresi | ~81px | 56–72 | 70–88 |
+| Hizmet kartı | ~190px | 130–165 | 165–215 |
+| Proje kartı | ~179px | 130–175 | 160–200 |
+| Sayfa yüksekliği | — | < 2050 | < 2150 |
+
+Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukarıdakilerin toplamıdır ve eskisiyle aynı koruma payını (~%4) bırakacak şekilde seçilmiştir — runaway bir düzeni hâlâ yakalar, referans ölçülerini cezalandırmaz. Bir bütçeyi ileride değiştirmek, referanstan yeni bir ölçüm ve aynı biçimde yazılmış bir gerekçe gerektirir. Testler F-SC-d…f.
+
+*İçerik uzunluğu ölçüyü bastırabilir.* Metrik etiketi referansta ~15px, bizde 13px: referansın etiketleri kısa ("Tamamlanan Proje"), bizimkiler uzun ("Her ekranda kusursuz deneyim") ve 15px'te ikinci satıra kaçıp hücreyi 81 → 102px yapıyordu. Aynı durum bölüm 2'deki başlık satır yüksekliğinde de vardı. Kural: ölçü ile içerik çakıştığında referansın **genel görünümünü** koruyan değer seçilir ve sebebi yazılır.
 
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
