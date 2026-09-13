@@ -69,6 +69,14 @@ $heroMarks = [
         . '<path d="m2 7.5 3.2 3.2L12 3.8"/></svg>',
 ];
 
+/* Surec adimlarini birbirine baglayan kesikli cizginin ucundaki ok.
+   Referansta her bosluk bir ok basiyla bitiyor; bizde duz kesikli cizgi
+   vardi. Cizgi CSS'te, yalnizca ok basi burada. Dekoratif. */
+$processChevron = '<span class="ref-process__link" aria-hidden="true">'
+    . '<svg class="ref-process__chevron" viewBox="0 0 8 12" fill="none" stroke="currentColor"'
+    . ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'
+    . '<path d="m1.5 1.5 5 4.5-5 4.5"/></svg></span>';
+
 // Only trusted local paths are rendered; CMS icon names never become SVG markup.
 $renderIcon = static function (string $key) use ($icons): string {
     $path = $icons[$key] ?? $icons['layout'];
@@ -262,6 +270,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
           <?php foreach ($stepItems as $index => $step): ?>
             <li>
               <span class="ref-process__dot" aria-hidden="true"><?= $renderIcon((string) ($step['icon'] ?? $processIcons[$index] ?? 'layout')) ?></span>
+              <?php if ($index < count($stepItems) - 1): ?><?= $processChevron ?><?php endif; ?>
               <div><span class="ref-process__number" aria-hidden="true"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span><h3><?= Security::e((string) ($step['title'] ?? '')) ?></h3><p><?= Security::e((string) ($step['text'] ?? '')) ?></p></div>
             </li>
           <?php endforeach; ?>
