@@ -30,6 +30,20 @@ test('F-FC-b', 'Tanınmayan platformda ikon boş döner', function (): void {
     assertSame('', social_icon('', ''), 'Boş girdi ikon üretmemeli');
 });
 
+test('F-FC-g', 'Platform açık alan adıyla eşleşir, alt dizeyle değil', function (): void {
+    // Once alt dize aranıyordu ve `x` anahtari tek karakter oldugu icin
+    // icinde "x" gecen HER alan adi X ikonu aliyordu; yoneticinin etiketi
+    // kayboluyordu. Codex incelemesinin bildirdigi hata.
+    foreach (['https://example.com/user', 'https://nextdoor.com/user', 'https://xkcd.com/'] as $url) {
+        assertSame('', social_icon($url, 'Kişisel site'), 'Alt dize eşleşmemeli: ' . $url);
+    }
+
+    // Alan adinin kendisi ve alt alan adi eslesmeli.
+    assertNotSame('', social_icon('https://x.com/arcates', 'Bağlantı'), 'Alan adının kendisi eşleşmeli');
+    assertNotSame('', social_icon('https://www.linkedin.com/company/x', 'Bağlantı'), 'www eşleşmeli');
+    assertNotSame('', social_icon('https://m.youtube.com/@x', 'Bağlantı'), 'Alt alan adı eşleşmeli');
+});
+
 test('F-FC-c', 'Alan adı tanınmazsa etiket adından çözülür', function (): void {
     // Yonetici kisaltilmis bir adres girmis olabilir.
     assertNotSame('', social_icon('https://lnkd.in/abc', 'LinkedIn'), 'Etiket adı yedek olmalı');

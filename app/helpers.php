@@ -277,34 +277,55 @@ function social_icon(string $url, string $label): string
         'whatsapp'  => '<path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z"/><path d="M8.8 8.4c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .6.5l.7 1.7c.1.2 0 .4-.1.6l-.4.5c-.1.2-.2.3 0 .6a6 6 0 0 0 2.8 2.4c.3.1.5.1.6-.1l.5-.6c.2-.2.3-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .5-.3 1.3-1.4 1.5-1.6.3-4-1-5.7-2.9-1.3-1.5-1.7-2.9-1.7-3.7 0-.6.2-1 .4-1.2Z"/>',
     ];
 
-    static $aliases = ['twitter' => 'x', 'wa' => 'whatsapp', 'yt' => 'youtube', 'insta' => 'instagram', 'fb' => 'facebook'];
+    /* Platform ACIK alan adiyla eslesir, alt dizeyle degil.
+     *
+     * Once `str_contains($host, $name)` kullaniyordum; `x` anahtari tek
+     * karakter oldugu icin icinde "x" gecen her alan adi (example.com,
+     * nextdoor.com) X ikonu aliyordu ve yoneticinin etiketi kayboluyordu.
+     * Artik ya alan adinin kendisi ya da alt alan adi olarak eslesir. */
+    static $domains = [
+        'linkedin.com'  => 'linkedin',
+        'lnkd.in'       => 'linkedin',
+        'instagram.com' => 'instagram',
+        'youtube.com'   => 'youtube',
+        'youtu.be'      => 'youtube',
+        'github.com'    => 'github',
+        'facebook.com'  => 'facebook',
+        'fb.com'        => 'facebook',
+        'fb.me'         => 'facebook',
+        'x.com'         => 'x',
+        'twitter.com'   => 'x',
+        't.co'          => 'x',
+        'whatsapp.com'  => 'whatsapp',
+        'wa.me'         => 'whatsapp',
+    ];
+
+    /* Etiketten cozerken TAM eslesme; burada da alt dize aranmaz. */
+    static $labels = [
+        'linkedin'  => 'linkedin',
+        'instagram' => 'instagram',
+        'youtube'   => 'youtube',
+        'github'    => 'github',
+        'facebook'  => 'facebook',
+        'x'         => 'x',
+        'twitter'   => 'x',
+        'whatsapp'  => 'whatsapp',
+    ];
 
     $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+    $host = preg_replace('~^www\.~', '', $host) ?? $host;
     $key  = '';
 
-    foreach (array_keys($paths) as $name) {
-        if ($host !== '' && str_contains($host, $name)) {
+    foreach ($domains as $domain => $name) {
+        if ($host === $domain || str_ends_with($host, '.' . $domain)) {
             $key = $name;
             break;
         }
     }
 
     if ($key === '') {
-        foreach ($aliases as $alias => $name) {
-            if ($host !== '' && str_contains($host, $alias)) {
-                $key = $name;
-                break;
-            }
-        }
-    }
-
-    if ($key === '') {
         $sade = strtolower(preg_replace('~[^a-z]~i', '', $label) ?? '');
-        if (isset($paths[$sade])) {
-            $key = $sade;
-        } elseif (isset($aliases[$sade])) {
-            $key = $aliases[$sade];
-        }
+        $key  = $labels[$sade] ?? '';
     }
 
     if ($key === '') {

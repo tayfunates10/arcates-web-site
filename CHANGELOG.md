@@ -12,6 +12,7 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - `/ara` rotası yakalayıcı slug deseninden önce tanımlandı; sonra tanımlanırsa bir sayfa slug'ı sanılırdı.
 
 ### Eklendi (13 Eylül 2026 — B7 alt bilgi sosyal ikonları ve yukarı çık)
+- Sosyal bağlantı platformu açık alan adıyla eşleşiyor. İlk sürüm alt dize arıyordu; `x` anahtarı tek karakter olduğu için içinde "x" geçen her alan adı (`example.com`, `nextdoor.com`) X ikonu alıyor ve yöneticinin etiketi kayboluyordu. (Codex incelemesi)
 - Alt bilgideki sosyal bağlantılar artık referanstaki gibi ikon olarak basılıyor. Platform adresin alan adından, olmazsa etiket adından çözülür; tanınmayan platformda ikon yerine etiket metni basılır, yani girilen bağlantı kaybolmaz. LinkedIn, Instagram, YouTube, GitHub, Facebook, X ve WhatsApp tanınır.
 - Yukarı çık düğmesi eklendi (referansta alt bilginin sağ altında). İşaretlemede `hidden` gelir, yalnızca JS açar; `opacity` + `transform` ile görünür, `prefers-reduced-motion` altında ani.
 - `reference-chrome.css` eklendi: alt bilgi ve yukarı çık her sayfada olduğu için anasayfa katmanlarından ayrı, genel olarak yüklenir.
