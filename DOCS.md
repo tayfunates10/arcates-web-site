@@ -264,6 +264,16 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *Yukarı çık.* İşaretlemede `hidden` gelir ve yalnızca `site.js` onu açar: JS kapalıyken düğmenin işlevi olmadığı için hiç görünmez. Görünürlük `opacity` + `transform` ile, kaydırma dinleyicisi mevcut rAF kuyruğuna bağlanır; `prefers-reduced-motion` altında hem geçiş hem de kaydırmanın kendisi ani olur. DOCS 7.1'e uygundur ve F-FC-f bunu test olarak korur.
 
+**Site içi arama (bölüm 8).** `/ara` adresinde, `Front\SearchController` + `Models\Search`. Referansta üst menüde bir arama düğmesi vardır; B1'de bilerek eklenmemişti çünkü arkasında çalışan bir arama yoktu — ziyaretçiye bir şey vaat edip vermemek olurdu. Bu modül o boşluğu kapatır ve düğme artık gerçek bir hedefe gider. Testler F-SR-a…g.
+
+*Kapsam.* Yalnızca **yayınlanmış** içerik: sayfalar, blog yazıları ve örnek siteler. Taslak, ileri tarihli ya da pasif kayıt sonuçlarda çıkmaz. Tür başına en çok 8 sonuç döner; sonuçlar tür adıyla gruplanır.
+
+*Güvenlik.* Her sorgu hazırlanmış ifadedir. Aranan metindeki LIKE jokerleri (`%`, `_`, `\`) kaçışlanır ve sorgu `ESCAPE '\\'` ile çalışır; aksi halde tek başına `%` yazan ziyaretçi bütün tabloyu döndürürdü (F-SR-b). Sorgu iki karakterden kısaysa hiç çalıştırılmaz (F-SR-a), 80 karakterde kesilir. Aranan metin sayfaya `Security::e()` ile basılır (F-SR-e). Arama GET'tir, veri değiştirmez, bu yüzden CSRF gerekmez.
+
+*Rota sırası.* `/ara`, `/{slug}` yakalayıcı deseninden **önce** tanımlanmalıdır; sonra tanımlanırsa bir sayfa slug'ı sanılır ve arama hiç çalışmaz. F-SR-g sırayı korur.
+
+*Dizine girmez.* Sonuç sayfaları `noindex,follow` işaretlenir: arama sonucu sayfaları ince içerik sayılır ve kendi sayfalarımızla rekabet eder (F-SR-d).
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.

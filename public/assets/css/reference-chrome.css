@@ -73,3 +73,61 @@
 @media (prefers-reduced-motion: reduce) {
   .to-top { transition: none; transform: none; }
 }
+
+/* --- Arama sonuclari ------------------------------------------------------ */
+
+.search__title { margin: 0; font-size: clamp(26px, 2.6vw, 40px); }
+
+.search__intro { margin: 8px 0 0; color: var(--fg-muted); }
+
+.search__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block-start: 20px;
+}
+
+/* Ic sayfalar acik temali (gövde zemini beyaz); alan da site jetonlarini
+   kullanir, sabit koyu renk degil. */
+.search__form input[type="search"] {
+  flex: 1 1 260px;
+  min-inline-size: 0;
+  padding: 12px 14px;
+  border: var(--hairline) solid var(--border);
+  border-radius: var(--r);
+  color: var(--fg);
+  background: var(--bg-raised);
+  font: inherit;
+}
+
+.search__form input[type="search"]:focus-visible {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 var(--sp-1) rgba(28, 123, 242, .1);
+}
+
+.search__note { margin-block-start: 18px; color: var(--fg-muted); }
+
+.search__group { margin-block-start: 26px; }
+
+.search__group-title {
+  margin: 0 0 10px;
+  font-size: clamp(15px, 1.2vw, 20px);
+  color: var(--brand);
+}
+
+.search__list { margin: 0; padding: 0; list-style: none; }
+
+.search__item {
+  padding-block: 12px;
+  border-block-start: var(--hairline) solid var(--border);
+}
+
+.search__link { font-weight: 600; text-decoration: none; }
+
+.search__link:hover { text-decoration: underline; }
+
+.search__excerpt {
+  margin: 4px 0 0;
+  color: var(--fg-muted);
+  font-size: .92em;
+}

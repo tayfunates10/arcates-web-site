@@ -17,4 +17,12 @@ return [
     // bu etiketlere cevrilir, yapisal veride ham kod kalir.
     'day_mo'=>'Pzt','day_tu'=>'Sal','day_we'=>'Çar','day_th'=>'Per','day_fr'=>'Cum','day_sa'=>'Cmt','day_su'=>'Paz',
     'back_to_top'        => 'Başa dön',
+    'search'              => 'Ara',
+    'search_intro'        => 'Sayfalarda, blog yazılarında ve örnek sitelerde arayın.',
+    'search_label'        => 'Aranacak metin',
+    'search_placeholder'  => 'Ne arıyorsunuz?',
+    'search_too_short'    => 'En az %d karakter yazın.',
+    'search_no_results'   => '"%s" için sonuç bulunamadı.',
+    'search_result_count' => '"%2$s" için %1$d sonuç.',
+    'pages'               => 'Sayfalar',
 ];

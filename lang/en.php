@@ -11,4 +11,12 @@ return [
     // bu etiketlere cevrilir, yapisal veride ham kod kalir.
     'day_mo'=>'Mon','day_tu'=>'Tue','day_we'=>'Wed','day_th'=>'Thu','day_fr'=>'Fri','day_sa'=>'Sat','day_su'=>'Sun',
     'back_to_top'        => 'Back to top',
+    'search'              => 'Search',
+    'search_intro'        => 'Search pages, blog posts and sample sites.',
+    'search_label'        => 'Search text',
+    'search_placeholder'  => 'What are you looking for?',
+    'search_too_short'    => 'Type at least %d characters.',
+    'search_no_results'   => 'No results for "%s".',
+    'search_result_count' => '%1$d results for "%2$s".',
+    'pages'               => 'Pages',
 ];

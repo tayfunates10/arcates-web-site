@@ -4,6 +4,13 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Eklendi (13 Eylül 2026 — B8 site içi arama)
+- `/ara` adresinde site içi arama: yayınlanmış sayfalar, blog yazıları ve örnek siteler; sonuçlar tür adıyla gruplanır, tür başına en çok 8 kayıt.
+- Üst menüye referanstaki büyüteç düğmesi eklendi. B1'de bilerek konmamıştı; arkasında çalışan bir arama olmadan ziyaretçiye boş bir vaat olurdu.
+- LIKE jokerleri (`%`, `_`, `\`) kaçışlanır ve sorgu `ESCAPE` ile çalışır; iki karakterden kısa sorgu hiç çalıştırılmaz, 80 karakterde kesilir.
+- Sonuç sayfaları `noindex,follow`: arama sonucu sayfaları ince içerik sayılır.
+- `/ara` rotası yakalayıcı slug deseninden önce tanımlandı; sonra tanımlanırsa bir sayfa slug'ı sanılırdı.
+
 ### Eklendi (13 Eylül 2026 — B7 alt bilgi sosyal ikonları ve yukarı çık)
 - Alt bilgideki sosyal bağlantılar artık referanstaki gibi ikon olarak basılıyor. Platform adresin alan adından, olmazsa etiket adından çözülür; tanınmayan platformda ikon yerine etiket metni basılır, yani girilen bağlantı kaybolmaz. LinkedIn, Instagram, YouTube, GitHub, Facebook, X ve WhatsApp tanınır.
 - Yukarı çık düğmesi eklendi (referansta alt bilginin sağ altında). İşaretlemede `hidden` gelir, yalnızca JS açar; `opacity` + `transform` ile görünür, `prefers-reduced-motion` altında ani.

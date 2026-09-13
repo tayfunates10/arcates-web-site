@@ -169,6 +169,15 @@ $router->post('/iletisim', 'Front\ContactController@submit');
 $router->get('/tesekkurler', 'Front\ContactController@thanks');
 
 // ---------------------------------------------------------------------------
+// Site ici arama  (DOCS.md 4.1)
+//
+// Yakalayici slug deseninden ONCE tanimlanir; aksi halde `/ara` bir sayfa
+// slug'i sanilir ve arama hic calismaz.
+// ---------------------------------------------------------------------------
+
+$router->get('/ara', 'Front\SearchController@index');
+
+// ---------------------------------------------------------------------------
 // On yuz sayfalari  (DOCS.md 4.1 - 4.4)
 //
 // Hizmet, ilce ve sektor sayfalari da tek duzey slug ile calisir; tur

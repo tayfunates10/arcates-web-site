@@ -261,3 +261,59 @@
     font-weight: 600;
   }
 }
+
+/* --- Arama dugmesi --------------------------------------------------------
+ *
+ * Referansta cagri butonunun solunda ince cerceveli bir daire icinde
+ * buyutec duruyor. Maketten olculen: cap ~45 css px (1863 px'lik tasarimda),
+ * yani 1440'ta ~35 px; glif ~19/16 px.
+ *
+ * Dugme B1'de bilerek eklenmemisti: arkasinda calisan bir arama yokken
+ * ziyaretciye bir sey vaat edip vermemek olurdu. `/ara` modulu geldi.
+ */
+.site-head__search {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  inline-size: clamp(34px, 2.4vw, 45px);
+  block-size: clamp(34px, 2.4vw, 45px);
+  border: 1px solid #16243A;
+  border-radius: 50%;
+  color: var(--ref-nav);
+  text-decoration: none;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+
+.site-head__search svg {
+  inline-size: clamp(15px, 1.1vw, 20px);
+  block-size: clamp(15px, 1.1vw, 20px);
+}
+
+.site-head__search:hover,
+.site-head__search:focus-visible {
+  color: #fff;
+  border-color: rgba(90, 200, 245, .5);
+}
+
+/* Acilir menude daire yerine satir; dar kutuda daire yalniz kaliyordu. */
+@media (max-width: 940px) {
+  .site-head__search {
+    inline-size: auto;
+    block-size: auto;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: .55em;
+    padding: 12px 8px;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .site-head__search .visually-hidden {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+}
