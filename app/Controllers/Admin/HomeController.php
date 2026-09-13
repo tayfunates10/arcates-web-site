@@ -357,14 +357,16 @@ final class HomeController extends Controller
             ],
 
             'cta' => [
-                'title' => $text($raw['title'] ?? '', 160),
-                'text'  => $text($raw['text'] ?? '', 400),
+                'title'  => $text($raw['title'] ?? '', 160),
+                'text'   => $text($raw['text'] ?? '', 400),
+                'slogan' => $text($raw['slogan'] ?? '', 60),
                 'cta1'  => $link($raw['cta1'] ?? []),
                 'cta2'  => $link($raw['cta2'] ?? []),
             ],
 
             'footer' => [
-                'about'   => $text($raw['about'] ?? '', 400),
+                'about'     => $text($raw['about'] ?? '', 400),
+                'signature' => $text($raw['signature'] ?? '', 120),
                 'columns' => array_values(array_filter(array_map(
                     static fn ($column): array => [
                         'title' => mb_substr(trim((string) ($column['title'] ?? '')), 0, 60),

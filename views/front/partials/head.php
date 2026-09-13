@@ -67,7 +67,7 @@ $ogAlt = trim((string) ($_site['name'] ?? 'Arcates Yazılım'));
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=Caveat:wght@500;600&display=swap">
 
 <link rel="stylesheet" href="<?= Security::e(asset('css/site.css')) ?>">
 <link rel="stylesheet" href="<?= Security::e(asset('css/redesign.css')) ?>">

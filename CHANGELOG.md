@@ -4,6 +4,25 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (13 Eylül 2026 — referans görselleri yenilendi)
+- Üç referans görseli yeniden üretildi. İkisi sitede basıldıkları ölçüden küçüktü, yani ekranda büyütülüyordu: kahraman görseli 400×300 kaynaktan 467×350, çağrı bandı arka planı 800×267 kaynaktan 1586×119 basılıyordu. Yeni ölçüler tarayıcıda ölçülen en geniş basıma göre belirlendi.
+  - `hero-laptop.webp` 400×300 → **1448×1086**
+  - `about-team.webp` 520×293 → **1672×941**
+  - `cta-mountain.webp` 800×267 → **2400×900**
+- Ekip görselindeki el yazısı not artık fotoğrafın içinde. `footer.signature` varsayılanı boşaltıldı; CSS kaplaması aynı cümleyi ikinci kez yazmıyor. Panelden metin girilirse kaplama yine devreye girer, kod değişmedi.
+- El yazısı cümle görselin **alt metnine** taşındı: görsel içindeki yazı ekran okuyucuya başka türlü ulaşmaz (WCAG 1.1.1).
+- Üretilen görselde "üretiyoruz" kelimesinin e harfi keskin vurguyla ("ürétiyoruz") gelmişti; işaret rötuşla silindi. Türkçede o harf düz e.
+- `F-GC-a…c` eklendi: görsellerin 2× ekranda büyütülmediğini, 200KB'ı aşmadığını ve el yazısı cümlenin alt metinde durduğunu korur.
+- `2026_09_13_0001_slogan_ve_el_yazisi_not.sql` → `2026_09_13_0001_cagri_bandi_slogani.sql` olarak yeniden adlandırıldı ve el yazısı notu ekleyen ifadesi çıkarıldı; o metin artık görselde, varsayılanı boş. Göç henüz `main`'e girmemişti, hiçbir kurulumda çalışmadı.
+### Eklendi (13 Eylül 2026 — B9 çağrı bandı sloganı ve el yazısı imza)
+- Çağrı bandının sağ ucuna referanstaki slogan eklendi ("DAHA / BÜYÜK / MÜMKÜN"). Metin panelden gelir (*Anasayfa → Çağrı bandı → Slogan*); her satır ayrı çizilir, ilk satır referanstaki gibi daha küçüktür. Boş bırakılırsa slogan da üç sütunlu düzen de açılmaz.
+- Anasayfadaki ekip görselinin üzerine el yazısı not bindirildi. Metin panelden gelir (*Anasayfa → Alt bilgi → El yazısı not*), boşken çizilmez.
+- El yazısı için Google Fonts'tan Caveat yüklendi ve kahraman karalamasındaki genel `cursive` ailesinin yerine geçti; `cursive` her işletim sisteminde başka bir yüze düşüyordu. Yeni alan adı veya script girmedi: Caveat mevcut `css2` isteğine eklendi. Caveat'in `latin-ext` alt kümesi Türkçe harfleri (ğ, ş, ı, İ) kapsar.
+- `reference-flourish.css` eklendi: ölçülen değerleri taşıyan son katman. Slogan rengi `#3bcbff` (referansta en parlak piksel), puntosu `1.21vw`, ilk satır `0.9vw`.
+- Üç sütunlu düzen yalnızca slogan doluyken açılıyor; `.ref-final-cta__action` üzerindeki sloganı beklemek için bırakılmış sağ boşluk o durumda kaldırıldı.
+- İmza görsele göre oranla konumlandı (mutlak ölçüyle değil): ekip görselimiz referanstakinden dar, ölçülen piksel doğrudan yazılsaydı imza görselin dışına taşardı.
+- Dar ekranda ikisi de gizli: slogan 940px altında (kart tek sütuna düşüyor), imza 640px altında (görsel tam genişliğe yayılıp not metnin üzerine biniyor).
+- `db/migrations/2026_09_13_0001_slogan_ve_el_yazisi_not.sql`: kurulmuş sitelere iki varsayılan metni ekler. Koşullu ve yinelenebilir — anahtar zaten varsa hiçbir şey yazmaz, yani panelden değiştirilen ya da bilerek boşaltılan metni ezmez.
 ### Eklendi (13 Eylül 2026 — B8 site içi arama)
 - `/ara` adresinde site içi arama: yayınlanmış sayfalar, blog yazıları ve örnek siteler; sonuçlar tür adıyla gruplanır, tür başına en çok 8 kayıt.
 - Üst menüye referanstaki büyüteç düğmesi eklendi. B1'de bilerek konmamıştı; arkasında çalışan bir arama olmadan ziyaretçiye boş bir vaat olurdu.

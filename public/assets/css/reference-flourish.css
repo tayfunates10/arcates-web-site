@@ -1,0 +1,129 @@
+/*
+ * B9 — Cagri bandi slogani ve el yazisi imza.
+ *
+ * Referans olcum yontemi B1'deki ile ayni: mockup 1086px genisliginde,
+ * macOS trafik isigi noktasi 7px olculdu (gercekte 12 CSS px) -> olcek 0,583,
+ * tasarimin dogal genisligi ~1863px. Bu dosyadaki her deger mockup pikselinden
+ * 1 mockup px = 0,0921vw carpani ile cevrildi.
+ *
+ * Son katmandir: `.ref-home` oneki ile (0,2,0) agirligindaki
+ * `.is-reference-home` kurallarina denk gelir ve daha sonra yuklenir.
+ */
+
+/* ---------------------------------------------------------------- slogan */
+
+/* Referansta slogan, "Teklif Al" butonunun sagindaki ucuncu sutunda durur.
+   Eski duzende burasi `.ref-final-cta__action` uzerindeki sag bosluk ile
+   bos birakiliyordu; slogan geldigi icin o bosluk kaldirildi. */
+.ref-home .ref-final-cta__card--slogan {
+  grid-template-columns: 1fr auto auto;
+}
+
+.ref-home .ref-final-cta__card--slogan .ref-final-cta__action {
+  margin-right: 0;
+}
+
+.ref-home .ref-final-cta__slogan {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0;
+  margin: 0;
+  /* MUMKUN satirinin sag kenari ile kartin ic kenari arasinda 14 mockup px
+     bosluk olculdu. */
+  padding-inline-end: 1.29vw;
+  /* Olculen renk: en parlak piksel #3BCBFF (ortalama #22A2EA anti-aliasing). */
+  color: #3bcbff;
+  font-weight: 700;
+  /* Buyuk satirlarin harf yuksekligi 9,5 mockup px -> ~22,6 tasarim px. */
+  font-size: clamp(12px, 1.21vw, 23px);
+  /* Satir araligi 16 mockup px olculdu. */
+  line-height: 1.22;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Ilk satir ("DAHA") referansta digerlerinden kucuk ve daha genis aralikli:
+   harf yuksekligi 7 mockup px, digerlerinde 9,5. Tek satir yazildiginda
+   kucultme uygulanmaz, cunku o zaman satir sloganin kendisidir. */
+.ref-home .ref-final-cta__slogan span:first-child:not(:only-child) {
+  font-size: clamp(10px, .9vw, 17px);
+  letter-spacing: .26em;
+}
+
+@media (max-width: 1180px) {
+  .ref-home .ref-final-cta__slogan {
+    padding-inline-end: 0;
+  }
+}
+
+/* Dar ekranda kart tek sutuna dusuyor; slogan orada butonun altinda ezik
+   duruyor ve referansta da yok. */
+@media (max-width: 940px) {
+  .ref-home .ref-final-cta__card--slogan {
+    grid-template-columns: 1fr auto;
+  }
+
+  .ref-home .ref-final-cta__slogan {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------ el yazisi */
+
+/* Genel `cursive` ailesi her isletim sisteminde baska bir yuze dusuyordu;
+   referanstaki el yazisi icin Google Fonts'tan Caveat yuklendi (head.php).
+   Depoya yeni bir bagimlilik girmiyor: Google Fonts zaten tek izinli
+   dis kaynak ve ayni `css2` istegine eklendi. */
+.ref-home .ref-hero__scribble,
+.ref-home .ref-about__scribble {
+  font-family: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+}
+
+/* Caveat'in govde yuksekligi generic cursive'e gore kucuk kaliyor; kahraman
+   karalamasi yerlesimi bozmadan ayni optik boyutta dursun diye buyutuldu.
+   Oge mutlak konumlu oldugu icin bu degisiklik sayfa yuksekligini etkilemez. */
+.ref-home .ref-hero__scribble {
+  font-size: clamp(14px, 1.2vw, 22px);
+  font-weight: 600;
+}
+
+/* Ekip gorselindeki imza. Gorsel `.ref-about__body` izgarasinin ilk
+   sutununda; imza o sutunun sag alt kosesine mutlak konumla bindiriliyor.
+   Boylece `>img` secicileriyle yazilmis mevcut kurallar bozulmuyor. */
+.ref-home .ref-about__body {
+  position: relative;
+}
+
+.ref-home .ref-about__scribble {
+  position: absolute;
+  z-index: 2;
+  /* Referansta imza blogu 93x41 mockup px ve gorselin sag alt kosesinde,
+     sag kenardan 15 mockup px iceride duruyor. Buradaki oranlar mutlak
+     olcuye degil gorsele gore verildi: bizim ekip gorselimiz referanstakinden
+     dar (izgara `minmax(190px,.96fr) 1.04fr`), mutlak deger yazilsaydi imza
+     gorselin disina tasardi. Yuzdeler `.ref-about__body` genisligine gore:
+     gorsel sutunu %47,1, imza %44,5'te bitip %16,5 genisliginde. */
+  inset-inline-end: 55.5%;
+  inset-block-end: 6%;
+  inline-size: 16.5%;
+  margin: 0;
+  color: #fff;
+  /* Referanstaki satir araligi 13,7 mockup px; gorsel oranina (0,77)
+     olceklenince 1440'ta ~14px. Caveat'in govde yuksekligi kucuk oldugu icin
+     puntoyu buyutup satir araligini 0,95'e cektik: adim yine ~14px ama
+     harfler referanstaki kadar iri duruyor. */
+  font-size: clamp(12px, 1.04vw, 20px);
+  font-weight: 500;
+  line-height: .95;
+  text-shadow: 0 1px 10px rgba(3, 14, 28, .75);
+}
+
+/* Tek sutuna dusen dar ekranda gorsel tam genislige yayiliyor ve imza
+   mutlak konumla metnin uzerine biniyor; ayrica bu boyutta okunmuyor. */
+@media (max-width: 640px) {
+  .ref-home .ref-about__scribble {
+    display: none;
+  }
+}

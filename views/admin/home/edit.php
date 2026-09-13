@@ -285,6 +285,26 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
           ?></textarea>
         </div>
 
+        <?php if ($key === 'cta'): ?>
+          <div class="field">
+            <label for="slogan_<?= Security::e($code) ?>">Slogan</label>
+            <textarea id="slogan_<?= Security::e($code) ?>" rows="3" maxlength="60"
+                      name="<?= Security::e($field($code, 'slogan')) ?>"><?php
+              echo Security::e($c['slogan'] ?? '');
+            ?></textarea>
+            <span class="field__hint">Bandın sağ ucunda büyük harflerle görünür. Her satırı ayrı yazın; ilk satır daha küçük çizilir. Boş bırakılırsa slogan gösterilmez.</span>
+          </div>
+        <?php endif; ?>
+
+        <?php if ($key === 'footer'): ?>
+          <div class="field">
+            <label for="signature_<?= Security::e($code) ?>">El yazısı not</label>
+            <input type="text" id="signature_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'signature')) ?>"
+                   maxlength="120" value="<?= Security::e($c['signature'] ?? '') ?>">
+            <span class="field__hint">Anasayfadaki ekip görselinin üzerine el yazısıyla bindirilir. Boş bırakılırsa gösterilmez.</span>
+          </div>
+        <?php endif; ?>
+
         <?php if (in_array($key, ['works', 'cta'], true)): ?>
           <?php $ctaKeys = $key === 'cta' ? ['cta1' => 'Birinci buton', 'cta2' => 'İkinci buton'] : ['cta' => 'Buton']; ?>
           <?php foreach ($ctaKeys as $ctaKey => $ctaLabel): ?>
