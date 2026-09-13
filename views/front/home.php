@@ -33,6 +33,7 @@ $stepItems    = (array) ($steps['content']['items'] ?? []);
 $projectItems = array_slice($projects ?? [], 0, 3);
 $postItems    = array_slice($posts ?? [], 0, 3);
 $aboutText    = trim((string) ($footerContent['about'] ?? ''));
+$aboutScribble = trim((string) ($footerContent['signature'] ?? ''));
 
 $icons = [
     'cube'     => '<path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 9 9-4M12 12 3 8m9 4v9"/>',
@@ -321,6 +322,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
           </header>
           <div class="ref-about__body">
             <img src="<?= Security::e(asset('img/reference/about-team.webp')) ?>" alt="<?= Security::e(__('team_image_alt')) ?>" width="1672" height="941" loading="lazy" decoding="async">
+            <?php if ($aboutScribble !== ''): ?><p class="ref-about__scribble"><?= Security::e($aboutScribble) ?></p><?php endif; ?>
             <div><p><?= Security::e($aboutText) ?></p><a class="ref-btn ref-btn--ghost ref-btn--small" href="<?= Security::e(url('/hakkimizda')) ?>"><?= Security::e(__('learn_more_about_us')) ?><?= $markArrow ?></a></div>
           </div>
         </article>
@@ -360,10 +362,18 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
 <?php endif; ?>
 
 <?php if ($cta !== null): ?>
-  <?php $ctaContent = (array) ($cta['content'] ?? []); $primary = $ctaContent['cta1'] ?? null; ?>
+  <?php
+    $ctaContent = (array) ($cta['content'] ?? []);
+    $primary    = $ctaContent['cta1'] ?? null;
+    /* Slogan panelde tek alan; her satir ayri bir span olarak cizilir. */
+    $sloganLines = array_values(array_filter(array_map(
+        static fn (string $line): string => trim($line),
+        preg_split('/\R/', (string) ($ctaContent['slogan'] ?? '')) ?: []
+    ), static fn (string $line): bool => $line !== ''));
+  ?>
   <section class="ref-final-cta">
     <div class="wrap">
-      <div class="ref-final-cta__card">
+      <div class="ref-final-cta__card<?= $sloganLines !== [] ? " ref-final-cta__card--slogan" : "" ?>">
         <div class="ref-final-cta__copy">
           <p class="ref-kicker"><?= Security::e(__('turn_ideas_into_reality')) ?></p>
           <h2><?= Security::e((string) ($ctaContent['title'] ?? '')) ?></h2>
@@ -371,6 +381,9 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
         </div>
         <?php if ($primary !== null && ($primary['label'] ?? '') !== ''): ?>
           <div class="ref-final-cta__action"><a class="ref-btn ref-btn--primary" href="<?= Security::e(url((string) ($primary['url'] ?? '/iletisim'))) ?>"><?= Security::e((string) $primary['label']) ?><?= $heroMarks['arrow'] ?></a><small><?= $markCheck ?><?= Security::e(__('free_consultation')) ?></small></div>
+        <?php endif; ?>
+        <?php if ($sloganLines !== []): ?>
+          <p class="ref-final-cta__slogan"><?php foreach ($sloganLines as $line): ?><span><?= Security::e($line) ?></span><?php endforeach; ?></p>
         <?php endif; ?>
       </div>
     </div>

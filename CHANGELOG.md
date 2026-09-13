@@ -4,6 +4,15 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Eklendi (13 Eylül 2026 — B9 çağrı bandı sloganı ve el yazısı imza)
+- Çağrı bandının sağ ucuna referanstaki slogan eklendi ("DAHA / BÜYÜK / MÜMKÜN"). Metin panelden gelir (*Anasayfa → Çağrı bandı → Slogan*); her satır ayrı çizilir, ilk satır referanstaki gibi daha küçüktür. Boş bırakılırsa slogan da üç sütunlu düzen de açılmaz.
+- Anasayfadaki ekip görselinin üzerine el yazısı not bindirildi. Metin panelden gelir (*Anasayfa → Alt bilgi → El yazısı not*), boşken çizilmez.
+- El yazısı için Google Fonts'tan Caveat yüklendi ve kahraman karalamasındaki genel `cursive` ailesinin yerine geçti; `cursive` her işletim sisteminde başka bir yüze düşüyordu. Yeni alan adı veya script girmedi: Caveat mevcut `css2` isteğine eklendi. Caveat'in `latin-ext` alt kümesi Türkçe harfleri (ğ, ş, ı, İ) kapsar.
+- `reference-flourish.css` eklendi: ölçülen değerleri taşıyan son katman. Slogan rengi `#3bcbff` (referansta en parlak piksel), puntosu `1.21vw`, ilk satır `0.9vw`.
+- Üç sütunlu düzen yalnızca slogan doluyken açılıyor; `.ref-final-cta__action` üzerindeki sloganı beklemek için bırakılmış sağ boşluk o durumda kaldırıldı.
+- İmza görsele göre oranla konumlandı (mutlak ölçüyle değil): ekip görselimiz referanstakinden dar, ölçülen piksel doğrudan yazılsaydı imza görselin dışına taşardı.
+- Dar ekranda ikisi de gizli: slogan 940px altında (kart tek sütuna düşüyor), imza 640px altında (görsel tam genişliğe yayılıp not metnin üzerine biniyor).
+- `db/migrations/2026_09_13_0001_slogan_ve_el_yazisi_not.sql`: kurulmuş sitelere iki varsayılan metni ekler. Koşullu ve yinelenebilir — anahtar zaten varsa hiçbir şey yazmaz, yani panelden değiştirilen ya da bilerek boşaltılan metni ezmez.
 ### Eklendi (13 Eylül 2026 — B8 site içi arama)
 - `/ara` adresinde site içi arama: yayınlanmış sayfalar, blog yazıları ve örnek siteler; sonuçlar tür adıyla gruplanır, tür başına en çok 8 kayıt.
 - Üst menüye referanstaki büyüteç düğmesi eklendi. B1'de bilerek konmamıştı; arkasında çalışan bir arama olmadan ziyaretçiye boş bir vaat olurdu.

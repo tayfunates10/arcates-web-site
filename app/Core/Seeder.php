@@ -281,6 +281,8 @@ final class Seeder
                 'title' => 'Projenizi konuşalım',
                 'text'  => 'Kısa bir görüşmeyle ihtiyacınızı netleştirelim, aynı hafta '
                     . 'fiyat ve takvim gönderelim.',
+                // Bandin sag ucundaki slogan; her satir ayri cizilir.
+                'slogan' => "DAHA\nBÜYÜK\nMÜMKÜN",
                 'cta1'  => ['label' => 'Teklif isteyin', 'url' => '/iletisim'],
                 'cta2'  => ['label' => 'Fiyatları görün', 'url' => '/fiyatlar'],
             ],
@@ -288,6 +290,8 @@ final class Seeder
             'footer' => [
                 'about' => 'Arcates Yazılım, Edremit Körfezi bölgesindeki işletmelere '
                     . 'web tasarım, e-ticaret ve yazılım hizmeti verir.',
+                // Anasayfadaki ekip gorseline binen el yazisi not.
+                'signature' => 'Daha iyi bir yarın için birlikte üretiyoruz.',
                 'columns' => [
                     [
                         'title' => 'Hizmetler',
