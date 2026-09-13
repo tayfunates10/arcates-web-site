@@ -279,7 +279,7 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 **Çağrı bandı sloganı ve el yazısı imza (bölüm 9).** `public/assets/css/reference-flourish.css` anasayfanın son katmanıdır. İki dekoratif metin taşır ve ikisinin de içeriği panelden gelir:
 
 - *Slogan* — `cta` bölümünün `slogan` alanı. Çağrı bandının sağ ucunda, büyük harfle. Her satır ayrı bir `span` olarak çizilir; referansta ilk satır ("DAHA") diğerlerinden küçük olduğu için `span:first-child:not(:only-child)` ile küçültülür — tek satır yazıldığında küçültme uygulanmaz, çünkü o zaman satırın kendisi slogandır. Boş bırakılınca ne blok ne de üç sütunlu kart düzeni açılır (F-FL-a…d).
-- *El yazısı not* — `footer` bölümünün `signature` alanı. Anasayfadaki ekip görselinin üzerine biner, boşken çizilmez (F-FL-e).
+- *El yazısı not* — `footer` bölümünün `signature` alanı. Anasayfadaki ekip görselinin üzerine biner, boşken çizilmez (F-FL-e). **Varsayılanı boştur:** o cümle artık ekip fotoğrafının içine gömülü geliyor, CSS kaplaması aynı cümleyi ikinci kez yazmasın diye. Görsel yazısız biriyle değiştirilirse panele metin yazmak yeterli, kod değişmez.
 
 *Yazı tipi.* El yazısı için Google Fonts'tan **Caveat** yüklenir. Öncesinde kahraman karalaması genel `cursive` ailesini kullanıyordu; bu aile her işletim sisteminde başka bir yüze düşer, yani tasarım makineden makineye değişirdi. Caveat mevcut `css2` isteğine eklendi, yeni bir alan adı ya da script girmedi (CLAUDE.md 4). `latin-ext` alt kümesi Türkçe harfleri (ğ, ş, ı, İ) kapsar. F-FL-f hem isteğin tekliğini hem de katmanın bağlandığını korur.
 
@@ -288,6 +288,18 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 *Dar ekran.* Slogan 940px altında gizlenir (kart tek sütuna düşüyor, slogan butonun altında eziliyor), imza 640px altında gizlenir (görsel tam genişliğe yayılınca mutlak konumlu not gövde metninin üzerine biniyor). İkisi de dekoratiftir; taşıdıkları bilgi başka yerde de vardır.
 
 *Yerleşime etkisi.* İmza mutlak konumludur, sayfa yüksekliğini değiştirmez. Slogan yalnızca çağrı bandının kendi satırındadır. B9 sonrası referans geometri denetiminde mobil kahraman yüksekliği katman açık ve kapalıyken birebir aynı ölçüldü (773.45px).
+
+**Referans görsellerinin çözünürlüğü.** `public/assets/img/reference/` altındaki üç fotoğraf sitede sabit ölçülerde basılır; kaynak dosya o ölçünün altında kalırsa tarayıcı büyütür ve görsel pikselleşir. İlk sürümde ikisi bu durumdaydı.
+
+| Dosya | En geniş basım | Kaynak |
+|---|---|---|
+| `hero-laptop.webp` | 467×350 (1440px) | 1448×1086 |
+| `about-team.webp` | 361×212 (1920px) | 1672×941 |
+| `cta-mountain.webp` | 1586×119 (1920px, `cover`) | 2400×900 |
+
+"En geniş basım" değerleri tarayıcıda ölçüldü: sayfa 1440, 1920 ve 2560 genişliklerde açılıp her görselin kutusu okundu. Kaynak, `<img>` ögelerinde bu ölçünün **iki katından** büyük olmalı (retina). `cta-mountain.webp` CSS arka planıdır ve `background-size: cover` ile yayılır; orada ölçüt kutunun genişliğidir, çünkü `cover` en/boy oranını koruyarak kutuyu doldurur ve fazlasını kırpar. **F-GC-a** bu eşikleri, **F-GC-b** 200KB dosya sınırını korur.
+
+*Ekip görselindeki yazı.* El yazısı cümle fotoğrafın içine gömülüdür. Görsel içindeki yazı ekran okuyucuya ulaşmadığı için cümle `team_image_alt` alt metninde tekrarlanır (WCAG 1.1.1, **F-GC-c**). Görsel değiştirilirse alt metin de güncellenmelidir.
 
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
@@ -709,7 +721,7 @@ R5 ek sözleşmeleri:
 - `F-R5-01`: sektör grubu yalnız yayınlanmış gerçek sektör sayfalarına bağlantı verir.
 - `F-R5-02`: WhatsApp hedefi yalnız NAP telefonundan üretilir.
 
-Referans bölümlerinin sözleşmeleri: `F-HD-a…h` (üst menü), `F-HR-a…f` (kahraman), `F-SC-a…f` (bölüm başlıkları ve metrik), `F-LW-a…d` (alt bölümler), `F-MK-a…c` (ok/onay işaretleri), `F-FC-a…g` (alt bilgi ve yukarı çık), `F-SR-a…g` (site içi arama), `F-FL-a…g` (çağrı bandı sloganı ve el yazısı imza).
+Referans bölümlerinin sözleşmeleri: `F-HD-a…h` (üst menü), `F-HR-a…f` (kahraman), `F-SC-a…f` (bölüm başlıkları ve metrik), `F-LW-a…d` (alt bölümler), `F-MK-a…c` (ok/onay işaretleri), `F-FC-a…g` (alt bilgi ve yukarı çık), `F-SR-a…g` (site içi arama), `F-FL-a…g` (çağrı bandı sloganı ve el yazısı imza), `F-GC-a…c` (referans görsellerinin çözünürlüğü ve alt metni).
 
 ### 14.5 Hareket testleri (A)
 | ID | Senaryo | Beklenen |

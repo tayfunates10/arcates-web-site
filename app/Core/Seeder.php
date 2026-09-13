@@ -290,8 +290,10 @@ final class Seeder
             'footer' => [
                 'about' => 'Arcates Yazılım, Edremit Körfezi bölgesindeki işletmelere '
                     . 'web tasarım, e-ticaret ve yazılım hizmeti verir.',
-                // Anasayfadaki ekip gorseline binen el yazisi not.
-                'signature' => 'Daha iyi bir yarın için birlikte üretiyoruz.',
+                // Ekip gorselindeki el yazisi not artik fotografin icinde;
+                // CSS kaplamasi ayni cumleyi ikinci kez yazmasin diye bos.
+                // Gorsel degistirilirse buraya metin yazmak yeterli.
+                'signature' => '',
                 'columns' => [
                     [
                         'title' => 'Hizmetler',
