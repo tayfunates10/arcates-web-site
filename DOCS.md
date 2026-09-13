@@ -258,6 +258,12 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *Dar kolonda alt yazı sarabilir.* "Biz Kimiz?" ve "Son Yazılar" yarım genişlikte kolonlarda durur. Referansta oradaki alt yazılar kısa olduğu için tek satıra sığar; bizimkiler panelden gelen daha uzun metinlerdir ve sarar. Kural doğrudur, saran satır `row-gap` ile nefes alır; tek satıra inmesi metnin kısalmasına bağlıdır ve bu bir içerik kararıdır.
 
+**Alt bilgi ve yukarı çık (bölüm 7).** `public/assets/css/reference-chrome.css` bu iki ögenin katmanıdır. Anasayfa katmanlarından farklı olarak `head.php` içinden **her sayfaya** yüklenir; alt bilgi ve yukarı çık düğmesi yalnızca anasayfada değil, tüm sayfalarda vardır. Testler F-FC-a…f.
+
+*Sosyal bağlantılar.* Altyapı bölüm 7'den önce de tamdı: `social_links` ayarı, paneldeki ad+adres satırları, yapısal veride `sameAs` ve alt bilgide koşullu basım. Eksik olan **ikon** olarak basılmasıydı. `social_icon()` platformu önce adresin alan adından, olmazsa etiket adından çözer; tanımadığında **boş döner** ve alt bilgi etiket metnini basar, yani girilen hiçbir bağlantı kaybolmaz. İkonlu durumda etiket `visually-hidden` olarak ekran okuyucuda kalır. Panelde hiç adres yoksa liste hiç basılmaz — uydurma hesap bağlantısı hiçbir durumda üretilmez.
+
+*Yukarı çık.* İşaretlemede `hidden` gelir ve yalnızca `site.js` onu açar: JS kapalıyken düğmenin işlevi olmadığı için hiç görünmez. Görünürlük `opacity` + `transform` ile, kaydırma dinleyicisi mevcut rAF kuyruğuna bağlanır; `prefers-reduced-motion` altında hem geçiş hem de kaydırmanın kendisi ani olur. DOCS 7.1'e uygundur ve F-FC-f bunu test olarak korur.
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.

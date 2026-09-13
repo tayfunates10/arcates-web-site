@@ -10,4 +10,5 @@ return [
     // Gun kisaltmalari. `opening_hours` semada Mo-Fr bicimindedir; ekranda
     // bu etiketlere cevrilir, yapisal veride ham kod kalir.
     'day_mo'=>'الإثنين','day_tu'=>'الثلاثاء','day_we'=>'الأربعاء','day_th'=>'الخميس','day_fr'=>'الجمعة','day_sa'=>'السبت','day_su'=>'الأحد',
+    'back_to_top'        => 'العودة إلى الأعلى',
 ];
