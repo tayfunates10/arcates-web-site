@@ -214,9 +214,45 @@ await import('node:fs').then(({ mkdirSync }) => mkdirSync('/tmp/arcates-referenc
 await desktopCheck();
 await mobileCheck();
 await iconAndTabletCheck();
+await ctaResponsiveCheck();
 await browser.close();
 console.log(fail === 0 ? '\nREFERANS GEOMETRI DENETIMLERI GECTI' : `\n${fail} REFERANS GEOMETRI DENETIMI KALDI`);
 process.exit(fail === 0 ? 0 : 1);
+
+// A card can clip its own contents while the document still has zero overflow.
+// Check the action itself and the 640/641px boundary, with/without the slogan.
+async function ctaResponsiveCheck() {
+  const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+  const page = await ctx.newPage();
+  await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+  for (const width of [320, 390, 640, 641, 768, 940, 941, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const slogan of [true, false]) {
+      const state = await page.evaluate((showSlogan) => {
+        const card = document.querySelector('.ref-final-cta__card');
+        const note = card?.querySelector('.ref-final-cta__slogan');
+        const action = card?.querySelector('.ref-final-cta__action');
+        const copy = card?.querySelector('.ref-final-cta__copy');
+        if (!card || !note || !action || !copy) return null;
+        card.classList.toggle('ref-final-cta__card--slogan', showSlogan);
+        note.style.display = showSlogan ? '' : 'none';
+        const c = card.getBoundingClientRect();
+        const a = action.getBoundingClientRect();
+        const t = copy.getBoundingClientRect();
+        return {
+          columns: getComputedStyle(card).gridTemplateColumns.split(' ').length,
+          stacked: a.top >= t.bottom - 1,
+          contained: a.left >= c.left && a.right <= c.right && a.bottom <= c.bottom,
+        };
+      }, slogan);
+      check(!!state && state.columns === (width <= 640 ? 1 : width <= 940 || !slogan ? 2 : 3),
+        `CTA ${width}px slogan=${slogan} beklenen kolon duzeni`);
+      check(!!state && state.contained && (width > 640 || state.stacked),
+        `CTA ${width}px slogan=${slogan} teklif eylemi kirpilmiyor ve telefonda metnin altinda`);
+    }
+  }
+  await ctx.close();
+}
 
 // Catch missing glyph replacements, hover-only glows and the tablet ordering gap.
 async function iconAndTabletCheck() {

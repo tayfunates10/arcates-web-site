@@ -4,6 +4,12 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Düzeltildi (13 Eylül 2026 — nihai kabul)
+- B9 slogan katmanının 640 px altında çağrı bandını yeniden iki sütuna çevirmesi düzeltildi; teklif eylemi metnin altında kalır.
+- Reference Parity içine slogan açık/kapalı ve 640/641, 940/941 px sınır kontrolleri eklendi; kart içi kırpılma belge taşmasından ayrı denetlenir.
+- Görsel regresyon workflow'u `main` üzerinde birleştirme sonrasında da çalışır; ortak şablon, font/dil, seed ve göç değişiklikleri PR kontrolünü tetikler.
+- Güncel teslim kaydı README üzerinden erişilebilir; DOCS sürüm ve Caveat bilgisi mevcut uygulamayla eşleştirildi.
+
 ### Değiştirildi (13 Eylül 2026 — referans görselleri yenilendi)
 - Üç referans görseli yeniden üretildi. İkisi sitede basıldıkları ölçüden küçüktü, yani ekranda büyütülüyordu: kahraman görseli 400×300 kaynaktan 467×350, çağrı bandı arka planı 800×267 kaynaktan 1586×119 basılıyordu. Yeni ölçüler tarayıcıda ölçülen en geniş basıma göre belirlendi.
   - `hero-laptop.webp` 400×300 → **1448×1086**

@@ -3,16 +3,23 @@ name: Reference Parity
 on:
   push:
     branches:
+      - main
       - fix/reference-visual-parity-final2
   pull_request:
     paths:
       - 'views/front/home.php'
+      - 'views/front/partials/**'
       - 'views/front/service.php'
       - 'app/Controllers/Front/HomeController.php'
       - 'public/assets/css/reference-*.css'
+      - 'public/assets/css/site.css'
+      - 'public/assets/css/redesign.css'
       - 'public/assets/css/inner-redesign.css'
       - 'public/assets/js/site.js'
       - 'public/assets/img/reference/**'
+      - 'lang/**'
+      - 'app/Core/SeedContent.php'
+      - 'db/migrations/**'
       - 'tools/browser/reference-parity-check.mjs'
       - 'tools/browser/redesign-gaps-check.mjs'
       - 'tests/functional/261_service_detail_visual_test.php'
