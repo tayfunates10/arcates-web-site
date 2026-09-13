@@ -67,3 +67,49 @@
 @media (max-width: 940px) {
   .ref-home .ref-process__link { display: none; }
 }
+
+/* --- Ortak ok ve onay isaretleri ------------------------------------------
+ *
+ * Sayfadaki butun metin glifleri (→ ↗ ✓) satir ici SVG'ye cevrildi. Glif
+ * fonta baglidir; font yuklenmezse kutu olarak cizilir. B2'de yalnizca
+ * kahramandakiler donusturulmustu, kalan dokuz yer burada.
+ *
+ * Boyut baglama gore: metin baglantisinda yaziyla ayni akista, kart
+ * dairesinin icinde ortada.
+ */
+.ref-home .ref-mark {
+  flex: 0 0 auto;
+  inline-size: 1em;
+  block-size: auto;
+  vertical-align: -.1em;
+}
+
+/* Bolum basligi baglantisi ve "Detaylari Gor": yazidan sonra kucuk bosluk. */
+.ref-home .ref-section__head > a .ref-mark,
+.ref-home .ref-service__more .ref-mark {
+  margin-inline-start: .45em;
+}
+
+.ref-home .ref-section__head > a,
+.ref-home .ref-service__more {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Kart dairesi: ok dairenin ortasinda, kendi boslugu yok. */
+.ref-home .ref-project__arrow .ref-mark,
+.ref-home .ref-post__arrow .ref-mark { inline-size: .9em; margin: 0; }
+
+/* Son cagri bandindaki onay isareti. */
+.ref-home .ref-final-cta__action small {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+}
+
+.ref-home .ref-final-cta__action .ref-mark--check {
+  inline-size: .95em;
+  color: #5AC8F5;
+}
+
+.ref-home .ref-about .ref-btn .ref-mark { margin-inline-start: .5em; }

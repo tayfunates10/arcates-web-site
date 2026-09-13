@@ -31,6 +31,12 @@
     flex-wrap: wrap;
     align-items: baseline;
     column-gap: clamp(12px, 1.55vw, 29px);
+
+    /* Dar kolonlarda (Biz Kimiz? / Son Yazilar) alt yazi tek satira
+       sigmayip sariyor. Referansta oradaki alt yazilar kisa oldugu icin
+       tek satirda duruyor; bizimkiler panelden gelen daha uzun metinler.
+       Sardiginda baslikla dibine yapismasin. */
+    row-gap: 3px;
   }
 
   .ref-home .ref-section__head:not(.ref-section__head--local) > div > p {

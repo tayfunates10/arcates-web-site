@@ -72,6 +72,16 @@ $heroMarks = [
 /* Surec adimlarini birbirine baglayan kesikli cizginin ucundaki ok.
    Referansta her bosluk bir ok basiyla bitiyor; bizde duz kesikli cizgi
    vardi. Cizgi CSS'te, yalnizca ok basi burada. Dekoratif. */
+/* Metin baglantilarinda ve kart dairelerinde kullanilan ok. Buton okuyla
+   ayni cizim, yalnizca sinifi farkli; boyutu baglama gore CSS verir. */
+$markArrow = '<svg class="ref-mark" viewBox="0 0 16 12" fill="none" stroke="currentColor"'
+    . ' stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+    . '<path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5"/></svg>';
+
+$markCheck = '<svg class="ref-mark ref-mark--check" viewBox="0 0 14 14" fill="none" stroke="currentColor"'
+    . ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+    . '<path d="m2 7.5 3.2 3.2L12 3.8"/></svg>';
+
 $processChevron = '<span class="ref-process__link" aria-hidden="true">'
     . '<svg class="ref-process__chevron" viewBox="0 0 8 12" fill="none" stroke="currentColor"'
     . ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">'
@@ -206,7 +216,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
     <div class="wrap">
       <header class="ref-section__head">
         <div><h2><?= Security::e(__('our_services')) ?></h2><p><?= Security::e((string) ($services['content']['description'] ?? '')) ?></p></div>
-        <a href="<?= Security::e(url('/web-tasarim')) ?>"><?= Security::e(__('all_services')) ?> <span aria-hidden="true">→</span></a>
+        <a href="<?= Security::e(url('/web-tasarim')) ?>"><?= Security::e(__('all_services')) ?><?= $markArrow ?></a>
       </header>
       <ul class="ref-services__grid">
         <?php foreach ($serviceCards as $card): ?>
@@ -216,7 +226,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
               <span class="ref-service__icon" aria-hidden="true"><?= $renderIcon($iconKey) ?></span>
               <strong><?= Security::e((string) ($card['title'] ?? '')) ?></strong>
               <span class="ref-service__text"><?= Security::e((string) ($card['text'] ?? '')) ?></span>
-              <span class="ref-service__more"><?= Security::e(__('more_details')) ?> →</span>
+              <span class="ref-service__more"><?= Security::e(__('more_details')) ?><?= $markArrow ?></span>
             </a>
           </li>
         <?php endforeach; ?>
@@ -230,7 +240,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
     <div class="wrap">
       <header class="ref-section__head">
         <div><h2><?= Security::e(__('featured_projects')) ?></h2><p><?= Security::e((string) ($works['content']['description'] ?? '')) ?></p></div>
-        <a href="<?= Security::e(url('/referanslar')) ?>"><?= Security::e(__('all_projects')) ?> <span aria-hidden="true">→</span></a>
+        <a href="<?= Security::e(url('/referanslar')) ?>"><?= Security::e(__('all_projects')) ?><?= $markArrow ?></a>
       </header>
       <ul class="ref-projects__grid">
         <?php foreach ($projectItems as $project): ?>
@@ -249,7 +259,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
                 <?php if (($project['sector'] ?? '') !== ''): ?><span class="ref-chip"><?= Security::e((string) $project['sector']) ?></span><?php endif; ?>
                 <h3><?= Security::e((string) ($project['title'] ?? $project['client_name'] ?? '')) ?></h3>
                 <?php if (($project['excerpt'] ?? '') !== ''): ?><p><?= Security::e((string) $project['excerpt']) ?></p><?php endif; ?>
-                <span class="ref-project__arrow" aria-hidden="true">→</span>
+                <span class="ref-project__arrow" aria-hidden="true"><?= $markArrow ?></span>
               </div>
             </a>
           </li>
@@ -303,22 +313,24 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
     <div class="wrap ref-editorial__grid">
       <?php if ($aboutText !== ''): ?>
         <article class="ref-about">
-          <header class="ref-section__head ref-section__head--local">
+          <?php /* `--local` baglantisi olmayan bolum demek; burada baglanti
+                   var, referansta da baslik ve alt yazi yan yana duruyor. */ ?>
+          <header class="ref-section__head">
             <div><h2><?= Security::e(__('who_we_are')) ?></h2><p><?= Security::e(__('human_centered_technology')) ?></p></div>
-            <a href="<?= Security::e(url('/hakkimizda')) ?>"><?= Security::e(__('about')) ?> <span aria-hidden="true">→</span></a>
+            <a href="<?= Security::e(url('/hakkimizda')) ?>"><?= Security::e(__('about')) ?><?= $markArrow ?></a>
           </header>
           <div class="ref-about__body">
             <img src="<?= Security::e(asset('img/reference/about-team.webp')) ?>" alt="<?= Security::e(__('team_image_alt')) ?>" width="1672" height="941" loading="lazy" decoding="async">
-            <div><p><?= Security::e($aboutText) ?></p><a class="ref-btn ref-btn--ghost ref-btn--small" href="<?= Security::e(url('/hakkimizda')) ?>"><?= Security::e(__('learn_more_about_us')) ?> →</a></div>
+            <div><p><?= Security::e($aboutText) ?></p><a class="ref-btn ref-btn--ghost ref-btn--small" href="<?= Security::e(url('/hakkimizda')) ?>"><?= Security::e(__('learn_more_about_us')) ?><?= $markArrow ?></a></div>
           </div>
         </article>
       <?php endif; ?>
 
       <?php if ($postItems !== []): ?>
         <article class="ref-posts">
-          <header class="ref-section__head ref-section__head--local">
+          <header class="ref-section__head">
             <div><h2><?= Security::e(__('latest_articles')) ?></h2><p><?= Security::e(__('latest_articles_short')) ?></p></div>
-            <a href="<?= Security::e(url('/blog')) ?>"><?= Security::e(__('all_posts')) ?> <span aria-hidden="true">→</span></a>
+            <a href="<?= Security::e(url('/blog')) ?>"><?= Security::e(__('all_posts')) ?><?= $markArrow ?></a>
           </header>
           <ul class="ref-posts__grid">
             <?php foreach ($postItems as $post): ?>
@@ -335,7 +347,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
                     <?php if (($post['category'] ?? '') !== ''): ?><span class="ref-chip"><?= Security::e((string) $post['category']) ?></span><?php endif; ?>
                     <h3><?= Security::e((string) ($post['title'] ?? '')) ?></h3>
                     <?php if (($post['published_at'] ?? '') !== ''): ?><time datetime="<?= Security::e((string) $post['published_at']) ?>"><?= Security::e(date('d.m.Y', strtotime((string) $post['published_at']))) ?></time><?php endif; ?>
-                    <span class="ref-post__arrow" aria-hidden="true">→</span>
+                    <span class="ref-post__arrow" aria-hidden="true"><?= $markArrow ?></span>
                   </div>
                 </a>
               </li>
@@ -358,7 +370,7 @@ $processIcons = count($stepItems) === 3 ? ['search', 'code', 'rocket'] : ['searc
           <?php if (($ctaContent['text'] ?? '') !== ''): ?><p><?= Security::e((string) $ctaContent['text']) ?></p><?php endif; ?>
         </div>
         <?php if ($primary !== null && ($primary['label'] ?? '') !== ''): ?>
-          <div class="ref-final-cta__action"><a class="ref-btn ref-btn--primary" href="<?= Security::e(url((string) ($primary['url'] ?? '/iletisim'))) ?>"><?= Security::e((string) $primary['label']) ?> <span aria-hidden="true">→</span></a><small>✓ <?= Security::e(__('free_consultation')) ?></small></div>
+          <div class="ref-final-cta__action"><a class="ref-btn ref-btn--primary" href="<?= Security::e(url((string) ($primary['url'] ?? '/iletisim'))) ?>"><?= Security::e((string) $primary['label']) ?><?= $heroMarks['arrow'] ?></a><small><?= $markCheck ?><?= Security::e(__('free_consultation')) ?></small></div>
         <?php endif; ?>
       </div>
     </div>

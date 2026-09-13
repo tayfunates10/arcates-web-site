@@ -252,6 +252,12 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *Bağlayıcı.* Eskiden listenin baştan sona uzanan tek bir `::before` çizgisiydi. Referansta boşluklar ayrı ayrı ve her biri ok başıyla biter; bu yüzden bağlayıcı adım başına taşındı (son adımdan sonra basılmaz) ve ok başı, buton oklarıyla aynı desende satır içi SVG olarak eklendi. 940px altında liste dikey aktığı için yatay bağlayıcı gizlenir; dikey çizgiyi listenin kendi `::before`'u çizmeye devam eder.
 
+**Ok ve onay işaretleri (bölüm 6).** Anasayfadaki **hiçbir** yerde fonta bağlı ok veya onay glifi (`→`, `↗`, `✓`) kullanılmaz; hepsi satır içi SVG'dir ve dekoratiftir (`aria-hidden`, `focusable="false"`). Glif fonta bağlıdır ve font yüklenmezse kutu olarak çizilir. Dönüşüm önce bilgi kartları ve hizmet ikonları, sonra bölüm 2'de kahraman butonları, bölüm 6'da kalan dokuz yer için yapıldı. `F-MK-a` glifin geri dönmesini engeller.
+
+*`--local` sınıfının anlamı.* `ref-section__head--local`, "sağ tarafında bağlantı yok" demektir; referansta o bölümlerde başlık ve alt yazı alt alta durur. "Biz Kimiz?" ve "Son Yazılar" başlıkları bağlantıları olduğu hâlde bu sınıfı taşıyordu, yani bölüm 3'teki tek satır kuralının dışında kalıyorlardı. Sınıf kaldırıldı. `F-MK-c` bağlantısı olan bir başlıkta bu sınıfın bulunmasını engeller.
+
+*Dar kolonda alt yazı sarabilir.* "Biz Kimiz?" ve "Son Yazılar" yarım genişlikte kolonlarda durur. Referansta oradaki alt yazılar kısa olduğu için tek satıra sığar; bizimkiler panelden gelen daha uzun metinlerdir ve sarar. Kural doğrudur, saran satır `row-gap` ile nefes alır; tek satıra inmesi metnin kısalmasına bağlıdır ve bu bir içerik kararıdır.
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.

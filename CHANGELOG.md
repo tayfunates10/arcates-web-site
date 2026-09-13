@@ -4,6 +4,11 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Değiştirildi (13 Eylül 2026 — B6 ok/onay işaretleri ve bölüm başlığı sınıfı)
+- Anasayfada kalan dokuz fonta bağlı glif (`→`, `↗`, `✓`) satır içi SVG'ye çevrildi: bölüm başlığı bağlantıları, "Detayları Gör", proje ve yazı kartlarının daireli okları, "Bizi Daha Yakından Tanıyın" butonu ve son çağrı bandındaki ok ile onay işareti. B2'de yalnızca kahramandakiler dönüştürülmüştü.
+- "Biz Kimiz?" ve "Son Yazılar" başlıklarından `--local` sınıfı kaldırıldı: bu sınıf "sağ tarafında bağlantı yok" demek, oysa ikisinin de bağlantısı var. Artık bölüm 3'teki tek satır kuralı onlara da uygulanıyor.
+- Dar kolonda alt yazı sardığında başlıkla arasında boşluk kalması için `row-gap` eklendi.
+
 ### Değiştirildi (12 Eylül 2026 — B5 projeler, süreç ve "Neden ARCATES")
 - "Neden ARCATES" madde ikonları referanstaki gibi dolu mavi daire + beyaz glif oldu. Önceki koyu lacivert gradyan (`#0b2c4c → #07192b`) zeminden neredeyse ayırt edilemiyordu.
 - Süreç adımları arasındaki kesikli çizgiye referanstaki ok başı eklendi. Bağlayıcı, listenin baştan sona uzanan tek çizgisi olmaktan çıkıp adım başına taşındı; son adımdan sonra basılmıyor.
