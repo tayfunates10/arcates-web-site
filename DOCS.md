@@ -276,6 +276,19 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *Dizine girmez.* Sonuç sayfaları `noindex,follow` işaretlenir: arama sonucu sayfaları ince içerik sayılır ve kendi sayfalarımızla rekabet eder (F-SR-d).
 
+**Çağrı bandı sloganı ve el yazısı imza (bölüm 9).** `public/assets/css/reference-flourish.css` anasayfanın son katmanıdır. İki dekoratif metin taşır ve ikisinin de içeriği panelden gelir:
+
+- *Slogan* — `cta` bölümünün `slogan` alanı. Çağrı bandının sağ ucunda, büyük harfle. Her satır ayrı bir `span` olarak çizilir; referansta ilk satır ("DAHA") diğerlerinden küçük olduğu için `span:first-child:not(:only-child)` ile küçültülür — tek satır yazıldığında küçültme uygulanmaz, çünkü o zaman satırın kendisi slogandır. Boş bırakılınca ne blok ne de üç sütunlu kart düzeni açılır (F-FL-a…d).
+- *El yazısı not* — `footer` bölümünün `signature` alanı. Anasayfadaki ekip görselinin üzerine biner, boşken çizilmez (F-FL-e).
+
+*Yazı tipi.* El yazısı için Google Fonts'tan **Caveat** yüklenir. Öncesinde kahraman karalaması genel `cursive` ailesini kullanıyordu; bu aile her işletim sisteminde başka bir yüze düşer, yani tasarım makineden makineye değişirdi. Caveat mevcut `css2` isteğine eklendi, yeni bir alan adı ya da script girmedi (CLAUDE.md 4). `latin-ext` alt kümesi Türkçe harfleri (ğ, ş, ı, İ) kapsar. F-FL-f hem isteğin tekliğini hem de katmanın bağlandığını korur.
+
+*Ölçüler.* Slogan rengi `#3bcbff` (referansta ölçülen en parlak piksel; anti-aliasing ortalaması `#22A2EA`), puntosu `1.21vw`, ilk satır `0.9vw`. İmza ise **mutlak ölçüyle değil görsele göre oranla** konumlandırıldı: bizim ekip görselimiz referanstakinden dar (`minmax(190px,.96fr) 1.04fr`), ölçülen piksel doğrudan yazılsaydı imza görselin dışına taşardı. Oranlar referanstan alındı — imza bloğu görsel genişliğinin %34'ü, sağ kenardan %5,5 içeride (F-FL-g).
+
+*Dar ekran.* Slogan 940px altında gizlenir (kart tek sütuna düşüyor, slogan butonun altında eziliyor), imza 640px altında gizlenir (görsel tam genişliğe yayılınca mutlak konumlu not gövde metninin üzerine biniyor). İkisi de dekoratiftir; taşıdıkları bilgi başka yerde de vardır.
+
+*Yerleşime etkisi.* İmza mutlak konumludur, sayfa yüksekliğini değiştirmez. Slogan yalnızca çağrı bandının kendi satırındadır. B9 sonrası referans geometri denetiminde mobil kahraman yüksekliği katman açık ve kapalıyken birebir aynı ölçüldü (773.45px).
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.
@@ -544,7 +557,7 @@ Panel yolu `config.php` ile değiştirilebilir, varsayılan `/panel`.
 Son 30 gün ziyaretçi grafiği, yeni form sayısı, dönüşüm hunisi, en çok ziyaret edilen sayfalar, son 404'ler, taslak içerik ve sistem durumu.
 
 ### 9.2 Anasayfa yöneticisi
-Bölüm listesi R5 sabit sırasını kullanır; her bölüm açılıp kapatılabilir. Kahraman metni/CTA'ları, sektör fallback etiketleri, hizmet içerikleri, süreç, örnek-site bölümü, bölge başlığı/açıklaması, SSS başlığı/açıklaması, CTA ve footer içerikleri yönetilebilir. Bölge noktaları `map_x`/`map_y` ile konumlandırılır.
+Bölüm listesi R5 sabit sırasını kullanır; her bölüm açılıp kapatılabilir. Kahraman metni/CTA'ları, sektör fallback etiketleri, hizmet içerikleri, süreç, örnek-site bölümü, bölge başlığı/açıklaması, SSS başlığı/açıklaması, CTA ve footer içerikleri yönetilebilir. Çağrı bandında ayrıca **slogan** (bandın sağ ucunda, her satır ayrı çizilir), alt bilgide ayrıca **el yazısı not** (anasayfadaki ekip görselinin üzerine biner) alanı vardır; ikisi de boş bırakılabilir, boşken ilgili öge hiç çizilmez. Bölge noktaları `map_x`/`map_y` ile konumlandırılır.
 
 > `strip` anahtarı geriye uyumluluk için korunur. R5 ön yüzde kayma hızı kullanılmaz. R7 panel yeniden tasarımında eski hız kontrolleri arayüzden tamamen kaldırılacaktır; kayıtlı eski `speed` değerleri ön yüzde etkisizdir.
 
@@ -695,6 +708,8 @@ R5 ek sözleşmeleri:
 - `F-P5-b`: sabit sıra `hero → strip → services → steps → works → coast → faq → cta`.
 - `F-R5-01`: sektör grubu yalnız yayınlanmış gerçek sektör sayfalarına bağlantı verir.
 - `F-R5-02`: WhatsApp hedefi yalnız NAP telefonundan üretilir.
+
+Referans bölümlerinin sözleşmeleri: `F-HD-a…h` (üst menü), `F-HR-a…f` (kahraman), `F-SC-a…f` (bölüm başlıkları ve metrik), `F-LW-a…d` (alt bölümler), `F-MK-a…c` (ok/onay işaretleri), `F-FC-a…g` (alt bilgi ve yukarı çık), `F-SR-a…g` (site içi arama), `F-FL-a…g` (çağrı bandı sloganı ve el yazısı imza).
 
 ### 14.5 Hareket testleri (A)
 | ID | Senaryo | Beklenen |

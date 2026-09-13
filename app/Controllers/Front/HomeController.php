@@ -78,6 +78,9 @@ final class HomeController extends Controller
 
                     // Projeler, surec ve "Neden ARCATES"; bolumlerden sonra.
                     'css/reference-lower.css',
+
+                    // Cagri bandi slogani ve el yazisi imza; en son katman.
+                    'css/reference-flourish.css',
                 ],
             ],
         ]);
