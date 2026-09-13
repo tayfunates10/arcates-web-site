@@ -10,4 +10,13 @@ return [
     // Gun kisaltmalari. `opening_hours` semada Mo-Fr bicimindedir; ekranda
     // bu etiketlere cevrilir, yapisal veride ham kod kalir.
     'day_mo'=>'Mo','day_tu'=>'Di','day_we'=>'Mi','day_th'=>'Do','day_fr'=>'Fr','day_sa'=>'Sa','day_su'=>'So',
+    'back_to_top'        => 'Nach oben',
+    'search'              => 'Suche',
+    'search_intro'        => 'Durchsuchen Sie Seiten, Blogbeiträge und Beispielseiten.',
+    'search_label'        => 'Suchtext',
+    'search_placeholder'  => 'Wonach suchen Sie?',
+    'search_too_short'    => 'Geben Sie mindestens %d Zeichen ein.',
+    'search_no_results'   => 'Keine Ergebnisse für "%s".',
+    'search_result_count' => '%1$d Ergebnisse für "%2$s".',
+    'pages'               => 'Seiten',
 ];

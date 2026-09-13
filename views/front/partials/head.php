@@ -81,6 +81,7 @@ $ogAlt = trim((string) ($_site['name'] ?? 'Arcates Yazılım'));
 <?php /* Ust menu son katmandir: sayfa stillerinden sonra gelir, boylece
          `.is-reference-home` onekli kurallar menuyu geri ezemez. */ ?>
 <link rel="stylesheet" href="<?= Security::e(asset('css/reference-header.css')) ?>">
+<link rel="stylesheet" href="<?= Security::e(asset('css/reference-chrome.css')) ?>">
 
 <?php foreach ($head['schemas'] ?? [] as $schema): ?>
 <script type="application/ld+json"><?= Security::json($schema) ?></script>

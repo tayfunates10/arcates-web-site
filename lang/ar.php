@@ -10,4 +10,13 @@ return [
     // Gun kisaltmalari. `opening_hours` semada Mo-Fr bicimindedir; ekranda
     // bu etiketlere cevrilir, yapisal veride ham kod kalir.
     'day_mo'=>'الإثنين','day_tu'=>'الثلاثاء','day_we'=>'الأربعاء','day_th'=>'الخميس','day_fr'=>'الجمعة','day_sa'=>'السبت','day_su'=>'الأحد',
+    'back_to_top'        => 'العودة إلى الأعلى',
+    'search'              => 'بحث',
+    'search_intro'        => 'ابحث في الصفحات والمقالات والمواقع النموذجية.',
+    'search_label'        => 'نص البحث',
+    'search_placeholder'  => 'عماذا تبحث؟',
+    'search_too_short'    => 'اكتب %d أحرف على الأقل.',
+    'search_no_results'   => 'لا نتائج لـ "%s".',
+    'search_result_count' => '%1$d نتيجة لـ "%2$s".',
+    'pages'               => 'الصفحات',
 ];

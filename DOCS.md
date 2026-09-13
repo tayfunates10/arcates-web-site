@@ -258,6 +258,24 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *Dar kolonda alt yazı sarabilir.* "Biz Kimiz?" ve "Son Yazılar" yarım genişlikte kolonlarda durur. Referansta oradaki alt yazılar kısa olduğu için tek satıra sığar; bizimkiler panelden gelen daha uzun metinlerdir ve sarar. Kural doğrudur, saran satır `row-gap` ile nefes alır; tek satıra inmesi metnin kısalmasına bağlıdır ve bu bir içerik kararıdır.
 
+**Alt bilgi ve yukarı çık (bölüm 7).** `public/assets/css/reference-chrome.css` bu iki ögenin katmanıdır. Anasayfa katmanlarından farklı olarak `head.php` içinden **her sayfaya** yüklenir; alt bilgi ve yukarı çık düğmesi yalnızca anasayfada değil, tüm sayfalarda vardır. Testler F-FC-a…f.
+
+*Sosyal bağlantılar.* Altyapı bölüm 7'den önce de tamdı: `social_links` ayarı, paneldeki ad+adres satırları, yapısal veride `sameAs` ve alt bilgide koşullu basım. Eksik olan **ikon** olarak basılmasıydı. `social_icon()` platformu önce adresin alan adından, olmazsa etiket adından çözer; tanımadığında **boş döner** ve alt bilgi etiket metnini basar, yani girilen hiçbir bağlantı kaybolmaz.
+
+*Eşleşme alt dizeyle değil, açık alan adıyla yapılır.* İlk sürüm `str_contains($host, $name)` kullanıyordu; `x` anahtarı tek karakter olduğu için içinde "x" geçen **her** alan adı (`example.com`, `nextdoor.com`) X ikonu alıyor ve yöneticinin etiketi kayboluyordu. Artık alan adının kendisi ya da alt alan adı olarak eşleşir (`x.com`, `www.linkedin.com`, `m.youtube.com`), etiketten çözümde de tam eşleşme aranır. F-FC-g bunu korur. İkonlu durumda etiket `visually-hidden` olarak ekran okuyucuda kalır. Panelde hiç adres yoksa liste hiç basılmaz — uydurma hesap bağlantısı hiçbir durumda üretilmez.
+
+*Yukarı çık.* İşaretlemede `hidden` gelir ve yalnızca `site.js` onu açar: JS kapalıyken düğmenin işlevi olmadığı için hiç görünmez. Görünürlük `opacity` + `transform` ile, kaydırma dinleyicisi mevcut rAF kuyruğuna bağlanır; `prefers-reduced-motion` altında hem geçiş hem de kaydırmanın kendisi ani olur. DOCS 7.1'e uygundur ve F-FC-f bunu test olarak korur.
+
+**Site içi arama (bölüm 8).** `/ara` adresinde, `Front\SearchController` + `Models\Search`. Referansta üst menüde bir arama düğmesi vardır; B1'de bilerek eklenmemişti çünkü arkasında çalışan bir arama yoktu — ziyaretçiye bir şey vaat edip vermemek olurdu. Bu modül o boşluğu kapatır ve düğme artık gerçek bir hedefe gider. Testler F-SR-a…g.
+
+*Kapsam.* Yalnızca **yayınlanmış** içerik: sayfalar, blog yazıları ve örnek siteler. Taslak, ileri tarihli ya da pasif kayıt sonuçlarda çıkmaz. Tür başına en çok 8 sonuç döner; sonuçlar tür adıyla gruplanır.
+
+*Güvenlik.* Her sorgu hazırlanmış ifadedir. Aranan metindeki LIKE jokerleri (`%`, `_`, `\`) kaçışlanır ve sorgu `ESCAPE '\\'` ile çalışır; aksi halde tek başına `%` yazan ziyaretçi bütün tabloyu döndürürdü (F-SR-b). Sorgu iki karakterden kısaysa hiç çalıştırılmaz (F-SR-a), 80 karakterde kesilir. Aranan metin sayfaya `Security::e()` ile basılır (F-SR-e). Arama GET'tir, veri değiştirmez, bu yüzden CSRF gerekmez.
+
+*Rota sırası.* `/ara`, `/{slug}` yakalayıcı deseninden **önce** tanımlanmalıdır; sonra tanımlanırsa bir sayfa slug'ı sanılır ve arama hiç çalışmaz. F-SR-g sırayı korur.
+
+*Dizine girmez.* Sonuç sayfaları `noindex,follow` işaretlenir: arama sonucu sayfaları ince içerik sayılır ve kendi sayfalarımızla rekabet eder (F-SR-d).
+
 ### 5.1 Kahraman bölümü
 - Arka plan ana koyu rol `#081426`, ikincil koyu yüzey `#10233D` ailesidir.
 - `H1` panelden gelen üç satırı kullanır; vurgulu üçüncü satır metin olarak DOM'da kalır, görsele dönüştürülmez.

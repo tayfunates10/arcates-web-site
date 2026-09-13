@@ -29,9 +29,21 @@ $legal         = $footerContent['legal'] ?? [];
       <?php if (($_site['social'] ?? []) !== []): ?>
         <ul class="site-foot__social" aria-label="<?= Security::e(__('follow_us')) ?>">
           <?php foreach ($_site['social'] as $link): ?>
+            <?php
+              /* Referansta baglantilar ikon olarak duruyor. Ikonu adresin
+                 alan adindan cikariyoruz; taninmayan platformda ikon bos
+                 doner ve etiket metni basilir, yani hicbir baglanti
+                 kaybolmaz. Ikonlu durumda etiket ekran okuyucuya kalir. */
+              $ikon = social_icon((string) ($link['url'] ?? ''), (string) ($link['label'] ?? ''));
+            ?>
             <li>
-              <a href="<?= Security::e($link['url'] ?? '') ?>" rel="noopener me" target="_blank">
-                <?= Security::e($link['label'] ?? '') ?>
+              <a class="site-foot__social-link<?= $ikon !== '' ? ' site-foot__social-link--icon' : '' ?>"
+                 href="<?= Security::e($link['url'] ?? '') ?>" rel="noopener me" target="_blank">
+                <?php if ($ikon !== ''): ?>
+                  <?= $ikon ?><span class="visually-hidden"><?= Security::e($link['label'] ?? '') ?></span>
+                <?php else: ?>
+                  <?= Security::e($link['label'] ?? '') ?>
+                <?php endif; ?>
               </a>
             </li>
           <?php endforeach; ?>
@@ -92,6 +104,17 @@ $legal         = $footerContent['legal'] ?? [];
     </div>
 
   </div>
+
+  <?php /* Yukari cik. Referansta alt bilginin sag altinda duruyor.
+           Yalnizca `html.js` altinda gorunur: JS kapaliyken bir islevi
+           olmaz, bos bir dugme birakmayiz. DOCS.md 7.1 */ ?>
+  <button class="to-top" type="button" data-to-top hidden
+          aria-label="<?= Security::e(__('back_to_top')) ?>">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M12 19V5M6 11l6-6 6 6"/>
+    </svg>
+  </button>
 
   <div class="wrap site-foot__base">
     <p class="site-foot__legal">

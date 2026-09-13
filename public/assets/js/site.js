@@ -308,6 +308,27 @@
     }
   }
 
+  /* Yukari cik. Referansta alt bilginin sag altinda duruyor.
+   *
+   * Dugme isaretlemede `hidden` gelir ve yalnizca burada acilir: JS
+   * kapaliyken bir islevi olmadigi icin hic gorunmemeli. Gorunurluk
+   * `opacity` + `transform` ile; kaydirma dinleyicisi mevcut rAF
+   * kuyruguna baglanir. DOCS.md 7.1 */
+  function initToTop() {
+    var button = doc.querySelector('[data-to-top]');
+    if (!button) return;
+
+    button.hidden = false;
+
+    addScrollTask(function (y) {
+      button.classList.toggle('is-shown', y > window.innerHeight);
+    });
+
+    button.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    });
+  }
+
   function start() {
     initReveal();
     initHead();
@@ -315,6 +336,7 @@
     initCoast();
     initToc();
     initStickyCta();
+    initToTop();
     initFormState();
 
     if (scrollTasks.length) {

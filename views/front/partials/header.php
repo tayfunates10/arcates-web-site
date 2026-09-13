@@ -96,6 +96,17 @@ $ctaArrow = '<svg class="btn__arrow" viewBox="0 0 16 12" aria-hidden="true" focu
           </nav>
         <?php endif; ?>
 
+        <?php /* Referansta cagri butonunun solunda bir arama dugmesi var.
+                 Arkasinda gercek bir arama olmadan konmamisti; `/ara`
+                 modulu geldigi icin artik gercek bir hedefi var. */ ?>
+        <a class="site-head__search" href="<?= Security::e(url('/ara')) ?>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>
+          </svg>
+          <span class="visually-hidden"><?= Security::e(__('search')) ?></span>
+        </a>
+
         <?php if ($headerCta !== null && ($headerCta['label'] ?? '') !== ''): ?>
           <a class="btn btn--primary btn--head" href="<?= Security::e(url((string) ($headerCta['url'] ?? '/iletisim'))) ?>">
             <?= Security::e($headerCta['label']) ?><?= $ctaArrow ?>
