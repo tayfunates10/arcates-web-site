@@ -114,6 +114,7 @@ abstract class Controller
             ['key' => 'seo',         'label' => 'SEO',             'url' => admin_url('seo'),             'ability' => 'seo.view',            'icon' => 'search'],
             ['key' => 'redirects',   'label' => 'Yönlendirmeler',  'url' => admin_url('yonlendirmeler'),  'ability' => 'redirects.manage',    'icon' => 'arrow'],
             ['key' => 'submissions', 'label' => 'Formlar',         'url' => admin_url('formlar'),         'ability' => 'submissions.manage',  'icon' => 'inbox'],
+            ['key' => 'newsletter',  'label' => 'Bülten',          'url' => admin_url('bulten'),          'ability' => 'submissions.manage',  'icon' => 'inbox'],
             ['key' => 'stats',       'label' => 'İstatistik',      'url' => admin_url('istatistik'),      'ability' => 'stats.view',          'icon' => 'chart'],
             ['key' => 'users',       'label' => 'Kullanıcılar',    'url' => admin_url('kullanicilar'),    'ability' => 'users.manage',        'icon' => 'users'],
             ['key' => 'settings',    'label' => 'Ayarlar',         'url' => admin_url('ayarlar'),         'ability' => 'settings.manage',     'icon' => 'gear'],

@@ -13,6 +13,25 @@ return [
     'service_benefits'=>'Hizmet avantajları','free_consultation'=>'Ücretsiz Ön Görüşme','quick_reply'=>'Hızlı Geri Dönüş','tailored_solution'=>'Size Özel Çözüm',
     'technology_for_limits'=>'Sınırların ötesi için teknoloji','core_capabilities'=>'Temel yetkinlikler','custom_design'=>'Özel Tasarım','custom_design_short'=>'İşletmenize özel arayüz','mobile_first'=>'Mobil Uyum','mobile_first_short'=>'Her ekranda kusursuz deneyim','speed_and_seo'=>'Hız & SEO','speed_and_seo_short'=>'Teknik performans odaklı','continuous_support'=>'Sürekli Destek','continuous_support_short'=>'Yayın sonrası da yanınızda',
     'our_services'=>'Hizmetlerimiz','all_services'=>'Tüm Hizmetleri Gör','more_details'=>'Detayları Gör','featured_projects'=>'Öne Çıkan Projeler','all_projects'=>'Tüm Projeleri Gör','how_we_work'=>'Nasıl Çalışıyoruz?','transparent_process'=>'Şeffaf, ölçülebilir ve adım adım ilerleyen süreç.','why_arcates'=>'Neden ARCATES?','why_arcates_short'=>'İşi yalnızca teslim etmiyor, doğru dijital temeli birlikte kuruyoruz.','more_than_software'=>'Yazılımdan fazlası: işinize uygun dijital çözüm.','who_we_are'=>'Biz Kimiz?','human_centered_technology'=>'Teknolojiyi anlaşılır, hızlı ve işletmeye fayda sağlayan hale getiriyoruz.','team_image_alt'=>'Arcates Yazılım ekibi çalışma toplantısında; görselin üzerinde el yazısıyla “Daha iyi bir yarın için birlikte üretiyoruz.” yazıyor','learn_more_about_us'=>'Bizi Daha Yakından Tanıyın','latest_articles'=>'Son Yazılar','latest_articles_short'=>'Web, yazılım, performans ve dijital büyüme üzerine güncel içerikler.','all_posts'=>'Tüm Yazıları Gör','turn_ideas_into_reality'=>'Fikirlerinizi gerçeğe dönüştürelim',
+
+    // Bulten (DOCS.md 12). Onay kutusunun metni referanstaki
+    // "KVKK kapsaminda verileriniz korunur" bilgilendirmesinden farkli:
+    // KVKK'da riza acik olmali, bilgilendirme cumlesi riza yerine gecmez.
+    'newsletter_email_label'=>'E-posta adresiniz',
+    'newsletter_email_placeholder'=>'E-posta adresiniz',
+    'newsletter_submit'=>'Abone ol',
+    'newsletter_consent'=>'Bülten göndermeniz için e-posta adresimin işlenmesine izin veriyorum.',
+    'newsletter_consent_required'=>'Bülten gönderebilmemiz için onay kutusunu işaretlemeniz gerekir.',
+    'newsletter_rate_limited'=>'Kısa sürede çok fazla deneme yapıldı. Bir süre sonra tekrar deneyin.',
+    'newsletter_pending_text'=>'Adresinize bir onay bağlantısı gönderdik. Aboneliğiniz, bağlantıya tıkladığınızda başlar.',
+    'newsletter_confirmed_title'=>'Aboneliğiniz başladı',
+    'newsletter_confirmed_text'=>'Bültenimize kaydınız onaylandı. Her iletinin altındaki bağlantıyla dilediğiniz an çıkabilirsiniz.',
+    'newsletter_unsubscribed_title'=>'Aboneliğiniz sona erdi',
+    'newsletter_unsubscribed_text'=>'Bu adrese artık bülten göndermeyeceğiz. Fikrinizi değiştirirseniz siteden yeniden kaydolabilirsiniz.',
+    'newsletter_invalid_title'=>'Bağlantı geçersiz',
+    'newsletter_invalid_text'=>'Bu bağlantı geçersiz ya da yenisiyle değiştirilmiş. Siteden yeniden kaydolabilirsiniz.',
+    'newsletter_mail_subject'=>'{site} bülteni — aboneliğinizi onaylayın',
+    'newsletter_mail_body'=>"Merhaba,\n\n{site} bültenine kaydolmak için bu adres girildi. Aboneliğiniz, aşağıdaki bağlantıya tıkladığınızda başlar:\n\n{onay}\n\nBu kaydı siz yapmadıysanız hiçbir şey yapmanıza gerek yok; bağlantıya tıklanmadıkça size ileti göndermeyiz.\n\nDilediğiniz an çıkmak için:\n{cikis}\n",
     // Gun kisaltmalari. `opening_hours` semada Mo-Fr bicimindedir; ekranda
     // bu etiketlere cevrilir, yapisal veride ham kod kalir.
     'day_mo'=>'Pzt','day_tu'=>'Sal','day_we'=>'Çar','day_th'=>'Per','day_fr'=>'Cum','day_sa'=>'Cmt','day_su'=>'Paz',

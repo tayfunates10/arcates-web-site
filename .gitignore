@@ -13,6 +13,10 @@
 .idea/
 .vscode/
 
+# Tarayici denetimleri icin kurulan playwright; depoya girmez.
+# Depoda bagimlilik yoktur, bu dizin yalnizca CI ve yerel denetim icindir.
+/node_modules/
+
 # Sema dosyalari surum kontrolunde tutulur
 !/db/schema.sql
 !/db/migrations/*.sql

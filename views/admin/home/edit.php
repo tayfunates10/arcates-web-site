@@ -297,6 +297,20 @@ $field = static fn (string $lang, string $name): string => 'c[' . $lang . '][' .
         <?php endif; ?>
 
         <?php if ($key === 'footer'): ?>
+          <div class="grid grid--2">
+            <div class="field">
+              <label for="nl_title_<?= Security::e($code) ?>">Bülten başlığı</label>
+              <input type="text" id="nl_title_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'newsletter_title')) ?>"
+                     maxlength="60" value="<?= Security::e($c['newsletter_title'] ?? '') ?>">
+              <span class="field__hint">Boş bırakılırsa alt bilgideki bülten sütunu hiç çizilmez.</span>
+            </div>
+            <div class="field">
+              <label for="nl_text_<?= Security::e($code) ?>">Bülten açıklaması</label>
+              <input type="text" id="nl_text_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'newsletter_text')) ?>"
+                     maxlength="200" value="<?= Security::e($c['newsletter_text'] ?? '') ?>">
+            </div>
+          </div>
+
           <div class="field">
             <label for="signature_<?= Security::e($code) ?>">El yazısı not</label>
             <input type="text" id="signature_<?= Security::e($code) ?>" name="<?= Security::e($field($code, 'signature')) ?>"

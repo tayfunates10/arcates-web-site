@@ -367,6 +367,8 @@ final class HomeController extends Controller
             'footer' => [
                 'about'     => $text($raw['about'] ?? '', 400),
                 'signature' => $text($raw['signature'] ?? '', 120),
+                'newsletter_title' => $text($raw['newsletter_title'] ?? '', 60),
+                'newsletter_text'  => $text($raw['newsletter_text'] ?? '', 200),
                 'columns' => array_values(array_filter(array_map(
                     static fn ($column): array => [
                         'title' => mb_substr(trim((string) ($column['title'] ?? '')), 0, 60),

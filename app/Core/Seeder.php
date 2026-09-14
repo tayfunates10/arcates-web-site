@@ -294,6 +294,9 @@ final class Seeder
                 // CSS kaplamasi ayni cumleyi ikinci kez yazmasin diye bos.
                 // Gorsel degistirilirse buraya metin yazmak yeterli.
                 'signature' => '',
+                // Bulten sutunu. Baslik bos birakilirsa form hic cizilmez.
+                'newsletter_title' => 'Bülten',
+                'newsletter_text'  => 'Yeni içeriklerden ve duyurulardan haberdar olun.',
                 'columns' => [
                     [
                         'title' => 'Hizmetler',

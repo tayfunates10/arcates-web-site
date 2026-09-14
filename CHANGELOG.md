@@ -4,6 +4,22 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Eklendi (14 Eylül 2026 — B10 bülten aboneliği)
+- Alt bilgiye bülten formu eklendi. Başlık ve açıklama panelden gelir (*Anasayfa → Alt bilgi → Bülten başlığı / açıklaması*); başlık boş bırakılırsa sütun hiç çizilmez.
+- **Çift onay (double opt-in).** Adres girildiğinde kayıt `pending` olur ve adrese bir onay bağlantısı gider; abonelik ancak ziyaretçi bağlantıya tıkladığında `active` olur. Böylece başkasının adresini yazan biri o kişiyi listeye sokamaz ve elimizde onayın kanıtı kalır.
+- **Çıkış kaydı silmez.** Her iletideki bağlantı kaydı `unsubscribed` yapar; satır durur, çünkü onayın geri alındığı da kanıtlanabilir olmalı. Panelden silme yalnızca kişinin "verilerimi silin" talebi içindir ve yalnızca yönetici yapabilir.
+- Açık rıza kutusu zorunlu ve önceden işaretli değil. Referanstaki "KVKK kapsamında verileriniz korunur" bilgilendirmesi rıza yerine geçmediği için kutunun metni değiştirildi.
+- Onay ve çıkış bağlantıları GET ile çalışır; kimlik doğrulaması oturuma değil, bağlantıdaki 64 haneli anahtara dayanır. Sayfalar `noindex,nofollow` işaretlenir.
+- Form, iletişim formuyla aynı korumaları taşır: CSRF, honeypot ve IP başına saatlik sınır. Ziyaretçiye her durumda aynı ileti gösterilir — aksi halde form, bir adresin listede olup olmadığını dışarıya söyleyen bir araç olurdu.
+- Panelde *Bülten* sayfası: durum sayaçları, süzgeç, arama ve CSV. CSV onayın kanıtını (zaman, IP, kaynak sayfa) taşır ama anahtarı taşımaz — dosya elden ele dolaşabilir.
+- `newsletter_subscribers` tablosu hem `db/schema.sql`'e hem göç dosyasına yazıldı. `InstallController` sıfırdan kurulumda schema.sql'i çalıştırıp bekleyen göçleri **çalıştırmadan** uygulanmış işaretliyor; tablo yalnızca göçte dursaydı sıfırdan kurulan sitede hiç oluşmazdı. `CREATE TABLE IF NOT EXISTS` olduğu için iki yol da güvenli.
+- `F-BL-a…h` eklendi.
+- Panel menüsüne *Bülten* ögesi eklendiği için `admin-mobile-drawer-check.mjs` içindeki beklenen menü ögesi sayısı 16 → 17 güncellendi. Denetimin amacı dar ekranda hiçbir ögenin kırpılmadığını korumak; sayının kaynağı `Admin\Controller::menu()`.
+
+### Düzeltildi (14 Eylül 2026)
+- Alt bilgi ızgarası bülten sütunuyla altı sütuna çıkarıldı. Taban kural `repeat(auto-fit, minmax(9rem, 1fr))` kullanıyor — auto-fit sütun sayısını çocuk sayısına göre değil yere göre ürettiği için altıncı öge alt satıra düşüyordu; `reference-parity-hotfix.css` ise aynı genişlikte beş sütun dayatıyordu.
+- Rota deseninde `{token:[a-f0-9]{64}}` kullanılamıyor: `Router`'ın yer tutucu deseni alt desen için `[^}]+` okuyor, yani ilk `}` işaretinde duruyor ve ifade bozuluyor. Rota geniş tutuldu; anahtarın tam biçimini `Newsletter::byToken()` doğruluyor ve biçimi tutmayan değer veritabanına hiç gitmiyor.
+
 ### Düzeltildi (13 Eylül 2026 — nihai kabul)
 - B9 slogan katmanının 640 px altında çağrı bandını yeniden iki sütuna çevirmesi düzeltildi; teklif eylemi metnin altında kalır.
 - Reference Parity içine slogan açık/kapalı ve 640/641, 940/941 px sınır kontrolleri eklendi; kart içi kırpılma belge taşmasından ayrı denetlenir.

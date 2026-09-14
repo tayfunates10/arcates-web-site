@@ -114,6 +114,11 @@ $router->get($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@show');
 $router->post($panel . '/medya/{id:[0-9]+}', 'Admin\MediaController@update');
 $router->post($panel . '/medya/{id:[0-9]+}/sil', 'Admin\MediaController@destroy');
 
+// Bulten aboneleri
+$router->get($panel . '/bulten', 'Admin\NewsletterController@index');
+$router->get($panel . '/bulten/csv', 'Admin\NewsletterController@export');
+$router->post($panel . '/bulten/{id:[0-9]+}/sil', 'Admin\NewsletterController@destroy');
+
 // Form kayitlari
 $router->get($panel . '/formlar', 'Admin\SubmissionController@index');
 $router->get($panel . '/formlar/csv', 'Admin\SubmissionController@export');
@@ -176,6 +181,25 @@ $router->get('/tesekkurler', 'Front\ContactController@thanks');
 // ---------------------------------------------------------------------------
 
 $router->get('/ara', 'Front\SearchController@index');
+
+// ---------------------------------------------------------------------------
+// Bulten aboneligi  (DOCS.md 12)
+//
+// Onay ve cikis GET ile calisir: baglanti e-postadan acilir, oturum yoktur.
+// Kimlik dogrulamasi baglantidaki 64 haneli anahtardir.
+//
+// Desende `{64}` gibi bir niceleyici KULLANILAMAZ: Router'in yer tutucu
+// deseni alt desen icin `[^}]+` okur, yani ilk `}` isaretinde durur ve
+// `{token:[a-f0-9]{64}}` bozuk bir ifadeye derlenir. Bu yuzden rota genis
+// tutulur; anahtarin tam bicimini `Newsletter::byToken()` dogrular ve
+// bicimi tutmayan deger veritabanina hic gitmez.
+//
+// Bunlar da yakalayici slug deseninden ONCE tanimlanir.
+// ---------------------------------------------------------------------------
+
+$router->post('/bulten', 'Front\NewsletterController@subscribe');
+$router->get('/bulten/onay/{token:[a-f0-9]+}', 'Front\NewsletterController@confirm');
+$router->get('/bulten/cikis/{token:[a-f0-9]+}', 'Front\NewsletterController@unsubscribe');
 
 // ---------------------------------------------------------------------------
 // On yuz sayfalari  (DOCS.md 4.1 - 4.4)
