@@ -4,6 +4,10 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 
 ## [Yayınlanmamış]
 
+### Düzeltildi (14 Eylül 2026 — kırılgan tarayıcı denetimi)
+- `inner-pages-check.mjs` içindeki `LIVE-03 secili kategori ekran okuyucuya aktarilir` denetimi yarış koşulundan rastgele kırmızı dönüyordu. Kategori çipi bir `<a>`; tıklama tam sayfa gezinmesi başlatıyor ama `.count()` beklemiyor, anında dönüyor — gezinme bitmeden sorulduğunda 0 buluyor ve gerçekte olmayan bir hata bildiriyordu. Tıklamadan sonra `waitForLoadState('networkidle')` eklendi.
+- Hata yükün altında görünür oluyordu; CI'nın hızlı sunucusunda çoğunlukla geçtiği için bugüne kadar fark edilmemişti. Denetimin kendisi doğruydu, ölçüm anı yanlıştı.
+
 ### Eklendi (14 Eylül 2026 — B10 bülten aboneliği)
 - Alt bilgiye bülten formu eklendi. Başlık ve açıklama panelden gelir (*Anasayfa → Alt bilgi → Bülten başlığı / açıklaması*); başlık boş bırakılırsa sütun hiç çizilmez.
 - **Çift onay (double opt-in).** Adres girildiğinde kayıt `pending` olur ve adrese bir onay bağlantısı gider; abonelik ancak ziyaretçi bağlantıya tıkladığında `active` olur. Böylece başkasının adresini yazan biri o kişiyi listeye sokamaz ve elimizde onayın kanıtı kalır.

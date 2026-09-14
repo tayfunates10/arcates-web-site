@@ -120,6 +120,10 @@ const representativeRoutes = [
   check(await page.locator('.chips [aria-current="page"]').count() === 1,
     'LIVE-03 tum kategoriler secimi erisilebilir');
   await page.locator('.chips a').nth(1).click();
+  // Cip bir <a>: tiklama tam sayfa gezinmesi baslatir. `.count()` beklemez,
+  // aninda doner; gezinme bitmeden sorulursa 0 bulur ve denetim gercekte
+  // olmayan bir hata bildirir. Once gezinmenin bitmesini bekliyoruz.
+  await page.waitForLoadState('networkidle');
   check(await page.locator('.chips .is-current[aria-current="page"]').count() === 1,
     'LIVE-03 secili kategori ekran okuyucuya aktarilir');
   check(posts.cards >= 1, `R6 blog kartlari mevcut (${posts.cards})`);
