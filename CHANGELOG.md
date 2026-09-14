@@ -14,6 +14,7 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) biçimini izle
 - Panelde *Bülten* sayfası: durum sayaçları, süzgeç, arama ve CSV. CSV onayın kanıtını (zaman, IP, kaynak sayfa) taşır ama anahtarı taşımaz — dosya elden ele dolaşabilir.
 - `newsletter_subscribers` tablosu hem `db/schema.sql`'e hem göç dosyasına yazıldı. `InstallController` sıfırdan kurulumda schema.sql'i çalıştırıp bekleyen göçleri **çalıştırmadan** uygulanmış işaretliyor; tablo yalnızca göçte dursaydı sıfırdan kurulan sitede hiç oluşmazdı. `CREATE TABLE IF NOT EXISTS` olduğu için iki yol da güvenli.
 - `F-BL-a…h` eklendi.
+- Panel menüsüne *Bülten* ögesi eklendiği için `admin-mobile-drawer-check.mjs` içindeki beklenen menü ögesi sayısı 16 → 17 güncellendi. Denetimin amacı dar ekranda hiçbir ögenin kırpılmadığını korumak; sayının kaynağı `Admin\Controller::menu()`.
 
 ### Düzeltildi (14 Eylül 2026)
 - Alt bilgi ızgarası bülten sütunuyla altı sütuna çıkarıldı. Taban kural `repeat(auto-fit, minmax(9rem, 1fr))` kullanıyor — auto-fit sütun sayısını çocuk sayısına göre değil yere göre ürettiği için altıncı öge alt satıra düşüyordu; `reference-parity-hotfix.css` ise aynı genişlikte beş sütun dayatıyordu.

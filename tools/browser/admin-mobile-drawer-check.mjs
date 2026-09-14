@@ -66,7 +66,10 @@ check(state.sideDisplay === 'grid', `drawer kesin grid yerlesiminde (${state.sid
 check(state.brandTop < 40, `mobil marka ustten basliyor (${state.brandTop}px)`);
 check(state.navTop < 100, `menu marka altinda basliyor (${state.navTop}px)`);
 check(state.firstNavTop < 135, `ilk menu ogesi ust bolumde (${state.firstNavTop}px)`);
-check(state.navCount === 16, `admin menu ogeleri eksiksiz (${state.navCount})`);
+// Kaynak: app/Controllers/Admin/Controller.php -> menu(). Oraya oge
+// eklenince burasi da guncellenir; denetimin amaci dar ekranda hicbir
+// ogenin kirpilmadigini korumak.
+check(state.navCount === 17, `admin menu ogeleri eksiksiz (${state.navCount})`);
 check(state.firstLabels.join('|') === 'Pano|Anasayfa|Sayfalar|Örnek siteler|Blog', `ilk menu sirasi dogru (${state.firstLabels.join(', ')})`);
 check(state.sideOverflowY === 'hidden', `drawer govdesi sabit kalir (${state.sideOverflowY})`);
 check(state.navOverflowY === 'auto' || state.navOverflowY === 'scroll', `yalniz menu dikey kaydirilabilir (${state.navOverflowY})`);
