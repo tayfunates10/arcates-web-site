@@ -6,7 +6,7 @@ Edremit ve Balıkesir Körfez bölgesinde yerel aramalardan müşteri adayı top
 
 - **Sürüm:** `VERSION` dosyasına bakınız
 - **Tam şartname:** [`DOCS.md`](DOCS.md)
-- **Yeniden tasarım devam durumu:** [`REDESIGN-R3-ASSETS.md`](REDESIGN-R3-ASSETS.md) — R3 G-01–G-10 görsel ailesi tamamlandı: hero, hizmet/sektör görselleri, süreç/bölge sahneleri, gerçek proje medya çerçevesi, blog kapakları, final CTA, sosyal/OG marka sistemi ve boş/hata/başarı durumları entegredir. Sıradaki adım tüm sistem için son R8 regresyonu ve gerçek üretim kabulüdür; CI canlı yayın kabulünün yerine geçmez.
+- **Güncel devam ve teslim durumu:** [`FINAL-ACCEPTANCE-2026-09-13.md`](FINAL-ACCEPTANCE-2026-09-13.md) — B1–B9 ve yeni referans görselleri main dalında. Mobil çağrı bandı düzeltmesi ve birleştirme sonrası görsel regresyon kapısı bu kapanışta ele alınır. Canlı kabul ayrıca doğrulanır.
 - **Canlı yayın kontrolü:** [`PRODUCTION.md`](PRODUCTION.md)
 - **Çalışma kuralları:** [`CLAUDE.md`](CLAUDE.md)
 

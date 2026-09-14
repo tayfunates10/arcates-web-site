@@ -1,7 +1,7 @@
 # Arcates Web Site — Proje Dokümantasyonu
 
 **Depo:** `arcates-web-site`  
-**Sürüm:** 1.0.0-rc1  
+**Sürüm:** `VERSION` dosyası (güncel yayın adayı: 1.1.0-rc1)
 **Ürün:** Arcates Yazılım kurumsal sitesi + yönetim paneli  
 **Hedef:** Edremit ve Balıkesir Körfez bölgesinde yerel aramalardan müşteri adayı toplamak
 
@@ -390,7 +390,7 @@ Eski çok renkli kart paleti yeni ana sayfada dekor amacıyla kullanılmaz.
 - Birincil eylem dolu mavi, ikincil eylem çerçeveli/ghost; her bölümde bir baskın CTA olur.
 
 ### 6.3 Tipografi
-Başlık `Sora` (600/700/800), gövde `Plus Jakarta Sans` (400/500/600). Üçüncü font eklenmez. H1/H2 ölçekleri responsive `clamp()` ile küçülür; mobilde satır kırılması güvenlidir.
+Başlık `Sora` (600/700/800), gövde `Plus Jakarta Sans` (400/500/600). B9 ile yalnız dekoratif el yazısında Caveat (500/600) kullanılır; aynı Google Fonts isteğinde yüklenir. H1/H2 ölçekleri responsive `clamp()` ile küçülür; mobilde satır kırılması güvenlidir.
 
 ### 6.4 Kontrast ve odak
 Metin/zemin normal metinde WCAG AA 4.5:1 hedefler. `:focus-visible` halkası tüm bağlantı, buton ve form kontrollerinde görünür olmalıdır. Renk tek başına durum anlatmaz.
@@ -905,3 +905,10 @@ Proje kartları tablet dahil metin solda/görsel sağda düzenini korur.
 JS kapalı/reduced-motion ikon görünürlüğünü denetler. Bu kontroller piksel
 birebirliği veya canlı cPanel dağıtımı kabulü değildir. Elle A-01, A-02,
 A-08 ve E (klavye, %200 zoom) kontrolleri uygulanmalıdır.
+
+
+### Nihai devam kaydı — 13 Eylül 2026
+
+B1–B9 ve 1448×1086 kahraman, 1672×941 ekip, 2400×900 çağrı bandı görselleri PR #50 ile `b75601e` sürümünde birleşti. Bu sürümün CI #602 çalışmasında 333/333 test ve browser işi başarılıdır. Güncel teslim sınırları `FINAL-ACCEPTANCE-2026-09-13.md` dosyasındadır; yukarıdaki tarihsel R3 kayıtları güncel açık iş listesi değildir.
+
+Sloganlı çağrı bandı 640 px ve altında tek sütun, 641–940 px arasında iki sütun, 941 px ve üstünde üç sütundur. Slogansız kart masaüstünde iki sütun kalır. Reference Parity, kartın içindeki teklif eyleminin kırpılmadığını ve telefonda metnin altında kaldığını slogan açık/kapalı durumlarında sınır genişlikleriyle denetler. Denetim artık `main` push olayında da çalışır; 5 viewport ekran görüntüsü artifact içinde korunur.
