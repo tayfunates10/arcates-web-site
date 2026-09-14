@@ -14,10 +14,12 @@ use Arcates\Core\Security;
 
 $footerContent = $footerContent ?? [];
 $columns       = $footerContent['columns'] ?? [];
+$bultenBaslik  = trim((string) ($footerContent['newsletter_title'] ?? ''));
+$bultenMetin   = trim((string) ($footerContent['newsletter_text'] ?? ''));
 $legal         = $footerContent['legal'] ?? [];
 ?>
 <footer class="site-foot">
-  <div class="wrap site-foot__inner">
+  <div class="wrap site-foot__inner<?= $bultenBaslik !== '' ? ' site-foot__inner--newsletter' : '' ?>">
 
     <div class="site-foot__brand">
       <img class="site-foot__logo" src="<?= Security::e(asset('img/logo-wordmark.png')) ?>"
@@ -102,6 +104,49 @@ $legal         = $footerContent['legal'] ?? [];
         </ul>
       <?php endif; ?>
     </div>
+
+    <?php /* Bulten. Baslik panelden gelir; bos birakilirsa sutun hic
+             cizilmez — arkasinda calisan bir liste olmayan bir forma
+             ziyaretciyi davet etmeyiz. DOCS.md 12 */ ?>
+    <?php if ($bultenBaslik !== ''): ?>
+      <div class="site-foot__col site-foot__newsletter" id="bulten">
+        <h2 class="site-foot__title"><?= Security::e($bultenBaslik) ?></h2>
+        <?php if ($bultenMetin !== ''): ?>
+          <p class="site-foot__newsletter-text"><?= Security::e($bultenMetin) ?></p>
+        <?php endif; ?>
+
+        <form class="newsletter-form" action="<?= Security::e(url('/bulten')) ?>" method="post">
+          <?= Security::csrfField() ?>
+          <input type="hidden" name="_return" value="<?= Security::e($_path ?? '/') ?>">
+
+          <?php /* Honeypot: gozden ve ekran okuyucudan gizli, bot doldurur. */ ?>
+          <div class="visually-hidden" aria-hidden="true">
+            <label for="nl-website">Website</label>
+            <input type="text" id="nl-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="newsletter-form__row">
+            <label class="visually-hidden" for="nl-email"><?= Security::e(__('newsletter_email_label')) ?></label>
+            <input type="email" id="nl-email" name="email" required maxlength="190"
+                   autocomplete="email"
+                   placeholder="<?= Security::e(__('newsletter_email_placeholder')) ?>">
+            <button class="newsletter-form__send" type="submit">
+              <span class="visually-hidden"><?= Security::e(__('newsletter_submit')) ?></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M21 3 3 10.5l7 3 3 7L21 3Z"/>
+              </svg>
+            </button>
+          </div>
+
+          <?php /* Onceden isaretli olmayan acik riza kutusu. DOCS.md 10.9 */ ?>
+          <label class="newsletter-form__consent" for="nl-kvkk">
+            <input type="checkbox" id="nl-kvkk" name="kvkk" value="1" required>
+            <span><?= Security::e(__('newsletter_consent')) ?></span>
+          </label>
+        </form>
+      </div>
+    <?php endif; ?>
 
   </div>
 

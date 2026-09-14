@@ -131,3 +131,103 @@
   color: var(--fg-muted);
   font-size: .92em;
 }
+
+/* ---------------------------------------------------------- bulten formu */
+
+/* Alt bilgideki bulten sutunu. Her sayfada oldugu icin bu dosyada durur.
+   DOCS.md 12 */
+.site-foot__newsletter-text {
+  margin: 0 0 12px;
+  color: var(--fg-muted, #8fa5bf);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.newsletter-form__row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.newsletter-form__row input[type="email"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border, rgba(74, 141, 211, .28));
+  border-radius: 8px;
+  color: inherit;
+  background: var(--bg-raised, rgba(6, 22, 40, .55));
+  font: inherit;
+  font-size: 13px;
+}
+
+.newsletter-form__row input[type="email"]:focus-visible {
+  outline: 2px solid var(--focus, #3d91f7);
+  outline-offset: 1px;
+}
+
+.newsletter-form__send {
+  flex: 0 0 auto;
+  width: 42px;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: #0e77fe;
+  cursor: pointer;
+}
+
+.newsletter-form__send svg {
+  width: 18px;
+  height: 18px;
+}
+
+.newsletter-form__send:hover {
+  background: #1189ff;
+}
+
+.newsletter-form__consent {
+  display: flex;
+  gap: 8px;
+  align-items: start;
+  margin-top: 10px;
+  color: var(--fg-muted, #8fa5bf);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.newsletter-form__consent input {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+/* Bulten sutunu geldiginde alt bilgi alti sutuna cikar.
+   Taban kural `repeat(auto-fit, minmax(9rem, 1fr))` kullaniyor; auto-fit
+   sutun sayisini cocuk sayisina gore degil yere gore urettigi icin altinci
+   oge bir alt satira dusuyordu. `reference-parity-hotfix.css` ise ayni
+   genislikte bes sutun dayatiyor.
+   Secici `.site-foot` oneki ile (0,2,0) agirliginda yazildi: oradaki
+   `.is-reference-home .site-foot__inner` kurali da (0,2,0) ve tek basina
+   `.site-foot__inner--newsletter` (0,1,0) onu gecemiyordu. Bu dosya daha
+   sonra yuklendigi icin esit agirlikta kural burada kazanir.
+   Duzen: marka + 3 baglanti sutunu + iletisim + bulten. */
+@media (min-width: 941px) {
+  .site-foot .site-foot__inner--newsletter {
+    grid-template-columns:
+      minmax(180px, 1.1fr)
+      repeat(3, minmax(105px, 0.66fr))
+      minmax(190px, 1.02fr)
+      minmax(200px, 1.08fr);
+  }
+}
+
+/* Dar ekranda alt bilgi iki sutuna duser; e-posta alani orada sigmaz. */
+@media (max-width: 940px) {
+  .site-foot__newsletter {
+    grid-column: 1 / -1;
+  }
+}

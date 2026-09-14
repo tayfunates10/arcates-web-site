@@ -56,6 +56,12 @@ abstract class Controller
             'body_class' => '',
         ];
 
+        // Alt bilgideki bulten formu gonderim sonrasi ayni sayfaya doner.
+        // Deger sunucudan okunur; denetleyici ayrica yalnizca kendi
+        // sitemizdeki bir yola izin verir. DOCS.md 12
+        $yol = (string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+        $data['_path'] = ($yol === '' || $yol[0] !== '/') ? '/' : $yol;
+
         $lang = Lang::current();
 
         // Header ve footer tum ziyaretci sayfalarinda ayni panel icerigini kullanir.

@@ -269,6 +269,26 @@ CREATE TABLE IF NOT EXISTS home_section_translations (
   CONSTRAINT fk_hst_section FOREIGN KEY (section_key) REFERENCES home_sections(`key`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Bulten aboneleri. Cift onay: pending -> active, cikista unsubscribed.
+-- Kayit silinmez; onayin geri alindiginin kaniti da saklanir. DOCS.md 8.4
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(190) NOT NULL,
+  lang CHAR(2) NULL,
+  status ENUM('pending','active','unsubscribed') NOT NULL DEFAULT 'pending',
+  token CHAR(64) NOT NULL,              -- onay ve cikis baglantisinin gizli anahtari
+  consent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  consent_ip VARBINARY(16) NULL,        -- onayin kaniti; KVKK/IYS icin saklanir
+  consent_source VARCHAR(255) NULL,     -- kaydin yapildigi sayfa
+  confirmed_at DATETIME NULL,
+  unsubscribed_at DATETIME NULL,        -- kayit silinmez: onayin geri alindiginin kaniti
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_newsletter_email (email),
+  UNIQUE KEY uq_newsletter_token (token),
+  INDEX idx_newsletter_status (status, created_at),
+  INDEX idx_newsletter_ip (consent_ip, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS districts (             -- bolge haritasi noktalari
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(60) NOT NULL,

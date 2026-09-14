@@ -276,6 +276,25 @@ Sayfa yüksekliği eşiği bağımsız bir referans ölçümü değildir; yukar�
 
 *Dizine girmez.* Sonuç sayfaları `noindex,follow` işaretlenir: arama sonucu sayfaları ince içerik sayılır ve kendi sayfalarımızla rekabet eder (F-SR-d).
 
+**Bülten aboneliği (bölüm 10).** Alt bilgide, `Front\NewsletterController` + `Models\Newsletter` + `newsletter_subscribers`. Başlık ve açıklama panelden gelir (`footer.newsletter_title`, `footer.newsletter_text`); başlık boşsa sütun hiç çizilmez — arkasında çalışan bir liste olmayan bir forma ziyaretçiyi davet etmeyiz (B8'deki arama düğmesi kararının aynısı). Testler F-BL-a…h.
+
+*Çift onay (double opt-in).* Adres girildiğinde kayıt `pending` olur ve adrese bir onay bağlantısı gider; abonelik ancak ziyaretçi bağlantıya tıkladığında `active` olur (F-BL-a, F-BL-b). Tek adımlı kayıt seçilmedi: başkasının adresini yazan biri o kişiyi listeye sokabilirdi ve elimizde onayın kanıtı olmazdı. Zaten etkin bir aboneye ikinci onay e-postası gönderilmez (F-BL-f).
+
+*Çıkış kaydı silmez.* Her iletideki bağlantı kaydı `unsubscribed` yapar, satır durur (F-BL-c). Silinseydi aynı adres için "onay vardı" ile "onay geri alındı" ayırt edilemezdi. Panelden silme yalnızca kişinin "verilerimi silin" talebi içindir, yalnızca yönetici yapabilir ve işlem günlüğüne yazılır.
+
+*Açık rıza.* Onay kutusu zorunlu ve önceden işaretli değildir (F-BL-e). Referanstaki "KVKK kapsamında verileriniz korunur" bir bilgilendirme cümlesidir, rıza yerine geçmez; bu yüzden kutunun metni değiştirildi.
+
+*Anahtar.* Onay ve çıkış GET ile çalışır. Kimlik doğrulaması oturuma değil, bağlantıdaki 64 haneli anahtara dayanır: anahtarı bilmeyen hiçbir kaydı değiştiremez, bilen zaten kendi kaydını değiştirebilir. Bu yüzden CSRF belirtecinin koruyacağı bir şey yoktur — e-postadaki bağlantıya belirteç de konamaz, çünkü e-posta oturumsuzdur. Her kayıt/tazeleme yeni anahtar üretir; eski bağlantıyı taşıyan bir e-posta başkasının eline geçtiyse geçersiz kalır. Biçimi tutmayan anahtar veritabanına hiç gitmez (F-BL-d). Sayfalar `noindex,nofollow`.
+
+Rota deseninde `{token:[a-f0-9]{64}}` **kullanılamaz**: `Router`'ın yer tutucu deseni alt desen için `[^}]+` okur, yani ilk `}` işaretinde durur ve ifade bozulur. Rota geniş tutulur, tam biçimi `Newsletter::byToken()` doğrular.
+
+*Adres sızdırılmaz.* Form her durumda aynı iletiyi gösterir; aksi halde bir adresin listede olup olmadığını dışarıya söyleyen bir araç olurdu. Form CSRF, honeypot ve IP başına saatlik sınır taşır (iletişim formuyla aynı `security.form_max_hourly` ayarı).
+
+*CSV.* Onayın kanıtını (zaman, IP, kaynak sayfa) taşır ama anahtarı taşımaz (F-BL-g): dosya elden ele dolaşabilir, anahtarı bilen herkes o kişiyi listeden çıkarabilir.
+
+*İYS.* Türkiye'de gerçek kişilere ticari elektronik ileti göndermek için gönderici olarak İleti Yönetim Sistemi'ne kayıt ve onayların İYS'ye yüklenmesi gerekir. Bu kodun değil işletmenin sorumluluğudur; `consent_at`, `consent_ip` ve `consent_source` alanları o yüklemenin dayanağını sağlar.
+
+
 **Çağrı bandı sloganı ve el yazısı imza (bölüm 9).** `public/assets/css/reference-flourish.css` anasayfanın son katmanıdır. İki dekoratif metin taşır ve ikisinin de içeriği panelden gelir:
 
 - *Slogan* — `cta` bölümünün `slogan` alanı. Çağrı bandının sağ ucunda, büyük harfle. Her satır ayrı bir `span` olarak çizilir; referansta ilk satır ("DAHA") diğerlerinden küçük olduğu için `span:first-child:not(:only-child)` ile küçültülür — tek satır yazıldığında küçültme uygulanmaz, çünkü o zaman satırın kendisi slogandır. Boş bırakılınca ne blok ne de üç sütunlu kart düzeni açılır (F-FL-a…d).
@@ -549,7 +568,7 @@ CREATE TABLE districts (
 R5 sabit anahtar sırası: `header, hero, strip, services, steps, works, coast, faq, cta, footer`. Eski kurulumdaki `sort` değerleri farklı olsa bile `HomeSection::all()` bu kanonik sırayı üretir. Yeni seed de aynı sırayı yazar. `strip` için hız konfigürasyonu artık üretilmez; sektör grubu statiktir.
 
 ### 8.4 Medya, form, SEO, istatistik
-Ana tablolar: `media`, `media_translations`, `submissions`, `redirects`, `not_found`, `visits`, `visits_daily`. `visits` ham kayıtları saklama süresi sonunda günlük tabloya toplanır.
+Ana tablolar: `media`, `media_translations`, `submissions`, `newsletter_subscribers`, `redirects`, `not_found`, `visits`, `visits_daily`. `visits` ham kayıtları saklama süresi sonunda günlük tabloya toplanır.
 
 ### 8.5 Menü
 `menu_items` + `menu_item_translations` kullanılır; `main` ve `footer` ağaçları dil bazlı etiket taşır.
@@ -558,6 +577,10 @@ Ana tablolar: `media`, `media_translations`, `submissions`, `redirects`, `not_fo
 `schema.sql` sıfırdan kurulum içindir. Sonraki şema veya kurulu-site varsayılan değişiklikleri `db/migrations/YYYY_MM_DD_NNNN_aciklama.sql` ile yapılır.
 
 Varsayılan değer göçü yalnız eski varsayılanın aynen durduğu veya alanın boş/eksik olduğu satıra dokunur; elle girilen işletme verisi koşulsuz `UPDATE` ile ezilemez. Göçler idempotent olmalıdır.
+
+**Yeni tablo iki yere birden yazılır.** `InstallController` sıfırdan kurulumda önce `db/schema.sql`'i çalıştırır, sonra bekleyen göçleri **çalıştırmadan** uygulanmış işaretler. Bu yüzden yalnızca göç dosyasında duran bir tablo, sıfırdan kurulan bir sitede hiç oluşmaz. Yeni tablo hem `schema.sql`'e hem göce yazılır; göç `CREATE TABLE IF NOT EXISTS` kullandığı için iki yol da güvenlidir ve göç yinelenebilir kalır.
+
+Bu, CLAUDE.md 5'teki "`schema.sql` elle düzenlenmez" kuralının lafzına bir istisnadır ama amacına uyar: o kural, göç yazmak **yerine** schema.sql'i düzenleyip kurulmuş siteleri bozmayı engellemek içindir. Kurulmuş siteler göçten, yeni kurulumlar schema.sql'den beslenir.
 
 ---
 
@@ -721,7 +744,7 @@ R5 ek sözleşmeleri:
 - `F-R5-01`: sektör grubu yalnız yayınlanmış gerçek sektör sayfalarına bağlantı verir.
 - `F-R5-02`: WhatsApp hedefi yalnız NAP telefonundan üretilir.
 
-Referans bölümlerinin sözleşmeleri: `F-HD-a…h` (üst menü), `F-HR-a…f` (kahraman), `F-SC-a…f` (bölüm başlıkları ve metrik), `F-LW-a…d` (alt bölümler), `F-MK-a…c` (ok/onay işaretleri), `F-FC-a…g` (alt bilgi ve yukarı çık), `F-SR-a…g` (site içi arama), `F-FL-a…g` (çağrı bandı sloganı ve el yazısı imza), `F-GC-a…c` (referans görsellerinin çözünürlüğü ve alt metni).
+Referans bölümlerinin sözleşmeleri: `F-HD-a…h` (üst menü), `F-HR-a…f` (kahraman), `F-SC-a…f` (bölüm başlıkları ve metrik), `F-LW-a…d` (alt bölümler), `F-MK-a…c` (ok/onay işaretleri), `F-FC-a…g` (alt bilgi ve yukarı çık), `F-SR-a…g` (site içi arama), `F-FL-a…g` (çağrı bandı sloganı ve el yazısı imza), `F-GC-a…c` (referans görsellerinin çözünürlüğü ve alt metni), `F-BL-a…h` (bülten aboneliği).
 
 ### 14.5 Hareket testleri (A)
 | ID | Senaryo | Beklenen |
